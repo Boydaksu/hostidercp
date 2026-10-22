@@ -18,9 +18,9 @@ test('MariaDB migrations apply/replay and expected table/JSON/status constraints
     raises(PDOException::class, fn() => $db->execute("INSERT INTO jobs(job_type,payload,dedupe_key,correlation_id) VALUES ('bad','not json','bad',?)", [Id::uuid()]));
 });
 test('migration checksum/missing file/incomplete DDL stop execution', function () use ($db,$migrationDir): void {
-    $db->execute("UPDATE schema_migrations SET checksum=REPEAT('0',64)");
+    $db->execute("UPDATE schema_migrations SET checksum=REPEAT('0',64) WHERE version='001_f0_infrastructure.php'");
     raises(RuntimeException::class, fn() => (new Migrator($db,$migrationDir))->migrate());
-    $db->execute('UPDATE schema_migrations SET checksum=?',[hash_file('sha256',$migrationDir.'/001_f0_infrastructure.php')]);
+    $db->execute('UPDATE schema_migrations SET checksum=? WHERE version=?',[hash_file('sha256',$migrationDir.'/001_f0_infrastructure.php'),'001_f0_infrastructure.php']);
     $db->execute("UPDATE schema_migrations SET status='APPLYING'");
     raises(RuntimeException::class, fn() => (new Migrator($db,$migrationDir))->migrate());
     $db->execute("UPDATE schema_migrations SET status='APPLIED'");
@@ -36,31 +36,31 @@ test('migration advisory lock excludes concurrent deployer', function () use ($d
 test('actual partial DDL remains APPLYING and blocks runner/readiness', function () use ($db,$migrationDir): void {
     $dir=dirname(__DIR__).'/storage/migration-failure';
     if (!is_dir($dir)) { mkdir($dir,0700,true); }
-    copy($migrationDir.'/001_f0_infrastructure.php',$dir.'/001_f0_infrastructure.php');
-    file_put_contents($dir.'/002_failure.php',"<?php return ['CREATE TABLE f0_partial_probe (id INT PRIMARY KEY) ENGINE=InnoDB', 'INVALID SQL'];");
+    foreach (glob($migrationDir.'/*.php') as $file) { copy($file,$dir.'/'.basename($file)); }
+    file_put_contents($dir.'/999_failure.php',"<?php return ['CREATE TABLE f0_partial_probe (id INT PRIMARY KEY) ENGINE=InnoDB', 'INVALID SQL'];");
     try {
         raises(PDOException::class,fn()=>(new Migrator($db,$dir))->migrate());
-        same('APPLYING',$db->execute("SELECT status FROM schema_migrations WHERE version='002_failure.php'")->fetchColumn());
+        same('APPLYING',$db->execute("SELECT status FROM schema_migrations WHERE version='999_failure.php'")->fetchColumn());
         same(0,(int)$db->execute('SELECT COUNT(*) FROM f0_partial_probe')->fetchColumn());
         raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->migrate());
         raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->assertReady());
     } finally {
         // Explicit manual recovery of a disposable, prefix-guarded test database.
         $db->execute('DROP TABLE IF EXISTS f0_partial_probe');
-        $db->execute("DELETE FROM schema_migrations WHERE version='002_failure.php'");
-        unlink($dir.'/002_failure.php'); unlink($dir.'/001_f0_infrastructure.php'); rmdir($dir);
+        $db->execute("DELETE FROM schema_migrations WHERE version='999_failure.php'");
+        foreach (glob($dir.'/*.php') as $file) { unlink($file); } rmdir($dir);
     }
     (new Migrator($db,$migrationDir))->assertReady();
 });
 test('migration out-of-order insertion and pending readiness fail closed', function () use ($db,$migrationDir): void {
     $dir=dirname(__DIR__).'/storage/migration-order';
     if (!is_dir($dir)) { mkdir($dir,0700,true); }
-    copy($migrationDir.'/001_f0_infrastructure.php',$dir.'/001_f0_infrastructure.php');
+    foreach (glob($migrationDir.'/*.php') as $file) { copy($file,$dir.'/'.basename($file)); }
     file_put_contents($dir.'/000_earlier.php',"<?php return ['SELECT 1'];");
     try {
         raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->migrate());
         raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->assertReady());
-    } finally { unlink($dir.'/000_earlier.php'); unlink($dir.'/001_f0_infrastructure.php'); rmdir($dir); }
+    } finally { foreach (glob($dir.'/*.php') as $file) { unlink($file); } rmdir($dir); }
 });
 test('business write and outbox rollback/commit together', function () use ($db): void {
     cleanJobs($db); $q = new Queue($db); $out = new Outbox($db,$q);
@@ -218,5 +218,42 @@ test('F01-AUDIT business mutation and audit commit or roll back atomically', fun
     same(0,(int)$db->execute('SELECT COUNT(*) FROM inbox_events')->fetchColumn());
     $db->transaction($write); same(1,(int)$db->execute('SELECT COUNT(*) FROM audit_logs')->fetchColumn());
     raises(LogicException::class,fn()=>$audit->record($actor,'login.succeeded','attempt',Id::uuid()));
+});
+test('F01-RETENTION rate cleanup preserves active and legacy windows and is bounded', function () use ($db): void {
+    cleanJobs($db); $retention=new \Hostider\Core\Queue\Retention($db);
+    foreach (['expired1'=>1,'expired2'=>2,'active'=>PHP_INT_MAX,'legacy'=>null] as $key=>$expiry) {
+        $db->execute('INSERT INTO rate_limits (bucket_hash,window_start,hits,expires_at) VALUES (?,1,1,?)',[hash('sha256',$key),$expiry]);
+    }
+    same(1,$retention->pruneRateLimits(1)); same(1,$retention->pruneRateLimits()); same(0,$retention->pruneRateLimits());
+    same(2,(int)$db->execute('SELECT COUNT(*) FROM rate_limits')->fetchColumn());
+    raises(InvalidArgumentException::class,fn()=>$retention->pruneRateLimits(1001));
+});
+test('F01-RETENTION refreshed rate bucket cannot be pruned as expired', function () use ($db): void {
+    cleanJobs($db); $limiter=new RateLimiter($db,'test-key');
+    same(true,$limiter->allow('bucket',2)); $db->execute('UPDATE rate_limits SET expires_at=1');
+    same(true,$limiter->allow('bucket',2)); same(0,(new \Hostider\Core\Queue\Retention($db))->pruneRateLimits());
+    same(false,$limiter->allow('bucket',2));
+});
+test('F01-RETENTION succeeded payload redaction keeps dedupe trace attempts and conflicts', function () use ($db): void {
+    cleanJobs($db); $q=new Queue($db); $r=new \Hostider\Core\Queue\Retention($db); $trace=Id::uuid();
+    $db->transaction(fn()=>$q->enqueue('probe',['z'=>1,'a'=>2],'retained',$trace));
+    $job=$q->claim(); $q->finish($job,'SUCCEEDED');
+    same(0,$r->redactSucceededPayloads(86400));
+    $db->execute('UPDATE jobs SET updated_at=TIMESTAMPADD(DAY,-2,UTC_TIMESTAMP(6))');
+    same(1,$r->redactSucceededPayloads(86400)); same(0,$r->redactSucceededPayloads(86400));
+    $row=$db->execute('SELECT * FROM jobs')->fetch(); same('{}',$row['payload']); same($trace,$row['correlation_id']);
+    same(1,(int)$db->execute('SELECT COUNT(*) FROM job_attempts')->fetchColumn());
+    $db->transaction(fn()=>$q->enqueue('probe',['a'=>2,'z'=>1],'retained',Id::uuid()));
+    same(null,$q->claim());
+    raises(LogicException::class,fn()=>$db->transaction(fn()=>$q->enqueue('probe',['a'=>9],'retained',Id::uuid())));
+});
+test('F01-RETENTION never redacts failed unknown pending or running evidence', function () use ($db): void {
+    cleanJobs($db); $q=new Queue($db);
+    foreach (['FAILED','UNKNOWN','PENDING','RUNNING'] as $status) {
+        $db->transaction(fn()=>$q->enqueue('probe',['status'=>$status],$status,Id::uuid()));
+        $db->execute('UPDATE jobs SET status=?,updated_at=TIMESTAMPADD(DAY,-90,UTC_TIMESTAMP(6)) WHERE dedupe_key=?',[$status,$status]);
+    }
+    same(0,(new \Hostider\Core\Queue\Retention($db))->redactSucceededPayloads(86400));
+    same(0,(int)$db->execute('SELECT COUNT(*) FROM jobs WHERE payload_purged_at IS NOT NULL')->fetchColumn());
 });
 runTests();

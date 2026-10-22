@@ -95,7 +95,7 @@ final class Session
         if (!is_string($requested) || ($requested !== '' && !preg_match('/^[A-Za-z0-9,-]{22,256}$/D', $requested))) {
             throw new HttpError(401, 'INVALID_SESSION');
         }
-        session_id(is_string($requested) ? $requested : '');
+        session_id($requested);
         if (!session_start()) {
             throw new \RuntimeException('Session unavailable');
         }

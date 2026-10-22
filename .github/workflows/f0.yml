@@ -30,6 +30,8 @@ jobs:
           php-version: '${{ matrix.php }}'
           extensions: pdo_mysql, sodium, mbstring
           coverage: none
+      - run: composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts
+      - run: php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M
       - run: php tools/check.php
       - run: php tools/audit.php
       - run: php tests/run.php

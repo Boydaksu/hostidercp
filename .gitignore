@@ -6,4 +6,5 @@
 /vendor/
 /build/
 /tools/local/
+/tools/analysis/vendor/
 *.log

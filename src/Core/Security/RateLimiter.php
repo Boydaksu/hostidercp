@@ -7,7 +7,7 @@ final readonly class RateLimiter
     public function __construct(private Database $db, #[\SensitiveParameter] private string $key) {}
     public function allow(string $bucket, int $limit = 60, int $window = 60): bool
     {
-        if ($limit < 1 || $window < 1) {
+        if ($limit < 1 || $window < 1 || $window > 86400) {
             throw new \InvalidArgumentException('Invalid rate policy');
         }
         $hash = hash_hmac('sha256', $bucket, $this->key);
@@ -20,7 +20,7 @@ final readonly class RateLimiter
             if ($hits >= $limit) {
                 return false;
             }
-            $this->db->execute('UPDATE rate_limits SET window_start=?,hits=? WHERE bucket_hash=?', [$start, $hits + 1, $hash]);
+            $this->db->execute('UPDATE rate_limits SET window_start=?,hits=?,expires_at=? WHERE bucket_hash=?', [$start, $hits + 1, $start + $window, $hash]);
             return true;
         });
     }

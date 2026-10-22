@@ -53,6 +53,8 @@ test('F01-JSON nested object order canonicalizes without collapsing types or lis
     }
     same(Idempotency::fingerprint(['b'=>1,'a'=>2]),hash('sha256','{"a":2,"b":1}'));
     raises(InvalidArgumentException::class,fn()=>CanonicalJson::fromJson('{"amount":1.5}'));
+    raises(InvalidArgumentException::class,fn()=>CanonicalJson::fromJson('{"amount":99999999999999999999999999}'));
+    same('{"0":"a","1":"b"}',CanonicalJson::encode([1=>'b',0=>'a']));
 });
 test('F01-PROVIDER production blocks all five mock adapters and mock results', function (): void {
     $config=testConfig('production'); $policy=new \Hostider\Core\Security\EffectPolicy($config);

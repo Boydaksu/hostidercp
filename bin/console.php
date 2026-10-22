@@ -3,7 +3,7 @@ declare(strict_types=1);
 require dirname(__DIR__) . '/bootstrap/autoload.php';
 use Hostider\Core\{Config, Id, SafeLogger};
 use Hostider\Core\Database\{Database, Migrator};
-use Hostider\Core\Queue\{Queue, Outbox, Worker};
+use Hostider\Core\Queue\{Queue, Outbox, Worker, Retention};
 ini_set('display_errors', '0');
 ini_set('log_errors', '0');
 ini_set('zend.exception_ignore_args', '1');
@@ -16,8 +16,8 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','health:check'], true)) {
-        fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, health:check' . PHP_EOL);
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads'], true)) {
+        fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>' . PHP_EOL);
         exit(2);
     }
     $db = Database::connect(Config::fromEnvironment());
@@ -43,6 +43,14 @@ try {
         // Internal no-side-effect probe only. Commerce handlers belong to later phases.
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
         echo json_encode(['worked' => $worker->once()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command === 'queue:attention') {
+        echo json_encode(['jobs' => $db->execute("SELECT id,status,attempts,correlation_id,last_error_safe,updated_at FROM jobs WHERE status IN ('FAILED','UNKNOWN') ORDER BY updated_at,id LIMIT 100")->fetchAll()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command === 'retention:rates') {
+        echo json_encode(['pruned' => (new Retention($db))->pruneRateLimits()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command === 'retention:job-payloads') {
+        $age = filter_var($argv[2] ?? '', FILTER_VALIDATE_INT);
+        if ($age === false) { throw new InvalidArgumentException('Explicit retention age required'); }
+        echo json_encode(['redacted' => (new Retention($db))->redactSucceededPayloads($age)], JSON_THROW_ON_ERROR) . PHP_EOL;
     } else {
         $db->execute('SELECT 1');
         echo json_encode(['database' => 'ok', 'jobs' => $db->execute('SELECT status,COUNT(*) AS count FROM jobs GROUP BY status')->fetchAll()], JSON_THROW_ON_ERROR) . PHP_EOL;

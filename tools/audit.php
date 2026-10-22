@@ -6,6 +6,7 @@ $patterns=['/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/', '/\bgh[pousr]_
 foreach ($paths as $path) {
     foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/'.$path,FilesystemIterator::SKIP_DOTS)) as $file) {
         if (str_contains(str_replace('\\','/',$file->getPathname()),'/tools/local/')) { continue; }
+        if (str_contains(str_replace('\\','/',$file->getPathname()),'/tools/analysis/vendor/')) { continue; }
         if (!$file->isFile()) { continue; } ++$count;
         $source=file_get_contents($file->getPathname());
         foreach ($patterns as $pattern) {

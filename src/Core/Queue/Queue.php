@@ -12,10 +12,14 @@ final readonly class Queue
     {
         $this->db->requireTransaction();
         $json = CanonicalJson::encode($payload);
-        $this->db->execute('INSERT INTO jobs (job_type,payload,dedupe_key,correlation_id,retry_safe) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id',
-            [$type, $json, $dedupe, $trace, (int) $retrySafe]);
-        $existing = $this->db->execute('SELECT job_type,payload,retry_safe FROM jobs WHERE dedupe_key=? FOR UPDATE', [$dedupe])->fetch();
-        if (!$existing || $existing['job_type'] !== $type || CanonicalJson::fromJson($existing['payload']) !== $json || (bool) $existing['retry_safe'] !== $retrySafe) {
+        $fingerprint = hash('sha256', $json);
+        $this->db->execute('INSERT INTO jobs (job_type,payload,dedupe_key,correlation_id,retry_safe,payload_fingerprint) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id',
+            [$type, $json, $dedupe, $trace, (int) $retrySafe, $fingerprint]);
+        $existing = $this->db->execute('SELECT job_type,payload,retry_safe,payload_fingerprint,payload_purged_at FROM jobs WHERE dedupe_key=? FOR UPDATE', [$dedupe])->fetch();
+        $samePayload = $existing && ($existing['payload_purged_at'] === null
+            ? CanonicalJson::fromJson($existing['payload']) === $json
+            : ($existing['payload_fingerprint'] !== null && hash_equals($existing['payload_fingerprint'], $fingerprint)));
+        if (!$existing || $existing['job_type'] !== $type || !$samePayload || (bool) $existing['retry_safe'] !== $retrySafe) {
             throw new \LogicException('Job dedupe conflict');
         }
     }

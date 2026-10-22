@@ -26,11 +26,15 @@ final readonly class Database
             $this->pdo->commit();
             return $result;
         } catch (\Throwable $e) {
-            if ($this->pdo->inTransaction()) {
-                $this->pdo->rollBack();
-            }
+            $this->rollbackIfActive();
             throw $e;
         }
+    }
+
+    private function rollbackIfActive(): void
+    {
+        // Callback code can fail after a DB-side transaction abort (e.g. a deadlock).
+        if ($this->pdo->inTransaction()) { $this->pdo->rollBack(); }
     }
 
     public function execute(string $sql, array $params = []): \PDOStatement
