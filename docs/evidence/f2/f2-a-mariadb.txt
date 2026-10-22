@@ -1,0 +1,11 @@
+PASS F2-A immutable journals balance and rollback also removes audit and outbox
+PASS F2-A DB PHP JSON roundtrip preserves amounts above Number safe integer
+PASS F2-A duplicate collection and payload conflicts cannot create a second payment
+PASS F2-A independent processes cannot overdraw the same wallet
+PASS F2-A mixed allocation and wallet liability never double-count cash
+PASS F2-A concurrent refunds reserve at most original unallocated collection
+PASS F2-A impersonation and production test collections fail closed
+PASS F2-A persistent idempotency commits collection audit and outbox once
+PASS F2-A foreign collection preserves immutable source amount and FX receipt
+PASS F2-A wallet compensation appends linked reversal and respects original spend limit
+10 tests, 0 failures

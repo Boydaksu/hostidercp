@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Hostider\Core\Security;
 enum AuditEvent: string
 {
+    case FinancialPosted = 'finance.posted';
     case AccessDenied = 'access.denied';
     case JobReconciled = 'job.reconciled';
     case SessionEnded = 'session.ended';

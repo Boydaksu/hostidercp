@@ -45,3 +45,5 @@ jobs:
       - run: php tests/identity-security.php
       - run: php tests/identity-http.php
       - run: php tests/http.php
+      - run: php tests/finance-unit.php
+      - run: php tests/finance.php

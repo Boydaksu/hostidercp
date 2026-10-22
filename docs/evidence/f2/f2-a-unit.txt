@@ -1,0 +1,5 @@
+PASS F2-A exact arithmetic exceeds JavaScript and machine integer precision
+PASS F2-A explicit symmetric rounding and ties to even
+PASS F2-A money minor strings survive JSON and currency precision
+PASS F2-A malformed or lossy input and overflow fail closed
+4 tests, 0 failures
