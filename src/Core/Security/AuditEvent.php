@@ -25,4 +25,14 @@ enum AuditEvent: string
     case ImpersonationEnded = 'impersonation.ended';
     case ImpersonationDenied = 'impersonation.denied';
     case ConfigurationChanged = 'configuration.changed';
+    case UserCreated = 'user.created';
+    case EmailVerified = 'email.verified';
+    case PasswordChanged = 'password.changed';
+    case InvitationCreated = 'invitation.created';
+    case InvitationAccepted = 'invitation.accepted';
+    case SuspiciousLogin = 'login.suspicious';
+    case MfaRemoved = 'mfa.removed';
+    case MfaRecoveryReplaced = 'mfa.recovery_replaced';
+    case DeviceCreated = 'device.created';
+    case DeviceRevoked = 'device.revoked';
 }
