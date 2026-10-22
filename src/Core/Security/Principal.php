@@ -5,5 +5,6 @@ final readonly class Principal
 {
     public function __construct(public string $actorId, public array $permissions, public ?string $customerId = null,
         public array $departments = [], public bool $staff = false, public bool $mfa = false,
-        public int $expiresAt = 0, public int $verifiedAt = 0, public bool $impersonating = false) {}
+        public int $expiresAt = 0, public int $verifiedAt = 0, public bool $impersonating = false,
+        public array $grants = [], public array $effectivePermissions = [], public bool $administrative = false) {}
 }

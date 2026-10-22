@@ -9,22 +9,7 @@ final readonly class Idempotency
 
     public static function fingerprint(array $request): string
     {
-        $normalize = static function (mixed $value) use (&$normalize): mixed {
-            if (is_float($value)) {
-                throw new \InvalidArgumentException('Use integer or decimal strings');
-            }
-            if (is_array($value)) {
-                if (!array_is_list($value)) {
-                    ksort($value, SORT_STRING);
-                }
-                return array_map($normalize, $value);
-            }
-            if (!is_scalar($value) && $value !== null) {
-                throw new \InvalidArgumentException('Unsupported request value');
-            }
-            return $value;
-        };
-        return hash('sha256', json_encode($normalize($request), JSON_THROW_ON_ERROR));
+        return hash('sha256', CanonicalJson::encode($request));
     }
 
     public function run(string $actor, string $scope, string $key, array $request, \Closure $work): array

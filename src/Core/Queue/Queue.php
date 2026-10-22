@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Hostider\Core\Queue;
 use Hostider\Core\Database\Database;
 use Hostider\Core\Id;
+use Hostider\Core\CanonicalJson;
 final readonly class Queue
 {
     public function __construct(private Database $db) {}
@@ -10,11 +11,11 @@ final readonly class Queue
     public function enqueue(string $type, array $payload, string $dedupe, string $trace, bool $retrySafe = false): void
     {
         $this->db->requireTransaction();
-        $json = json_encode($payload, JSON_THROW_ON_ERROR);
+        $json = CanonicalJson::encode($payload);
         $this->db->execute('INSERT INTO jobs (job_type,payload,dedupe_key,correlation_id,retry_safe) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id',
             [$type, $json, $dedupe, $trace, (int) $retrySafe]);
         $existing = $this->db->execute('SELECT job_type,payload,retry_safe FROM jobs WHERE dedupe_key=? FOR UPDATE', [$dedupe])->fetch();
-        if (!$existing || $existing['job_type'] !== $type || $existing['payload'] !== $json || (bool) $existing['retry_safe'] !== $retrySafe) {
+        if (!$existing || $existing['job_type'] !== $type || CanonicalJson::fromJson($existing['payload']) !== $json || (bool) $existing['retry_safe'] !== $retrySafe) {
             throw new \LogicException('Job dedupe conflict');
         }
     }

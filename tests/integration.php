@@ -179,4 +179,21 @@ function parallelChildren(string $mode): array
     }
     return $results;
 }
+test('F01-QUEUE reordered nested payload reuses one job including legacy JSON', function () use ($db): void {
+    cleanJobs($db); $q=new Queue($db);
+    $db->transaction(fn()=>$q->enqueue('probe',['b'=>['y'=>1,'x'=>2],'a'=>3],'order',Id::uuid()));
+    // Existing F0 rows need no rewrite or migration to compare canonically.
+    $db->execute('UPDATE jobs SET payload=?',['{"b":{"y":1,"x":2},"a":3}']);
+    $db->transaction(fn()=>$q->enqueue('probe',['a'=>3,'b'=>['x'=>2,'y'=>1]],'order',Id::uuid()));
+    same(1,(int)$db->execute('SELECT COUNT(*) FROM jobs')->fetchColumn());
+});
+test('F01-QUEUE scalar list object and operation differences remain conflicts', function () use ($db): void {
+    foreach ([[['x'=>1],['x'=>'1']], [['x'=>[1,2]],['x'=>[2,1]]], [['x'=>new stdClass()],['x'=>[]]], [['x'=>true],['x'=>1]]] as [$first,$second]) {
+        cleanJobs($db); $q=new Queue($db);
+        $db->transaction(fn()=>$q->enqueue('probe',$first,'types',Id::uuid()));
+        raises(LogicException::class,fn()=>$db->transaction(fn()=>$q->enqueue('probe',$second,'types',Id::uuid())));
+        raises(LogicException::class,fn()=>$db->transaction(fn()=>$q->enqueue('different',$first,'types',Id::uuid())));
+        raises(LogicException::class,fn()=>$db->transaction(fn()=>$q->enqueue('probe',$first,'types',Id::uuid(),true)));
+    }
+});
 runTests();
