@@ -1,0 +1,7 @@
+PASS F2-E pending topup and bank notification cannot credit unverified money
+PASS F2-E verified duplicate fixture records one collection and one readiness event
+PASS F2-E bad signature amount currency wrong customer and fabricated success never collect
+PASS F2-E failed payment leaves order awaiting funds and does not topup wallet
+PASS F2-E late payment after cancellation remains unallocated for reconciliation
+PASS F2-E test fixture acceptance is forbidden in staging and production and PayTR stays shut
+6 tests, 0 failures

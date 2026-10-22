@@ -50,3 +50,4 @@ jobs:
       - run: php tests/catalog.php
       - run: php tests/pricing.php
       - run: php tests/orders.php
+      - run: php tests/payments.php

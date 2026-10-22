@@ -24,6 +24,21 @@ final readonly class FinanceService
     {
         if ((new Decimal($amount->minor))->compare(new Decimal('0'))<=0) { throw new HttpError(422,'POSITIVE_AMOUNT_REQUIRED'); }
     }
+    public function reconcile(string $subject,string $code,Principal $actor,string $trace): string
+    {
+        $this->mutation($actor);
+        if(!in_array($code,['LATE_OR_EXCESS_PAYMENT','FX_REFUND_POLICY_REQUIRED','PAYMENT_MISMATCH'],true)){throw new HttpError(422,'INVALID_RECONCILIATION_CODE');}
+        $id=Id::uuid();$this->db->execute('INSERT INTO finance_reconciliations(id,subject_id,code,actor_id,trace_id) VALUES (?,?,?,?,?)',[$id,$subject,$code,$actor->actorId,$trace]);
+        (new \Hostider\Core\Security\Audit($this->db))->record($actor,\Hostider\Core\Security\AuditEvent::FinancialReconciled,$id,$trace);return $id;
+    }
+    public function recordBankCollection(string $customer,Money $amount,string $approvalReference,Principal $actor,string $trace): string
+    {
+        $this->mutation($actor);
+        if($this->config->environment==='production'){throw new HttpError(403,'PRODUCTION_FINANCE_RELEASE_GATE_OPEN');}
+        if(!$actor->staff){throw new HttpError(403,'STAFF_BANK_APPROVAL_REQUIRED');}
+        (new \Hostider\Core\Security\Authorization())->require($actor,'finance.approve',$customer,privileged:true);
+        return $this->collection($customer,$amount,'BANK',$approvalReference,$actor,$trace);
+    }
     public function openWallet(string $customer,Currency $currency,Principal $actor): string
     {
         $this->mutation($actor);
