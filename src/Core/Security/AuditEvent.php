@@ -5,6 +5,7 @@ enum AuditEvent: string
 {
     case FinancialPosted = 'finance.posted';
     case CatalogChanged = 'catalog.changed';
+    case OrderChanged = 'orders.changed';
     case AccessDenied = 'access.denied';
     case JobReconciled = 'job.reconciled';
     case SessionEnded = 'session.ended';

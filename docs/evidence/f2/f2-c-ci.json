@@ -1,0 +1,228 @@
+{
+  "commit": "14a6963829bb43ef888a8214d3b429e30159bdb6",
+  "run": 39787343370,
+  "jobs": [
+    {
+      "name": "verify (8.3)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run shivammathur/setup-php@v2",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer audit --working-dir=tools/analysis --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/check.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/run.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/hardening-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-concurrency.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/integration.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-security.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/catalog.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/pricing.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "verify (8.4)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run shivammathur/setup-php@v2",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer audit --working-dir=tools/analysis --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/check.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/run.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/hardening-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-concurrency.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/integration.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-security.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/catalog.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/pricing.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

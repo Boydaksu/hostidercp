@@ -34,8 +34,9 @@ final readonly class Repository
         $refunded=$this->db->execute("SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_refunds WHERE payment_id=? AND destination='ORIGINAL' FOR UPDATE",[$id])->fetchColumn();
         return (string)(new Decimal((string)$payment['amount_minor']))->subtract(new Decimal($allocated))->subtract(new Decimal($credited))->subtract(new Decimal($refunded));
     }
-    public function allocated(string $request): string
+    public function allocated(string $request,bool $lock=false): string
     {
-        return $this->db->execute('SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_allocations WHERE payment_request_id=?',[$request])->fetchColumn();
+        if($lock){$this->db->requireTransaction();}
+        return $this->db->execute('SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_allocations WHERE payment_request_id=?'.($lock?' FOR UPDATE':''),[$request])->fetchColumn();
     }
 }

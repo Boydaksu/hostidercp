@@ -1,0 +1,7 @@
+PASS F2-D quote produces one immutable request and separate order state
+PASS F2-D wallet and external partial allocations close once with one readiness fact
+PASS F2-D failed transaction leaves no partial funding or ready event
+PASS F2-D overpayment stays unallocated and cancellation preserves historical request
+PASS F2-D wrong customer and impersonated funding cannot access order or bill
+PASS F2-D independent duplicate funding processes emit readiness once
+6 tests, 0 failures
