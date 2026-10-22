@@ -1,0 +1,4 @@
+Baseline static test labels retained: 37 / 37
+Provider class matrix retained: 5 / 5
+Missing labels: 0
+Existing F0 baseline execution count: 41; F0.1 adds regressions and strengthens unsafe expectations.

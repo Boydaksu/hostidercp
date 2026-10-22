@@ -1,0 +1,4 @@
+Note: Using configuration file C:\Users\alici\OneDrive\Desktop\hostidercp\phpstan.neon.
+
+ [OK] No errors                                                                                                        
+

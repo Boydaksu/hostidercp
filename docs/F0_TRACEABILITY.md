@@ -1,5 +1,7 @@
 # F0 gereksinim ve kabul izi
 
+F0.1 ilave iz: F01-AUTH → Principal/AccessGrant/Authorization + hardening-unit (FR-ID, R4-01..07, SEC-004); F01-JSON/QUEUE → CanonicalJson/Queue + integration (OPS-005); F01-SESSION → Session/Snapshot/Guard + process ve HTTP concurrency (R4-07); F01-AUDIT → AuditEvent/Audit + transaction testleri; F01-PROVIDER → EffectPolicy/ProviderResult/ResultAcceptance + 5 adapter production reddi (OPS-001); F01-RETENTION → migration 002/Retention/RateLimiter + integration (FR-OPS); PHPStan → phpstan.neon/tools/analysis + CI. Ayrıntı: F0_1_REPORT.md ve ADR-002.
+
 Mevcut R/FR kimlikleri iş kararlarıdır. Aşağıdaki F0-* kimlikleri kickoff teslim bileşenlerini izlemek için eklenmiştir; yeni ticari kural değildir. Uygulama temeli ile tamamlanmış ürün özellikleri birbirinden ayrılır.
 
 | F0 | Kaynak | Dosyalar | Kanıt |

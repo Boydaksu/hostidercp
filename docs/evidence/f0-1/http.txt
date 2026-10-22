@@ -1,0 +1,4 @@
+PASS HTTP entry point health/error envelopes, headers and rate limiting
+PASS HTTP invalid bootstrap config returns safe 503
+PASS HTTP incomplete schema refuses to serve health as ready
+3 tests, 0 failures

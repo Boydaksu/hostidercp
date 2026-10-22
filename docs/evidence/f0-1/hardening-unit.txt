@@ -1,0 +1,8 @@
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures

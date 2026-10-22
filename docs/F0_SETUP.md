@@ -1,5 +1,7 @@
 # F0 kurulum ve çalışma
 
+> F0.1 ile migration 002, kısa kilitli session API, explicit access grants, mock-production engeli ve opt-in retention eklendi. Güncel sözleşmeler ve ek test/analiz komutları [F0_1_OPERATIONS.md](F0_1_OPERATIONS.md) ve [F0_1_REPORT.md](F0_1_REPORT.md) içindedir. Buradaki F0 temel kurulum bilgileri korunur.
+
 Bu sürüm çalışan altyapı çekirdeğidir; ticari otomasyon veya üretim sürümü değildir. Tam giriş, TOTP enrollment/recovery, kullanıcı tabloları ve paneller F1 kapsamındadır. Tek public route `GET /api/v1/health`; commerce/callback endpointleri kapalıdır.
 
 ## Gereksinimler ve dosya yapısı

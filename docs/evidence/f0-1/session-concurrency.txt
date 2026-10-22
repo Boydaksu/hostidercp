@@ -1,0 +1,8 @@
+PASS F01-SESSION slow request releases lock before concurrent request finishes
+PASS F01-SESSION parallel mutations serialize without losing increments
+PASS F01-SESSION stale concurrent replacement gets 409
+PASS F01-SESSION in-flight old request cannot resurrect after rotation
+PASS F01-SESSION in-flight old request cannot resurrect after logout
+PASS F01-SESSION failed mutation aborts and revocation hook denies subsequent write
+PASS F01-SESSION client SID is rejected in admin context
+7 tests, 0 failures

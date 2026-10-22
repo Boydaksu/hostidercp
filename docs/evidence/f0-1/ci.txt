@@ -1,0 +1,6 @@
+Code revision: 4ec37db43da2634cfebc117b8bd0cd629c0a00e7
+Run: https://github.com/Boydaksu/hostidercp/actions/runs/39768737397
+PHP 8.3: completed / success
+PHP 8.4: completed / success
+PHPStan level 5 and all seven test suites passed in both jobs.
+Runtime third-party PHP dependencies remain zero. PHPStan is development-only.

@@ -1,0 +1,5 @@
+{"applied":[]}
+{"database":"ok","jobs":[{"status":"FAILED","count":1},{"status":"PENDING","count":1},{"status":"RUNNING","count":1},{"status":"UNKNOWN","count":1}]}
+{"jobs":[{"id":146,"status":"FAILED","attempts":0,"correlation_id":"46855253-ec38-432a-949e-b2631bdf9525","last_error_safe":null,"updated_at":"2026-07-24 11:08:40.147348"},{"id":147,"status":"UNKNOWN","attempts":0,"correlation_id":"e05871be-03da-436c-84f4-9b9d8b8f810e","last_error_safe":null,"updated_at":"2026-07-24 11:08:40.151763"}]}
+{"pruned":1}
+{"redacted":0}

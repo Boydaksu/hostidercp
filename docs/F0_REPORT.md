@@ -1,5 +1,7 @@
 # F0 teslim raporu — 22 Ekim 2026
 
+> Bu bölüm 8683bea/3a08b82 F0 tesliminin tarihsel raporudur. Güncel F0.1 test/CI, migration 002, yetki/session/mock/retention ve PHPStan durumu [F0_1_REPORT.md](F0_1_REPORT.md) içindedir. Eski teknik borç maddeleri F0.1 raporuyla birlikte okunmalıdır.
+
 ## Sonuç ve kapsam
 Güncel kickoff A–E doğrultusunda gerçek PHP/MariaDB çekirdeği ve test altyapısı oluşturuldu. F1 başlatılmadı. Üretim kullanımı ve tüm V1 özelliklerinin kabulü anlamına gelmez; canlı GATE'ler OPEN. F0 mimari/schema incelemesi kullanıcıya sunulmuştur, kullanıcı kabulü otomatik varsayılmaz.
 
