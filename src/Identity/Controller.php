@@ -25,7 +25,7 @@ final class Controller
                     return Response::data($this->identity->view($native->reference,$context,$view,$customer),$trace);
                 });
             }
-            foreach(['login','register','token-request','token-complete','logout','logout-all','session-revoke','renew','step-up','enroll','enroll-confirm','mfa','password','mfa-disable','recovery','device-create','device-revoke','switch','account-update','customer-create','role-save','role-assign','role-remove','user-save','staff-save','invite','member-remove','member-scope','impersonate','impersonation-end','key-create','key-change'] as $action) {
+            foreach(['confirmation-prepare','login','register','token-request','token-complete','logout','logout-all','session-revoke','renew','step-up','enroll','enroll-confirm','mfa','password','mfa-disable','recovery','device-create','device-revoke','switch','account-update','customer-create','role-save','role-assign','role-remove','user-save','staff-save','invite','member-remove','member-scope','impersonate','impersonation-end','key-create','key-change'] as $action) {
                 $router->add('POST',$base.$action,fn(Request $r,string $trace): Response=>$this->mutation($r,$context,$action,$trace));
             }
         }
@@ -86,7 +86,11 @@ final class Controller
         $executed=false; $sensitive=in_array($action,['enroll','enroll-confirm','recovery','device-create','key-create'],true);
         try {
             $wrapped=(new Idempotency($this->identity->db))->run($native->reference,$scope,$key,['hmac'=>$this->identity->digest(CanonicalJson::encode($data))],function() use($r,$context,$action,$data,$native,$scope,$key,$crypto,&$executed): array {
-                $executed=true; $result=$this->dispatch($data,$context,$action,$native->reference,$r);
+                $executed=true;
+                if(in_array($action,CriticalActions::ACTIONS,true)){
+                    $command=$data;$approval=$command['confirmation'] ?? null;unset($command['confirmation']);
+                    $result=(new CriticalActions($this->identity))->execute($native->reference,$context,$action,$command,$approval,fn():array=>$this->dispatch($command,$context,$action,$native->reference,$r));
+                }else{$result=$this->dispatch($data,$context,$action,$native->reference,$r);}
                 return ['cipher'=>$crypto->encrypt(json_encode($result,JSON_THROW_ON_ERROR),'http:'.$scope.':'.$key)];
             });
         } catch(HttpError $e) {
@@ -105,6 +109,11 @@ final class Controller
     {
         $s=$this->identity;
         switch($action) {
+            case 'confirmation-prepare':
+                $this->fields($d,['action','payload'],['action','payload']);$operation=$this->text($d,'action');
+                if(!$d['payload'] instanceof \stdClass){throw new HttpError(422,'PAYLOAD_MUST_BE_OBJECT');}
+                $payload=get_object_vars($d['payload']);
+                return (new CriticalActions($s))->prepare($ref,$context,$operation,$payload,fn():array=>$this->dispatch($payload,$context,$operation,$ref,$request));
             case 'login': $this->fields($d,['email','password','device'],['email','password']); $device=$d['device'] ?? $_COOKIE['__Host-hostider_device'] ?? null; if($device!==null&&!is_string($device)){throw new HttpError(422,'INVALID_DEVICE');} return $s->login($this->text($d,'email'),$this->text($d,'password'),$context,$ref,$request->remoteAddress.':'.$request->header('user-agent'),$device);
             case 'register': $this->fields($d,['email','name','password'],['email','name','password']); if($context!=='client'){throw new HttpError(403,'CLIENT_ONLY');} $s->register($this->text($d,'email'),$this->text($d,'name'),$this->text($d,'password'),$request->remoteAddress); break;
             case 'token-request': $this->fields($d,['email','purpose'],['email','purpose']); $s->requestToken($this->text($d,'email'),$this->text($d,'purpose'),$request->remoteAddress); break;

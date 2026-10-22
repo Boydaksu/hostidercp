@@ -3,9 +3,21 @@ const context=document.querySelector('meta[name="identity-context"]').content;
 const base=`/api/v1/${context}/identity/`;
 const main=document.querySelector('#main'),nav=document.querySelector('#navigation'),heading=document.querySelector('#heading');
 const state={csrf:'',me:null,customer:null};
+const criticalActions=new Set(['role-save','role-assign','role-remove','staff-save','account-update','member-remove','member-scope','user-save','invite','mfa-disable','recovery','device-create','key-create','key-change','impersonate']);
+async function reviewChange(review){
+ return new Promise(resolve=>{const box=card('Değişikliği inceleyin ve onaylayın',review.effect);box.classList.add('warning');
+  const labels={actor:'İşlemi yapan',user:'Hedef kullanıcı',staff:'Personel yetkisi',memberships:'Mevcut üyelikler',user_roles:'Mevcut roller',grants:'Erişim kapsamları',role:'Hedef rol',permissions:'Mevcut işlem izinleri',affected_assignments:'Etkilenecek rol atamaları',customer:'Hedef müşteri',affected_members:'Etkilenecek üyeler',resources:'Hizmet sahipliği',assignment:'Hedef atama',keys:'Entegrasyon anahtarları',devices:'Güvenilir cihazlar',mfa:'MFA durumu',recovery:'Kurtarma kodları',invitations:'Davetler'};
+  box.append(el('h3','İstenen değişiklik'),table(review.proposed));for(const [key,rows]of Object.entries(review.current)){if(rows.length){box.append(el('h3',labels[key]||key),table(rows));}}
+  box.append(el('p','Bu onay yalnız gösterilen işlem, hedef ve mevcut kayıt sürümü için 5 dakika geçerlidir.'));
+  const label=el('label','Etkiyi, hedefi ve erişim kapsamını inceledim; bu değişikliği açıkça onaylıyorum.');const accepted=el('input');accepted.type='checkbox';label.prepend(accepted);
+  const approve=button('Onayla ve uygula',()=>{box.remove();resolve(true);},'primary');approve.disabled=true;accepted.onchange=()=>approve.disabled=!accepted.checked;
+  box.append(label,approve,button('Vazgeç',()=>{box.remove();resolve(false);}));main.prepend(box);box.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+}
 function el(tag,text='',cls=''){const x=document.createElement(tag);x.textContent=text;if(cls)x.className=cls;return x;}
 function notice(text){const n=document.querySelector('#notice');n.textContent=text;n.classList.add('visible');setTimeout(()=>n.classList.remove('visible'),6000);}
 async function api(action,data=null,query=''){
+ if(data!==null&&criticalActions.has(action)&&!data.confirmation){const review=await api('confirmation-prepare',{action,payload:data});if(!await reviewChange(review))throw new Error('İşlem uygulanmadı.');data={...data,confirmation:{id:review.id,accepted:true}};}
  const options={credentials:'same-origin',headers:{}};
  if(data!==null){options.method='POST';options.headers={'Content-Type':'application/json','X-CSRF-Token':state.csrf,'Idempotency-Key':crypto.randomUUID()};options.body=JSON.stringify(data);}
  const response=await fetch(base+action+query,options);const body=await response.json();

@@ -36,4 +36,6 @@ enum AuditEvent: string
     case DeviceCreated = 'device.created';
     case DeviceRevoked = 'device.revoked';
     case SessionReauthenticated = 'session.reauthenticated';
+    case CriticalPrepared = 'critical.prepared';
+    case CriticalConfirmed = 'critical.confirmed';
 }

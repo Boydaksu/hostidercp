@@ -1,5 +1,7 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F1.1 güvenlik kapanışı:** pending MFA ile password+MFA step-up ayrıldı; kritik Identity işlemlerine sunucuya bağlı ayrıntılı onay ve scope delegasyon kontrolü eklendi. [F1_1_REPORT](docs/F1_1_REPORT.md), [F1_1_PLAN](docs/F1_1_PLAN.md), [ADR-004](docs/adr/ADR-004-f1-1-confirmations.md). F2 başlamadı; bütün canlı GATE'ler OPEN.
+
 > **F1 Identity ve paneller:** çalışan admin/client hesapları, MFA, kalıcı roller/kapsamlar, davetler, oturum iptali, API anahtarları ve responsive paneller eklendi. Teslim ve sınırlar: [F1_REPORT](docs/F1_REPORT.md); kurulum, güvenli ilk yönetici ve yapay demo: [F1_SETUP](docs/F1_SETUP.md); plan: [F1_PLAN](docs/F1_PLAN.md). F2 başlatılmadı; bütün canlı GATE'ler OPEN. Aşağıdaki F0/F0.1 notları tarihsel teslim kayıtlarıdır.
 
 > **F0.1 hardening:** kapsamlı sonuç ve açık sınırlar [F0_1_REPORT](docs/F0_1_REPORT.md), güvenlik/session/retention sözleşmeleri [F0_1_OPERATIONS](docs/F0_1_OPERATIONS.md), plan [F0_1_PLAN](docs/F0_1_PLAN.md).

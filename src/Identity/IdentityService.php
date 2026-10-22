@@ -273,6 +273,14 @@ final readonly class IdentityService
         if ((int)$s['verified']<=time()-300 || (int)$s['verified']>time()) { throw new HttpError(403,'STEP_UP_REQUIRED'); }
         if ($this->db->execute('SELECT 1 FROM identity_impersonations WHERE session_id=? AND ended_at IS NULL',[$s['id']])->fetchColumn()) { throw new HttpError(403,'IMPERSONATION_RESTRICTED'); }
     }
+    public function withStepUp(string $reference,string $context,\Closure $work): mixed
+    {
+        return $this->locked($reference,$context,function(array $u,array $s)use($work):mixed{$this->fresh($s);return $work($u,$s);});
+    }
+    public function confirmationEvent(string $user,string $id,bool $executed):void
+    {
+        $this->event($user,$executed?AuditEvent::CriticalConfirmed:AuditEvent::CriticalPrepared,$id);
+    }
     public function disableMfa(string $reference,string $context): void
     {
         $this->locked($reference,$context,function(array $u,array $s): void {
@@ -553,6 +561,7 @@ final readonly class IdentityService
             if (!in_array($permission,$p->permissions,true) || str_starts_with($permission,'identity.')) { throw new HttpError(403,'PERMISSION_ESCALATION'); }
             if ($service==='*') { (new Authorization())->require($p,$permission,$customer,$department,service:'*'); }
             elseif ($service!==null) { $this->authorize($u,$s,$permission,$customer,$service,$department); }
+            else { $this->authorize($u,$s,$permission,$customer,null,$department); }
             $assignment=$this->db->execute('SELECT a.id FROM identity_assignments a JOIN identity_memberships m ON m.user_id=a.user_id AND m.customer_id=a.customer_id JOIN identity_role_permissions rp ON rp.role_id=a.role_id WHERE a.user_id=? AND a.customer_id=? AND rp.permission=? AND m.is_owner=FALSE LIMIT 1',[$target,$customer,$permission])->fetchColumn();
             if (!$assignment) { throw new HttpError(403,'MEMBER_ROLE_SCOPE'); }
             if ($service!==null && $service!=='*') { $this->repository->owns($service,$customer,$department); }

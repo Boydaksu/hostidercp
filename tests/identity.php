@@ -25,7 +25,7 @@ function notificationToken(string $user,string $purpose): string {
 }
 function cleanIdentity(): void {
     global $db;
-    foreach (['identity_impersonations','identity_api_credentials','identity_devices','identity_sessions','identity_notifications','identity_security_events','identity_recovery','identity_mfa','identity_tokens','identity_resource_scopes','identity_grants','identity_assignments','identity_staff','identity_memberships','identity_customers','identity_credentials','identity_users'] as $t) { $db->execute('DELETE FROM '.$t); }
+    foreach (['identity_confirmations','identity_impersonations','identity_api_credentials','identity_devices','identity_sessions','identity_notifications','identity_security_events','identity_recovery','identity_mfa','identity_tokens','identity_resource_scopes','identity_grants','identity_assignments','identity_staff','identity_memberships','identity_customers','identity_credentials','identity_users'] as $t) { $db->execute('DELETE FROM '.$t); }
     $db->execute('UPDATE identity_settings SET bootstrapped=FALSE');
 }
 test('F1-A request preserves nested object/list types through canonical fingerprint', function (): void {
