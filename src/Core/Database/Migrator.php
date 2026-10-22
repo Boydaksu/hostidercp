@@ -59,7 +59,7 @@ final readonly class Migrator
                 if ($applied !== [] && strcmp($name, max($applied)) < 0) {
                     throw new \RuntimeException('Out-of-order migration');
                 }
-                $statements = require $file;
+                $statements = (static fn(string $migrationFile): mixed => require $migrationFile)($file);
                 if (!is_array($statements) || $statements === []) {
                     throw new \RuntimeException('Invalid migration');
                 }

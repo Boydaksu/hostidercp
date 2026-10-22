@@ -24,7 +24,7 @@ final readonly class Request
             if (!$object instanceof \stdClass) {
                 throw new \JsonException();
             }
-            return json_decode($this->body, true, 32, JSON_THROW_ON_ERROR);
+            return get_object_vars($object);
         } catch (\JsonException) {
             throw new HttpError(400, 'INVALID_JSON');
         }

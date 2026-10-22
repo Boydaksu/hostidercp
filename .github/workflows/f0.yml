@@ -31,6 +31,7 @@ jobs:
           extensions: pdo_mysql, sodium, mbstring
           coverage: none
       - run: composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts
+      - run: composer audit --working-dir=tools/analysis --locked
       - run: php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M
       - run: php tools/check.php
       - run: php tools/audit.php
@@ -40,4 +41,5 @@ jobs:
       - run: php tests/session-concurrency.php
       - run: php tests/session-http.php
       - run: php tests/integration.php
+      - run: php tests/identity.php
       - run: php tests/http.php
