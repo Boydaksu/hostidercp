@@ -98,4 +98,69 @@ test('F1-B persistent guard logout-all and password change invalidate sessions',
     raises(HttpError::class,fn()=>$guard->assertActive($snapshot));
     same(0,(int)$db->execute('SELECT COUNT(*) FROM identity_sessions WHERE revoked_at IS NULL')->fetchColumn());
 });
+test('F1-D explicit staff customer grant and impersonation actor constraints', function () use($identity,$db): void {
+    cleanJobs($db); [$root,$ref,$pw,$codes]=rootFixture();
+    $clientPw=bin2hex(random_bytes(20)); $identity->register('customer@example.invalid','Customer',$clientPw,'new-customer');
+    $client=$db->execute("SELECT id FROM identity_users WHERE email='customer@example.invalid'")->fetchColumn();
+    $identity->completeToken(notificationToken($client,'verify'),'verify');
+    $customer=$db->execute('SELECT customer_id FROM identity_memberships WHERE user_id=?',[$client])->fetchColumn();
+    raises(HttpError::class,fn()=>$identity->impersonate($ref,'admin',$customer,$client,'Synthetic support'));
+    $assignment=$db->execute('SELECT id FROM identity_assignments WHERE user_id=? AND customer_id IS NULL',[$root])->fetchColumn();
+    $db->execute('INSERT INTO identity_grants VALUES (?,?,?,?,?,?)',[Id::uuid(),$assignment,'identity.impersonate',$customer,'','']);
+    $identity->impersonate($ref,'admin',$customer,$client,'Synthetic support');
+    same($customer,$identity->view($ref,'admin','account',$customer)['id']);
+    raises(HttpError::class,fn()=>$identity->createKey($ref,'admin',['identity.users.view'],3600));
+    raises(HttpError::class,fn()=>$identity->view($ref,'admin','users'));
+    $db->execute('UPDATE identity_impersonations SET expires_at=TIMESTAMPADD(SECOND,-1,UTC_TIMESTAMP(6))');
+    raises(HttpError::class,fn()=>$identity->view($ref,'admin','users'));
+    $identity->endImpersonation($ref,'admin',$pw,$codes[0]);
+    same(false,$identity->view($ref,'admin','me')['impersonating']);
+    same($root,$db->execute("SELECT actor_id FROM audit_logs WHERE action='impersonation.started' ORDER BY id DESC LIMIT 1")->fetchColumn());
+});
+test('F1-D invitation creates membership without staff permission escalation', function () use($identity,$db): void {
+    cleanIdentity(); cleanJobs($db); $pw=bin2hex(random_bytes(20)); $identity->register('owner@example.invalid','Owner',$pw,'owner-reg');
+    $owner=$db->execute("SELECT id FROM identity_users WHERE email='owner@example.invalid'")->fetchColumn();
+    $identity->completeToken(notificationToken($owner,'verify'),'verify'); $ref=Id::uuid();
+    $login=$identity->login('owner@example.invalid',$pw,'client',$ref,'owner-login'); $customer=$login['customer_id'];
+    $identity->stepUp($ref,'client',$pw,'');
+    $role=$db->execute("SELECT id FROM identity_roles WHERE name='Alt Kullanıcı'")->fetchColumn();
+    $identity->invite($ref,'client',$customer,'invite@example.invalid',$role);
+    $invitee=$db->execute("SELECT id FROM identity_users WHERE email='invite@example.invalid'")->fetchColumn();
+    $inviteToken=notificationToken($invitee,'invite'); $next=bin2hex(random_bytes(20)); $identity->completeToken($inviteToken,'invite',$next);
+    $subref=Id::uuid(); same('active',$identity->login('invite@example.invalid',$next,'client',$subref,'sub-login')['stage']);
+    same($customer,$identity->view($subref,'client','account')['id']);
+    $super=$db->execute("SELECT id FROM identity_roles WHERE name='Super Admin'")->fetchColumn();
+    raises(HttpError::class,fn()=>$identity->invite($ref,'client',$customer,'escalate@example.invalid',$super));
+    $identity->removeMembership($ref,'client',$customer,$invitee);
+    raises(HttpError::class,fn()=>$identity->view($subref,'client','me'));
+});
+test('F1-E API keys are shown once scoped hashed revocable and use current owner permissions', function () use($identity,$db): void {
+    cleanJobs($db); [$root,$ref]=rootFixture();
+    $key=$identity->createKey($ref,'admin',['identity.users.view'],3600);
+    same(false,str_contains(json_encode($identity->view($ref,'admin','keys')),$key['key']));
+    same($root,$identity->withKey($key['key'],'identity.users.view',null,fn($p)=>$p->actorId));
+    raises(HttpError::class,fn()=>$identity->withKey($key['key'],'identity.staff.manage',null,fn()=>null));
+    raises(HttpError::class,fn()=>$identity->changeKey($ref,'admin',$key['id'],['identity.users.view','identity.staff.manage']));
+    $identity->changeKey($ref,'admin',$key['id']); raises(HttpError::class,fn()=>$identity->withKey($key['key'],'identity.users.view',null,fn()=>null));
+    $second=$identity->createKey($ref,'admin',['identity.users.view'],3600);
+    $db->execute('UPDATE identity_users SET identity_version=identity_version+1 WHERE id=?',[$root]);
+    raises(HttpError::class,fn()=>$identity->withKey($second['key'],'identity.users.view',null,fn()=>null));
+});
+test('F1-D revocation race serializes at transaction boundary and blocks later mutation', function() use($identity,$identityConfig,$db): void {
+    cleanJobs($db); [$user,$reference]=rootFixture();
+    $directory=dirname(__DIR__).'/storage/identity-race-'.bin2hex(random_bytes(8)); mkdir($directory,0700,true);
+    $file=$directory.'/fixture.json'; file_put_contents($file,json_encode(['key'=>$identityConfig->key,'user'=>$user,'reference'=>$reference,'directory'=>$directory],JSON_THROW_ON_ERROR));
+    $launch=function(string $mode) use($file): array {
+        $pipes=[];$p=proc_open([PHP_BINARY,__DIR__.'/identity-child.php',$file,$mode],[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes); fclose($pipes[0]); return [$p,$pipes];
+    };
+    $finish=function(array $child): string { [$p,$pipes]=$child; $out=stream_get_contents($pipes[1]); $err=stream_get_contents($pipes[2]); fclose($pipes[1]); fclose($pipes[2]); same(0,proc_close($p)); same('',$err); return $out; };
+    $wait=function(string $path): void { $deadline=hrtime(true)+4_000_000_000; while(!file_exists($path)){if(hrtime(true)>$deadline){throw new RuntimeException('Barrier timeout');}usleep(10000);} };
+    try {
+        $writer=$launch('mutation'); $wait($directory.'/locked'); $revoker=$launch('revoke'); $wait($directory.'/revoker-started');
+        file_put_contents($directory.'/release','1'); same('OK',$finish($writer)); same('OK',$finish($revoker));
+        same('mutation-committed',$db->execute('SELECT display_name FROM identity_users WHERE id=?',[$user])->fetchColumn());
+        same('401',$finish($launch('mutation')));
+        raises(HttpError::class,fn()=>$identity->locked($reference,'admin',fn()=>null));
+    } finally { foreach(glob($directory.'/*') as $path){unlink($path);}rmdir($directory); }
+});
 runTests();

@@ -30,7 +30,10 @@ final readonly class Repository
         $permissions=[]; $grants=[]; $departments=[];
         foreach ($rows as $row) {
             $permissions[]=$row['permission'];
-            if (!$staff && $customer!==null) { $grants[]=new AccessGrant($row['permission'],[$customer],['*'],['*']); }
+            if (!$staff && $customer!==null) {
+                $owner=$this->db->execute('SELECT is_owner FROM identity_memberships WHERE user_id=? AND customer_id=?',[$user['id'],$customer])->fetchColumn();
+                $grants[]=new AccessGrant($row['permission'],[$customer],$owner?['*']:[],[]);
+            }
             foreach ($this->db->execute('SELECT * FROM identity_grants WHERE assignment_id=? AND permission=?',[$row['id'],$row['permission']])->fetchAll() as $g) {
                 $grants[]=new AccessGrant($g['permission'],[$g['customer_scope']],$g['service_scope']===''?[]:[$g['service_scope']],$g['department_scope']===''?[]:[$g['department_scope']]);
                 if ($g['department_scope']!=='') { $departments[]=$g['department_scope']; }
