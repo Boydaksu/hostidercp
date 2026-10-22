@@ -9,7 +9,7 @@ final readonly class Decimal implements \JsonSerializable
     private bool $negative;
     public function __construct(string $value)
     {
-        if (!preg_match('/^(-?)([0-9]{1,96})(?:\.([0-9]{1,48}))?$/D',$value,$m)) {
+        if (!preg_match('/^(-?)([0-9]{1,240})(?:\.([0-9]{1,240}))?$/D',$value,$m)) {
             throw new \InvalidArgumentException('Invalid exact decimal');
         }
         $fraction=rtrim($m[3]??'','0'); $this->scale=strlen($fraction);
@@ -75,7 +75,7 @@ final readonly class Decimal implements \JsonSerializable
     }
     private static function validateScale(int $scale): void
     {
-        if ($scale<0 || $scale>48) { throw new \InvalidArgumentException('Unsupported decimal scale'); }
+        if ($scale<0 || $scale>240) { throw new \InvalidArgumentException('Unsupported decimal scale'); }
     }
     public function __toString(): string { return $this->quantize($this->scale,Rounding::TowardZero); }
     public function jsonSerialize(): string { return (string)$this; }

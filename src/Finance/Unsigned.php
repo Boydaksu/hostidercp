@@ -7,7 +7,7 @@ final class Unsigned
 {
     public static function normalize(string $value): string
     {
-        if (!preg_match('/^[0-9]{1,240}$/D', $value)) { throw new \InvalidArgumentException('Invalid exact integer'); }
+        if (!preg_match('/^[0-9]{1,1024}$/D', $value)) { throw new \InvalidArgumentException('Invalid exact integer'); }
         return ltrim($value, '0') ?: '0';
     }
     public static function compare(string $a, string $b): int

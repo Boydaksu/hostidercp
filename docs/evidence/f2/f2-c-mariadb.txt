@@ -1,0 +1,10 @@
+PASS F2-C USD source converts to TRY with spread and tax without floating point
+PASS F2-C independent TRY price has configured priority over source FX
+PASS F2-C quote expires at exactly fifteen minutes and historical quote does not reprice
+PASS F2-C tax included excluded and minor rounding conserve the total
+PASS F2-C FX missing stale untrusted future and live synthetic sources fail closed
+PASS F2-C required options and cross-product selections are enforced server side
+PASS F2-C financial planning has no database side effects
+PASS F2-C promotion conflicts and parallel redemption enforce the single-use quota
+PASS F2-C renewal protection and notice explicitly gate next-period pricing
+9 tests, 0 failures
