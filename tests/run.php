@@ -18,7 +18,9 @@ test('effect policy denies every live effect in all environments', function (): 
         $p = new EffectPolicy(testConfig($env));
         foreach (['provisioning','payments','mail'] as $effect) {
             raises(RuntimeException::class, fn() => $p->assertAllowed($effect, false));
-            $p->assertAllowed($effect, true);
+            if ($env === 'production') {
+                raises(RuntimeException::class, fn() => $p->assertAllowed($effect, true));
+            } else { $p->assertAllowed($effect, true); }
         }
         raises(LogicException::class, fn() => $p->assertAllowed('typo', true));
     }

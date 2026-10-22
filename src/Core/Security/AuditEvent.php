@@ -1,0 +1,28 @@
+<?php
+declare(strict_types=1);
+namespace Hostider\Core\Security;
+enum AuditEvent: string
+{
+    case AccessDenied = 'access.denied';
+    case JobReconciled = 'job.reconciled';
+    case SessionEnded = 'session.ended';
+    case SessionRevoked = 'session.revoked';
+    case SessionRotated = 'session.rotated';
+    case LoginSucceeded = 'login.succeeded';
+    case LoginFailed = 'login.failed';
+    case MfaChallenged = 'mfa.challenged';
+    case MfaSucceeded = 'mfa.succeeded';
+    case MfaFailed = 'mfa.failed';
+    case MfaEnrolled = 'mfa.enrolled';
+    case MfaRecoveryUsed = 'mfa.recovery_used';
+    case PermissionChanged = 'permission.changed';
+    case RoleAssigned = 'role.assigned';
+    case ApiKeyCreated = 'api_key.created';
+    case ApiKeyRevoked = 'api_key.revoked';
+    case ApiKeyRotated = 'api_key.rotated';
+    case ApiKeyDenied = 'api_key.denied';
+    case ImpersonationStarted = 'impersonation.started';
+    case ImpersonationEnded = 'impersonation.ended';
+    case ImpersonationDenied = 'impersonation.denied';
+    case ConfigurationChanged = 'configuration.changed';
+}

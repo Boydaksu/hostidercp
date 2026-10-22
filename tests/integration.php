@@ -196,4 +196,27 @@ test('F01-QUEUE scalar list object and operation differences remain conflicts', 
         raises(LogicException::class,fn()=>$db->transaction(fn()=>$q->enqueue('probe',$first,'types',Id::uuid(),true)));
     }
 });
+test('F01-AUDIT security vocabulary persists typed opaque references only', function () use ($db): void {
+    cleanJobs($db); $audit=new Audit($db); $actor=new Principal('anonymous',[]);
+    foreach (\Hostider\Core\Security\AuditEvent::cases() as $event) {
+        $db->transaction(fn()=>$audit->record($actor,$event,'attempt_opaque',Id::uuid(),Id::uuid()));
+    }
+    same(count(\Hostider\Core\Security\AuditEvent::cases()),(int)$db->execute('SELECT COUNT(*) FROM audit_logs')->fetchColumn());
+    foreach (['person@example.invalid','token=secret'] as $pii) {
+        raises(InvalidArgumentException::class,fn()=>$db->transaction(fn()=>$audit->record($actor,'login.failed','attempt',$pii)));
+        raises(InvalidArgumentException::class,fn()=>$db->transaction(fn()=>$audit->record($actor,'login.failed','attempt',Id::uuid(),$pii)));
+    }
+});
+test('F01-AUDIT business mutation and audit commit or roll back atomically', function () use ($db): void {
+    cleanJobs($db); $audit=new Audit($db); $actor=new Principal('staff_1',[]); $trace=Id::uuid();
+    $write=function () use ($db,$audit,$actor,$trace): void {
+        $db->execute("INSERT INTO inbox_events (consumer,event_uuid) VALUES ('role-change',?)",[$trace]);
+        $audit->record($actor,'permission.changed','role_1',$trace);
+    };
+    raises(RuntimeException::class,fn()=>$db->transaction(function () use ($write): void { $write(); throw new RuntimeException('business failure'); }));
+    same(0,(int)$db->execute('SELECT COUNT(*) FROM audit_logs')->fetchColumn());
+    same(0,(int)$db->execute('SELECT COUNT(*) FROM inbox_events')->fetchColumn());
+    $db->transaction($write); same(1,(int)$db->execute('SELECT COUNT(*) FROM audit_logs')->fetchColumn());
+    raises(LogicException::class,fn()=>$audit->record($actor,'login.succeeded','attempt',Id::uuid()));
+});
 runTests();

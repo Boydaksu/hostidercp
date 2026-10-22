@@ -5,8 +5,9 @@
   "description": "Hostider adapter normalized response. Live provider raw payload is never public.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["operationId", "provider", "status", "recordedAt"],
+  "required": ["operationId", "provider", "status", "recordedAt", "environment"],
   "properties": {
+    "environment": {"const": "mock"},
     "operationId": {"type": "string", "format": "uuid"},
     "provider": {"type": "string", "minLength": 1},
     "status": {"enum": ["SUCCESS", "DEFINITIVE_FAILURE", "UNKNOWN", "UNSUPPORTED"]},

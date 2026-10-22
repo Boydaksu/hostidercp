@@ -11,6 +11,9 @@ final readonly class EffectPolicy
             throw new \LogicException('Unknown effect');
         }
         if ($mock) {
+            if ($this->config->environment === 'production') {
+                throw new \RuntimeException('Mock effects forbidden in production');
+            }
             return;
         }
         if ($this->config->environment !== 'production' || !$this->config->{$effect}) {

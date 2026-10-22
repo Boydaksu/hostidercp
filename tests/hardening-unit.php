@@ -54,4 +54,16 @@ test('F01-JSON nested object order canonicalizes without collapsing types or lis
     same(Idempotency::fingerprint(['b'=>1,'a'=>2]),hash('sha256','{"a":2,"b":1}'));
     raises(InvalidArgumentException::class,fn()=>CanonicalJson::fromJson('{"amount":1.5}'));
 });
+test('F01-PROVIDER production blocks all five mock adapters and mock results', function (): void {
+    $config=testConfig('production'); $policy=new \Hostider\Core\Security\EffectPolicy($config);
+    foreach ([\Hostider\Providers\Mock\Paytr::class,\Hostider\Providers\Mock\Cpanel::class,\Hostider\Providers\Mock\ResellerClub::class,\Hostider\Providers\Mock\DomainNameApi::class,\Hostider\Providers\Mock\Voyar::class] as $class) {
+        $provider=new $class($policy);
+        $op=new \Hostider\Providers\Contract\Operation(\Hostider\Core\Id::uuid(),$provider->capabilities()['actions'][0]);
+        raises(RuntimeException::class,fn()=>$provider->execute($op)); same(0,$provider->calls);
+        $mock=new $class(new \Hostider\Core\Security\EffectPolicy(testConfig()));
+        $result=$mock->execute($op); same('mock',$result->environment);
+        (new \Hostider\Providers\Contract\ResultAcceptance(testConfig()))->assertAcceptable($result);
+        raises(RuntimeException::class,fn()=>(new \Hostider\Providers\Contract\ResultAcceptance($config))->assertAcceptable($result));
+    }
+});
 runTests();
