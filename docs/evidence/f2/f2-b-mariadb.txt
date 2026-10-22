@@ -1,0 +1,7 @@
+PASS F2-B catalog models separate variants options addons and billing cycles
+PASS F2-B immutable price publications are independent of cost proposals
+PASS F2-B provider mappings stay commercial and do not create resources
+PASS F2-B tax inheritance sale status and stale versions are explicit
+PASS F2-B promotion policies and quotas persist without assuming redemption
+PASS F2-B rejected and interrupted catalog writes leave no partial entities
+6 tests, 0 failures

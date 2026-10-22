@@ -47,3 +47,4 @@ jobs:
       - run: php tests/http.php
       - run: php tests/finance-unit.php
       - run: php tests/finance.php
+      - run: php tests/catalog.php

@@ -12,4 +12,6 @@ Sınırlar: Collection şu anda yalnız APP_ENV=test factory'sidir; BANK workflo
 
 Geri dönüş: trafik/cron durdur, doğrulanmış kod+DB+APP_KEY snapshot birlikte restore veya forward-fix. Yeni finans hareketleri silinmez. Testler immutable finans satırlarını temizlemez; yalnız izole hostider_f0_test* veritabanı kullanır. Runtime DDL/TRIGGER yetkisi kaldırılmalıdır. Üretimde migration ve geri yükleme provası yapılmadı.
 
+Uzak kaynak `ffc33db2243e324b231ed34624b084acf261296e`: [Actions 39785483166](https://github.com/Boydaksu/hostidercp/actions/runs/39785483166), PHP 8.3 ve 8.4 job'ları completed/success. Her job önceki 94 ve yeni 14 testi, PHPStan/lint/audit adımlarını çalıştırdı. Özet kanıt: `evidence/f2/f2-a-ci.json`.
+
 Demo: izole test DB'de finance-unit.php ve finance.php çalıştır; 1000 TRY test tahsilatını 400 TRY wallet + 600 TRY allocation olarak izle; paralel 800 TRY harcamada tek başarılı sonuç ve 200 TRY bakiye; orijinal hareket değişmeden kredi fişi. Kullanıcı arayüzü demosu G'de yapılacak.
