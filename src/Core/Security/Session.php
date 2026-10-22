@@ -62,6 +62,7 @@ final class Session
             $snapshot = self::snapshot();
             self::commit();
             $_COOKIE[session_name()] = session_id();
+            self::issueCookie(session_id());
             return $snapshot;
         } catch (\Throwable $error) {
             if (session_status() === PHP_SESSION_ACTIVE) { session_abort(); }
@@ -88,9 +89,12 @@ final class Session
         }
         ini_set('session.use_strict_mode', '1');
         ini_set('session.use_only_cookies', '1');
+        ini_set('session.use_cookies', '1');
         ini_set('session.use_trans_sid', '0');
         session_name('__Host-hostider_' . $context);
         session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => true, 'httponly' => true, 'samesite' => 'Strict']);
+        // Cookie parsing/issuance is explicit: stale responses must not overwrite a rotated SID.
+        ini_set('session.use_cookies', '0');
         $requested = $_COOKIE[session_name()] ?? '';
         if (!is_string($requested) || ($requested !== '' && !preg_match('/^[A-Za-z0-9,-]{22,256}$/D', $requested))) {
             throw new HttpError(401, 'INVALID_SESSION');
@@ -116,6 +120,7 @@ final class Session
         }
         $_COOKIE[session_name()] = session_id();
         $_SESSION['_seen'] = $now;
+        if ($requested === '') { self::issueCookie(session_id()); }
         // AJAX reads never rotate cookies implicitly; Identity controls rotation boundaries.
     }
 
@@ -129,5 +134,10 @@ final class Session
         if (!session_write_close()) { throw new \RuntimeException('Session commit failed'); }
         // Detached global writes can never silently persist after unlock.
         $_SESSION = [];
+    }
+
+    private static function issueCookie(string $id): void
+    {
+        setcookie(session_name(), $id, ['expires' => 0, 'path' => '/', 'secure' => true, 'httponly' => true, 'samesite' => 'Strict']);
     }
 }
