@@ -21,6 +21,9 @@ try {
         exit(2);
     }
     $db = Database::connect(Config::fromEnvironment());
+    if ($command !== 'migrate') {
+        (new Migrator($db, dirname(__DIR__) . '/migrations'))->assertReady();
+    }
     $queue = new Queue($db);
     if ($command === 'migrate') {
         echo json_encode(['applied' => (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate()], JSON_THROW_ON_ERROR) . PHP_EOL;

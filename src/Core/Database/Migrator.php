@@ -5,6 +5,24 @@ final readonly class Migrator
 {
     public function __construct(private Database $db, private string $directory) {}
 
+    public function assertReady(): void
+    {
+        $files = glob($this->directory . '/*.php') ?: [];
+        $history = $this->db->execute('SELECT version,checksum,status FROM schema_migrations')->fetchAll();
+        if (count($files) !== count($history)) {
+            throw new \RuntimeException('Schema is not current');
+        }
+        $expected = [];
+        foreach ($files as $file) {
+            $expected[basename($file)] = hash_file('sha256', $file);
+        }
+        foreach ($history as $row) {
+            if ($row['status'] !== 'APPLIED' || !isset($expected[$row['version']]) || !hash_equals($expected[$row['version']], $row['checksum'])) {
+                throw new \RuntimeException('Schema drift or incomplete migration');
+            }
+        }
+    }
+
     public function migrate(): array
     {
         if ($this->db->pdo->inTransaction()) {

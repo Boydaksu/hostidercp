@@ -1,6 +1,6 @@
 # F0 uygulama planı — 22 Ekim 2026
 
-Durum: çalışılıyor; DONE veya üretim onayı değildir.
+Durum: F0 uygulama ve yerel doğrulama teslimi; açık canlı GATE'ler korunuyor. Üretim onayı değildir. Son kanıt ve sınırlar F0_REPORT.md içindedir.
 
 ## Kapsam ve gereksinimler
 Güncel kickoff A–E talimatları F0 kapsamıdır. FR-OPS, FR-ID (sözleşme), FR-NOTIFY (outbox), FR-PAY/FR-SERVICE (idempotency temeli), FR-CPANEL/FR-DOMAIN/FR-VOYAR (mock sözleşme); R1-07, R3-07, R3-10, R4-01..07, R6-01, R6-03, R7-07. OPS-001/003/005, SEC-001/002/004 ve PROV-001 yalnız çekirdek seviyesinde doğrulanır; tüm ürün kabul testlerinin geçtiği iddia edilmez.

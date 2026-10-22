@@ -31,6 +31,8 @@ jobs:
           extensions: pdo_mysql, sodium, mbstring
           coverage: none
       - run: php tools/check.php
+      - run: php tools/audit.php
       - run: php tests/run.php
       - run: php tests/session.php
       - run: php tests/integration.php
+      - run: php tests/http.php

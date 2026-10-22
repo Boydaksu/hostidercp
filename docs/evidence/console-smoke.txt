@@ -1,0 +1,4 @@
+{"applied":[]}
+{"dispatched":0}
+{"worked":false}
+{"database":"ok","jobs":[]}

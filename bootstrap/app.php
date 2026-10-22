@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 use Hostider\Core\{Config, Container, SafeLogger};
-use Hostider\Core\Database\Database;
+use Hostider\Core\Database\{Database, Migrator};
 use Hostider\Core\Http\{Kernel, Router, Request, Response, HttpError};
 use Hostider\Core\Security\RateLimiter;
 require_once __DIR__ . '/autoload.php';
@@ -16,7 +16,15 @@ foreach (['pdo_mysql','sodium','mbstring','json','session'] as $extension) {
 $container = new Container();
 $container->bind(Config::class, static fn(): Config => Config::fromEnvironment());
 $container->get(Config::class);
-$container->bind(Database::class, static fn(Container $c): Database => Database::connect($c->get(Config::class)));
+$container->bind(Database::class, static function (Container $c): Database {
+    try {
+        $db = Database::connect($c->get(Config::class));
+        (new Migrator($db, dirname(__DIR__) . '/migrations'))->assertReady();
+        return $db;
+    } catch (Throwable) {
+        throw new HttpError(503, 'DATABASE_UNAVAILABLE');
+    }
+});
 $container->bind(RateLimiter::class, static fn(Container $c): RateLimiter => new RateLimiter($c->get(Database::class), base64_decode($c->get(Config::class)->key, true)));
 $router = new Router();
 $router->add('GET', '/api/v1/health', static fn(Request $r, string $trace): Response => Response::data(['status' => 'ok', 'phase' => 'F0'], $trace), [

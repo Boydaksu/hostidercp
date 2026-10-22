@@ -1,0 +1,19 @@
+PASS MariaDB migrations apply/replay and expected table/JSON/status constraints
+PASS migration checksum/missing file/incomplete DDL stop execution
+PASS migration advisory lock excludes concurrent deployer
+PASS actual partial DDL remains APPLYING and blocks runner/readiness
+PASS migration out-of-order insertion and pending readiness fail closed
+PASS business write and outbox rollback/commit together
+PASS idempotency replay, actor/scope isolation, conflict and rollback
+PASS two independent PHP processes cannot execute same idempotency work twice
+PASS two independent worker processes claim exactly one lease
+PASS expired unsafe lease becomes UNKNOWN and stale worker is fenced
+PASS expired safe lease retries with different fencing token
+PASS safe bounded retry/backoff ends in dead letter
+PASS unsafe handler exception is UNKNOWN with no second execution
+PASS unregistered handler fails closed and worker refuses open transaction
+PASS inbox dedupe and consumer failure rolls back receipt
+PASS queue dedupe rejects different payload without modifying original
+PASS rate limiter stores hashed bucket and enforces bound
+PASS audit keeps original actor/effective customer and refuses free text
+18 tests, 0 failures

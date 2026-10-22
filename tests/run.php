@@ -10,7 +10,6 @@ use Hostider\Providers\Mock\{Paytr, Cpanel, ResellerClub, DomainNameApi, Voyar};
 test('config rejects absent environment/key and staging live flags', function (): void {
     raises(InvalidArgumentException::class, fn() => new Config('', '', '', '', '', ''));
     $c = testConfig();
-    foreach (['true', 'false'] as $flag) { same(is_string($flag), true); }
     raises(InvalidArgumentException::class, fn() => new Config('staging', $c->url, $c->key, $c->dsn, 'test', '', true));
     same('staging', $c->environment);
 });

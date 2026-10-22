@@ -33,6 +33,35 @@ test('migration advisory lock excludes concurrent deployer', function () use ($d
     try { raises(RuntimeException::class, fn() => (new Migrator($db,$migrationDir))->migrate()); }
     finally { $other->execute("SELECT RELEASE_LOCK('hostider_schema')"); }
 });
+test('actual partial DDL remains APPLYING and blocks runner/readiness', function () use ($db,$migrationDir): void {
+    $dir=dirname(__DIR__).'/storage/migration-failure';
+    if (!is_dir($dir)) { mkdir($dir,0700,true); }
+    copy($migrationDir.'/001_f0_infrastructure.php',$dir.'/001_f0_infrastructure.php');
+    file_put_contents($dir.'/002_failure.php',"<?php return ['CREATE TABLE f0_partial_probe (id INT PRIMARY KEY) ENGINE=InnoDB', 'INVALID SQL'];");
+    try {
+        raises(PDOException::class,fn()=>(new Migrator($db,$dir))->migrate());
+        same('APPLYING',$db->execute("SELECT status FROM schema_migrations WHERE version='002_failure.php'")->fetchColumn());
+        same(0,(int)$db->execute('SELECT COUNT(*) FROM f0_partial_probe')->fetchColumn());
+        raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->migrate());
+        raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->assertReady());
+    } finally {
+        // Explicit manual recovery of a disposable, prefix-guarded test database.
+        $db->execute('DROP TABLE IF EXISTS f0_partial_probe');
+        $db->execute("DELETE FROM schema_migrations WHERE version='002_failure.php'");
+        unlink($dir.'/002_failure.php'); unlink($dir.'/001_f0_infrastructure.php'); rmdir($dir);
+    }
+    (new Migrator($db,$migrationDir))->assertReady();
+});
+test('migration out-of-order insertion and pending readiness fail closed', function () use ($db,$migrationDir): void {
+    $dir=dirname(__DIR__).'/storage/migration-order';
+    if (!is_dir($dir)) { mkdir($dir,0700,true); }
+    copy($migrationDir.'/001_f0_infrastructure.php',$dir.'/001_f0_infrastructure.php');
+    file_put_contents($dir.'/000_earlier.php',"<?php return ['SELECT 1'];");
+    try {
+        raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->migrate());
+        raises(RuntimeException::class,fn()=>(new Migrator($db,$dir))->assertReady());
+    } finally { unlink($dir.'/000_earlier.php'); unlink($dir.'/001_f0_infrastructure.php'); rmdir($dir); }
+});
 test('business write and outbox rollback/commit together', function () use ($db): void {
     cleanJobs($db); $q = new Queue($db); $out = new Outbox($db,$q);
     raises(LogicException::class, fn() => $out->append(Id::uuid(),'core.probe','probe',[],Id::uuid()));
