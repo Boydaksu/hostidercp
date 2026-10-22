@@ -20,7 +20,7 @@ Ortam: Windows, PHP **8.4.24**, MariaDB **10.11.18**, PDO native prepares/InnoDB
 
 Toplam **41 test**, 0 başarısız. Provider contract testleri her mock action üzerinde SUCCESS/DEFINITIVE_FAILURE/UNKNOWN/UNSUPPORTED, replay ve çelişkili fingerprint davranışını sınar. Şema required/additionalProperties/status/date sözleşmesi kontrol edilir; tam JSON Schema engine kullanılmaz. İki process ile yarış testleri gerçek ayrı PDO bağlantıları kullanır. Gerçek bozuk DDL sonrası kalıcı APPLYING, runner'ın ve HTTP readiness'nin engellenmesi sınandı.
 
-İlk uzak CI [39764325135](https://github.com/Boydaksu/hostidercp/actions/runs/39764325135) PHP 8.3 ve 8.4'te başarılı; bu `d516acab6c62ed26fb445aa7088563794f556037` revizyonunun 36 testini doğrular. Sonradan eklenen gerçek partial-DDL/readiness/HTTP testleri yerelde geçti ve workflow'a eklendi; son commit'in CI sonucu GitHub Actions üzerinden ayrıca kontrol edilir.
+İlk uzak CI [39764325135](https://github.com/Boydaksu/hostidercp/actions/runs/39764325135) PHP 8.3 ve 8.4'te başarılı; bu `d516acab6c62ed26fb445aa7088563794f556037` revizyonunun 36 testini doğrular. Son kod revizyonu `8683bea9189052000622038bc4e160504994e262` için [39765145112](https://github.com/Boydaksu/hostidercp/actions/runs/39765145112) de SUCCESS: partial-DDL/readiness/HTTP dahil 41 test workflow'a dahildir. Ardından yalnız teslim dokümantasyonu güncellenmiştir.
 
 ## Kararlar ve migration/rollback
 ADR-001: son kullanıcı kickoff'u çekirdek işleri F0'a alır; Composer'sız runtime, hafif modüler monolit, yerel transaction/outbox, unsafe işte tekrar yasağı, MariaDB DDL dirty marker. Ticari iş kuralı değiştirilmedi.
@@ -47,3 +47,4 @@ Migration `001_f0_infrastructure.php`: outbox_events, jobs, job_attempts, dead_l
 4. HTTP, gerçek yarım DDL/readiness, ek kontroller, kurulum/izlenebilirlik/GATE görevleri ve 41 test kanıtı teslim revizyonuna eklendi.
 
 Kullanıcının kalıcı talebi gereği tamamlanan her anlamlı değişiklik grubu Boydaksu/hostidercp deposuna gönderilir. Secrets, çalışma DB'si, test anahtarları ve yerel loglar Git dışındadır. Kaynak/test/migration manifesti evidence/F0_SHA256SUMS.txt içindedir; test kanıtları bu kaynak sürümlerini karşılar.
+
