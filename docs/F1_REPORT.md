@@ -49,6 +49,10 @@ Paneller gerçek DB/fetch akışlarıdır; henüz bulunmayan finans/hosting/doma
 
 PHPStan level5, PHP80300 hedefi ve sıfır ignore; lint/architecture/security pattern taraması; açık Composer locked audit adımı; runtime üçüncü taraf PHP bağımlılığı sıfır. Node yalnız JavaScript syntax kontrolü. CI her push'ta PHP8.3/8.4 ve MariaDB10.11 ile dokuz suite çalıştırır. Kesin run/commit sonuçları `evidence/f1/ci.json` dosyasında teslim sırasında kaydedilir; tahmini başarı raporlanmaz.
 
+**Doğrulanmış son kaynak:** `bd92174a276164ad218688331aeb725ee2e47521`. [GitHub Actions 39776719991](https://github.com/Boydaksu/hostidercp/actions/runs/39776719991): `verify (8.3)` ve `verify (8.4)` tamamlandı, ikisi de **success**. Her matrix job içinde Composer audit, PHPStan, önceki MariaDB/session concurrency suite'leri ve yeni Identity/HTTP suite'leri başarılıdır. Yerelde **84/84**, CI'da her PHP sürümünde **84/84**; eski migration blob hash'leri aynı ve önceki test deklarasyonları korunmuş ([kanıt](evidence/f1/baseline-preservation.txt)).
+
+Anlamlı gruplar main'e ayrı gönderildi: A `6c30c91`, B/C `37cb47c`, D/E `bcd50f4`, F `b95b620`, final MFA/kanıt/demo `bd92174`. Bu beş grubun Actions sonucu success'tir. Bu raporun son CI kayıt güncellemesi yalnız dokümantasyondur; yukarıdaki kaynak SHA'sı doğrulanan uygulamayı belirtir.
+
 ## Açık sınırlar ve F2 öncesi borçlar
 
 - Bütün [canlı GATE görevleri](F0_GATE_TASKS.md) OPEN. Gerçek mail/PayTR/Voyar/cPanel/registrar bağlantısı veya production müşteri işlemi yapılmadı. Mail GATE kapanmadan gerçek müşteri signup/reset/invite gönderimi kullanıma açılmaz.
