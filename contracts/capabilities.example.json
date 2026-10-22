@@ -1,0 +1,19 @@
+{
+  "_notice": "Temsili adapter capability çıktısıdır; Voyar/cPanel/registrar canlı kabiliyeti olarak yorumlanamaz.",
+  "provider": "example-compute",
+  "environment": "staging",
+  "testedAt": null,
+  "capabilities": {
+    "create": "UNKNOWN",
+    "status": "UNKNOWN",
+    "power": "UNKNOWN",
+    "reinstall": "UNKNOWN",
+    "upgrade": "UNKNOWN",
+    "downgrade": "UNKNOWN",
+    "terminate": "UNKNOWN",
+    "supportsIdempotencyKey": "UNKNOWN",
+    "canReconcileUnknownCreate": "UNKNOWN",
+    "chargesStopOnPowerOff": "UNKNOWN",
+    "chargesStopOnTerminate": "UNKNOWN"
+  }
+}

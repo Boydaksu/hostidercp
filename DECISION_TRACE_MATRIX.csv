@@ -1,0 +1,71 @@
+id,tur,soru,karar_ozeti,ana_dokuman,durum
+R1-01,1,1,"PayTR öncelik, iyzico V2, EFT/havale, cüzdan, modüler ödeme",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-02,1,2,"Proforma + elle resmi PDF, TRY/USD, dövizli fiyat hesaplama",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-03,1,3,Ürün bazlı otomatik veya personel onaylı provisioning,docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-04,1,4,"Global-kategori-ürün yenileme, askı, silme kuralları",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-05,1,5,"TLD birincil/alternatif registrar, EPP ve domain durumları",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-06,1,6,"Voyar hazır/özel paket, aylık satış, saatlik sağlayıcı maliyeti",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-07,1,7,"Ayrı müşteri/admin, PHP ana siteden API, yenilemesiz UI",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-08,1,8,"<50 müşteri, tam fatura/ticket/hizmet/şifre uygunluklu aktarım",docs/02_REQUIREMENTS.md,ONAYLANDI
+R1-09,1,9,Gelişmiş destek sistemi ve tek kasa: gelir/gider/tekrarlayan,docs/02_REQUIREMENTS.md,ONAYLANDI
+R2-01,2,1,Özel departman + varsayılan şablon,docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-02,2,2,Departman bazlı mesai ve SLA,docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-03,2,3,"Manuel, round-robin, iş yüküne göre departman atama",docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-04,2,4,"Doğrulanmış e-posta otomatik, diğerleri inceleme",docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-05,2,5,Müşteri önceliği + personel/kural override,docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-06,2,6,Departman bazlı auto close/reopen,docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-07,2,7,Toplu incident ve bağlı ticket,docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-08,2,8,1–5 puan ve isteğe bağlı müşteri yorumu,docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R2-09,2,9,"Departman, öncelik, saat, etiket, müşteri/hizmete dayalı kurallar",docs/08_SUPPORT_CENTER.md,ONAYLANDI
+R3-01,3,1,"Ürün bazlı 30 gün, takvim ayı veya özel döngü",docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-02,3,2,Sipariş/ödeme para birimi müşterinin hesap parası,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-03,3,3,Teklif 15 dakika geçerli,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-04,3,4,Tek cüzdan bakiyesi ve otomatik FX,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-05,3,5,Kısmi/karma ödeme; tam tahsilat olmadan otomatik kurulum yok,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-06,3,6,Ürün/kategori KDV dahil/hariç ve vergi kuralları,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-07,3,7,"Başarılı ödeme sonrası provider hata: ödeme korunur, retry/reconcile",docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-08,3,8,Cloud iptal hemen veya dönem sonu ürün bazlı,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-09,3,9,Destek departman/rol bazlı görme/yanıt/yönetme izinleri,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R3-10,3,10,Her dakika cron,docs/05_FINANCE_AND_PRICING.md,ONAYLANDI
+R4-01,4,1,"Hazır + özelleştirilebilir personel rolleri, işlem izinleri",docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-02,4,2,Müşteri davetli alt kullanıcı ve ayrı izinler,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-03,4,3,Müşteri müşteri hesabına göre 2FA politikası,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-04,4,4,Personel şifresiz denetimli müşteri destek oturumu,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-05,4,5,Kritik işlemde step-up auth ve ayrıntılı onay,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-06,4,6,Scope/expiry/revoke destekli dahili API keys,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-07,4,7,"Çoklu session, cihaz listesi, logout-all, şüpheli giriş",docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-08,4,8,Yabancı cüzdan yüklemesi hemen hesap para birimine çevrilir,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-09,4,9,Müşteri para değişimi yönetici onaylı; tarihi faturalar sabit,docs/03_ARCHITECTURE.md,ONAYLANDI
+R4-10,4,10,"Modern operasyon paneli, arama, hızlı işlem, sekmeler",docs/03_ARCHITECTURE.md,ONAYLANDI
+R5-01,5,1,"Ana ürün, varyant, opsiyon, addon kataloğu",docs/06_WORKFLOWS.md,ONAYLANDI
+R5-02,5,2,Döngü bazlı bağımsız para birimi fiyat kuralları,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-03,5,3,Tek seferlik ve tekrarlayan bağlı/bağımsız addon,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-04,5,4,Yeni maliyetten fiyat önerisi; admin onayıyla yayın,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-05,5,5,Ürün bazlı sabit/otomatik/hibrit sağlayıcı seçim,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-06,5,6,Kapasite/sağlık/ağırlıkla WHM sunucu seçim + override,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-07,5,7,Müşteri Cloud seçenekleri admin lokasyon/CPU/RAM/disk/OS sınırı,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-08,5,8,Uygun hizmetlerde ödemeden sonra anında prorata yükseltme,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-09,5,9,Anında/period end düşürme ve ürün kredi politikası,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-10,5,10,Hizmet bazında otomatik cüzdan yenileme,docs/06_WORKFLOWS.md,ONAYLANDI
+R5-11,5,11,"Koşullu kampanya, indirim kombinasyon ve kullanım limiti",docs/06_WORKFLOWS.md,ONAYLANDI
+R5-12,5,12,Borç sonrası karşılıklı onaylı hizmet transferi ve tüm geçmişin korunması,docs/06_WORKFLOWS.md,ONAYLANDI
+R6-01,6,1,Staging + production farklı DB/dosya,docs/10_OPERATIONS.md,ONAYLANDI
+R6-02,6,2,Web installer ve opsiyonel CLI,docs/10_OPERATIONS.md,ONAYLANDI
+R6-03,6,3,"Admin onaylı update, preflight/backup/maintenance/migrations",docs/10_OPERATIONS.md,ONAYLANDI
+R6-04,6,4,Gecelik tam yedek,docs/10_OPERATIONS.md,ONAYLANDI
+R6-05,6,5,Yerel + seçilebilir şifreli Google Drive/S3 vb. hedefler,docs/10_OPERATIONS.md,ONAYLANDI
+R6-06,6,6,14 günlük+8 haftalık+12 aylık retention,docs/10_OPERATIONS.md,ONAYLANDI
+R6-07,6,7,Bütünlük ve izole restore testi,docs/10_OPERATIONS.md,ONAYLANDI
+R6-08,6,8,Panel/e-posta/webhook sağlık bildirimleri,docs/10_OPERATIONS.md,ONAYLANDI
+R6-09,6,9,WHMCS read-only DB/dump + ekler ve API doğrulama,docs/10_OPERATIONS.md,ONAYLANDI
+R6-10,6,10,Uyumlu parola hash rehash-on-login yoksa reset,docs/10_OPERATIONS.md,ONAYLANDI
+R6-11,6,11,"Prova, reconciliation, freeze, final sync, tek aktif engine",docs/10_OPERATIONS.md,ONAYLANDI
+R6-12,6,12,"WHMCS otomasyon kapalı, sınırlı erişimli geçici arşiv",docs/10_OPERATIONS.md,ONAYLANDI
+R7-01,7,1,Her ürün kendi fiyatlandırma stratejisini seçer,docs/01_DECISIONS.md,ONAYLANDI
+R7-02,7,2,PaymentRequest oluşunca tutar sabit; sonraki period yeniden hesap,docs/01_DECISIONS.md,ONAYLANDI
+R7-03,7,3,Ürün/hizmet fiyat koruma ve değişiklik bildirim politikası,docs/01_DECISIONS.md,ONAYLANDI
+R7-04,7,4,İade orijinal tahsilat para birimi/tutarı,docs/01_DECISIONS.md,ONAYLANDI
+R7-05,7,5,Borçlu hizmet devredilemez; borç kapanınca çift onay,docs/01_DECISIONS.md,ONAYLANDI
+R7-06,7,6,"Cloud grace+bildirim, doğrulanmış provider termination",docs/01_DECISIONS.md,ONAYLANDI
+R7-07,7,7,Domain kesin başarısızsa uyumlu alternatif; UNKNOWN bekletilir,docs/01_DECISIONS.md,ONAYLANDI
+R7-08,7,8,Gecelik tam + mümkünse saatlik DB backup veya PITR,docs/01_DECISIONS.md,ONAYLANDI

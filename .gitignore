@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+/storage/*
+!/storage/.gitkeep
+/vendor/
+/build/
+/tools/local/
+*.log

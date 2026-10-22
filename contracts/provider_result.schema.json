@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hostider.net/internal/schemas/provider-result-v1",
+  "title": "Internal ProviderResult V1",
+  "description": "Hostider adapter normalized response. Live provider raw payload is never public.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["operationId", "provider", "status", "recordedAt"],
+  "properties": {
+    "operationId": {"type": "string", "format": "uuid"},
+    "provider": {"type": "string", "minLength": 1},
+    "status": {"enum": ["SUCCESS", "DEFINITIVE_FAILURE", "UNKNOWN", "UNSUPPORTED"]},
+    "externalRequestId": {"type": ["string", "null"]},
+    "externalResourceId": {"type": ["string", "null"]},
+    "retryAfterSeconds": {"type": ["integer", "null"], "minimum": 0},
+    "safeErrorCode": {"type": ["string", "null"]},
+    "verificationEvidenceId": {"type": ["string", "null"]},
+    "recordedAt": {"type": "string", "format": "date-time"}
+  }
+}

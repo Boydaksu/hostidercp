@@ -1,0 +1,61 @@
+# 09 — API sözleşmesi ve sayfa haritası
+
+## API ilkeleri
+- `https://.../api/v1/...` JSON; `/admin` ve `/client` frontends farklı oturum ve yetki bağlamında.
+- DB internal ID dışarı verilmez; opaque `public_id` ve pagination cursor / whitelisted sort.
+- POST/PUT/PATCH/DELETE için CSRF (cookie session) veya uygun Bearer API credentials; tutarlı 401/403/404/409/422/429; client ID override yasak.
+- Mutasyonlarda `Idempotency-Key`, `X-Request-ID`; eşzamanlı update `If-Match` / `version`, 409.
+- Response envelope: `{data,meta,errors}`; errors `{code,message,details,trace_id}`. Hata kodları API sürümünde sözleşmeli.
+- Mutation requests gizli bilgi loglamaz; servis activity timelines yalnız filtreli public veriyi gösterir.
+
+## Örnek endpoint katalogu (tasarım; kodlanmış API değil)
+| Kategori | Örnek endpoint | Erişim |
+|---|---|---|
+| Kimlik | `POST /auth/login`, `POST /auth/2fa/verify`, `POST /auth/logout-all` | owner/actor |
+| Müşteri | `GET /customers/current`, `POST /customers/{id}/invites` | owner/admin |
+| Katalog | `GET /catalog/products`, `POST /catalog/quotes`, `POST /checkout/orders` | müşteri/public belirli |
+| Sipariş | `GET /orders/{id}`, `POST /orders/{id}/submit` | müşteri/admin |
+| Ödeme | `POST /payments/paytr/sessions`, `POST /webhooks/paytr`, `POST /wallet/topups` | müşteri/gateway |
+| Fatura | `GET /billing/payment-requests/{id}`, `POST /admin/billing/documents` | müşteri/admin |
+| Cüzdan | `GET /wallet/balance`, `GET /wallet/entries`, `POST /wallet/allocations` | yetkili müşteri |
+| Hizmetler | `GET /services`, `GET /services/{id}`, `POST /services/{id}/renew`, `/cancel`, `/transfer` | owner/role |
+| Hosting | `POST /services/{id}/suspend`, `/unsuspend`, `/change-package` | izin/capability |
+| Cloud | `GET /services/{id}/vm/status`, `POST /services/{id}/vm/restart` vb. | izin/capability |
+| Domain | `POST /domains/check`, `POST /domains/{id}/renew`, `/nameservers`, `/unlock` | izin/TLD |
+| Support | `GET /support/tickets`, `POST /support/tickets`, `POST /support/tickets/{id}/messages` | müşteri/department |
+| Support admin | `POST /admin/support/tickets/{id}/assign`, `GET /admin/support/sla`, `POST /admin/support/incidents` | departman/role |
+| Finans | `GET /admin/finance/cash`, `POST /admin/finance/expenses`, `GET /admin/finance/reconciliations` | finans izni |
+| Sistem | `GET /admin/operations/health`, `/jobs`, `/backups`, `/updates` | privileged |
+| Entegrasyon | `POST /admin/providers/{id}/test`, `GET /admin/providers/{id}/capabilities` | privileged |
+
+**PayTR webhook** müşteri oturumu kullanmaz; callback doğrulaması HMAC ve pending payment request üstünden yapılır. Bütün iç API endpointleri aynı public haklara sahip değildir.
+
+## Personel ekran haritası
+- `/admin/dashboard`: ana operasyon göstergeleri, SLA risk, başarısız provisioning, tahsilat ve cron/backup sağlığı.
+- `/admin/search`: müşteriler, hizmetler, domainler, faturalar, ticket'lar, siparişler genel arama (izin filtreli).
+- `/admin/customers`: liste, müşteri detay, kullanıcılar/davetler, bakiye, finans, service/ticket timeline.
+- `/admin/products`: kategoriler, ana ürün, varyant, opsiyon, addon, döngüler, fiyat yayınları, vergi, promosyon.
+- `/admin/orders`: siparişler, manuel onay, ödeme mutabakatı, oluşturma işleri.
+- `/admin/services`: hosting/cloud/domain birleşik görünüm, sağlayıcı resource bağlantısı, renewal, transfer, operasyon geçmişi.
+- `/admin/providers`: WHM server pool, Voyar account, registrar accounts, ödeme sağlayıcısı, credential audit, health.
+- `/admin/domains`: TLD ve registrar politikaları, kayıt/transfer/yenileme işleri, belirsiz statü.
+- `/admin/support`: inbox, saved queues, ticket view/compose, departman, SLA/takvim, rules, incidents, CSAT, mail review.
+- `/admin/finance`: tek kasa, kategori/gelir/gider/tekrarlayan ödemeler, cüzdan ve ödeme defteri, e-belge yüklemeleri, reconciliation.
+- `/admin/system`: roller/permissions, impersonation, sessions, API keys, cron/jobs, dead letters, logs, backups, restore, updates, settings.
+- `/admin/migration`: import dry-run, eşleşmeler, sayım karşılaştırması, son geçiş checklisti.
+
+## Müşteri ekran haritası
+- `/client/dashboard`: aktif hizmetler, son ödeme, açık talepler, yenileme uyarıları.
+- `/client/catalog` + `/client/checkout`: varyant, özel Cloud config, opsiyon, kur/quote/countdown, ödeme.
+- `/client/services`: hosting, cloud, domain hizmet listesi, servis detay/işlem, ileri tarihli iptal, auto renew, transfer.
+- `/client/billing`: ödeme talepleri/proforma, geçmiş finans belgeleri ve gerçek PDF'leri, ödeme geçmişi.
+- `/client/wallet`: hesap para birimi bakiye, yükleme, hareketler, otomatik yenilemeler.
+- `/client/support`: ticket listesi, talep aç/cevap/ek/CSAT, bağlantılı incident.
+- `/client/account`: profil, alt kullanıcı davetleri/izinler, 2FA, cihazlar, para birimi değişiklik talebi.
+
+## Arayüz davranış normları
+- Form başarılı olunca tüm sayfa yenilenmez; ilgili resource JSON döner ve widget/state güncellenir.
+- Arka plan sağlayıcı işlemi `PENDING/PROVISIONING` görünür; kaynak kanıtlı ACTIVE olmadan 'hazır' mesajı gösterme.
+- Uzun işlerde kullanıcıya progress/son olay/tekrar dene seçeneği (yalnız güvenli işlemler), personel escalation.
+- Kritik delete / suspend / refund / service transfer için step-up auth, onay ve özet.
+- Düşük bant genişlikli mobil panel işlevsellik korur; erişilebilir odak sırası, klavye kısayolları, ARIA, alternatif uyarılar.
