@@ -27,6 +27,12 @@ $container->bind(Database::class, static function (Container $c): Database {
 });
 $container->bind(RateLimiter::class, static fn(Container $c): RateLimiter => new RateLimiter($c->get(Database::class), base64_decode($c->get(Config::class)->key, true)));
 $router = new Router();
+$identityConfig=$container->get(Config::class);
+(new \Hostider\Identity\Controller(static fn(): \Hostider\Identity\IdentityService => new \Hostider\Identity\IdentityService($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
+foreach(['admin','client'] as $panelContext) {
+    $router->add('GET','/'.$panelContext,static fn(): Response=>\Hostider\Identity\Panel::response($panelContext));
+    $router->add('GET','/'.$panelContext.'/',static fn(): Response=>\Hostider\Identity\Panel::response($panelContext));
+}
 $router->add('GET', '/api/v1/health', static fn(Request $r, string $trace): Response => Response::data(['status' => 'ok', 'phase' => 'F0'], $trace), [
     static function (Request $request, Closure $next) use ($container): Response {
         if (!$container->get(RateLimiter::class)->allow('health:' . $request->remoteAddress)) {

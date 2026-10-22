@@ -4,7 +4,7 @@ namespace Hostider\Core\Http;
 final readonly class Request
 {
     public function __construct(public string $method, public string $path, public array $headers = [],
-        public string $body = '', public string $remoteAddress = '') {}
+        public string $body = '', public string $remoteAddress = '', public array $query = []) {}
 
     public function header(string $name): string
     {
@@ -42,6 +42,6 @@ final readonly class Request
         $body = file_get_contents('php://input', false, null, 0, 65537);
         return new self(strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET')),
             (string) (parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH) ?: '/'),
-            $headers, $body === false ? '' : $body, (string) ($_SERVER['REMOTE_ADDR'] ?? ''));
+            $headers, $body === false ? '' : $body, (string) ($_SERVER['REMOTE_ADDR'] ?? ''), $_GET);
     }
 }

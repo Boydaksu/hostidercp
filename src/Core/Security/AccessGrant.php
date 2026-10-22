@@ -12,8 +12,8 @@ final readonly class AccessGrant
     {
         return $this->permission === $permission
             && ($customer === null || $this->includes($this->customers, $customer))
-            && ($service === null || $this->includes($this->services, $service))
-            && ($department === null || $this->includes($this->departments, $department));
+            && ($service === null ? $this->services === [] || in_array('*',$this->services,true) : $this->includes($this->services, $service))
+            && ($department === null ? $this->departments === [] || in_array('*',$this->departments,true) : $this->includes($this->departments, $department));
     }
 
     private function includes(array $scope, string $id): bool

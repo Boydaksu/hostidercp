@@ -129,6 +129,12 @@ test('F1-D invitation creates membership without staff permission escalation', f
     $inviteToken=notificationToken($invitee,'invite'); $next=bin2hex(random_bytes(20)); $identity->completeToken($inviteToken,'invite',$next);
     $subref=Id::uuid(); same('active',$identity->login('invite@example.invalid',$next,'client',$subref,'sub-login')['stage']);
     same($customer,$identity->view($subref,'client','account')['id']);
+    $db->execute('INSERT INTO identity_resource_scopes VALUES (?,?,?)',['scoped-service',$customer,'scoped-department']);
+    raises(HttpError::class,fn()=>$identity->locked($subref,'client',fn($u,$s)=>$identity->authorize($u,$s,'services.view',$customer,'scoped-service')));
+    $identity->memberScope($ref,'client',$customer,$invitee,'services.view','scoped-service','scoped-department');
+    raises(HttpError::class,fn()=>$identity->view($subref,'client','me'));
+    $subref=Id::uuid(); $identity->login('invite@example.invalid',$next,'client',$subref,'sub-login-scope');
+    $identity->locked($subref,'client',fn($u,$s)=>$identity->authorize($u,$s,'services.view',$customer,'scoped-service'));
     $super=$db->execute("SELECT id FROM identity_roles WHERE name='Super Admin'")->fetchColumn();
     raises(HttpError::class,fn()=>$identity->invite($ref,'client',$customer,'escalate@example.invalid',$super));
     $identity->removeMembership($ref,'client',$customer,$invitee);
@@ -143,8 +149,30 @@ test('F1-E API keys are shown once scoped hashed revocable and use current owner
     raises(HttpError::class,fn()=>$identity->changeKey($ref,'admin',$key['id'],['identity.users.view','identity.staff.manage']));
     $identity->changeKey($ref,'admin',$key['id']); raises(HttpError::class,fn()=>$identity->withKey($key['key'],'identity.users.view',null,fn()=>null));
     $second=$identity->createKey($ref,'admin',['identity.users.view'],3600);
+    $expired=$identity->createKey($ref,'admin',['identity.users.view'],60);
+    $db->execute('UPDATE identity_api_credentials SET expires_at=TIMESTAMPADD(SECOND,-1,UTC_TIMESTAMP(6)) WHERE id=?',[$expired['id']]);
+    same(401,raises(HttpError::class,fn()=>$identity->withKey($expired['key'],'identity.users.view',null,fn()=>null))->status);
     $db->execute('UPDATE identity_users SET identity_version=identity_version+1 WHERE id=?',[$root]);
     raises(HttpError::class,fn()=>$identity->withKey($second['key'],'identity.users.view',null,fn()=>null));
+});
+
+test('F1-D role revocation fences sessions and identity mutation audit rolls back atomically',function()use($identity,$db):void{
+    cleanJobs($db);[$user,$ref]=rootFixture();
+    $before=(int)$db->execute('SELECT COUNT(*) FROM identity_customers')->fetchColumn();
+    $events=(int)$db->execute('SELECT COUNT(*) FROM identity_security_events')->fetchColumn();
+    raises(RuntimeException::class,fn()=>$db->transaction(function()use($identity,$ref):void{
+        $identity->createCustomer($ref,'admin','Rollback synthetic','TRY');throw new RuntimeException('synthetic rollback');
+    }));
+    same($before,(int)$db->execute('SELECT COUNT(*) FROM identity_customers')->fetchColumn());
+    same($events,(int)$db->execute('SELECT COUNT(*) FROM identity_security_events')->fetchColumn());
+    $password=bin2hex(random_bytes(20));$identity->register('revoke-role@example.invalid','Synthetic role target',$password,'role-fixture');
+    $target=$db->execute("SELECT id FROM identity_users WHERE email='revoke-role@example.invalid'")->fetchColumn();
+    $identity->completeToken(notificationToken($target,'verify'),'verify');$targetRef=Id::uuid();
+    $identity->login('revoke-role@example.invalid',$password,'client',$targetRef,'role-login');
+    $assignment=$db->execute('SELECT id FROM identity_assignments WHERE user_id=?',[$target])->fetchColumn();
+    $identity->removeRole($ref,'admin',$assignment);
+    same(401,raises(HttpError::class,fn()=>$identity->view($targetRef,'client','me'))->status);
+    same(1,(int)$db->execute("SELECT COUNT(*) FROM identity_security_events WHERE code='permission.changed'")->fetchColumn());
 });
 test('F1-D revocation race serializes at transaction boundary and blocks later mutation', function() use($identity,$identityConfig,$db): void {
     cleanJobs($db); [$user,$reference]=rootFixture();
@@ -162,5 +190,9 @@ test('F1-D revocation race serializes at transaction boundary and blocks later m
         same('401',$finish($launch('mutation')));
         raises(HttpError::class,fn()=>$identity->locked($reference,'admin',fn()=>null));
     } finally { foreach(glob($directory.'/*') as $path){unlink($path);}rmdir($directory); }
+});
+test('F1-D a narrow resource grant cannot authorize a broad customer operation',function():void{
+    $grant=new \Hostider\Core\Security\AccessGrant('view',['customer'],['service'],['department']);
+    same(false,$grant->covers('view','customer',null,null));same(true,$grant->covers('view','customer','service','department'));
 });
 runTests();

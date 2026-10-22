@@ -35,4 +35,5 @@ enum AuditEvent: string
     case MfaRecoveryReplaced = 'mfa.recovery_replaced';
     case DeviceCreated = 'device.created';
     case DeviceRevoked = 'device.revoked';
+    case SessionReauthenticated = 'session.reauthenticated';
 }

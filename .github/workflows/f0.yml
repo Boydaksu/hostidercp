@@ -42,4 +42,5 @@ jobs:
       - run: php tests/session-http.php
       - run: php tests/integration.php
       - run: php tests/identity.php
+      - run: php tests/identity-http.php
       - run: php tests/http.php

@@ -27,12 +27,14 @@ final readonly class Repository
         $customer ??= $session['customer_id'];
         if (!$staff && $customer!==null && !$this->db->execute('SELECT 1 FROM identity_memberships WHERE user_id=? AND customer_id=?',[$user['id'],$customer])->fetchColumn()) { throw new HttpError(403,'CUSTOMER_SCOPE'); }
         $rows=$this->db->execute('SELECT a.id,p.permission FROM identity_assignments a JOIN identity_role_permissions p ON p.role_id=a.role_id WHERE a.user_id=? AND '.($staff?'a.customer_id IS NULL':'a.customer_id=?'),$staff?[$user['id']]:[$user['id'],$customer])->fetchAll();
-        $permissions=[]; $grants=[]; $departments=[];
+        $permissions=[]; $grants=[];
+        $owner=!$staff && $customer!==null && (bool)$this->db->execute('SELECT is_owner FROM identity_memberships WHERE user_id=? AND customer_id=?',[$user['id'],$customer])->fetchColumn();
+        $departments=$owner?array_column($this->db->execute('SELECT DISTINCT department_id FROM identity_resource_scopes WHERE customer_id=? AND department_id IS NOT NULL',[$customer])->fetchAll(),'department_id'):[];
         foreach ($rows as $row) {
+            if (!$staff && str_starts_with($row['permission'],'identity.')) { continue; }
             $permissions[]=$row['permission'];
             if (!$staff && $customer!==null) {
-                $owner=$this->db->execute('SELECT is_owner FROM identity_memberships WHERE user_id=? AND customer_id=?',[$user['id'],$customer])->fetchColumn();
-                $grants[]=new AccessGrant($row['permission'],[$customer],$owner?['*']:[],[]);
+                $grants[]=new AccessGrant($row['permission'],[$customer],$owner?['*']:[],$owner?['*']:[]);
             }
             foreach ($this->db->execute('SELECT * FROM identity_grants WHERE assignment_id=? AND permission=?',[$row['id'],$row['permission']])->fetchAll() as $g) {
                 $grants[]=new AccessGrant($g['permission'],[$g['customer_scope']],$g['service_scope']===''?[]:[$g['service_scope']],$g['department_scope']===''?[]:[$g['department_scope']]);
@@ -41,9 +43,10 @@ final readonly class Repository
         }
         return new Principal($user['id'],array_values(array_unique($permissions)),$customer,array_unique($departments),$staff,(bool)$session['mfa_verified'],(int)$session['expiry'],(int)$session['verified'],false,$grants,[],(bool)$user['administrative']);
     }
-    public function owns(string $service,string $customer,?string $department=null): void
+    public function owns(string $service,string $customer,?string $department=null): array
     {
         $row=$this->db->execute('SELECT customer_id,department_id FROM identity_resource_scopes WHERE service_id=? FOR UPDATE',[$service])->fetch();
         if (!$row || $row['customer_id']!==$customer || ($department!==null && $row['department_id']!==$department)) { throw new HttpError(404,'RESOURCE_NOT_FOUND'); }
+        return $row;
     }
 }

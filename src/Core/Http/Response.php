@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace Hostider\Core\Http;
 final readonly class Response
 {
-    public function __construct(public int $status, public array $envelope, public array $headers = []) {}
+    public function __construct(public int $status, public array $envelope, public array $headers = [],public ?string $html = null) {}
 
     public static function data(mixed $data, string $trace, int $status = 200): self
     {
@@ -19,6 +19,13 @@ final readonly class Response
     public function send(): void
     {
         http_response_code($this->status);
+        if ($this->html!==null) {
+            header('Content-Type: text/html; charset=utf-8'); header('Cache-Control: no-store');
+            header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");
+            header('X-Content-Type-Options: nosniff'); header('Referrer-Policy: no-referrer');
+            header('Strict-Transport-Security: max-age=31536000');
+            echo $this->html; return;
+        }
         foreach (['Content-Type' => 'application/json; charset=utf-8', 'Cache-Control' => 'no-store',
             'X-Content-Type-Options' => 'nosniff', 'Content-Security-Policy' => "default-src 'none'; frame-ancestors 'none'",
             'Referrer-Policy' => 'no-referrer', 'Strict-Transport-Security' => 'max-age=31536000'] + $this->headers as $k => $v) {

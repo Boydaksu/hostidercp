@@ -18,6 +18,17 @@ final readonly class IdentityService
         $this->crypto=new Crypto($this->key);
     }
     public function digest(#[\SensitiveParameter] string $secret): string { return hash_hmac('sha256',$secret,$this->key); }
+    private function transaction(\Closure $work): mixed
+    {
+        // Explicit module-level join for the HTTP idempotency/business transaction.
+        return $this->db->pdo->inTransaction() ? $work() : $this->db->transaction($work);
+    }
+    public function recordDenial(?string $reference,string $context,AuditEvent $event): void
+    {
+        $user=null;
+        if ($reference!==null) { try { $user=$this->repository->session($reference,$context)['user_id']; } catch(HttpError) {} }
+        $this->transaction(fn()=>$this->event($user,$event,Id::uuid()));
+    }
     private function email(string $email): string
     {
         $email=strtolower(trim($email));
@@ -45,7 +56,7 @@ final readonly class IdentityService
     public function bootstrap(string $email,string $name,#[\SensitiveParameter] string $password): string
     {
         $hash=Passwords::hash($password); $email=$this->email($email);
-        return $this->db->transaction(function () use($email,$name,$hash): string {
+        return $this->transaction(function () use($email,$name,$hash): string {
             $settings=$this->db->execute('SELECT * FROM identity_settings WHERE id=1 FOR UPDATE')->fetch();
             if ((bool)$settings['bootstrapped'] || $this->db->execute('SELECT 1 FROM identity_staff LIMIT 1')->fetchColumn()) { throw new HttpError(409,'BOOTSTRAP_CLOSED'); }
             $id=$this->createUser($email,$name,$hash,true);
@@ -71,7 +82,7 @@ final readonly class IdentityService
     {
         $email=$this->email($email); $hash=Passwords::hash($password); $this->throttle('register:'.$network,5);
         try {
-            $this->db->transaction(function () use($email,$name,$hash): void {
+            $this->transaction(function () use($email,$name,$hash): void {
                 if ($this->db->execute('SELECT 1 FROM identity_users WHERE email=?',[$email])->fetchColumn()) { return; }
                 $user=$this->createUser($email,$name,$hash); $customer=Id::uuid();
                 $this->db->execute('INSERT INTO identity_customers(id,name,currency) VALUES (?,?,?)',[$customer,Validation::text($name),'TRY']);
@@ -83,13 +94,15 @@ final readonly class IdentityService
     }
     private function throttle(string $bucket,int $limit=10): void
     {
+        // HTTP callers throttle persistently before entering the outer idempotency TX.
+        if ($this->db->pdo->inTransaction()) { return; }
         if (!(new RateLimiter($this->db,$this->key))->allow('identity:'.$bucket,$limit,300)) { throw new HttpError(429,'RATE_LIMITED'); }
     }
     public function requestToken(string $email,string $purpose,string $network): void
     {
         if (!in_array($purpose,['reset','verify'],true)) { throw new HttpError(422,'INVALID_PURPOSE'); }
         $this->throttle('token:'.$network,5); $email=$this->email($email);
-        $this->db->transaction(function () use($email,$purpose): void {
+        $this->transaction(function () use($email,$purpose): void {
             $u=$this->db->execute('SELECT id FROM identity_users WHERE email=? AND status=\'ACTIVE\' FOR UPDATE',[$email])->fetch();
             if ($u) { $this->token($u['id'],$purpose); }
         });
@@ -103,13 +116,13 @@ final readonly class IdentityService
     public function completeToken(string $secret,string $purpose,?string $password=null): void
     {
         $hash=$purpose==='reset'?Passwords::hash($password ?? ''):null;
-        $this->db->transaction(function () use($secret,$purpose,$hash,$password): void {
+        $this->transaction(function () use($secret,$purpose,$hash,$password): void {
             // Find the owner, then use the same user-first lock order as session mutations.
             $owner=$this->db->execute('SELECT user_id FROM identity_tokens WHERE secret_hash=?',[$this->digest($secret)])->fetchColumn();
             if (!$owner) { throw new HttpError(422,'INVALID_OR_EXPIRED_TOKEN'); }
             $user=$this->repository->user($owner,true); $row=$this->consume($secret,$purpose);
             if ($purpose==='verify') { $this->db->execute('UPDATE identity_users SET verified_at=UTC_TIMESTAMP(6) WHERE id=?',[$owner]); $this->event($owner,AuditEvent::EmailVerified,$owner); }
-            elseif ($purpose==='reset') { $this->db->execute('UPDATE identity_credentials SET password_hash=?,changed_at=UTC_TIMESTAMP(6) WHERE user_id=?',[$hash,$owner]); $this->invalidate($owner); $this->event($owner,AuditEvent::PasswordChanged,$owner); }
+            elseif ($purpose==='reset') { $this->db->execute('UPDATE identity_credentials SET password_hash=?,changed_at=UTC_TIMESTAMP(6) WHERE user_id=?',[$hash,$owner]); $this->db->execute('UPDATE identity_users SET verified_at=COALESCE(verified_at,UTC_TIMESTAMP(6)) WHERE id=?',[$owner]); $this->invalidate($owner); $this->event($owner,AuditEvent::PasswordChanged,$owner); }
             elseif ($purpose==='invite') {
                 if (!$row['customer_id'] || !$row['role_id']) { throw new HttpError(422,'INVALID_INVITE'); }
                 if (!$user['verified_at']) {
@@ -129,7 +142,8 @@ final readonly class IdentityService
         $row=$this->db->execute('SELECT u.id,c.password_hash FROM identity_users u JOIN identity_credentials c ON c.user_id=u.id WHERE u.email=?',[$email])->fetch();
         $hash=$row?$row['password_hash']:$this->db->execute('SELECT dummy_hash FROM identity_settings WHERE id=1')->fetchColumn();
         $verified=Passwords::verify($password,$hash);
-        return $this->db->transaction(function () use($row,$hash,$verified,$password,$context,$nativeReference,$network,$device): array {
+        return $this->transaction(function () use($row,$hash,$verified,$password,$context,$nativeReference,$network,$device): array {
+            if ($this->db->execute('SELECT 1 FROM identity_sessions WHERE native_reference=?',[$nativeReference])->fetchColumn()) { throw new HttpError(409,'LOGOUT_REQUIRED'); }
             $user=$row?$this->repository->user($row['id'],true):null;
             if (!$verified || !$user || $user['status']!=='ACTIVE' || !$user['verified_at'] || !hash_equals($hash,$user['password_hash']) || ($context==='admin' && $user['administrative']===null)) {
                 $this->event($user['id'] ?? null,AuditEvent::LoginFailed,Id::uuid()); return ['denied'=>true];
@@ -150,7 +164,7 @@ final readonly class IdentityService
     }
     public function locked(string $reference,string $context,\Closure $work,bool $pending=false): mixed
     {
-        return $this->db->transaction(function () use($reference,$context,$work,$pending): mixed {
+        return $this->transaction(function () use($reference,$context,$work,$pending): mixed {
             $candidate=$this->repository->session($reference,$context);
             $user=$this->repository->user($candidate['user_id'],true);
             $session=$this->repository->session($reference,$context,true); $this->repository->validate($user,$session);
@@ -165,6 +179,7 @@ final readonly class IdentityService
         if (!$imp) { return $this->repository->principal($user,$session); }
         if ((int)$imp['expiry']<=time()) { throw new HttpError(403,'IMPERSONATION_EXPIRED'); }
         $target=$this->repository->user($imp['target_user_id']);
+        if ($target['status']!=='ACTIVE') { throw new HttpError(403,'IMPERSONATION_TARGET_DISABLED'); }
         $targetSession=$session; $targetSession['context']='client'; $targetSession['customer_id']=$imp['customer_id'];
         $p=$this->repository->principal($target,$targetSession);
         $allowed=array_values(array_intersect($p->permissions,['account.view','members.view','services.view','support.view']));
@@ -173,7 +188,7 @@ final readonly class IdentityService
     public function authorize(array $user,array $session,string $permission,?string $customer=null,?string $service=null,?string $department=null,bool $privileged=false): Principal
     {
         $this->db->requireTransaction(); $principal=$this->principal($user,$session);
-        if ($service!==null) { if ($customer===null) { throw new HttpError(403,'CUSTOMER_REQUIRED'); } $this->repository->owns($service,$customer,$department); }
+        if ($service!==null) { if ($customer===null) { throw new HttpError(403,'CUSTOMER_REQUIRED'); } $owned=$this->repository->owns($service,$customer,$department); $department=$owned['department_id']; }
         (new Authorization())->require($principal,$permission,$customer,$department,$privileged,null,$service); return $principal;
     }
     public function invalidate(string $user): void
@@ -189,7 +204,8 @@ final readonly class IdentityService
         $ok=$this->locked($reference,$context,function (array $u,array $s) use($password,$code): bool {
             $hasFactor=(bool)$this->db->execute('SELECT enabled FROM identity_mfa WHERE user_id=?',[$u['id']])->fetchColumn();
             if (!Passwords::verify($password,$u['password_hash']) || ($hasFactor && !$this->factor($u['id'],$code))) { $this->event($u['id'],AuditEvent::MfaFailed,$s['id']); return false; }
-            $this->db->execute('UPDATE identity_sessions SET verified_at=UTC_TIMESTAMP(6) WHERE id=?',[$s['id']]); return true;
+            $this->db->execute('UPDATE identity_sessions SET verified_at=UTC_TIMESTAMP(6) WHERE id=?',[$s['id']]);
+            $this->event($u['id'],AuditEvent::SessionReauthenticated,$s['id']); return true;
         }); if (!$ok) { throw new HttpError(403,'REAUTHENTICATION_FAILED'); }
     }
     private function factor(string $user,string $code): bool
@@ -293,6 +309,13 @@ final readonly class IdentityService
             if ($view==='sessions') { return $this->db->execute('SELECT id,context,mfa_verified,expires_at,revoked_at,last_seen_at,created_at FROM identity_sessions WHERE user_id=? ORDER BY created_at DESC LIMIT 100',[$u['id']])->fetchAll(); }
             if ($view==='devices') { return $this->db->execute('SELECT id,expires_at,revoked_at,created_at FROM identity_devices WHERE user_id=? ORDER BY created_at DESC LIMIT 100',[$u['id']])->fetchAll(); }
             if ($view==='keys') { return $this->db->execute('SELECT id,customer_id,scopes,expires_at,revoked_at,last_used_at FROM identity_api_credentials WHERE user_id=? ORDER BY created_at DESC LIMIT 100',[$u['id']])->fetchAll(); }
+            if ($view==='member-roles') {
+                $this->authorize($u,$s,'members.manage',$customer ?? $p->customerId); $roles=[];
+                foreach($this->db->execute('SELECT id,name FROM identity_roles')->fetchAll() as $role) {
+                    $permissions=array_column($this->db->execute('SELECT permission FROM identity_role_permissions WHERE role_id=?',[$role['id']])->fetchAll(),'permission');
+                    if ($permissions!==[] && !array_diff($permissions,$p->permissions) && !array_filter($permissions,fn(string $v): bool=>str_starts_with($v,'identity.'))) { $roles[]=$role; }
+                } return $roles;
+            }
             if ($view==='account' || $view==='members' || $view==='invitations') {
                 $customer ??= $p->customerId; if (!$customer) { throw new HttpError(422,'CUSTOMER_REQUIRED'); }
                 $this->authorize($u,$s,$view==='account'?'account.view':'members.view',$customer);
@@ -300,7 +323,7 @@ final readonly class IdentityService
                 if ($view==='members') { return $this->db->execute('SELECT u.id,u.display_name,u.email,m.is_owner FROM identity_memberships m JOIN identity_users u ON u.id=m.user_id WHERE m.customer_id=?',[$customer])->fetchAll(); }
                 return $this->db->execute("SELECT id,user_id,role_id,expires_at,consumed_at FROM identity_tokens WHERE customer_id=? AND purpose='invite' ORDER BY expires_at DESC LIMIT 100",[$customer])->fetchAll();
             }
-            if (!$p->staff || !$p->administrative) { throw new HttpError(403,'ADMIN_REQUIRED'); }
+            if (!$p->staff) { throw new HttpError(403,'ADMIN_REQUIRED'); }
             if ($view==='users' || $view==='staff') {
                 $this->authorize($u,$s,'identity.users.view');
                 return $this->db->execute('SELECT u.id,u.email,u.display_name,u.status,u.verified_at,u.identity_version,s.administrative FROM identity_users u LEFT JOIN identity_staff s ON s.user_id=u.id '.($view==='staff'?'WHERE s.user_id IS NOT NULL ':'').'ORDER BY u.created_at DESC LIMIT 100')->fetchAll();
@@ -312,7 +335,7 @@ final readonly class IdentityService
                     try { $this->authorize($u,$s,'identity.customers.view',$c['id']); $result[]=$c; } catch(HttpError) {}
                 } return $result;
             }
-            if ($view==='roles') { $this->authorize($u,$s,'identity.roles.manage'); return ['roles'=>$this->db->execute('SELECT * FROM identity_roles')->fetchAll(),'permissions'=>$this->db->execute('SELECT code FROM identity_permissions')->fetchAll(),'role_permissions'=>$this->db->execute('SELECT * FROM identity_role_permissions')->fetchAll()]; }
+            if ($view==='roles') { $this->authorize($u,$s,'identity.roles.manage'); return ['roles'=>$this->db->execute('SELECT * FROM identity_roles')->fetchAll(),'permissions'=>$this->db->execute('SELECT code FROM identity_permissions')->fetchAll(),'role_permissions'=>$this->db->execute('SELECT * FROM identity_role_permissions')->fetchAll(),'assignments'=>$this->db->execute('SELECT * FROM identity_assignments')->fetchAll(),'grants'=>$this->db->execute('SELECT * FROM identity_grants')->fetchAll()]; }
             if ($view==='events') { $this->authorize($u,$s,'identity.security.view'); return $this->db->execute('SELECT id,user_id,code,trace_id,created_at FROM identity_security_events ORDER BY created_at DESC LIMIT 100')->fetchAll(); }
             throw new HttpError(404,'NOT_FOUND');
         });
@@ -468,7 +491,7 @@ final readonly class IdentityService
     public function withKey(string $token,string $permission,?string $customer,\Closure $work,?string $service=null): mixed
     {
         try {
-            return $this->db->transaction(function () use($token,$permission,$customer,$work,$service): mixed {
+            return $this->transaction(function () use($token,$permission,$customer,$work,$service): mixed {
                 $candidate=$this->db->execute('SELECT user_id FROM identity_api_credentials WHERE secret_hash=?',[$this->digest($token)])->fetchColumn();
                 if (!$candidate) { throw new HttpError(401,'INVALID_API_KEY'); }
                 $u=$this->repository->user($candidate,true);
@@ -476,18 +499,59 @@ final readonly class IdentityService
                 if (!$key || $key['revoked_at'] || (int)$key['expiry']<=time() || $u['status']!=='ACTIVE' || (int)$key['identity_version']!==(int)$u['identity_version']) { throw new HttpError(401,'INVALID_API_KEY'); }
                 if (!in_array($permission,json_decode($key['scopes'],true,32,JSON_THROW_ON_ERROR),true) || ($key['customer_id']!==null && $key['customer_id']!==$customer)) { throw new HttpError(403,'KEY_SCOPE'); }
                 $p=$this->repository->principal($u,['context'=>$key['customer_id']===null?'admin':'client','customer_id'=>$key['customer_id'],'mfa_verified'=>true,'expiry'=>$key['expiry'],'verified'=>0]);
-                if ($service!==null) { if (!$customer) { throw new HttpError(403,'CUSTOMER_REQUIRED'); } $this->repository->owns($service,$customer); }
-                (new Authorization())->require($p,$permission,$customer,service:$service);
+                $department=null;
+                if ($service!==null) { if (!$customer) { throw new HttpError(403,'CUSTOMER_REQUIRED'); } $department=$this->repository->owns($service,$customer)['department_id']; }
+                (new Authorization())->require($p,$permission,$customer,$department,service:$service);
                 $this->db->execute('UPDATE identity_api_credentials SET last_used_at=UTC_TIMESTAMP(6) WHERE id=?',[$key['id']]); return $work($p);
             });
         } catch(HttpError $e) {
-            $this->db->transaction(fn()=>$this->event(null,AuditEvent::ApiKeyDenied,Id::uuid())); throw $e;
+            $this->transaction(fn()=>$this->event(null,AuditEvent::ApiKeyDenied,Id::uuid())); throw $e;
         }
     }
     public function revokeDevice(string $reference,string $context,string $id): void
     {
         $this->locked($reference,$context,function(array $u,array $s) use($id): void {
             $this->fresh($s); $this->db->execute('UPDATE identity_devices SET revoked_at=UTC_TIMESTAMP(6) WHERE id=? AND user_id=?',[$id,$u['id']]); $this->event($u['id'],AuditEvent::DeviceRevoked,$id);
+        });
+    }
+    public function managedUser(string $reference,string $context,?string $id,string $name,?string $email=null,?string $status=null): array
+    {
+        $hash=$id===null?Passwords::hash(bin2hex(random_bytes(32))):null;
+        return $this->locked($reference,$context,function(array $u,array $s) use($id,$name,$email,$status,$hash): array {
+            $p=$this->authorize($u,$s,'identity.users.manage',privileged:true);
+            if (!$p->staff || !$p->administrative) { throw new HttpError(403,'ADMIN_REQUIRED'); }
+            if ($id===null) { $target=$this->createUser($this->email($email ?? ''),$name,$hash); $this->token($target,'reset'); return ['id'=>$target]; }
+            if (!in_array($status,['ACTIVE','DISABLED'],true) || ($id===$u['id'] && $status!=='ACTIVE')) { throw new HttpError(409,'UNSAFE_USER_STATE'); }
+            $this->repository->user($id,true); $this->db->execute('UPDATE identity_users SET display_name=?,status=? WHERE id=?',[Validation::text($name),$status,$id]);
+            $this->invalidate($id); $this->event($u['id'],AuditEvent::ConfigurationChanged,$id); return ['id'=>$id];
+        });
+    }
+    public function removeRole(string $reference,string $context,string $assignment): void
+    {
+        $this->locked($reference,$context,function(array $u,array $s) use($assignment): void {
+            $p=$this->authorize($u,$s,'identity.roles.manage',privileged:true);
+            if (!$p->staff || !$p->administrative) { throw new HttpError(403,'ADMIN_REQUIRED'); }
+            $row=$this->db->execute('SELECT user_id FROM identity_assignments WHERE id=?',[$assignment])->fetch();
+            if (!$row) { throw new HttpError(404,'ROLE_ASSIGNMENT_NOT_FOUND'); }
+            if ($row['user_id']===$u['id']) { throw new HttpError(409,'SELF_ROLE_REMOVAL_DENIED'); }
+            $this->repository->user($row['user_id'],true); $this->db->execute('DELETE FROM identity_grants WHERE assignment_id=?',[$assignment]);
+            $this->db->execute('DELETE FROM identity_assignments WHERE id=?',[$assignment]); $this->invalidate($row['user_id']); $this->event($u['id'],AuditEvent::PermissionChanged,$row['user_id']);
+        });
+    }
+    public function memberScope(string $reference,string $context,string $customer,string $target,string $permission,?string $service=null,?string $department=null): void
+    {
+        $this->locked($reference,$context,function(array $u,array $s) use($customer,$target,$permission,$service,$department): void {
+            $p=$this->authorize($u,$s,'members.manage',$customer,privileged:true); $this->repository->user($target,true);
+            if (!in_array($permission,$p->permissions,true) || str_starts_with($permission,'identity.')) { throw new HttpError(403,'PERMISSION_ESCALATION'); }
+            if ($service==='*') { (new Authorization())->require($p,$permission,$customer,$department,service:'*'); }
+            elseif ($service!==null) { $this->authorize($u,$s,$permission,$customer,$service,$department); }
+            $assignment=$this->db->execute('SELECT a.id FROM identity_assignments a JOIN identity_memberships m ON m.user_id=a.user_id AND m.customer_id=a.customer_id JOIN identity_role_permissions rp ON rp.role_id=a.role_id WHERE a.user_id=? AND a.customer_id=? AND rp.permission=? AND m.is_owner=FALSE LIMIT 1',[$target,$customer,$permission])->fetchColumn();
+            if (!$assignment) { throw new HttpError(403,'MEMBER_ROLE_SCOPE'); }
+            if ($service!==null && $service!=='*') { $this->repository->owns($service,$customer,$department); }
+            elseif ($department!==null && !$this->db->execute('SELECT 1 FROM identity_resource_scopes WHERE customer_id=? AND department_id=? LIMIT 1',[$customer,$department])->fetchColumn()) { throw new HttpError(404,'DEPARTMENT_NOT_FOUND'); }
+            $this->db->execute('DELETE FROM identity_grants WHERE assignment_id=? AND permission=?',[$assignment,$permission]);
+            $this->db->execute('INSERT INTO identity_grants VALUES (?,?,?,?,?,?)',[Id::uuid(),$assignment,$permission,$customer,$service ?? '',$department ?? '']);
+            $this->invalidate($target); $this->event($u['id'],AuditEvent::PermissionChanged,$target,$customer);
         });
     }
 }

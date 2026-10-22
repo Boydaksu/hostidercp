@@ -22,13 +22,17 @@ function raises(string $class, Closure $work): Throwable
 }
 function runTests(): never
 {
+    exit(executeTests());
+}
+function executeTests(): int
+{
     $failed = 0;
     foreach ($GLOBALS['tests'] as $name => $work) {
         try { $work(); echo 'PASS ' . $name . PHP_EOL; }
         catch (Throwable $e) { ++$failed; echo 'FAIL ' . $name . ': ' . $e->getMessage() . PHP_EOL; }
     }
     echo count($GLOBALS['tests']) . ' tests, ' . $failed . ' failures' . PHP_EOL;
-    exit($failed === 0 ? 0 : 1);
+    return $failed === 0 ? 0 : 1;
 }
 function testConfig(string $env = 'staging'): \Hostider\Core\Config
 {
