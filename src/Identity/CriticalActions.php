@@ -43,7 +43,7 @@ final readonly class CriticalActions
         $scope=$data['grant'] ?? null;$scopeCustomer=$scope instanceof \stdClass?($scope->customer ?? null):null;
         $scopeCustomer ??= $customer;
         if($scopeCustomer!==null){
-            $state['scope_customer']=$db->execute('SELECT * FROM identity_customers WHERE id=? FOR UPDATE',[$scopeCustomer])->fetchAll();
+            if($scopeCustomer!==$customer){$state['scope_customer']=$db->execute('SELECT * FROM identity_customers WHERE id=? FOR UPDATE',[$scopeCustomer])->fetchAll();}
             $state['resources']=$db->execute('SELECT * FROM identity_resource_scopes WHERE customer_id=? ORDER BY service_id FOR UPDATE',[$scopeCustomer])->fetchAll();
         }
         if($action==='invite'){$state['invitations']=$db->execute("SELECT id,user_id,role_id,expires_at,consumed_at FROM identity_tokens WHERE customer_id=? AND purpose='invite' ORDER BY id FOR UPDATE",[$customer])->fetchAll();}

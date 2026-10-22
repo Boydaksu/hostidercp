@@ -33,9 +33,12 @@ test('F11 role grants cannot cross assigned customer or delegate beyond actor re
     $assignment=$db->execute('SELECT id FROM identity_assignments WHERE user_id=?',[$user])->fetchColumn();
     $db->execute('INSERT INTO identity_resource_scopes VALUES (?,?,?)',['f11-service',$customer,'f11-department']);
     raises(HttpError::class,fn()=>$identity->assignRole($ref,'admin',$target,$role,null,['permission'=>'services.view','customer'=>$customer,'service'=>'f11-service','department'=>'f11-department']));
-    $db->execute('INSERT INTO identity_grants VALUES (?,?,?,?,?,?)',[Id::uuid(),$assignment,'services.view',$customer,'*','f11-department']);
+    $db->execute('INSERT INTO identity_grants VALUES (?,?,?,?,?,?)',[Id::uuid(),$assignment,'services.view',$customer,'f11-service','f11-department']);
     $db->execute('INSERT INTO identity_grants VALUES (?,?,?,?,?,?)',[Id::uuid(),$assignment,'services.view',$customer,'','']);
     same(403,raises(HttpError::class,fn()=>$identity->assignRole($ref,'admin',$target,$role,$customer,['permission'=>'services.view','customer'=>$other]))->status);
+    same('GRANT_CUSTOMER_MISMATCH',raises(HttpError::class,fn()=>$identity->assignRole($ref,'admin',$target,$role,$customer,['permission'=>'services.view','customer'=>$other]))->errorCode);
+    $db->execute('INSERT INTO identity_resource_scopes VALUES (?,?,?)',['f11-other-service',$customer,'f11-department']);
+    raises(HttpError::class,fn()=>$identity->assignRole($ref,'admin',$target,$role,null,['permission'=>'services.view','customer'=>$customer,'service'=>'f11-other-service','department'=>'f11-department']));
     raises(HttpError::class,fn()=>$identity->assignRole($ref,'admin',$target,$role,null,['permission'=>'services.view','customer'=>$customer,'service'=>'*','department'=>'other-department']));
     $identity->assignRole($ref,'admin',$target,$role,null,['permission'=>'services.view','customer'=>$customer,'service'=>'f11-service','department'=>'f11-department']);
     $db->execute('DELETE FROM identity_grants WHERE assignment_id IN (SELECT id FROM identity_assignments WHERE role_id=?)',[$role]);$db->execute('DELETE FROM identity_assignments WHERE role_id=?',[$role]);$db->execute('DELETE FROM identity_role_permissions WHERE role_id=?',[$role]);$db->execute('DELETE FROM identity_roles WHERE id=?',[$role]);

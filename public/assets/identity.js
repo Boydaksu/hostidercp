@@ -6,7 +6,7 @@ const state={csrf:'',me:null,customer:null};
 const criticalActions=new Set(['role-save','role-assign','role-remove','staff-save','account-update','member-remove','member-scope','user-save','invite','mfa-disable','recovery','device-create','key-create','key-change','impersonate']);
 async function reviewChange(review){
  return new Promise(resolve=>{const box=card('Değişikliği inceleyin ve onaylayın',review.effect);box.classList.add('warning');
-  const labels={actor:'İşlemi yapan',user:'Hedef kullanıcı',staff:'Personel yetkisi',memberships:'Mevcut üyelikler',user_roles:'Mevcut roller',grants:'Erişim kapsamları',role:'Hedef rol',permissions:'Mevcut işlem izinleri',affected_assignments:'Etkilenecek rol atamaları',customer:'Hedef müşteri',affected_members:'Etkilenecek üyeler',resources:'Hizmet sahipliği',assignment:'Hedef atama',keys:'Entegrasyon anahtarları',devices:'Güvenilir cihazlar',mfa:'MFA durumu',recovery:'Kurtarma kodları',invitations:'Davetler'};
+  const labels={actor:'İşlemi yapan',user:'Hedef kullanıcı',staff:'Personel yetkisi',memberships:'Mevcut üyelikler',user_roles:'Mevcut roller',grants:'Erişim kapsamları',role:'Hedef rol',permissions:'Mevcut işlem izinleri',affected_assignments:'Etkilenecek rol atamaları',customer:'Hedef müşteri',scope_customer:'Kapsamın müşteri hesabı',affected_members:'Etkilenecek üyeler',resources:'Hizmet sahipliği',assignment:'Hedef atama',keys:'Entegrasyon anahtarları',devices:'Güvenilir cihazlar',mfa:'MFA durumu',recovery:'Kurtarma kodları',invitations:'Davetler'};
   box.append(el('h3','İstenen değişiklik'),table(review.proposed));for(const [key,rows]of Object.entries(review.current)){if(rows.length){box.append(el('h3',labels[key]||key),table(rows));}}
   box.append(el('p','Bu onay yalnız gösterilen işlem, hedef ve mevcut kayıt sürümü için 5 dakika geçerlidir.'));
   const label=el('label','Etkiyi, hedefi ve erişim kapsamını inceledim; bu değişikliği açıkça onaylıyorum.');const accepted=el('input');accepted.type='checkbox';label.prepend(accepted);
@@ -33,7 +33,7 @@ function form(title,action,fields,done=null,description=''){
   if(type==='select'){input=el('select');for(const choice of choices||[]){const o=el('option',choice.name||choice);o.value=typeof choice==='object'?choice.id:choice;input.append(o);}if(value!=='')input.value=value;}
   else if(type==='textarea'){input=el('textarea');input.value=value;}
   else{input=el('input');input.type=type==='list'?'text':type==='hidden-number'?'hidden':type; if(type==='checkbox')input.checked=Boolean(value);else input.value=value;}
-  input.name=name;input.dataset.kind=type==='hidden-number'?'number':type;if(type==='hidden-number')l.hidden=true;input.autocomplete=type==='password'?'current-password':'off';input.required=!['checkbox','id','code','customer','grant','service','department','password_optional'].includes(name);l.append(input);f.append(l);
+  input.name=name;input.dataset.kind=type==='hidden-number'?'number':type;if(type==='hidden-number')l.hidden=true;input.autocomplete=type==='password'?'current-password':'off';input.required=type!=='checkbox'&&!['checkbox','id','code','customer','grant','service','department','password_optional'].includes(name);l.append(input);f.append(l);
  }
  const submit=el('button','Kaydet ve devam et','primary');submit.type='submit';f.append(submit);
  f.onsubmit=async e=>{e.preventDefault();submit.disabled=true;try{const data={};for(const input of f.elements){if(!input.name)continue;const kind=input.dataset.kind;

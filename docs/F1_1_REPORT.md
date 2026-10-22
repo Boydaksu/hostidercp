@@ -50,3 +50,5 @@ Onay kaydı server-side HMAC fingerprint taşır; e-posta, reason, ham komut vey
 - Scope devri artık actor'ın explicit kaynak sınırını aşamaz. İlk grant'i kurmak için güvenilir operasyon yetkisi gerekir; sırf Super Admin etiketiyle müşterilere otomatik erişim geri getirilmedi.
 
 Test/CI kanıtları `docs/evidence/f1-1/` altındadır. Nihai commit ve CI sonuçları doğrulandıktan sonra aşağıya kaydedilir. F2 yalnız kullanıcının sonraki açık onayıyla başlayabilir; burada durulur.
+
+Yapay ayrı DB ile gerçek tarayıcıda login → password step-up → account-update preview → ayrıntılı etki/hedef/sürüm → başlangıçta devre dışı onay butonu → vazgeç akışı doğrulandı. Hiçbir müşteri güvenlik politikası uygulanmadı. Onay ekranının görüntüsü [critical-confirmation.png](evidence/f1-1/critical-confirmation.png). Bu incelemede MFA policy checkbox'ının false değerini de geçerli girdi olarak bırakabilmesi düzeltildi; browser required checkbox artık politikayı zorla true'ya yönlendirmiyor. İsteğe bağlı MFA false iken preview ve iptal akışı gerçek ekranda görüldü.
