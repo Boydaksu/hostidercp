@@ -77,9 +77,11 @@ PASS F1-B persistent guard logout-all and password change invalidate sessions
 PASS F1-D explicit staff customer grant and impersonation actor constraints
 PASS F1-D invitation creates membership without staff permission escalation
 PASS F1-E API keys are shown once scoped hashed revocable and use current owner permissions
+PASS F1-D role revocation fences sessions and identity mutation audit rolls back atomically
 PASS F1-D revocation race serializes at transaction boundary and blocks later mutation
+PASS F1-C enabling customer MFA revokes pre-enrollment sessions and keeps only enrolling session
 PASS F1-D a narrow resource grant cannot authorize a broad customer operation
-14 tests, 0 failures
+16 tests, 0 failures
 PASS F1-F real admin HTTP MFA enrollment login idempotency and protected views
 PASS F1-F API bearer key output once and revocation and cookie-context isolation
 PASS F1-F panel HTML and protected rendering policies are real separate entry points

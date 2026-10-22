@@ -1,6 +1,8 @@
 # Hostider Automation — V1.0 Master Specification
 
-> **F0.1 hardening:** kapsamlı sonuç ve açık sınırlar [F0_1_REPORT](docs/F0_1_REPORT.md), güvenlik/session/retention sözleşmeleri [F0_1_OPERATIONS](docs/F0_1_OPERATIONS.md), plan [F0_1_PLAN](docs/F0_1_PLAN.md). F1 başlatılmadı; bütün canlı GATE'ler OPEN.
+> **F1 Identity ve paneller:** çalışan admin/client hesapları, MFA, kalıcı roller/kapsamlar, davetler, oturum iptali, API anahtarları ve responsive paneller eklendi. Teslim ve sınırlar: [F1_REPORT](docs/F1_REPORT.md); kurulum, güvenli ilk yönetici ve yapay demo: [F1_SETUP](docs/F1_SETUP.md); plan: [F1_PLAN](docs/F1_PLAN.md). F2 başlatılmadı; bütün canlı GATE'ler OPEN. Aşağıdaki F0/F0.1 notları tarihsel teslim kayıtlarıdır.
+
+> **F0.1 hardening:** kapsamlı sonuç ve açık sınırlar [F0_1_REPORT](docs/F0_1_REPORT.md), güvenlik/session/retention sözleşmeleri [F0_1_OPERATIONS](docs/F0_1_OPERATIONS.md), plan [F0_1_PLAN](docs/F0_1_PLAN.md).
 
 > **Uygulama durumu (F0, 22 Ekim 2026):** PHP çekirdeği, MariaDB migration/outbox/queue, güvenlik sözleşmeleri ve ağsız sağlayıcı mock'ları eklendi. Kurulum: [F0_SETUP](docs/F0_SETUP.md); kapsam: [F0_PLAN](docs/F0_PLAN.md); test ve sınırlar: [F0_REPORT](docs/F0_REPORT.md); gereksinim izi: [F0_TRACEABILITY](docs/F0_TRACEABILITY.md); canlı kapılar: [F0_GATE_TASKS](docs/F0_GATE_TASKS.md). F1 başlamadı. Aşağıdaki şartname iş kurallarının referansıdır. `SHA256SUMS.txt` ilk geliştirici paketinin manifestidir; güncel uygulama manifesti `docs/evidence/F0_SHA256SUMS.txt` içindedir.
 

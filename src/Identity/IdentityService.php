@@ -236,6 +236,9 @@ final readonly class IdentityService
             $counter=$factor?Totp::counter($this->crypto->decrypt($factor['secret_encrypted'],'totp:'.$u['id']),$code,-1,time()):null;
             if ($counter===null) { throw new HttpError(422,'INVALID_MFA_CODE'); }
             $this->db->execute('UPDATE identity_mfa SET enabled=TRUE,last_counter=? WHERE user_id=?',[$counter,$u['id']]);
+            // Fence pre-enrollment sessions and API keys; retain only the enrolling session.
+            $this->invalidate($u['id']);
+            $this->db->execute('UPDATE identity_sessions SET revoked_at=NULL,identity_version=? WHERE id=?',[(int)$u['identity_version']+1,$s['id']]);
             $codes=$this->recovery($u['id']); $this->activate($s['id']); $this->event($u['id'],AuditEvent::MfaEnrolled,$u['id']); return ['recovery_codes'=>$codes];
         },true);
     }

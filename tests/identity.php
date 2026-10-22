@@ -191,6 +191,17 @@ test('F1-D revocation race serializes at transaction boundary and blocks later m
         raises(HttpError::class,fn()=>$identity->locked($reference,'admin',fn()=>null));
     } finally { foreach(glob($directory.'/*') as $path){unlink($path);}rmdir($directory); }
 });
+test('F1-C enabling customer MFA revokes pre-enrollment sessions and keeps only enrolling session',function()use($identity,$db):void{
+    cleanIdentity();cleanJobs($db);$pw=bin2hex(random_bytes(20));$identity->register('mfa-change@example.invalid','Synthetic MFA client',$pw,'mfa-register');
+    $id=$db->execute("SELECT id FROM identity_users WHERE email='mfa-change@example.invalid'")->fetchColumn();
+    $identity->completeToken(notificationToken($id,'verify'),'verify');$first=Id::uuid();$second=Id::uuid();
+    $identity->login('mfa-change@example.invalid',$pw,'client',$first,'device-a');$identity->login('mfa-change@example.invalid',$pw,'client',$second,'device-b');
+    $setup=$identity->enroll($second,'client',$pw);$identity->confirmEnrollment($second,'client',Totp::code($setup['secret'],intdiv(time(),30)));
+    same(401,raises(HttpError::class,fn()=>$identity->view($first,'client','me'))->status);
+    same($id,$identity->view($second,'client','me')['user']['id']);
+    same('mfa',$identity->login('mfa-change@example.invalid',$pw,'client',Id::uuid(),'device-c')['stage']);
+});
+
 test('F1-D a narrow resource grant cannot authorize a broad customer operation',function():void{
     $grant=new \Hostider\Core\Security\AccessGrant('view',['customer'],['service'],['department']);
     same(false,$grant->covers('view','customer',null,null));same(true,$grant->covers('view','customer','service','department'));

@@ -1,0 +1,1 @@
+PASS synthetic demo: two random-password users through bootstrap/register; no credential in stdout; repeat and production denied; private output deleted after verification.
