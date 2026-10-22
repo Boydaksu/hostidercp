@@ -1,0 +1,229 @@
+{
+  "source_commit": "37c01f95cef5f798e41fd3d8847db72af4a74afc",
+  "baseline_commit": "5f4d50b1d4694ec08131488c1cfa89fd1286cc0e",
+  "reviewed_commit": "bd92174a276164ad218688331aeb725ee2e47521",
+  "total_tests": 94,
+  "preserved_tests": 84,
+  "new_tests": 10,
+  "local": {
+    "tests": "94/94 passed",
+    "phpstan": "level5 / no errors",
+    "composer_audit": "No security vulnerability advisories found",
+    "runtime_php_dependencies": 0
+  },
+  "runs": [
+    {
+      "id": 39781601291,
+      "commit": "37c01f95cef5f798e41fd3d8847db72af4a74afc",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/39781601291"
+    },
+    {
+      "id": 39780669699,
+      "commit": "4f68d76c4271253b89cbe43b43c983e1ce334904",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/39780669699"
+    },
+    {
+      "id": 39779335336,
+      "commit": "b0453c4c9338be4a69ec72d361b72d7f0396949c",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/39779335336"
+    }
+  ],
+  "source_matrix": [
+    {
+      "name": "verify (8.4)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run shivammathur/setup-php@v2",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer audit --working-dir=tools/analysis --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/check.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/run.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/hardening-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-concurrency.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/integration.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-security.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "verify (8.3)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run shivammathur/setup-php@v2",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer audit --working-dir=tools/analysis --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/check.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/run.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/hardening-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-concurrency.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/integration.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-security.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

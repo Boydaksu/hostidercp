@@ -51,4 +51,14 @@ Onay kaydı server-side HMAC fingerprint taşır; e-posta, reason, ham komut vey
 
 Test/CI kanıtları `docs/evidence/f1-1/` altındadır. Nihai commit ve CI sonuçları doğrulandıktan sonra aşağıya kaydedilir. F2 yalnız kullanıcının sonraki açık onayıyla başlayabilir; burada durulur.
 
+## Doğrulanmış teslim sonucu
+
+- Yerel son koşu **94/94 başarılı**; PHPStan level5 hatasız, lint/mimari kontrol85 PHP dosyasında0 ihlal, tarama91 dosyada0 bulgu; Composer locked audit bilinen açık bulmadı. Ham çıktılar [local-tests](evidence/f1-1/local-tests.txt), [local-checks](evidence/f1-1/local-checks.txt), [composer-audit](evidence/f1-1/composer-audit.txt).
+- Önceki84 test deklarasyonları korundu; 001/002/003 migration blob hash'leri başlangıçla aynı: [baseline-preservation](evidence/f1-1/baseline-preservation.txt).
+- MFA/scope grubu [b0453c4](https://github.com/Boydaksu/hostidercp/commit/b0453c4c9338be4a69ec72d361b72d7f0396949c), [CI39779335336](https://github.com/Boydaksu/hostidercp/actions/runs/39779335336): PHP8.3/8.4 success.
+- Onay/atomiklik grubu [4f68d76](https://github.com/Boydaksu/hostidercp/commit/4f68d76c4271253b89cbe43b43c983e1ce334904), [CI39780669699](https://github.com/Boydaksu/hostidercp/actions/runs/39780669699): PHP8.3/8.4 success.
+- Nihai uygulama kaynağı **37c01f95cef5f798e41fd3d8847db72af4a74afc**, [commit](https://github.com/Boydaksu/hostidercp/commit/37c01f95cef5f798e41fd3d8847db72af4a74afc), [CI39781601291](https://github.com/Boydaksu/hostidercp/actions/runs/39781601291): iki matrix job completed/success; her sürümde **94/94**. MariaDB integration ve çok süreçli session/revocation/confirmation testleri korunmuştur. Ayrıntılı step sonuçları [ci.json](evidence/f1-1/ci.json).
+
+Bu son CI kayıt güncellemesi yalnız dokümantasyondur; yukarıdaki SHA doğrulanmış uygulamayı belirtir. F1.1 kullanıcı incelemesine hazırdır. F2 güvenlik temeli bu regresyonlar bakımından hazır; yukarıdaki gerçek operasyon riskleri ve açık GATE'ler sürer. F2 başlamadı.
+
 Yapay ayrı DB ile gerçek tarayıcıda login → password step-up → account-update preview → ayrıntılı etki/hedef/sürüm → başlangıçta devre dışı onay butonu → vazgeç akışı doğrulandı. Hiçbir müşteri güvenlik politikası uygulanmadı. Onay ekranının görüntüsü [critical-confirmation.png](evidence/f1-1/critical-confirmation.png). Bu incelemede MFA policy checkbox'ının false değerini de geçerli girdi olarak bırakabilmesi düzeltildi; browser required checkbox artık politikayı zorla true'ya yönlendirmiyor. İsteğe bağlı MFA false iken preview ve iptal akışı gerçek ekranda görüldü.
