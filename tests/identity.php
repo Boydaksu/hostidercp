@@ -14,6 +14,7 @@ function rootFixture(): array {
     $login=$identity->login('admin@example.invalid',$password,'admin',$ref,'fixture-network');
     $factor=$identity->enroll($ref,'admin',$password);
     $codes=$identity->confirmEnrollment($ref,'admin',Totp::code($factor['secret'],intdiv(time(),30)));
+    $identity->stepUp($ref,'admin',$password,$codes['recovery_codes'][7]);
     return [$id,$ref,$password,$codes['recovery_codes'],$factor['secret']];
 }
 function notificationToken(string $user,string $purpose): string {
@@ -86,7 +87,7 @@ test('F1-C staff enrollment MFA recovery replay and trusted-device bypass denial
     raises(HttpError::class,fn()=>$identity->locked($next,'admin',fn()=>null));
     $identity->verifyMfa($next,'admin',$codes[0]);
     raises(HttpError::class,fn()=>$identity->verifyMfa($next,'admin',$codes[0]));
-    same(1,(int)$db->execute('SELECT COUNT(*) FROM identity_recovery WHERE used_at IS NOT NULL')->fetchColumn());
+    same(2,(int)$db->execute('SELECT COUNT(*) FROM identity_recovery WHERE used_at IS NOT NULL')->fetchColumn()); // fixture step-up + this one-use recovery
     raises(HttpError::class,fn()=>$identity->disableMfa($next,'admin'));
 });
 test('F1-B persistent guard logout-all and password change invalidate sessions', function () use($identity,$db): void {
@@ -206,4 +207,4 @@ test('F1-D a narrow resource grant cannot authorize a broad customer operation',
     $grant=new \Hostider\Core\Security\AccessGrant('view',['customer'],['service'],['department']);
     same(false,$grant->covers('view','customer',null,null));same(true,$grant->covers('view','customer','service','department'));
 });
-runTests();
+if (!defined('IDENTITY_FIXTURES_ONLY')) { runTests(); }

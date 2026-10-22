@@ -249,12 +249,13 @@ final readonly class IdentityService
     }
     private function activate(string $session): void
     {
-        $this->db->execute('UPDATE identity_sessions SET mfa_verified=TRUE,verified_at=UTC_TIMESTAMP(6),expires_at=TIMESTAMPADD(HOUR,8,UTC_TIMESTAMP(6)) WHERE id=?',[$session]);
+        $this->db->execute('UPDATE identity_sessions SET mfa_verified=TRUE,verified_at=NULL,expires_at=TIMESTAMPADD(HOUR,8,UTC_TIMESTAMP(6)) WHERE id=?',[$session]);
     }
     public function verifyMfa(string $reference,string $context,string $code): void
     {
         $this->throttle('mfa:'.$reference,5);
         $ok=$this->locked($reference,$context,function(array $u,array $s) use($code): bool {
+            if ((bool)$s['mfa_verified']) { throw new HttpError(409,'MFA_CHALLENGE_NOT_PENDING'); }
             if (!$this->factor($u['id'],$code)) { $this->event($u['id'],AuditEvent::MfaFailed,$s['id']); return false; }
             $this->activate($s['id']); $this->event($u['id'],AuditEvent::MfaSucceeded,$s['id']); return true;
         },true); if (!$ok) { throw new HttpError(403,'INVALID_MFA_CODE'); }
@@ -399,10 +400,14 @@ final readonly class IdentityService
             $rp=array_column($this->db->execute('SELECT permission FROM identity_role_permissions WHERE role_id=?',[$role])->fetchAll(),'permission');
             if (array_diff($rp,$p->permissions)) { throw new HttpError(403,'PERMISSION_ESCALATION'); }
             if ($customer!==null) { foreach($rp as $permission) { if (str_starts_with($permission,'identity.')) { throw new HttpError(403,'ADMIN_ROLE_IN_CUSTOMER_SCOPE'); } } }
+            if ($customer!==null) { foreach($rp as $permission) { $this->authorize($u,$s,$permission,$customer); } }
             $assignment=$this->assign($target,$role,$customer);
             if ($grant!==null) {
                 Validation::fields($grant,['permission','customer','service','department'],['permission','customer']);
+                foreach($grant as $value) { if (!is_string($value)) { throw new HttpError(422,'INVALID_GRANT'); } }
+                if ($customer!==null && $grant['customer']!==$customer) { throw new HttpError(403,'GRANT_CUSTOMER_MISMATCH'); }
                 if (!in_array($grant['permission'],$rp,true) || !$this->db->execute('SELECT 1 FROM identity_customers WHERE id=?',[$grant['customer']])->fetchColumn()) { throw new HttpError(422,'INVALID_GRANT'); }
+                $this->authorize($u,$s,$grant['permission'],$grant['customer'],($grant['service'] ?? '')!==''?$grant['service']:null,($grant['department'] ?? '')!==''?$grant['department']:null);
                 if (($grant['service'] ?? '')!=='' && $grant['service']!=='*') { $this->repository->owns($grant['service'],$grant['customer'],$grant['department'] ?? null); }
                 $this->db->execute('INSERT INTO identity_grants VALUES (?,?,?,?,?,?)',[Id::uuid(),$assignment,$grant['permission'],$grant['customer'],$grant['service'] ?? '',$grant['department'] ?? '']);
             }

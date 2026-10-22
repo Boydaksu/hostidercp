@@ -34,6 +34,7 @@ try {
         $key=Id::uuid();$enroll=identityHttp('/api/v1/admin/identity/enroll',['password'=>$password],$key);same(200,$enroll[0]);
         same(409,identityHttp('/api/v1/admin/identity/enroll',['password'=>$password],$key)[0]);
         $secret=$enroll[1]['data']['secret'];$confirmed=identityHttp('/api/v1/admin/identity/enroll-confirm',['code'=>Totp::code($secret,intdiv(time(),30))]);same(200,$confirmed[0]);same(8,count($confirmed[1]['data']['recovery_codes']));
+        same(200,identityHttp('/api/v1/admin/identity/step-up',['password'=>$password,'code'=>$confirmed[1]['data']['recovery_codes'][7]])[0]);
         same(200,identityHttp('/api/v1/admin/identity/users')[0]);
         same(422,identityHttp('/api/v1/admin/identity/customer-create',['name'=>'Bad','currency'=>'TRY','principal'=>['staff'=>true]])[0]);
         $operation=Id::uuid();$first=identityHttp('/api/v1/admin/identity/customer-create',['name'=>'Synthetic HTTP customer','currency'=>'TRY'],$operation);same(200,$first[0]);
