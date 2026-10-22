@@ -1,0 +1,5 @@
+PASS F2-F official PDF is stored outside webroot with owner scope checksum and encrypted metadata
+PASS F2-F upload traversal non-PDF active document and interrupted file offset fail closed
+PASS F2-F cash reports separate collection sales wallet liability and costs
+PASS F2-F recurring payable is not paid cash expense and calendar anchor survives February
+4 tests, 0 failures

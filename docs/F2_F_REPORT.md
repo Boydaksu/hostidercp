@@ -1,0 +1,11 @@
+# F2-F belgeler ve kasa — çalışma raporu
+
+FR-BILL, R1-02/09; FIN-006/008 temeli. Migration 012: korumalı belge upload kayıtları, immutable official document metadata, tek kasa kategorileri/giderleri, recurring kurallar ve ayrı payable kayıtları. Proforma Billing'de oluşturulmuş immutable ödeme talebidir; harici resmî PDF yüklemek e-Fatura/e-Arşiv düzenlemek anlamına gelmez.
+
+DocumentStore webroot dışında sabit root ve server UUID dosya adları kullanır. 32 KiB chunk / 10 MiB toplam sınırı, actor-bound offset, MIME/header/EOF, aktif PDF işaretleri kontrolü, finalized upload değişmezliği ve SHA-256 doğrulaması vardır. Meta (belge no/tarih/tür) şifrelidir. İndirme customer/request sahipliğine bağlıdır; G HTTP adapter'ı attachment+sandbox sunacak. Kontrol tam PDF sanitization/antivirus değildir. File ve DB ortak transaction olamaz: dosya yazılıp metadata commit kesilirse offset uyuşmazlığı fail-closed; aynı upload kör append edilmez, yeni upload gerekir. Terk edilmiş dosyalar için G-O04 retention kararı olmadan otomatik silme yok.
+
+CashService immutable paid expense ve ayrı provider_cost kaydı üretir. Recurring rule materialize yalnız payable oluşturur; explicit payDue tekil cash entry ile gerçek iç gider kaydı olur. Takvim ayı anchor_day ile Şubat sonrası ayın 31'i korunur. Rapor currency bazında cash/revenue/wallet_liability/unallocated/tax/refund_payable/expense/provider_cost'u ayrı verir; INTERNAL_FINANCE_NOT_STATUTORY_ACCOUNTING etiketi zorunludur. Wallet credit nakit veya gelir olarak ikinci kez yazılmaz.
+
+4 MariaDB testi: korumalı PDF/owner/hash/metadata, traversal/aktif dosya/yanlış MIME/yarım commit, kasa yükümlülük ayrımı ve idempotent gider, recurring payable/ödeme/calendar anchor. PHPStan kontrolü başarılı; kanıtlar evidence/f2/f2-f-*. Gerçek resmî müşteri PDF'si veya muhasebe belgesi kullanılmadı; test PDF'si sentetiktir. HTTP indirme/panel ve tam uçtan uca kabul G'de tamamlanacak.
+
+Rollback: yeni 012 additive DDL; kod+DB+APP_KEY ve korumalı belge dosyaları birlikte doğrulanmış snapshot'tan restore edilir veya forward-fix. PDF dosyaları DB yedeğinin dışında unutulamaz. Geçmiş belgeler ve para fişleri silinmez. Canlı GATE'ler OPEN; üretim kullanımı etkinleştirilmedi.
