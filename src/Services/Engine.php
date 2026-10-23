@@ -62,10 +62,10 @@ final readonly class Engine
         $this->repository->event($service,'CREATE_QUEUED',$actor,$trace);
     }
     /** Claim transaction commits before a provider adapter may be invoked. */
-    public function claim(Principal $actor,string $trace,?string $id=null): ?array
+    public function claim(Principal $actor,string $trace,?string $id=null,bool $reserve=false): ?array
     {
         $this->guard($actor);
-        return $this->db->transaction(function()use($actor,$trace,$id): ?array{
+        return $this->db->transaction(function()use($actor,$trace,$id,$reserve): ?array{
             $candidate=$this->db->execute("SELECT service_id,id FROM svc_operations WHERE status='PENDING'".($id!==null?' AND id=?':'').' ORDER BY created_at,id LIMIT 1',$id!==null?[$id]:[])->fetch();
             if(!$candidate){return null;}
             // Same order -> service -> operation order as discovery; cancellation cannot race dispatch acceptance.
@@ -79,6 +79,7 @@ final readonly class Engine
             // Recheck cancellation/refund/payment at dispatch, not merely at discovery.
             $source=$this->db->execute('SELECT o.status,o.refund_status,s.status AS bill_status,s.refund_status AS bill_refund FROM orders o JOIN billing_request_states s ON s.request_id=o.payment_request_id WHERE o.id=?',[$service['order_id']])->fetch();
             if(!$source||$source['status']!=='READY_FOR_PROVISIONING'||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){throw new HttpError(409,'SERVICE_SOURCE_CHANGED');}
+            if($reserve){$reservation=(new \Hostider\Hosting\Pools($this->db,$this->config))->reserve($service,$operation['id'],$this->repository->configuration($service['id'])['selection']);$this->db->execute('UPDATE svc_provider_operations SET server_id=? WHERE lifecycle_operation_id=?',[$reservation['server_id'],$operation['id']]);}
             $token=Id::uuid();$this->db->execute("UPDATE svc_operations SET status='RUNNING',lease_token=?,lease_until=DATE_ADD(UTC_TIMESTAMP(6),INTERVAL 60 SECOND),updated_at=UTC_TIMESTAMP(6) WHERE id=?",[$token,$operation['id']]);
             $this->db->execute("UPDATE svc_provider_operations SET status='RUNNING' WHERE lifecycle_operation_id=?",[$operation['id']]);
             $this->db->execute("INSERT INTO svc_attempt_events(operation_id,lease_token,kind,safe_code) VALUES (?,?,'STARTED','DISPATCH_CLAIMED')",[$operation['id'],$token]);
@@ -110,6 +111,31 @@ final readonly class Engine
             $service=$this->repository->find($serviceId);$op=$this->db->execute('SELECT *,lease_until>UTC_TIMESTAMP(6) AS live FROM svc_operations WHERE id=? FOR UPDATE',[$id])->fetch();
             if($op['status']!=='RUNNING'||!hash_equals((string)$op['lease_token'],$token)||!$op['live']){throw new HttpError(409,'STALE_SERVICE_LEASE');}
             $this->unknown($service,$op,$actor,$trace,'PROVIDER_OUTCOME_UNKNOWN');
+        });
+    }
+    public function finishMock(string $id,string $token,\Hostider\Providers\Contract\ProviderResult $result,?array $proof,Principal $actor,string $trace): void
+    {
+        $this->guard($actor);$this->db->transaction(function()use($id,$token,$result,$proof,$actor,$trace): void{
+            $identity=$this->db->execute('SELECT o.service_id,s.order_id FROM svc_operations o JOIN svc_services s ON s.id=o.service_id WHERE o.id=?',[$id])->fetch();if(!$identity){throw new HttpError(404,'OPERATION_NOT_FOUND');}
+            $source=$this->db->execute('SELECT o.status,o.refund_status,b.status AS bill_status,b.refund_status AS bill_refund FROM orders o JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE o.id=? FOR UPDATE',[$identity['order_id']])->fetch();
+            $service=$this->repository->find($identity['service_id']);$op=$this->db->execute('SELECT *,lease_until>UTC_TIMESTAMP(6) AS live FROM svc_operations WHERE id=? FOR UPDATE',[$id])->fetch();$provider=$this->db->execute('SELECT * FROM svc_provider_operations WHERE lifecycle_operation_id=? FOR UPDATE',[$id])->fetch();
+            if($op['status']!=='RUNNING'||!hash_equals((string)$op['lease_token'],$token)||!$op['live']||$service['current_operation_id']!==$id){throw new HttpError(409,'STALE_SERVICE_LEASE');}
+            if($result->operationId!==$provider['id']||$result->provider!=='cpanel'||$result->environment!=='mock'){throw new HttpError(409,'PROVIDER_RESULT_BINDING');}
+            if(!$source||$source['status']!=='READY_FOR_PROVISIONING'||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){$this->unknown($service,$op,$actor,$trace,'SOURCE_CHANGED_AFTER_DISPATCH');return;}
+            if($result->status==='UNKNOWN'){$this->unknown($service,$op,$actor,$trace,'PROVIDER_OUTCOME_UNKNOWN');return;}
+            $success=$result->status==='SUCCESS';
+            if($success){
+                $period=$this->db->execute('SELECT * FROM svc_periods WHERE id=? FOR UPDATE',[$service['current_period_id']])->fetch();
+                if(!$proof||$result->externalResourceId!==$proof['id']||$proof['server_id']!==$provider['server_id']||$proof['service_id']!==$service['id']||$proof['create_operation_id']!==$provider['id']||$proof['status']!=='ACTIVE'||$period['status']!=='PENDING_PROVIDER'){$this->unknown($service,$op,$actor,$trace,'INSPECT_PROOF_MISMATCH');return;}
+                $cycle=json_decode($period['cycle_snapshot'],true,32,JSON_THROW_ON_ERROR);$start=new \DateTimeImmutable($proof['starts_at'],new \DateTimeZone('UTC'));$end=$cycle['kind']==='ONCE'?null:\Hostider\Catalog\BillingCycle::next($start,$cycle['kind'],(int)$cycle['interval_count'])->format('Y-m-d H:i:s.u');
+                if($proof['ends_at']!==$end){$this->unknown($service,$op,$actor,$trace,'INSPECT_PERIOD_MISMATCH');return;}
+                $key=base64_decode($this->config->key,true);$json=CanonicalJson::encode($proof);$hash=hash_hmac('sha256',$json,$key);$evidence=Id::uuid();
+                $this->db->execute('INSERT INTO svc_resources(id,service_id,server_id,external_id,operation_id,evidence_hash) VALUES (?,?,?,?,?,?)',[Id::uuid(),$service['id'],$provider['server_id'],$proof['id'],$id,$hash]);
+                $this->db->execute('INSERT INTO svc_period_evidence(id,period_id,operation_id,evidence_encrypted,fingerprint) VALUES (?,?,?,?,?)',[$evidence,$period['id'],$id,(new Crypto($key))->encrypt($json,'svc-evidence:'.$evidence),$hash]);
+                $this->db->execute("UPDATE svc_periods SET starts_at=?,ends_at=?,status='VERIFIED',version=version+1 WHERE id=?",[$proof['starts_at'],$proof['ends_at'],$period['id']]);
+            }else{(new \Hostider\Hosting\Pools($this->db,$this->config))->releaseDefinitiveFailure($id);}
+            $state=$success?'SUCCEEDED':'FAILED';$this->db->execute('UPDATE svc_operations SET status=?,updated_at=UTC_TIMESTAMP(6) WHERE id=?',[$state,$id]);$this->db->execute('UPDATE svc_provider_operations SET status=? WHERE id=?',[$state,$provider['id']]);
+            $this->db->execute("INSERT INTO svc_attempt_events(operation_id,lease_token,kind,safe_code) VALUES (?,?,'FINISHED',?)",[$id,$token,$success?'MOCK_INSPECT_VERIFIED':'MOCK_DEFINITIVE_FAILURE']);$this->repository->transition($service,$success?'ACTIVE':'FAILED',$actor,$trace);
         });
     }
 }
