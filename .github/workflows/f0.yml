@@ -1,11 +1,12 @@
 name: F0 foundation
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php: ['8.3', '8.4']
     services:
@@ -59,4 +60,24 @@ jobs:
       - run: php tests/currency-change.php
       - run: php tests/commerce-events.php
       - run: php tests/post-delivery.php
+      - name: Repeated commerce HTTP stability
+        id: http_stability
+        run: php tools/repeat-suite.php commerce-http 30
+      - name: Capture native HTTP server crash stack after failure
+        if: failure()
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y gdb
+          HTTP_TEST_GDB=1 php tools/repeat-suite.php commerce-http 10
+      - name: Repeated session concurrency stability
+        run: php tools/repeat-suite.php session-concurrency 20
       - run: node --check public/assets/commerce.js
+      - name: Upload allowlisted test process diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-process-diagnostics-php-${{ matrix.php }}-${{ github.run_attempt }}
+          path: |
+            storage/ci-diagnostics/*.json
+            storage/ci-stability/*.json
+          if-no-files-found: warn

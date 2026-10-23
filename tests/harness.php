@@ -24,13 +24,14 @@ function runTests(): never
 {
     exit(executeTests());
 }
-function executeTests(): int
+function executeTests(bool $failFast=false): int
 {
-    $failed = 0;
+    $failed = 0;$executed=0;
     foreach ($GLOBALS['tests'] as $name => $work) {
-        try { $work(); echo 'PASS ' . $name . PHP_EOL; }
-        catch (Throwable $e) { ++$failed; echo 'FAIL ' . $name . ': ' . $e->getMessage() . PHP_EOL; }
+        ++$executed;try { $work(); echo 'PASS ' . $name . PHP_EOL; }
+        catch (Throwable $e) { ++$failed; echo 'FAIL ' . $name . ': ' . $e->getMessage() . PHP_EOL;if($failFast){break;} }
     }
+    if($executed<count($GLOBALS['tests'])){echo (count($GLOBALS['tests'])-$executed).' dependent tests BLOCKED after first failure; not counted as passed'.PHP_EOL;}
     echo count($GLOBALS['tests']) . ' tests, ' . $failed . ' failures' . PHP_EOL;
     return $failed === 0 ? 0 : 1;
 }

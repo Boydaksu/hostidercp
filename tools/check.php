@@ -5,6 +5,7 @@ $root=dirname(__DIR__); $count=0; $errors=[];
 foreach (['src','bootstrap','bin','public','migrations','tests','tools'] as $dir) {
     foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/'.$dir,FilesystemIterator::SKIP_DOTS)) as $file) {
         if ($file->getExtension()!=='php') { continue; }
+        if (str_contains(str_replace('\\','/',$file->getPathname()),'/tools/local/')) { continue; }
         if (str_contains(str_replace('\\','/',$file->getPathname()),'/tools/analysis/vendor/')) { continue; }
         ++$count; $source=file_get_contents($file->getPathname());
         $pipes=[]; $p=proc_open([PHP_BINARY,'-n','-l',$file->getPathname()], [1=>['pipe','w'],2=>['pipe','w']],$pipes);

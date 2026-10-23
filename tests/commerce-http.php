@@ -1,25 +1,24 @@
 <?php
 declare(strict_types=1);
-require __DIR__.'/harness.php';require __DIR__.'/database.php';require __DIR__.'/catalog-fixture.php';require __DIR__.'/commerce-fixture.php';
+require __DIR__.'/harness.php';require __DIR__.'/support/HttpTestServer.php';require __DIR__.'/database.php';require __DIR__.'/catalog-fixture.php';require __DIR__.'/commerce-fixture.php';
 use Hostider\Commerce\Services;
 use Hostider\Core\{Config,Id};
 use Hostider\Core\Database\Migrator;
 $db=integrationDb();(new Migrator($db,dirname(__DIR__).'/migrations'))->migrate();$key=base64_encode(random_bytes(32));$config=new Config('test','https://test.example.invalid',$key,getenv('TEST_DB_DSN'),getenv('TEST_DB_USER')?:'root',getenv('TEST_DB_PASSWORD')?:'');$services=new Services($db,$config);$admin=commerceAdmin($services);$buyer=commerceUser($services,'http-buyer');$outsider=commerceUser($services,'http-outsider');$catalog=catalogFixture($db);$catalog['create']('price-publish',['item_id'=>$catalog['product'],'cycle_id'=>$catalog['cycle'],'currency'=>'TRY','amount'=>'100']);
 $assignment=$db->execute('SELECT id FROM identity_assignments WHERE user_id=? AND customer_id IS NULL LIMIT 1',[$admin['user']])->fetchColumn();foreach(['finance.view','finance.approve','billing.view','wallet.view','orders.view','identity.customers.view','billing.documents.manage'] as $permission){$db->execute('INSERT INTO identity_grants(id,assignment_id,permission,customer_scope) VALUES (?,?,?,?)',[Id::uuid(),$assignment,$permission,$buyer['customer']]);}
-$port=33322;$root=dirname(__DIR__);$env=array_merge(getenv(),['APP_ENV'=>'test','APP_URL'=>'https://test.example.invalid','APP_KEY'=>$key,'DB_DSN'=>getenv('TEST_DB_DSN'),'DB_USER'=>getenv('TEST_DB_USER')?:'root','DB_PASSWORD'=>getenv('TEST_DB_PASSWORD')?:'','PROVISIONING_ALLOWED'=>'false','PAYMENT_LIVE_ALLOWED'=>'false','EXTERNAL_MAIL_ALLOWED'=>'false']);$pipes=[];$process=proc_open([PHP_BINARY,'-S','127.0.0.1:'.$port,'-t',$root.'/public',__DIR__.'/identity-router.php'],[0=>['pipe','r'],1=>['file',$root.'/storage/commerce-http.stdout','a'],2=>['file',$root.'/storage/commerce-http.stderr','a']],$pipes,$root,$env);fclose($pipes[0]);$jars=['admin'=>[],'client'=>[]];$tokens=['admin'=>'','client'=>''];
+$root=dirname(__DIR__);$env=array_merge(getenv(),['APP_ENV'=>'test','APP_URL'=>'https://test.example.invalid','APP_KEY'=>$key,'DB_DSN'=>getenv('TEST_DB_DSN'),'DB_USER'=>getenv('TEST_DB_USER')?:'root','DB_PASSWORD'=>getenv('TEST_DB_PASSWORD')?:'','PROVISIONING_ALLOWED'=>'false','PAYMENT_LIVE_ALLOWED'=>'false','EXTERNAL_MAIL_ALLOWED'=>'false']);$server=new HttpTestServer($root,$env,__DIR__.'/commerce-router.php');$jars=['admin'=>[],'client'=>[]];$tokens=['admin'=>'','client'=>''];
 function commerceHttp(string $path,?array $data=null,?string $key=null,bool $csrf=true): array
 {
-    global $port,$jars,$tokens;$context=str_contains($path,'/admin/')?'admin':'client';$headers=[];$responseHeaders=[];$curl=curl_init('http://127.0.0.1:'.$port.$path);curl_setopt_array($curl,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>10,CURLOPT_HEADERFUNCTION=>function($curl,string $line)use(&$responseHeaders): int{$responseHeaders[]=$line;return strlen($line);}]);
-    if($jars[$context]){curl_setopt($curl,CURLOPT_COOKIE,implode('; ',array_map(fn($k,$v)=>$k.'='.$v,array_keys($jars[$context]),$jars[$context])));}
-    if($data!==null){$headers=['Content-Type: application/json','Idempotency-Key: '.($key??Id::uuid())];if($csrf){$headers[]='X-CSRF-Token: '.$tokens[$context];}curl_setopt_array($curl,[CURLOPT_POST=>true,CURLOPT_POSTFIELDS=>json_encode((object)$data,JSON_THROW_ON_ERROR),CURLOPT_HTTPHEADER=>$headers]);}
-    $raw=curl_exec($curl);$status=curl_getinfo($curl,CURLINFO_RESPONSE_CODE);curl_close($curl);foreach($responseHeaders as $line){if(preg_match('/^Set-Cookie: ([^=]+)=([^;]*)/i',$line,$m)){$jars[$context][$m[1]]=$m[2];}}$body=is_string($raw)?json_decode($raw,true):null;if(isset($body['data']['csrf'])){$tokens[$context]=$body['data']['csrf'];}return [$status,$body,$responseHeaders,$raw];
+    global $server,$jars,$tokens;$context=str_contains($path,'/admin/')?'admin':'client';$headers=[];$options=[];
+    if($jars[$context]){$options[CURLOPT_COOKIE]=implode('; ',array_map(fn($k,$v)=>$k.'='.$v,array_keys($jars[$context]),$jars[$context]));}
+    if($data!==null){$headers=['Content-Type: application/json','Idempotency-Key: '.($key??Id::uuid())];if($csrf){$headers[]='X-CSRF-Token: '.$tokens[$context];}$options += [CURLOPT_POST=>true,CURLOPT_POSTFIELDS=>json_encode((object)$data,JSON_THROW_ON_ERROR),CURLOPT_HTTPHEADER=>$headers];}
+    [$status,$raw,$responseHeaders]=$server->request($path,$options);foreach($responseHeaders as $line){if(preg_match('/^Set-Cookie: ([^=]+)=([^;]*)/i',$line,$m)){$jars[$context][$m[1]]=$m[2];}}$body=is_string($raw)?json_decode($raw,true):null;if(isset($body['data']['csrf'])){$tokens[$context]=$body['data']['csrf'];}return [$status,$body,$responseHeaders,$raw];
 }
 function httpCommand(string $context,string $action,array $payload,?string $customer=null): array
 {
     $data=['action'=>$action,'payload'=>(object)$payload];if($customer!==null){$data['customer']=$customer;}$review=commerceHttp('/api/v1/'.$context.'/commerce/prepare',$data);if($review[0]!==200){return $review;}$data['confirmation']=(object)['id'=>$review[1]['data']['id'],'accepted'=>true];return commerceHttp('/api/v1/'.$context.'/commerce/execute',$data);
 }
 try{
-    for($i=0;$i<40;++$i){if(commerceHttp('/api/v1/health')[0]===200){break;}usleep(100000);}
     test('F2-G HTTP requires login fresh step-up CSRF and scoped customer ownership',function()use($buyer,$outsider): void {
         same(401,commerceHttp('/api/v1/client/commerce/wallet')[0]);same(200,commerceHttp('/api/v1/client/identity/bootstrap')[0]);same(200,commerceHttp('/api/v1/client/identity/login',['email'=>$buyer['email'],'password'=>$buyer['password']])[0]);
         $data=['action'=>'attempt-create','payload'=>(object)['minor'=>'100']];same(403,commerceHttp('/api/v1/client/commerce/prepare',$data)[0]);same(200,commerceHttp('/api/v1/client/identity/step-up',['password'=>$buyer['password'],'code'=>''])[0]);same(403,commerceHttp('/api/v1/client/commerce/prepare',$data,csrf:false)[0]);
@@ -62,5 +61,5 @@ try{
         $config=testConfig('production');$router=new \Hostider\Core\Http\Router();(new \Hostider\Commerce\Controller(fn()=>throw new RuntimeException('Database must not open'),$config))->routes($router);
         same(503,raises(\Hostider\Core\Http\HttpError::class,fn()=>$router->dispatch(new \Hostider\Core\Http\Request('POST','/api/v1/admin/commerce/prepare'),Id::uuid()))->status);
     });
-    $exit=executeTests();
-}finally{proc_terminate($process);proc_close($process);}exit($exit);
+    $exit=executeTests(failFast:true);
+}finally{$server->stop();}exit($exit);
