@@ -1,0 +1,473 @@
+{
+  "suite": "commerce-http",
+  "php": "8.3.36",
+  "os": "Linux",
+  "iterations": 50,
+  "failed_iterations": 7,
+  "results": [
+    {
+      "iteration": 1,
+      "exit": 0,
+      "duration_ms": 4782.860174,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 2,
+      "exit": 0,
+      "duration_ms": 4006.7826,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 3,
+      "exit": 0,
+      "duration_ms": 3817.904094,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 4,
+      "exit": 0,
+      "duration_ms": 3811.84377,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 5,
+      "exit": 0,
+      "duration_ms": 3812.029493,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 6,
+      "exit": 0,
+      "duration_ms": 3811.282103,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 7,
+      "exit": 0,
+      "duration_ms": 3854.850454,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 8,
+      "exit": 0,
+      "duration_ms": 3937.234581,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 9,
+      "exit": 0,
+      "duration_ms": 3867.282547,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 10,
+      "exit": 0,
+      "duration_ms": 3875.007608,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 11,
+      "exit": 0,
+      "duration_ms": 3944.419714,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 12,
+      "exit": 0,
+      "duration_ms": 3887.952071,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 13,
+      "exit": 0,
+      "duration_ms": 3880.709263,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 14,
+      "exit": 0,
+      "duration_ms": 3848.347354,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 15,
+      "exit": 0,
+      "duration_ms": 3884.689956,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 16,
+      "exit": 0,
+      "duration_ms": 3875.612326,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 17,
+      "exit": 0,
+      "duration_ms": 3891.398959,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 18,
+      "exit": 0,
+      "duration_ms": 3933.991983,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 19,
+      "exit": 0,
+      "duration_ms": 3988.434563,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 20,
+      "exit": 0,
+      "duration_ms": 4007.835465,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 21,
+      "exit": 0,
+      "duration_ms": 4007.333691,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 22,
+      "exit": 0,
+      "duration_ms": 4005.72095,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 23,
+      "exit": 0,
+      "duration_ms": 3992.801637,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 24,
+      "exit": 0,
+      "duration_ms": 4007.355353,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 25,
+      "exit": 1,
+      "duration_ms": 3125.610629,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "9c657ad2199a0ba3719d5621a228d2149094929485da907de4acb7ac432c5a52",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 26,
+      "exit": 0,
+      "duration_ms": 4553.165438,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 27,
+      "exit": 0,
+      "duration_ms": 4133.877994,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 28,
+      "exit": 0,
+      "duration_ms": 4029.013364,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 29,
+      "exit": 1,
+      "duration_ms": 3129.823239,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "7f17eb2e93b1ef2910592be7cf6dbb844aca1296e5fc1e7ba1e990a067d7ca5e",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 30,
+      "exit": 0,
+      "duration_ms": 4088.375615,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 31,
+      "exit": 0,
+      "duration_ms": 4048.264197,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 32,
+      "exit": 0,
+      "duration_ms": 4057.792619,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 33,
+      "exit": 0,
+      "duration_ms": 4050.844389,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 34,
+      "exit": 1,
+      "duration_ms": 3172.491041,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "af21a37f7d5b2f6bca0cd0d9b1b85d809b4e102100a485e7fec93afbe7e8ec44",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 35,
+      "exit": 0,
+      "duration_ms": 4076.299812,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 36,
+      "exit": 0,
+      "duration_ms": 4011.61803,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 37,
+      "exit": 0,
+      "duration_ms": 3996.262816,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 38,
+      "exit": 0,
+      "duration_ms": 3954.705463,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 39,
+      "exit": 1,
+      "duration_ms": 3071.976509,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "65185b9946cacd8e25a5630d045bda07169638904e65e14c3896ea8ed7eb198a",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 40,
+      "exit": 1,
+      "duration_ms": 3118.707495,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "ce187643306549dc009f3207c44bebf1535a15f2e12fb7ba0c54e282548cb9e8",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 41,
+      "exit": 0,
+      "duration_ms": 4034.668264,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 42,
+      "exit": 0,
+      "duration_ms": 3968.553134,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 43,
+      "exit": 0,
+      "duration_ms": 3995.459712,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 44,
+      "exit": 0,
+      "duration_ms": 4005.77449,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 45,
+      "exit": 0,
+      "duration_ms": 4015.85149,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 46,
+      "exit": 0,
+      "duration_ms": 4027.784659,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 47,
+      "exit": 1,
+      "duration_ms": 3112.427095,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "5963f2aba9bcafbaba142d784e0446aa25184ae91ee4d4e86deb7b81a8986b28",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 48,
+      "exit": 0,
+      "duration_ms": 3986.638771,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 49,
+      "exit": 1,
+      "duration_ms": 3107.775324,
+      "failed_tests": [
+        "F2-G HTTP quote and order work and approved command replay is atomic"
+      ],
+      "stdout_sha256": "04deaee7bec910f4597372e91b1c2406f9c1f9512f5a938ff12505d82d106ae7",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "iteration": 50,
+      "exit": 0,
+      "duration_ms": 4036.981768,
+      "failed_tests": [],
+      "stdout_sha256": "28aa39c5cb931fd57d9c4a343704143618287027c380546083cb422e1fecc87b",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

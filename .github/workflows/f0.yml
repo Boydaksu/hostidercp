@@ -22,6 +22,7 @@ jobs:
           --health-interval=5s --health-timeout=5s --health-retries=20
     env:
       APP_ENV: test
+      HTTP_TEST_ENGINE: interpreter
       TEST_DB_DSN: mysql:host=127.0.0.1;port=3306;dbname=hostider_f0_test;charset=utf8mb4
       TEST_DB_USER: root
       TEST_DB_PASSWORD: isolated-ci-password

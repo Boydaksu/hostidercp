@@ -1,0 +1,11 @@
+2026-10-23T15:59:10.3538749Z PASS F2-G HTTP requires login fresh step-up CSRF and scoped customer ownership
+2026-10-23T15:59:10.6374168Z PASS F2-G HTTP quote and order work and approved command replay is atomic
+2026-10-23T15:59:11.5532965Z PASS F2-G HTTP topup bank approval mixed funding and ready fact use actual services
+2026-10-23T15:59:11.9749172Z PASS F2-G HTTP official PDF download is attachment and another customer cannot fetch it
+2026-10-23T15:59:12.0215068Z PASS F2-G HTTP real PayTR callback and unsupported privileged commands remain closed
+2026-10-23T15:59:12.0221681Z PASS F2-G HTTP panel JavaScript and stylesheet are actually served by the local router
+2026-10-23T15:59:12.0966567Z PASS F2-G company ledger is staff-only and exposes exact minor strings
+2026-10-23T15:59:12.4440927Z PASS Review HTTP reconciliation lists open cases and exposes scoped evidence after atomic resolution
+2026-10-23T15:59:12.4520312Z PASS Review HTTP idempotent replay still requires fresh step-up
+2026-10-23T15:59:12.4550473Z PASS F2-G production commerce mutation gate rejects before opening business database
+2026-10-23T15:59:12.4551256Z 10 tests, 0 failures

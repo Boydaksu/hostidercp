@@ -1,0 +1,12 @@
+2026-10-23T15:59:09.1567540Z PASS F2-G HTTP requires login fresh step-up CSRF and scoped customer ownership
+2026-10-23T15:59:10.4086207Z FAIL F2-G HTTP quote and order work and approved command replay is atomic: Assertion failed: 200 != 0
+2026-10-23T15:59:10.4106710Z FAIL F2-G HTTP topup bank approval mixed funding and ready fact use actual services: Assertion failed: 200 != 0
+2026-10-23T15:59:10.4108545Z FAIL F2-G HTTP official PDF download is attachment and another customer cannot fetch it: Undefined global variable $httpCommerceOrder
+2026-10-23T15:59:10.4110231Z FAIL F2-G HTTP real PayTR callback and unsupported privileged commands remain closed: Assertion failed: 403 != 0
+2026-10-23T15:59:10.4116376Z FAIL F2-G HTTP panel JavaScript and stylesheet are actually served by the local router: Assertion failed: 200 != 0
+2026-10-23T15:59:10.4118375Z FAIL F2-G company ledger is staff-only and exposes exact minor strings: Assertion failed: 403 != 0
+2026-10-23T15:59:10.4157327Z FAIL Review HTTP reconciliation lists open cases and exposes scoped evidence after atomic resolution: Resource not found
+2026-10-23T15:59:10.4184713Z FAIL Review HTTP idempotent replay still requires fresh step-up: Undefined global variable $reviewReplay
+2026-10-23T15:59:10.4192622Z PASS F2-G production commerce mutation gate rejects before opening business database
+2026-10-23T15:59:10.4209661Z 10 tests, 8 failures
+2026-10-23T15:59:10.5058766Z ##[error]Process completed with exit code 1.

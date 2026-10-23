@@ -1,0 +1,40 @@
+{
+  "instance": "4da2355c99b595b2034566cf",
+  "reason": "CURL_TRANSPORT",
+  "port": 46697,
+  "engine": "inherit",
+  "server_runtime": {
+    "jit": "1235",
+    "jit_buffer_size": "256M",
+    "opcache_enabled": true,
+    "jit_status": {
+      "enabled": true,
+      "on": true,
+      "kind": 3,
+      "opt_level": 5,
+      "opt_flags": 6,
+      "buffer_size": 268435440,
+      "buffer_free": 268432944
+    }
+  },
+  "running": false,
+  "exitcode": -1,
+  "signaled": true,
+  "termsig": 11,
+  "stderr_bytes": 1275,
+  "stderr_sha256": "79b4439628e275a8a1a8d01bd4fa35cf0077d8111e2e1f74161f9145292686e7",
+  "stdout_bytes": 0,
+  "markers": [],
+  "native_frames": [],
+  "debuggee_signal": null,
+  "php": "8.3.36",
+  "os": "Linux",
+  "parent_ini": {
+    "opcache.enable_cli": "0",
+    "opcache.jit": "1235",
+    "opcache.jit_buffer_size": "256M"
+  },
+  "curl_errno": 52,
+  "curl_error": "Server returned nothing (no headers, no data)",
+  "route_sha256": "7a012c70fe2f1e77f6c39759eba9cc5206bf8cb15ec3f6cf191e6b8588d48ca2"
+}

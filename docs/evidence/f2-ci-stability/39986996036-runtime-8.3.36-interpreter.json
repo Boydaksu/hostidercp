@@ -1,0 +1,37 @@
+{
+  "instance": "063fa81c57c088444b449785",
+  "reason": "STOP",
+  "port": 41657,
+  "engine": "interpreter",
+  "server_runtime": {
+    "jit": "disable",
+    "jit_buffer_size": "0",
+    "opcache_enabled": true,
+    "jit_status": {
+      "enabled": false,
+      "on": false,
+      "kind": 0,
+      "opt_level": 0,
+      "opt_flags": 0,
+      "buffer_size": 0,
+      "buffer_free": 0
+    }
+  },
+  "running": false,
+  "exitcode": -1,
+  "signaled": true,
+  "termsig": 15,
+  "stderr_bytes": 6316,
+  "stderr_sha256": "14f03688abc55f75bb9b22d129dced074ebec2081467b888f8cd749dcdc77211",
+  "stdout_bytes": 0,
+  "markers": [],
+  "native_frames": [],
+  "debuggee_signal": null,
+  "php": "8.3.36",
+  "os": "Linux",
+  "parent_ini": {
+    "opcache.enable_cli": "0",
+    "opcache.jit": "1235",
+    "opcache.jit_buffer_size": "256M"
+  }
+}

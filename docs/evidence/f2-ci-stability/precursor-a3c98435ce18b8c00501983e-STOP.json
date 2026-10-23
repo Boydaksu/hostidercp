@@ -1,0 +1,22 @@
+{
+  "instance": "a3c98435ce18b8c00501983e",
+  "reason": "STOP",
+  "port": 36249,
+  "running": false,
+  "exitcode": -1,
+  "signaled": true,
+  "termsig": 11,
+  "stderr_bytes": 1172,
+  "stderr_sha256": "d0355bdac8e81fde976a0aaf08320e5b23a5583df50c95fdec24b9b61dd45837",
+  "stdout_bytes": 0,
+  "markers": [],
+  "native_frames": [],
+  "debuggee_signal": null,
+  "php": "8.3.36",
+  "os": "Linux",
+  "ini": {
+    "opcache.enable_cli": "0",
+    "opcache.jit": "1235",
+    "opcache.jit_buffer_size": "256M"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "php": "8.4.27",
+  "os": "Linux",
+  "iterations_per_engine": 30,
+  "results": [
+    {
+      "engine": "inherit",
+      "exit": 0,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "engine": "interpreter",
+      "exit": 0,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "any_failure": false
+}
