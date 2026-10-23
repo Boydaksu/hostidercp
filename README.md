@@ -1,5 +1,7 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F2 finans ve satış çekirdeği:** katalog, kesin dövizli fiyatlandırma, teklif/sipariş, cüzdan/karma ödeme, proforma/korumalı PDF ve yönetici finans panelleri test ortamında tamamlandı. [F2_REPORT](docs/F2_REPORT.md), [F2_SETUP](docs/F2_SETUP.md), [F2_PLAN](docs/F2_PLAN.md). 164 test ve PHP 8.3/8.4 CI başarılı. Kullanıcı kabulü beklenir; F3 başlamadı. Production kullanımı ve canlı işlemler kapalı; bütün doğrulama GATE'leri OPEN. Aşağıdaki eski faz notları tarihsel kayıtlardır.
+
 > **F1.1 güvenlik kapanışı:** pending MFA ile password+MFA step-up ayrıldı; kritik Identity işlemlerine sunucuya bağlı ayrıntılı onay ve scope delegasyon kontrolü eklendi. [F1_1_REPORT](docs/F1_1_REPORT.md), [F1_1_PLAN](docs/F1_1_PLAN.md), [ADR-004](docs/adr/ADR-004-f1-1-confirmations.md). F2 başlamadı; bütün canlı GATE'ler OPEN.
 
 > **F1 Identity ve paneller:** çalışan admin/client hesapları, MFA, kalıcı roller/kapsamlar, davetler, oturum iptali, API anahtarları ve responsive paneller eklendi. Teslim ve sınırlar: [F1_REPORT](docs/F1_REPORT.md); kurulum, güvenli ilk yönetici ve yapay demo: [F1_SETUP](docs/F1_SETUP.md); plan: [F1_PLAN](docs/F1_PLAN.md). F2 başlatılmadı; bütün canlı GATE'ler OPEN. Aşağıdaki F0/F0.1 notları tarihsel teslim kayıtlarıdır.
