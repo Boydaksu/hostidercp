@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-23",
+  "base_commit": "e9ccece0fb8488dca6ffa3cde22a119f4e179f46",
+  "environment": "Windows PHP 8.4.24, real isolated MariaDB",
+  "test": "F3-E protected renewal never perpetuates an initial-only promotion without an explicit price policy",
+  "setup": "Real paid first-period invoice: 324 USD minor units after 10 percent FIRST promotion; explicit price_protected=true and price_notice_required=false",
+  "first_result": "FAIL: Expected exception: Hostider\\Core\\Http\\HttpError; 13 tests, 1 failure",
+  "source_cause": "Protected renewal copied net/tax/total from the historical discounted service price while stripping the promotion description",
+  "correction": "Reject historical promotions/nonzero discount under protected pricing until explicit recurring commercial policy is resolved",
+  "verified_after_correction": "13 tests, 0 failures; rejected request creates no renewal or additional journal; explicit unprotected renewal calculates 360 minor units",
+  "live_or_customer_effect": false
+}

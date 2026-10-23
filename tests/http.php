@@ -39,6 +39,11 @@ function httpProbe(int $port, string $path, string $method='GET'): array
 }
 test('HTTP entry point health/error envelopes, headers and rate limiting', function (): void {
     $db=integrationDb(); $db->execute('DELETE FROM rate_limits');
+    // The application intentionally uses aligned 60-second windows. Starting this
+    // burst at xx:59 can legitimately reset the bucket before its 61st request.
+    // Establish the clock precondition once; do not retry or relax a failed result.
+    $seconds=(int)$db->execute('SELECT UNIX_TIMESTAMP()')->fetchColumn()%60;
+    if($seconds>=45){usleep((61-$seconds)*1000000);}
     withServer([],function (int $port): void {
         [$status,$headers,$body]=httpProbe($port,'/api/v1/health'); same(200,$status); same('ok',$body['data']['status']);
         same(true,str_contains(strtolower($headers),'cache-control: no-store'));
