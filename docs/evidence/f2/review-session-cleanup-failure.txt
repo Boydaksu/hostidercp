@@ -1,0 +1,42 @@
+=== run (exit 0) ===
+PASS config rejects absent environment/key and staging live flags
+PASS effect policy denies every live effect in all environments
+PASS production flags cannot bypass open F0 provider gate
+PASS DI shares services and detects circular/missing/duplicate bindings
+PASS router middleware wraps handler in declaration order
+PASS kernel error envelope and logger never leak message/body/headers
+PASS JSON media type/object/depth/size and validation are bounded
+PASS CSRF denies missing/wrong tokens and allows safe reads
+PASS authorization denies anonymous/expired/missing permission/customer scope
+PASS staff requires MFA, department membership and fresh step-up
+PASS AEAD roundtrip randomized nonce, tamper/context/key binding
+PASS canonical fingerprint ignores map ordering and preserves lists/types
+PASS provider contract Hostider\Providers\Mock\Paytr
+PASS provider contract Hostider\Providers\Mock\Cpanel
+PASS provider contract Hostider\Providers\Mock\ResellerClub
+PASS provider contract Hostider\Providers\Mock\DomainNameApi
+PASS provider contract Hostider\Providers\Mock\Voyar
+PASS mock PayTR never accepts live callback as verified payment
+PASS provider normalized results reject unrecognized status/provider/PII error
+19 tests, 0 failures
+=== hardening-unit (exit 0) ===
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures
+=== session (exit 0) ===
+PASS session HTTPS/cookie separation, rotation and expiry reset
+1 tests, 0 failures
+=== session-concurrency (exit 1) ===
+PASS F01-SESSION slow request releases lock before concurrent request finishes
+PASS F01-SESSION parallel mutations serialize without losing increments
+PASS F01-SESSION stale concurrent replacement gets 409
+FAIL F01-SESSION in-flight old request cannot resurrect after rotation: rmdir(C:\Users\alici\OneDrive\Desktop\hostidercp/storage/session-test-0fca6fdb20e87b47): Directory not empty
+PASS F01-SESSION in-flight old request cannot resurrect after logout
+PASS F01-SESSION failed mutation aborts and revocation hook denies subsequent write
+PASS F01-SESSION client SID is rejected in admin context
+7 tests, 1 failures

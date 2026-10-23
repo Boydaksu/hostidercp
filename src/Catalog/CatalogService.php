@@ -47,7 +47,7 @@ final readonly class CatalogService
     /** All fields are administrative proposals; HTTP authorization and explicit confirmation are separate. */
     public function execute(string $action,array $data,Principal $actor,string $trace): array
     {
-        $this->db->requireTransaction();
+        $this->db->requireTransaction();(new \Hostider\Core\Database\VersionFence($this->db))->advance('catalog');
         if($actor->impersonating){throw new HttpError(403,'CATALOG_IMPERSONATION_FORBIDDEN');}
         $id=Id::uuid();
         switch($action) {

@@ -58,4 +58,5 @@ jobs:
       - run: php tests/commerce-http.php
       - run: php tests/currency-change.php
       - run: php tests/commerce-events.php
+      - run: php tests/post-delivery.php
       - run: node --check public/assets/commerce.js

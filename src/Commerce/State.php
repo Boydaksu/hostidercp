@@ -7,11 +7,15 @@ use Hostider\Core\Database\Database;
 final readonly class State
 {
     public function __construct(private Database $db) {}
-    public function lock(?string $customer,string $actor): array
+    public function lock(?string $customer,string $actor,string $action): array
     {
         $this->db->requireTransaction();$state=[];
-        foreach(['catalog_tax_rules','catalog_categories','catalog_cycles','catalog_items','catalog_products','catalog_variants','catalog_option_groups','catalog_option_values','catalog_addons','catalog_product_addons','catalog_prices','catalog_cost_proposals','catalog_provider_mappings','catalog_promotions','catalog_redemptions','pricing_fx_rates','finance_cash_categories','finance_recurring_rules','finance_due_expenses','finance_cash_entries'] as $table){$state[$table]=$this->db->execute('SELECT * FROM '.$table.' ORDER BY 1 FOR UPDATE')->fetchAll();}
+        $versions=new \Hostider\Core\Database\VersionFence($this->db);
+        if(in_array($action,Commands::CATALOG,true)||$action==='quote-create'){$state['catalog_version']=$versions->read('catalog',$action!=='quote-create');}
+        if(in_array($action,['quote-create','fx-create','customer-currency','order-refund'],true)){$state['fx_version']=$versions->read('fx',$action==='fx-create');}
+        if(in_array($action,['cash-category','expense-create','recurring-create','recurring-due','recurring-pay'],true)){$state['cash_version']=$versions->read('cash',true);}
         if($customer!==null){
+            $state['account']=$this->db->execute('SELECT id,currency,version FROM identity_customers WHERE id=? FOR UPDATE',[$customer])->fetchAll();
             foreach(['orders','billing_requests','pricing_quotes','finance_wallets','finance_payments','finance_allocations','payment_attempts'] as $table){$state[$table]=$this->db->execute('SELECT * FROM '.$table.' WHERE customer_id=? ORDER BY id FOR UPDATE',[$customer])->fetchAll();}
             $state['billing_states']=$this->db->execute('SELECT s.* FROM billing_request_states s JOIN billing_requests r ON r.id=s.request_id WHERE r.customer_id=? ORDER BY s.request_id FOR UPDATE',[$customer])->fetchAll();
             $state['wallet_entries']=$this->db->execute('SELECT e.* FROM finance_wallet_entries e JOIN finance_wallets w ON w.id=e.wallet_id WHERE w.customer_id=? ORDER BY e.id FOR UPDATE',[$customer])->fetchAll();
@@ -19,8 +23,8 @@ final readonly class State
             $state['notices']=$this->db->execute('SELECT n.* FROM payment_bank_notices n JOIN payment_attempts a ON a.id=n.attempt_id WHERE a.customer_id=? ORDER BY n.id FOR UPDATE',[$customer])->fetchAll();
             $state['documents']=$this->db->execute('SELECT * FROM billing_official_documents WHERE customer_id=? ORDER BY id FOR UPDATE',[$customer])->fetchAll();
         }
-        $state['addon_policies']=$this->db->execute('SELECT * FROM catalog_addon_policies ORDER BY addon_id FOR UPDATE')->fetchAll();
-        $state['uploads']=$this->db->execute('SELECT * FROM billing_uploads WHERE actor_id=? ORDER BY id FOR UPDATE',[$actor])->fetchAll();
+        if($customer!==null){$state['reconciliations']=$this->db->execute('SELECT r.* FROM finance_reconciliations r JOIN finance_payments p ON p.id=r.subject_id WHERE p.customer_id=? ORDER BY r.id FOR UPDATE',[$customer])->fetchAll();$state['resolutions']=$this->db->execute('SELECT * FROM finance_reconciliation_resolutions WHERE customer_id=? ORDER BY id FOR UPDATE',[$customer])->fetchAll();}
+        if(str_starts_with($action,'document-')){$state['uploads']=$this->db->execute('SELECT * FROM billing_uploads WHERE actor_id=? ORDER BY id FOR UPDATE',[$actor])->fetchAll();}
         return self::strings($state);
     }
     private static function strings(array $data): array

@@ -14,7 +14,7 @@ final class Controller
     {
         foreach(['admin','client'] as $context){
             $base='/api/v1/'.$context.'/commerce/';
-            foreach(['status','catalog','configuration','catalog-admin','orders','order','bills','bill','wallet','payments','notices','cash','ledger','reconciliations','documents','document'] as $view){$router->add('GET',$base.$view,fn(Request $r,string $trace): Response=>$this->view($r,$context,$view,$trace));}
+            foreach(['status','catalog','configuration','catalog-admin','orders','order','bills','bill','wallet','payments','notices','cash','ledger','reconciliations','reconciliation','documents','document'] as $view){$router->add('GET',$base.$view,fn(Request $r,string $trace): Response=>$this->view($r,$context,$view,$trace));}
             $router->add('POST',$base.'prepare',fn(Request $r,string $trace): Response=>$this->mutation($r,$context,true,$trace));
             $router->add('POST',$base.'execute',fn(Request $r,string $trace): Response=>$this->mutation($r,$context,false,$trace));
             $router->add('GET','/'.$context.'/commerce',fn(): Response=>Panel::response($context));
@@ -45,10 +45,10 @@ final class Controller
             $customer=$this->customer($u,$session,$this->query($r,'customer'));$p=$this->s->identity->principal($u,$session);
             if($p->impersonating){throw new HttpError(403,'FINANCIAL_IMPERSONATION_FORBIDDEN');}
             if($view==='status'){return Response::data(['name'=>$u['display_name'],'permissions'=>$p->permissions,'customer_id'=>$customer,'staff'=>$p->staff,'administrative'=>$p->administrative,'environment'=>$this->config->environment,'step_up_fresh'=>(int)$session['verified']>time()-300,'live_payments'=>false,'live_provisioning'=>false],$trace);}
-            $permission=match($view){'catalog','configuration'=>'catalog.view','catalog-admin'=>'catalog.manage','orders','order'=>'orders.view','bills','bill','documents','document'=>'billing.view','wallet'=>'wallet.view','payments','notices'=>'billing.view','cash','ledger','reconciliations'=>'finance.view',default=>throw new HttpError(404,'VIEW_NOT_FOUND')};
+            $permission=match($view){'catalog','configuration'=>'catalog.view','catalog-admin'=>'catalog.manage','orders','order'=>'orders.view','bills','bill','documents','document'=>'billing.view','wallet'=>'wallet.view','payments','notices'=>'billing.view','cash','ledger','reconciliations','reconciliation'=>'finance.view',default=>throw new HttpError(404,'VIEW_NOT_FOUND')};
             $global=in_array($view,['catalog','configuration','catalog-admin','cash','ledger','reconciliations'],true);if(!$global&&$customer===null){throw new HttpError(422,'CUSTOMER_REQUIRED');}
             $this->s->identity->authorize($u,$session,$permission,$global?null:$customer);
-            if(in_array($view,['catalog-admin','cash','ledger','reconciliations'],true)&&!$p->staff){throw new HttpError(403,'STAFF_REQUIRED');}
+            if(in_array($view,['catalog-admin','cash','ledger','reconciliations','reconciliation'],true)&&!$p->staff){throw new HttpError(403,'STAFF_REQUIRED');}
             $offset=$this->query($r,'offset')??'0';if(!ctype_digit($offset)||(int)$offset>1000000){throw new HttpError(422,'INVALID_OFFSET');}$offset=(int)$offset;
             $id=$this->query($r,'id');$data=match($view){
                 'catalog'=>$this->s->catalog->repository->listProducts(true,$offset),'configuration'=>$this->s->catalog->repository->configuration($id??throw new HttpError(422,'ID_REQUIRED')),
@@ -57,7 +57,8 @@ final class Controller
                 'payments'=>$this->s->db->execute('SELECT id,method,external_reference,CAST(amount_minor AS CHAR) amount_minor,currency,created_at FROM finance_payments WHERE customer_id=? ORDER BY created_at DESC,id LIMIT 50 OFFSET '.$offset,[$customer])->fetchAll(),
                 'notices'=>$this->s->db->execute('SELECT n.id,n.attempt_id,n.status,n.version,a.purpose,a.order_id,CAST(a.expected_minor AS CHAR) expected_minor,a.currency FROM payment_bank_notices n JOIN payment_attempts a ON a.id=n.attempt_id WHERE a.customer_id=? ORDER BY n.created_at DESC,n.id LIMIT 50 OFFSET '.$offset,[$customer])->fetchAll(),
                 'cash'=>$this->s->cash->report()+['categories'=>$this->s->db->execute('SELECT * FROM finance_cash_categories ORDER BY id LIMIT 50 OFFSET '.$offset)->fetchAll(),'recurring'=>$this->s->db->execute('SELECT * FROM finance_recurring_rules ORDER BY id LIMIT 50 OFFSET '.$offset)->fetchAll(),'due'=>$this->s->db->execute('SELECT * FROM finance_due_expenses ORDER BY id LIMIT 50 OFFSET '.$offset)->fetchAll()],
-                'ledger'=>$this->ledger($offset),'reconciliations'=>$this->s->db->execute('SELECT id,subject_id,code,actor_id,trace_id,created_at FROM finance_reconciliations ORDER BY created_at DESC,id LIMIT 50 OFFSET '.$offset)->fetchAll(),
+                'reconciliation'=>(new \Hostider\Finance\Reconciliation($this->s->db,$this->config,$this->s->finance))->detail($id??throw new HttpError(422,'ID_REQUIRED'),$customer,$p),
+                'ledger'=>$this->ledger($offset),'reconciliations'=>$this->s->db->execute('SELECT r.id,r.subject_id,r.code,r.actor_id,r.trace_id,r.created_at,p.customer_id,CASE WHEN x.id IS NULL THEN \'OPEN\' ELSE \'RESOLVED\' END status,x.action resolution_action,x.evidence_sha256 FROM finance_reconciliations r LEFT JOIN finance_payments p ON p.id=r.subject_id LEFT JOIN finance_reconciliation_resolutions x ON x.case_id=r.id ORDER BY r.created_at DESC,r.id LIMIT 50 OFFSET '.$offset)->fetchAll(),
                 'documents'=>$this->s->documents()->list($id??throw new HttpError(422,'ID_REQUIRED'),$customer),'document'=>$this->s->documents()->download($id??throw new HttpError(422,'ID_REQUIRED'),$customer)};
             if($view==='document'){return new Response(200,[],binary:$data['bytes'],downloadName:$data['filename']);}return Response::data(self::moneyStrings($data),$trace);
         });
@@ -94,6 +95,10 @@ final class Controller
                     $confirmation=$data['confirmation']??new \stdClass();if(!$confirmation instanceof \stdClass){throw new HttpError(422,'CONFIRMATION_OBJECT_REQUIRED');}
                     return $prepare?$confirmations->prepare($u,$session,$action,$payload,$customer):$confirmations->execute($u,$session,$action,$payload,$customer,get_object_vars($confirmation),$trace);
                 });return ['encrypted'=>$crypto->encrypt(json_encode($out,JSON_THROW_ON_ERROR),'commerce-result:'.$binding)];
+            },function()use($native,$context,$action,$requested): void {
+                $this->s->identity->withStepUp($native->reference,$context,function(array $u,array $session)use($action,$requested): void {
+                    (new Commands($this->s))->authorize($u,$session,$action,$this->customer($u,$session,$requested));
+                });
             });
             return Response::data(json_decode($crypto->decrypt($result['encrypted'],'commerce-result:'.$binding),true,64,JSON_THROW_ON_ERROR),$trace);
         }catch(\InvalidArgumentException|\OverflowException|\DivisionByZeroError){throw new HttpError(422,'INVALID_FINANCIAL_VALUE');}

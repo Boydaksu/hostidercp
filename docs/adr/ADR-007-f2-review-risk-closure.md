@@ -1,0 +1,13 @@
+# ADR-007 — F2 denetimi: mutabakat, onay sınırı ve köken
+
+23 Ekim 2026. Kullanıcının F2 teslim sonrası denetim talimatına göre yalnız doğrulanan eksikler giderilir; mevcut ticari kararlar değişmez.
+
+Mutabakat bir kayıt etiketiyle bitmez. Yeni immutable resolution, unique case, şifreli kanıt ve kanıt özeti, actor/trace/effect bağlantısı taşır. Scoped finance.approve + güncel step-up + server-bound confirmation zorunludur. Desteklenen çözüm, mevcut doğrulanmış tahsilatın bütün dağıtılmamış bakiyesini mevcut wallet-credit veya original refund reserve servisine yönlendirir. Bakiye zaten sıfırsa yalnız kanıtlı no-funds incelemesi kapanabilir. FX/orijinal yöntem politikası belirsizse case açık kalır. Dış para transferi veya gateway davranışı uydurulmaz.
+
+Ölçülen global State taraması yerine catalog/fx/cash aggregate version fence kullanılır. Salt quote shared catalog+FX fence; katalog/kur/kasa yazarı ilgili fence'i business row'lardan önce exclusive alıp aynı transaction'da artırır. Müşteri finans işlemi ilgisiz global fence almaz. Müşteri state/hash, güncel plan hash, Identity commit fence, request/payment/wallet kilitleri korunur. Order-submit immutable quote'a bağlıdır; yeniden katalog fiyatı değerlendirmez. Version değişimi eski onayı reddeder. Katalog/FX'de yeni INSERT phantom'u da fence sayesinde plan/execute arasına giremez. DB dışından veya yeni kod yoluyla tablo yazmak bu protokolü bozabilir; runtime schema yetkisi ve bütün application writer'ların service üzerinden geçmesi şarttır. Yeni 022 migration merkezi fence yapısını kurar; önceki migration'lar değişmez.
+
+Idempotency cache yalnız işin tekrarını önler; authorization cache değildir. Mevcut Core Idempotency'ye isteğe bağlı validateReplay callback eklendi. Commerce bu callback içinde aynı transaction'da Identity user/session fence altında fresh step-up, permission ve customer scope'u yeniden doğrular. İlk işlem yolu aynı kontrolleri zaten yapar. Diğer çağrıların davranışı varsayılan olarak değişmez; finans için SAVEPOINT preview kullanılmaz.
+
+Sipariş kökeni yeni 021 migration ile immutable olur. Mevcut satırlar LEGACY_UNKNOWN, yeni Commerce satırı Config ortamını alır. Queue SUCCEEDED provisioning değildir. Handoff canonical sipariş/fatura/item üzerinden yeniden keşfedilir; test/staging/legacy karantinadadır. Claim/operation/UNKNOWN sağlayıcı akışı F3 sözleşmesi olarak belgelenir; F3 kodu veya gerçek handler başlatılmaz.
+
+Bu yöntemler test edilen yerel yük için seçilmiştir. Onay TTL, kur veya ticari limitler değişmedi; önerilen performans hedefi kullanıcı kararı sayılmaz. Production GATE'leri ve repository ayarları değiştirilmedi.

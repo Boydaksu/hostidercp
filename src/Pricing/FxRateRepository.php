@@ -10,7 +10,7 @@ final readonly class FxRateRepository
     public function __construct(private Database $db,private Config $config) {}
     public function publishSynthetic(FxSnapshot $rate,bool $trusted): string
     {
-        $this->db->requireTransaction();
+        $this->db->requireTransaction();(new \Hostider\Core\Database\VersionFence($this->db))->advance('fx');
         if($this->config->environment!=='test'){throw new HttpError(403,'SYNTHETIC_RATE_FORBIDDEN');}
         $id=Id::uuid(); $data=$rate->jsonSerialize();
         $this->db->execute('INSERT INTO pricing_fx_rates(id,source_currency,target_currency,rate,spread,source_reference,observed_at,trusted) VALUES (?,?,?,?,?,?,?,?)',[$id,$data['source'],$data['target'],$data['rate'],$data['spread'],$data['reference'],$data['observed_at'],$trusted?1:0]); return $id;

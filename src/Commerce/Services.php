@@ -19,7 +19,7 @@ final readonly class Services
     {
         $this->identity=new \Hostider\Identity\IdentityService($db,$config);$this->catalog=new \Hostider\Catalog\CatalogService($db);$this->fx=new \Hostider\Pricing\FxRateRepository($db,$config);
         $this->quotes=new \Hostider\Pricing\QuoteService($db,$this->catalog->repository,new \Hostider\Pricing\PriceResolver($this->catalog->repository,$this->fx,new \Hostider\Pricing\ExchangeRatePolicy(3600)));
-        $this->finance=new \Hostider\Finance\FinanceService($db,$config);$this->billing=new \Hostider\Billing\BillingService($db,$config,$this->finance);$this->orders=new \Hostider\Orders\OrderService($db,$this->billing,$this->quotes);$this->payments=new \Hostider\Payments\PaymentService($db,$config,$this->finance,$this->billing,$this->orders);$this->cash=new \Hostider\Finance\CashService($db,$config);
+        $this->finance=new \Hostider\Finance\FinanceService($db,$config);$this->billing=new \Hostider\Billing\BillingService($db,$config,$this->finance);$this->orders=new \Hostider\Orders\OrderService($db,$this->billing,$this->quotes,$config->environment);$this->payments=new \Hostider\Payments\PaymentService($db,$config,$this->finance,$this->billing,$this->orders);$this->cash=new \Hostider\Finance\CashService($db,$config);
         $this->credits=new \Hostider\Billing\Credits($db,$this->billing,$this->finance,$this->orders,$this->fx);
     }
     public function documents(): \Hostider\Billing\DocumentService

@@ -13,7 +13,7 @@ use Hostider\Pricing\QuoteService;
 final readonly class OrderService
 {
     public Repository $repository;
-    public function __construct(private Database $db,private BillingService $billing,private QuoteService $quotes) { $this->repository=new Repository($db); }
+    public function __construct(private Database $db,private BillingService $billing,private QuoteService $quotes,private string $originEnvironment='LEGACY_UNKNOWN') { $this->repository=new Repository($db); }
     private function mutation(Principal $actor): void
     {
         $this->db->requireTransaction(); if($actor->impersonating){throw new HttpError(403,'FINANCIAL_IMPERSONATION_FORBIDDEN');}
@@ -24,7 +24,7 @@ final readonly class OrderService
         if(isset($customerSnapshot['currency'])&&$quote['currency']!==$customerSnapshot['currency']){throw new HttpError(409,'ACCOUNT_CURRENCY_CHANGED_REQUOTE_REQUIRED');}
         $old=$this->db->execute('SELECT * FROM orders WHERE quote_id=? FOR UPDATE',[$quoteId])->fetch();
         if($old){return $old;}
-        $id=Id::uuid(); $this->db->execute("INSERT INTO orders(id,customer_id,quote_id,status) VALUES (?,?,?,'AWAITING_PAYMENT')",[$id,$customer,$quoteId]);
+        $id=Id::uuid(); $this->db->execute("INSERT INTO orders(id,customer_id,quote_id,status,origin_environment) VALUES (?,?,?,'AWAITING_PAYMENT',?)",[$id,$customer,$quoteId,$this->originEnvironment]);
         foreach($quote['lines'] as $line){$this->db->execute('INSERT INTO order_items(id,order_id,product_id,snapshot) VALUES (?,?,?,?)',[Id::uuid(),$id,$line['product_id'],json_encode($line,JSON_THROW_ON_ERROR)]);}
         (new Promotions($this->db))->redeem($quote['promotions'],$id,$customer,$quote['renewal'],$now);
         $request=$this->billing->issue($id,$quote,$customerSnapshot,$actor,$trace);

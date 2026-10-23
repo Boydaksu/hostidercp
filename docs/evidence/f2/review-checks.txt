@@ -1,0 +1,10 @@
+173 PHP files checked; 0 violations
+179 source/config/test files scanned; 0 findings
+Runtime third-party PHP dependencies: 0; embedded reference SDK is not loaded
+Pattern scan is not a complete secret or vulnerability audit
+Note: Using configuration file C:\Users\alici\OneDrive\Desktop\hostidercp\phpstan.neon.
+
+ [OK] No errors                                                                                                        
+
+No security vulnerability advisories found.
+JavaScript syntax PASS

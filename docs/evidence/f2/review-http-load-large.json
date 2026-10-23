@@ -1,0 +1,140 @@
+{
+    "database": "10.11.18-MariaDB",
+    "transport": "loopback HTTP; 8 independent PHP servers; real auth\/CSRF\/step-up\/confirmations; 5 rounds per workload",
+    "runs": [
+        {
+            "workers": 1,
+            "scope": "different",
+            "counts": {
+                "prepare_200": 5,
+                "execute_200": 5
+            },
+            "latency": {
+                "prepare": {
+                    "requests": 5,
+                    "p50_ms": 71.521,
+                    "p95_ms": 71.79,
+                    "max_ms": 76.82700000000001
+                },
+                "execute": {
+                    "requests": 5,
+                    "p50_ms": 70.44,
+                    "p95_ms": 74.437,
+                    "max_ms": 78.861
+                }
+            }
+        },
+        {
+            "workers": 1,
+            "scope": "same",
+            "counts": {
+                "prepare_200": 5,
+                "execute_200": 5
+            },
+            "latency": {
+                "prepare": {
+                    "requests": 5,
+                    "p50_ms": 60.225,
+                    "p95_ms": 61.641,
+                    "max_ms": 68.804
+                },
+                "execute": {
+                    "requests": 5,
+                    "p50_ms": 52.065,
+                    "p95_ms": 61.857,
+                    "max_ms": 63.980999999999995
+                }
+            }
+        },
+        {
+            "workers": 4,
+            "scope": "different",
+            "counts": {
+                "prepare_200": 20,
+                "execute_200": 20
+            },
+            "latency": {
+                "prepare": {
+                    "requests": 20,
+                    "p50_ms": 48.369,
+                    "p95_ms": 68.953,
+                    "max_ms": 69.743
+                },
+                "execute": {
+                    "requests": 20,
+                    "p50_ms": 60.67,
+                    "p95_ms": 66.43400000000001,
+                    "max_ms": 70.29199999999999
+                }
+            }
+        },
+        {
+            "workers": 4,
+            "scope": "same",
+            "counts": {
+                "prepare_200": 20,
+                "execute_200": 5,
+                "execute_409": 15
+            },
+            "latency": {
+                "prepare": {
+                    "requests": 20,
+                    "p50_ms": 63.596,
+                    "p95_ms": 101.93599999999999,
+                    "max_ms": 102.203
+                },
+                "execute": {
+                    "requests": 20,
+                    "p50_ms": 68.16999999999999,
+                    "p95_ms": 109.595,
+                    "max_ms": 113.833
+                }
+            }
+        },
+        {
+            "workers": 8,
+            "scope": "different",
+            "counts": {
+                "prepare_200": 40,
+                "execute_200": 40
+            },
+            "latency": {
+                "prepare": {
+                    "requests": 40,
+                    "p50_ms": 68.481,
+                    "p95_ms": 77.246,
+                    "max_ms": 78.786
+                },
+                "execute": {
+                    "requests": 40,
+                    "p50_ms": 62.542,
+                    "p95_ms": 78.369,
+                    "max_ms": 93.487
+                }
+            }
+        },
+        {
+            "workers": 8,
+            "scope": "same",
+            "counts": {
+                "prepare_200": 40,
+                "execute_409": 35,
+                "execute_200": 5
+            },
+            "latency": {
+                "prepare": {
+                    "requests": 40,
+                    "p50_ms": 130.09699999999998,
+                    "p95_ms": 212.739,
+                    "max_ms": 238.249
+                },
+                "execute": {
+                    "requests": 40,
+                    "p50_ms": 124.597,
+                    "p95_ms": 200.131,
+                    "max_ms": 215.362
+                }
+            }
+        }
+    ]
+}

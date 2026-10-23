@@ -1,0 +1,10 @@
+PASS F2-G HTTP requires login fresh step-up CSRF and scoped customer ownership
+PASS F2-G HTTP quote and order work and approved command replay is atomic
+PASS F2-G HTTP topup bank approval mixed funding and ready fact use actual services
+PASS F2-G HTTP official PDF download is attachment and another customer cannot fetch it
+PASS F2-G HTTP real PayTR callback and unsupported privileged commands remain closed
+PASS F2-G HTTP panel JavaScript and stylesheet are actually served by the local router
+PASS F2-G company ledger is staff-only and exposes exact minor strings
+PASS Review HTTP idempotent replay still requires fresh step-up
+PASS F2-G production commerce mutation gate rejects before opening business database
+9 tests, 0 failures

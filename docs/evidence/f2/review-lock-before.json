@@ -1,0 +1,181 @@
+{
+    "label": "before",
+    "database": "10.11.18-MariaDB",
+    "volume": {
+        "catalog_products": 319,
+        "catalog_prices": 381,
+        "finance_cash_entries": 8,
+        "finance_wallet_entries": 134,
+        "orders": 85
+    },
+    "synthetic_hold_ms": 20,
+    "runs": [
+        {
+            "concurrency": 1,
+            "scope": "different",
+            "transactions": 10,
+            "errors": [],
+            "elapsed_ms": 708.7225,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 10.0424,
+                    "p95": 11.9219,
+                    "max": 16.2197
+                },
+                "transaction_ms": {
+                    "p50": 30.7393,
+                    "p95": 45.1207,
+                    "max": 45.5442
+                }
+            }
+        },
+        {
+            "concurrency": 1,
+            "scope": "same",
+            "transactions": 10,
+            "errors": [],
+            "elapsed_ms": 770.8973,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 10.9491,
+                    "p95": 12.7296,
+                    "max": 23.43
+                },
+                "transaction_ms": {
+                    "p50": 45.0903,
+                    "p95": 45.408,
+                    "max": 45.5002
+                }
+            }
+        },
+        {
+            "concurrency": 4,
+            "scope": "different",
+            "transactions": 40,
+            "errors": [],
+            "elapsed_ms": 2097.845,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 136.067,
+                    "p95": 161.4768,
+                    "max": 163.521
+                },
+                "transaction_ms": {
+                    "p50": 165.9915,
+                    "p95": 196.0778,
+                    "max": 196.1642
+                }
+            }
+        },
+        {
+            "concurrency": 4,
+            "scope": "same",
+            "transactions": 40,
+            "errors": [],
+            "elapsed_ms": 2141.321,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 146.0233,
+                    "p95": 159.6566,
+                    "max": 161.9154
+                },
+                "transaction_ms": {
+                    "p50": 180.0766,
+                    "p95": 181.2223,
+                    "max": 195.6028
+                }
+            }
+        },
+        {
+            "concurrency": 8,
+            "scope": "different",
+            "transactions": 80,
+            "errors": [],
+            "elapsed_ms": 3431.8055,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 253.1062,
+                    "p95": 309.8737,
+                    "max": 315.5056
+                },
+                "transaction_ms": {
+                    "p50": 285.776,
+                    "p95": 332.0735,
+                    "max": 347.3621
+                }
+            }
+        },
+        {
+            "concurrency": 8,
+            "scope": "same",
+            "transactions": 80,
+            "errors": [],
+            "elapsed_ms": 3668.593,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 269.8747,
+                    "p95": 329.5245,
+                    "max": 348.179
+                },
+                "transaction_ms": {
+                    "p50": 301.6614,
+                    "p95": 362.5466,
+                    "max": 377.7275
+                }
+            }
+        }
+    ],
+    "explain": [
+        {
+            "sql": "SELECT * FROM catalog_prices ORDER BY 1 FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "catalog_prices",
+                    "type": "index",
+                    "possible_keys": null,
+                    "key": "PRIMARY",
+                    "key_len": "36",
+                    "ref": null,
+                    "rows": "381",
+                    "Extra": ""
+                }
+            ]
+        },
+        {
+            "sql": "SELECT * FROM finance_wallets WHERE customer_id=? ORDER BY id FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": null,
+                    "type": null,
+                    "possible_keys": null,
+                    "key": null,
+                    "key_len": null,
+                    "ref": null,
+                    "rows": null,
+                    "Extra": "Impossible WHERE noticed after reading const tables"
+                }
+            ]
+        },
+        {
+            "sql": "SELECT * FROM payment_attempts WHERE customer_id=? ORDER BY id FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "payment_attempts",
+                    "type": "ref",
+                    "possible_keys": "ix_attempt_customer",
+                    "key": "ix_attempt_customer",
+                    "key_len": "36",
+                    "ref": "const",
+                    "rows": "1",
+                    "Extra": "Using index condition; Using where; Using filesort"
+                }
+            ]
+        }
+    ]
+}

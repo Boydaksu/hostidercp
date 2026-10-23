@@ -10,7 +10,7 @@ final readonly class CashService
 {
     private Crypto $crypto;
     public function __construct(private Database $db,Config $config){$this->crypto=new Crypto(base64_decode($config->key,true));}
-    private function mutation(Principal $actor): void {$this->db->requireTransaction();if($actor->impersonating){throw new HttpError(403,'FINANCIAL_IMPERSONATION_FORBIDDEN');}}
+    private function mutation(Principal $actor): void {$this->db->requireTransaction();if($actor->impersonating){throw new HttpError(403,'FINANCIAL_IMPERSONATION_FORBIDDEN');}(new \Hostider\Core\Database\VersionFence($this->db))->advance('cash');}
     private function event(string $id,Principal $actor): void
     {
         $trace=Id::uuid();(new \Hostider\Core\Security\Audit($this->db))->record($actor,\Hostider\Core\Security\AuditEvent::CashChanged,$id,$trace);

@@ -1,0 +1,422 @@
+{
+    "label": "after-large",
+    "database": "10.11.18-MariaDB",
+    "volume": {
+        "catalog_products": 1411,
+        "catalog_prices": 1504,
+        "finance_cash_entries": 12,
+        "finance_wallet_entries": 213,
+        "orders": 132
+    },
+    "synthetic_hold_ms": 20,
+    "runs": [
+        {
+            "concurrency": 1,
+            "scope": "different",
+            "db_row_lock_wait_ms_total": 0,
+            "transactions": 10,
+            "errors": [],
+            "elapsed_ms": 645.1036,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 5.1994,
+                    "p95": 5.7156,
+                    "max": 11.7572
+                },
+                "transaction_ms": {
+                    "p50": 30.04,
+                    "p95": 30.5534,
+                    "max": 39.2098
+                }
+            }
+        },
+        {
+            "concurrency": 1,
+            "scope": "same",
+            "db_row_lock_wait_ms_total": 0,
+            "transactions": 10,
+            "errors": [],
+            "elapsed_ms": 647.5445,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 5.3157,
+                    "p95": 6.0326,
+                    "max": 11.4637
+                },
+                "transaction_ms": {
+                    "p50": 30.0291,
+                    "p95": 30.5259,
+                    "max": 34.5994
+                }
+            }
+        },
+        {
+            "concurrency": 4,
+            "scope": "different",
+            "db_row_lock_wait_ms_total": 0,
+            "transactions": 40,
+            "errors": [],
+            "elapsed_ms": 723.432,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 5.3138,
+                    "p95": 8.7024,
+                    "max": 9.3268
+                },
+                "transaction_ms": {
+                    "p50": 30.0063,
+                    "p95": 30.4257,
+                    "max": 36.3563
+                }
+            }
+        },
+        {
+            "concurrency": 4,
+            "scope": "same",
+            "db_row_lock_wait_ms_total": 3350,
+            "transactions": 40,
+            "errors": [],
+            "elapsed_ms": 1607.7444,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 94.3343,
+                    "p95": 96.1191,
+                    "max": 99.0872
+                },
+                "transaction_ms": {
+                    "p50": 120.0305,
+                    "p95": 120.5516,
+                    "max": 120.6569
+                }
+            }
+        },
+        {
+            "concurrency": 8,
+            "scope": "different",
+            "db_row_lock_wait_ms_total": 0,
+            "transactions": 80,
+            "errors": [],
+            "elapsed_ms": 830.7144,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 6.1528,
+                    "p95": 7.6581,
+                    "max": 14.5961
+                },
+                "transaction_ms": {
+                    "p50": 30.0475,
+                    "p95": 32.7365,
+                    "max": 44.0496
+                }
+            }
+        },
+        {
+            "concurrency": 8,
+            "scope": "same",
+            "db_row_lock_wait_ms_total": 15687,
+            "transactions": 80,
+            "errors": [],
+            "elapsed_ms": 2911.1365,
+            "metrics": {
+                "lock_ms": {
+                    "p50": 215.6693,
+                    "p95": 218.0483,
+                    "max": 221.3371
+                },
+                "transaction_ms": {
+                    "p50": 241.1992,
+                    "p95": 242.8363,
+                    "max": 243.6475
+                }
+            }
+        }
+    ],
+    "explain": [
+        {
+            "sql": "SELECT * FROM catalog_prices ORDER BY 1 FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "catalog_prices",
+                    "type": "index",
+                    "possible_keys": null,
+                    "key": "PRIMARY",
+                    "key_len": "36",
+                    "ref": null,
+                    "rows": "1484",
+                    "Extra": ""
+                }
+            ],
+            "analyze": {
+                "query_optimization": {
+                    "r_total_time_ms": 0.007084831
+                },
+                "query_block": {
+                    "select_id": 1,
+                    "r_loops": 1,
+                    "r_total_time_ms": 0.380489486,
+                    "nested_loop": [
+                        {
+                            "table": {
+                                "table_name": "catalog_prices",
+                                "access_type": "index",
+                                "key": "PRIMARY",
+                                "key_length": "36",
+                                "used_key_parts": [
+                                    "id"
+                                ],
+                                "r_loops": 1,
+                                "rows": 1484,
+                                "r_rows": 1504,
+                                "r_table_time_ms": 0.322330997,
+                                "r_other_time_ms": 0.056167296,
+                                "r_engine_stats": {
+                                    "pages_accessed": 24
+                                },
+                                "filtered": 100,
+                                "r_filtered": 100
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "sql": "SELECT * FROM commerce_state_versions WHERE aggregate_name='catalog' LOCK IN SHARE MODE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "commerce_state_versions",
+                    "type": "const",
+                    "possible_keys": "PRIMARY",
+                    "key": "PRIMARY",
+                    "key_len": "26",
+                    "ref": "const",
+                    "rows": "1",
+                    "Extra": ""
+                }
+            ],
+            "analyze": {
+                "query_optimization": {
+                    "r_total_time_ms": 0.014245851
+                },
+                "query_block": {
+                    "select_id": 1,
+                    "r_loops": 1,
+                    "r_total_time_ms": 0.0007076595,
+                    "nested_loop": [
+                        {
+                            "table": {
+                                "table_name": "commerce_state_versions",
+                                "access_type": "const",
+                                "possible_keys": [
+                                    "PRIMARY"
+                                ],
+                                "key": "PRIMARY",
+                                "key_length": "26",
+                                "used_key_parts": [
+                                    "aggregate_name"
+                                ],
+                                "ref": [
+                                    "const"
+                                ],
+                                "r_loops": 0,
+                                "rows": 1,
+                                "r_rows": null,
+                                "r_engine_stats": {
+                                    "pages_accessed": 1
+                                },
+                                "filtered": 100,
+                                "r_filtered": null
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "sql": "SELECT * FROM finance_allocations WHERE customer_id=? ORDER BY id FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "finance_allocations",
+                    "type": "ref",
+                    "possible_keys": "ix_allocation_customer",
+                    "key": "ix_allocation_customer",
+                    "key_len": "36",
+                    "ref": "const",
+                    "rows": "1",
+                    "Extra": "Using index condition; Using where"
+                }
+            ],
+            "analyze": {
+                "query_optimization": {
+                    "r_total_time_ms": 0.022425461
+                },
+                "query_block": {
+                    "select_id": 1,
+                    "r_loops": 1,
+                    "r_total_time_ms": 0.011311569,
+                    "nested_loop": [
+                        {
+                            "table": {
+                                "table_name": "finance_allocations",
+                                "access_type": "ref",
+                                "possible_keys": [
+                                    "ix_allocation_customer"
+                                ],
+                                "key": "ix_allocation_customer",
+                                "key_length": "36",
+                                "used_key_parts": [
+                                    "customer_id"
+                                ],
+                                "ref": [
+                                    "const"
+                                ],
+                                "r_loops": 1,
+                                "rows": 1,
+                                "r_rows": 1,
+                                "r_table_time_ms": 0.008423276,
+                                "r_other_time_ms": 0.001136648,
+                                "r_engine_stats": {
+                                    "pages_accessed": 3
+                                },
+                                "filtered": 100,
+                                "r_filtered": 100,
+                                "index_condition": "finance_allocations.customer_id = '78328dc1-4839-4c4b-b4a5-60898d908933'",
+                                "attached_condition": "finance_allocations.customer_id <=> '78328dc1-4839-4c4b-b4a5-60898d908933'"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "sql": "SELECT * FROM finance_wallets WHERE customer_id=? ORDER BY id FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "finance_wallets",
+                    "type": "const",
+                    "possible_keys": "customer_id",
+                    "key": "customer_id",
+                    "key_len": "36",
+                    "ref": "const",
+                    "rows": "1",
+                    "Extra": ""
+                }
+            ],
+            "analyze": {
+                "query_optimization": {
+                    "r_total_time_ms": 0.014241046
+                },
+                "query_block": {
+                    "select_id": 1,
+                    "r_loops": 1,
+                    "r_total_time_ms": 0.0005209637,
+                    "nested_loop": [
+                        {
+                            "table": {
+                                "table_name": "finance_wallets",
+                                "access_type": "const",
+                                "possible_keys": [
+                                    "customer_id"
+                                ],
+                                "key": "customer_id",
+                                "key_length": "36",
+                                "used_key_parts": [
+                                    "customer_id"
+                                ],
+                                "ref": [
+                                    "const"
+                                ],
+                                "r_loops": 0,
+                                "rows": 1,
+                                "r_rows": null,
+                                "r_engine_stats": {
+                                    "pages_accessed": 4
+                                },
+                                "filtered": 100,
+                                "r_filtered": null
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "sql": "SELECT * FROM payment_attempts WHERE customer_id=? ORDER BY id FOR UPDATE",
+            "explain": [
+                {
+                    "id": 1,
+                    "select_type": "SIMPLE",
+                    "table": "payment_attempts",
+                    "type": "ref",
+                    "possible_keys": "ix_attempt_customer",
+                    "key": "ix_attempt_customer",
+                    "key_len": "36",
+                    "ref": "const",
+                    "rows": "1",
+                    "Extra": "Using index condition; Using where; Using filesort"
+                }
+            ],
+            "analyze": {
+                "query_optimization": {
+                    "r_total_time_ms": 0.027594601
+                },
+                "query_block": {
+                    "select_id": 1,
+                    "r_loops": 1,
+                    "r_total_time_ms": 0.021275772,
+                    "nested_loop": [
+                        {
+                            "read_sorted_file": {
+                                "r_rows": 1,
+                                "filesort": {
+                                    "sort_key": "payment_attempts.`id`",
+                                    "r_loops": 1,
+                                    "r_total_time_ms": 0.016030443,
+                                    "r_used_priority_queue": false,
+                                    "r_output_rows": 1,
+                                    "r_buffer_size": "41KiB",
+                                    "r_sort_mode": "sort_key,packed_addon_fields",
+                                    "table": {
+                                        "table_name": "payment_attempts",
+                                        "access_type": "ref",
+                                        "possible_keys": [
+                                            "ix_attempt_customer"
+                                        ],
+                                        "key": "ix_attempt_customer",
+                                        "key_length": "36",
+                                        "used_key_parts": [
+                                            "customer_id"
+                                        ],
+                                        "ref": [
+                                            "const"
+                                        ],
+                                        "r_loops": 1,
+                                        "rows": 1,
+                                        "r_rows": 1,
+                                        "r_table_time_ms": 0.007073163,
+                                        "r_other_time_ms": 0.002727681,
+                                        "r_engine_stats": {
+                                            "pages_accessed": 4
+                                        },
+                                        "filtered": 100,
+                                        "r_filtered": 100,
+                                        "index_condition": "payment_attempts.customer_id = '78328dc1-4839-4c4b-b4a5-60898d908933'",
+                                        "attached_condition": "payment_attempts.customer_id <=> '78328dc1-4839-4c4b-b4a5-60898d908933'"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
