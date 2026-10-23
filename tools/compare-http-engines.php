@@ -1,0 +1,6 @@
+<?php
+declare(strict_types=1);
+// Same runner/PHP/DB/source, only child HTTP server JIT flags differ. Negative controls remain red.
+$count=filter_var($argv[1]??'30',FILTER_VALIDATE_INT);if($count===false||$count<1||$count>100){exit(2);}$results=[];$failed=false;$root=dirname(__DIR__);
+foreach(['inherit','interpreter'] as $engine){$env=getenv();$env['HTTP_TEST_ENGINE']=$engine;$pipes=[];$p=proc_open([PHP_BINARY,__DIR__.'/repeat-suite.php','commerce-http',(string)$count],[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes,$root,$env);fclose($pipes[0]);$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);$exit=proc_close($p);echo 'ENGINE '.$engine.' exit='.$exit.PHP_EOL.$out;$results[]=['engine'=>$engine,'exit'=>$exit,'stderr_bytes'=>strlen($err),'stderr_sha256'=>hash('sha256',$err)];$failed=$failed||$exit!==0;}
+$directory=$root.'/storage/ci-stability';if(!is_dir($directory)){mkdir($directory,0700,true);}file_put_contents($directory.'/paired-engines.json',json_encode(['php'=>PHP_VERSION,'os'=>PHP_OS_FAMILY,'iterations_per_engine'=>$count,'results'=>$results,'any_failure'=>$failed],JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR));exit($failed?1:0);
