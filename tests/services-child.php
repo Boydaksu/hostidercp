@@ -7,6 +7,6 @@ try{
     $f=json_decode(file_get_contents($argv[1]),true,32,JSON_THROW_ON_ERROR);$db=integrationDb();
     $config=new Config('test','https://test.example.invalid',$f['key'],getenv('TEST_DB_DSN'),getenv('TEST_DB_USER')?:'root',getenv('TEST_DB_PASSWORD')?:'');
     $engine=new Engine($db,$config);$actor=new Principal('service-test-worker',[]);
-    $result=($argv[2]==='discover')?$engine->discover($f['order'],$actor,Id::uuid()):$engine->claim($actor,Id::uuid(),$f['operation']);
+    $result=match($argv[2]){'discover'=>$engine->discover($f['order'],$actor,Id::uuid()),'work'=>(new \Hostider\Services\Runner($db,$config))->once($actor,$f['operation']),'schedule'=>(new \Hostider\Services\Scheduler($db,$config))->run(),default=>$engine->claim($actor,Id::uuid(),$f['operation'])};
     echo json_encode($result,JSON_THROW_ON_ERROR);
 }catch(Throwable){fwrite(STDERR,'SERVICE_CHILD_FAILED');exit(1);}

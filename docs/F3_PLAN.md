@@ -6,12 +6,12 @@ Onaylı taban ada37dc52b324e34380ba836ae7794cebb174ec4, 180 test. Kullanıcı F3
 
 | Faz | Gereksinim / P0 | Dosyalar / migration / test |
 |---|---|---|
-| A | FR-SERVICE; service/period/resource/config/price/ownership; ayrı state machine | src/Services model/repository; 023 additive şema; state/immutable/çoklu unit DB testleri |
-| B | FR-SERVICE/OPS; PROV-003/004, OPS-005 | canonical discovery, order-item/unit claim, unique operation/generation, outbox, lease/fence; 024; bağımsız PHP süreç/queue kaybı/lease testleri |
-| C | FR-HOSTING; OPS-001 | Providers/Hosting mock dünya + kapalı WHM sınırı; pool/mapping/kapasite/health/secret; 025; contract + seçim testleri |
-| D | PROV-001/002/006 | immutable attempts/results/evidence; UNKNOWN inspect ve scoped personel mutabakatı; 026; found/not-found/stale/rollback testleri |
-| E | FR-SERVICE; SVC-001/002/003 | politika mirası, onay, billing service üzerinden renewal order/period, wallet opt-in, grace/notification, cancel/termination safeguard, dual-owner transfer; 027; lifecycle DB/concurrency testleri |
-| F | SEC-004, OPS-001/005 | Identity tabanlı service HTTP controller, pure plan/confirmation, admin/client assets; 028 izin/onay; gerçek HTTP/IDOR/impersonation/replay testleri ve browser demo |
+| A | FR-SERVICE; service/period/resource/config/price/ownership; ayrı state machine | src/Services model/repository; gerçek migration 023–024; state/immutable/çoklu unit DB testleri |
+| B | FR-SERVICE/OPS; PROV-003/004, OPS-005 | canonical discovery, order-item/unit claim, unique operation/generation, outbox, lease/fence; gerçek migration 025; bağımsız PHP süreç/queue kaybı/lease testleri |
+| C | FR-HOSTING; OPS-001 | Providers/Hosting mock dünya + kapalı WHM sınırı; pool/mapping/kapasite/health/secret; gerçek migration 026–027; contract + seçim testleri |
+| D | PROV-001/002/006 | immutable attempts/results/evidence; UNKNOWN inspect ve scoped personel mutabakatı; gerçek migration 028; found/not-found/stale/rollback testleri |
+| E | FR-SERVICE; SVC-001/002/003 | politika mirası, onay, billing service üzerinden renewal order/period, wallet opt-in, grace/notification, cancel/termination safeguard, dual-owner transfer; 029–032 uygulandı, kalan ek şema ayrı migration; lifecycle DB/concurrency testleri |
+| F | SEC-004, OPS-001/005 | Identity tabanlı service HTTP controller, pure plan/confirmation, admin/client assets; izin/onay için sıradaki yeni migration; gerçek HTTP/IDOR/impersonation/replay testleri ve browser demo |
 
 Her fazdan sonra ilgili test/lint/PHPStan, teslim notu ve küçük commit; bir sonraki faz test geçmeden başlamaz. Mevcut 180 suite finalde ve PHP 8.3/8.4 CI'da korunur. Test HTTP sunucusu interpreter modunda kalır. Gerçek hosting JIT/cron testi G-O01'e bağlıdır.
 

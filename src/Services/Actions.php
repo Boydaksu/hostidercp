@@ -32,8 +32,23 @@ final readonly class Actions
     public function request(string $id,string $customer,string $kind,Principal $actor,string $trace,bool $safeguard=false): string
     {
         $permission=match($kind){'SUSPEND'=>'services.suspend','UNSUSPEND'=>'services.unsuspend','TERMINATE'=>'services.terminate',default=>throw new HttpError(422,'UNSUPPORTED_LIFECYCLE_ACTION')};$this->authorize($id,$customer,$permission,$actor,true);
+        return $this->enqueue($id,$customer,$kind,$actor,$trace,$safeguard);
+    }
+    /** Trusted cron entry; persisted explicit policy and elapsed verified period supply authorization. */
+    public function suspendDue(string $id,Principal $actor,string $trace): string
+    {
+        if($this->config->environment!=='test'||$actor->impersonating){throw new HttpError(403,'F3_TEST_ONLY');}
+        return $this->transaction(function()use($id,$actor,$trace): string{
+            $identity=$this->repository->find($id,lock:false);$service=$this->lock($id,$identity['customer_id']);$policy=(new Policies($this->db,$this->config))->resolve($service);$grace=Policies::required($policy,'grace_seconds');if(Policies::required($policy,'auto_suspend')!==true){throw new HttpError(409,'AUTOMATIC_SUSPENSION_DISABLED');}
+            $period=$this->db->execute("SELECT status,ends_at IS NOT NULL AND TIMESTAMPADD(SECOND,?,ends_at)<=UTC_TIMESTAMP(6) AS due FROM svc_periods WHERE id=?",[$grace,$service['current_period_id']])->fetch();if(!$period||$period['status']!=='VERIFIED'||!$period['due']){throw new HttpError(409,'SERVICE_GRACE_NOT_ELAPSED');}
+            if($this->db->execute("SELECT 1 FROM svc_renewals r JOIN orders o ON o.id=r.order_id JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE r.service_id=? AND b.status='PAID' AND r.status IN ('AWAITING_PAYMENT','PENDING_PROVIDER','UNKNOWN')",[$id])->fetchColumn()){throw new HttpError(409,'PAID_RENEWAL_REQUIRES_PROVIDER_REVIEW');}
+            return $this->enqueue($id,$service['customer_id'],'SUSPEND',$actor,$trace,false);
+        });
+    }
+    private function enqueue(string $id,string $customer,string $kind,Principal $actor,string $trace,bool $safeguard): string
+    {
         return $this->transaction(function()use($id,$customer,$kind,$actor,$trace,$safeguard): string{
-            $service=$this->lock($id,$customer);$expected=match($kind){'SUSPEND'=>'ACTIVE','UNSUSPEND'=>'SUSPENDED','TERMINATE'=>'CANCEL_SCHEDULED'};if($service['status']!==$expected){throw new HttpError(409,'SERVICE_ACTION_STATE_CONFLICT');}
+            $service=$this->lock($id,$customer);$expected=match($kind){'SUSPEND'=>'ACTIVE','UNSUSPEND'=>'SUSPENDED','TERMINATE'=>'CANCEL_SCHEDULED',default=>throw new HttpError(422,'UNSUPPORTED_LIFECYCLE_ACTION')};if($service['status']!==$expected){throw new HttpError(409,'SERVICE_ACTION_STATE_CONFLICT');}
             if($kind==='TERMINATE'){
                 $cancel=$this->db->execute("SELECT *,execute_after<=UTC_TIMESTAMP(6) AS due FROM svc_cancellations WHERE service_id=? AND status='PENDING' ORDER BY requested_at DESC,id DESC LIMIT 1 FOR UPDATE",[$id])->fetch();if(!$safeguard||!$cancel||!$cancel['due']){throw new HttpError(409,'TERMINATION_WAIT_AND_EXPLICIT_SAFEGUARD_REQUIRED');}
                 if($this->db->execute("SELECT 1 FROM svc_renewals WHERE service_id=? AND status IN ('AWAITING_PAYMENT','PENDING_PROVIDER','UNKNOWN')",[$id])->fetchColumn()){throw new HttpError(409,'RENEWAL_TERMINATION_CONFLICT');}
