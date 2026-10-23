@@ -46,3 +46,8 @@
 ## Ortam güvencesi
 - 1 dk cron olanağı doğrulandı; **gerçek uygulama timeout, CPU, memory, disk quota** ve döngülerin üst üste binmesi staging load-testinde kontrol edilir.
 - Paylaşımlı hosting PHP/cron yetersiz çıkarsa hedef uygulama tasarımı değiştirilmeden harici queue runner veya VPS kullanılabilir; V1'in başlangıç şartı değil.
+# F3 test/mock işletim eki
+
+`php bin/console.php services:discover`, `services:work`, `services:expire`, `services:schedule` aynı test DB ve APP_KEY ile çalışır. Canlı effect gate'leri kapalı kalır. Canonical operation kayıtları işin kaynağıdır; UNKNOWN mutation yeniden gönderilmez. Cron overlap named lock ile reddedilir. Keşif ve scheduler sınırlı batch kullanır; yoğunlukta aynı kayıtları tekrar seçmemek için kontrol zamanı tutulur.
+
+023–037 migration ve geri dönüş etkileri, gerçek test/performans kanıtı ve açık hosting/JIT kapıları için `F3_REPORT.md` okunmalıdır. Bu komutlar production cron veya restore kabulü anlamına gelmez.

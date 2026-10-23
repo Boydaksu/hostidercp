@@ -54,4 +54,8 @@
 4. Uygulama sırasında yazılı olarak kabul edilmiş ADR'ler ve test edilmiş özellikler.
 
 ## Sahiplik ve kullanış
-Bu paket çalışma tasarımıdır; kullanıcı API anahtarlarını, canlı DB dump'ını ve şifrelerini bu dosyalara koymamalıdır. Kod üretimi, testler, şema doğrulaması ve canlı sağlayıcı onayı henüz yapılmış değildir.
+Bu paket çalışma tasarımıdır; kullanıcı API anahtarlarını, canlı DB dump'ını ve şifrelerini bu dosyalara koymamalıdır. Uygulanan test/mock kapsamı ve gerçek kanıtlar aşağıdaki güncel raporda belirtilir; canlı sağlayıcı onayı açık GATE gerektirir.
+
+## Uygulama durumu — F3 test/mock
+
+Güncel uygulama ve doğrulanmış sınırlar [F3 teslim raporunda](docs/F3_REPORT.md) bulunur. Hizmet motoru ve Identity/Commerce ile bağlı müşteri/yönetici hizmet panelleri test/mock ortamında uygulanmıştır; canlı sağlayıcı onayı ve production kullanımı açık GATE'lere bağlıdır. F4 başlatılmadı.

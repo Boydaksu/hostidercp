@@ -223,7 +223,7 @@
           "conclusion": "success"
         }
       ],
-      "total_test_executions_including_repetitions": 229,
+      "normal_suite_test_count": 229,
       "name": "verify (8.3)"
     },
     {
@@ -447,7 +447,7 @@
           "conclusion": "success"
         }
       ],
-      "total_test_executions_including_repetitions": 229,
+      "normal_suite_test_count": 229,
       "name": "verify (8.4)"
     }
   ]
