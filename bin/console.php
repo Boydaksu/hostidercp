@@ -16,17 +16,21 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads'], true)) {
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire'], true)) {
         fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>' . PHP_EOL);
         exit(2);
     }
-    $db = Database::connect(Config::fromEnvironment());
+    $config=Config::fromEnvironment();
+    $db = Database::connect($config);
     if ($command !== 'migrate') {
         (new Migrator($db, dirname(__DIR__) . '/migrations'))->assertReady();
     }
     $queue = new Queue($db);
     if ($command === 'migrate') {
         echo json_encode(['applied' => (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif (in_array($command,['services:discover','services:expire'],true)) {
+        $engine=new \Hostider\Services\Engine($db,$config);$actor=new \Hostider\Core\Security\Principal('service-cron',[]);$trace=Id::uuid();
+        echo json_encode(['processed'=>$command==='services:discover'?$engine->discoverBatch($actor,$trace):$engine->expire($actor,$trace)],JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command === 'outbox:dispatch') {
         $outbox = new Outbox($db, $queue);
         $count = 0;
