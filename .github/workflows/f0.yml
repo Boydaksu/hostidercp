@@ -70,6 +70,9 @@ jobs:
       - run: php tests/services-lifecycle.php
       - run: php tests/services-transfer.php
       - run: php tests/services-package.php
+      - run: php tests/services-http.php
+      - name: Repeated service HTTP stability
+        run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability
         id: http_stability
         run: php tools/repeat-suite.php commerce-http 30
@@ -92,6 +95,7 @@ jobs:
       - name: Repeated session concurrency stability
         run: php tools/repeat-suite.php session-concurrency 20
       - run: node --check public/assets/commerce.js
+      - run: node --check public/assets/services.js
       - name: Upload allowlisted test process diagnostics
         if: always()
         uses: actions/upload-artifact@v4

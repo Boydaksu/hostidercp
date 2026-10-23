@@ -21,9 +21,9 @@ final readonly class Engine
     }
     public function discoverBatch(Principal $actor,string $trace): int
     {
-        $this->guard($actor);$count=0;
-        $ids=$this->db->execute("SELECT o.id FROM orders o JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE o.origin_environment='test' AND o.status IN ('READY_FOR_PROVISIONING','REQUIRES_APPROVAL') AND o.refund_status='NONE' AND b.status='PAID' AND b.refund_status='NONE' AND EXISTS (SELECT 1 FROM order_items i JOIN catalog_products p ON p.id=i.product_id WHERE i.order_id=o.id AND p.product_type='HOSTING' AND (SELECT COUNT(*) FROM svc_services s WHERE s.order_item_id=i.id)<CAST(JSON_UNQUOTE(JSON_EXTRACT(i.snapshot,'$.quantity')) AS UNSIGNED)) ORDER BY o.created_at,o.id LIMIT 100")->fetchAll();
-        foreach($ids as $row){try{$this->discover($row['id'],$actor,$trace);++$count;}catch(HttpError $e){if($e->status!==409){throw $e;}}}return $count;
+        $this->guard($actor);$count=0;$deadline=hrtime(true)+20_000_000_000;
+        $ids=$this->db->execute("SELECT o.id FROM orders o JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE o.origin_environment='test' AND o.status IN ('READY_FOR_PROVISIONING','REQUIRES_APPROVAL') AND o.refund_status='NONE' AND b.status='PAID' AND b.refund_status='NONE' AND NOT EXISTS(SELECT 1 FROM svc_renewals r WHERE r.order_id=o.id) AND NOT EXISTS(SELECT 1 FROM svc_package_changes c WHERE c.order_id=o.id) AND EXISTS (SELECT 1 FROM order_items i JOIN catalog_products p ON p.id=i.product_id WHERE i.order_id=o.id AND p.product_type='HOSTING' AND (SELECT COUNT(*) FROM svc_services s WHERE s.order_item_id=i.id)<CAST(JSON_UNQUOTE(JSON_EXTRACT(i.snapshot,'$.quantity')) AS UNSIGNED)) ORDER BY o.created_at,o.id LIMIT 100")->fetchAll();
+        foreach($ids as $row){if(hrtime(true)>$deadline){break;}try{$this->discover($row['id'],$actor,$trace);++$count;}catch(HttpError $e){if($e->status!==409){throw $e;}}}return $count;
     }
     /** Internal scheduler entry point; authorization of user commands belongs to the HTTP application service. */
     public function discover(string $orderId,Principal $actor,string $trace): array
@@ -37,13 +37,15 @@ final readonly class Engine
             $bill=$this->db->execute('SELECT r.currency,s.status,s.refund_status FROM billing_requests r JOIN billing_request_states s ON s.request_id=r.id WHERE r.id=? AND r.order_id=? AND r.customer_id=? FOR UPDATE',[$order['payment_request_id'],$orderId,$order['customer_id']])->fetch();
             if(!$bill||$order['origin_environment']!=='test'||!in_array($order['status'],['READY_FOR_PROVISIONING','REQUIRES_APPROVAL'],true)||$order['refund_status']!=='NONE'||$bill['status']!=='PAID'||$bill['refund_status']!=='NONE'){throw new HttpError(409,'SERVICE_ORDER_NOT_ELIGIBLE');}
             $order['currency']=$bill['currency'];
-            $items=$this->db->execute('SELECT * FROM order_items WHERE order_id=? ORDER BY id FOR UPDATE',[$orderId])->fetchAll();$result=[];
+            $items=$this->db->execute('SELECT * FROM order_items WHERE order_id=? ORDER BY id FOR UPDATE',[$orderId])->fetchAll();$result=[];$created=0;$deadline=hrtime(true)+5_000_000_000;
             foreach($items as $item){
                 $product=$this->db->execute('SELECT product_type,category_id FROM catalog_products WHERE id=?',[$item['product_id']])->fetch();
                 if(!$product||$product['product_type']!=='HOSTING'){continue;}
                 $line=json_decode($item['snapshot'],true,64,JSON_THROW_ON_ERROR);
+                $existing=[];foreach($this->db->execute('SELECT * FROM svc_services WHERE order_item_id=? ORDER BY unit_no FOR UPDATE',[$item['id']])->fetchAll() as $row){$existing[(int)$row['unit_no']]=$row;}
                 for($unit=1;$unit<=$line['quantity'];++$unit){
-                    $service=$this->repository->materialize($order,$item,$line,$unit,$product['category_id'],$actor,$trace);
+                    if($created>=100||hrtime(true)>$deadline){return $result;}
+                    $service=$existing[$unit]??$this->repository->materialize($order,$item,$line,$unit,$product['category_id'],$actor,$trace);if(!isset($existing[$unit])){++$created;}
                     if($service['status']==='QUEUED'){$this->enqueueCreate($service,$actor,$trace);}
                     $result[]=$service['id'];
                 }
@@ -66,12 +68,12 @@ final readonly class Engine
     public function approve(string $id,string $customer,Principal $actor,string $trace): void
     {
         $this->guard($actor);(new \Hostider\Core\Security\Authorization())->require($actor,'services.approve',$customer,privileged:true,service:$id);if(!$actor->staff){throw new HttpError(403,'STAFF_REQUIRED');}
-        $this->db->transaction(function()use($id,$customer,$actor,$trace): void{
+        $work=function()use($id,$customer,$actor,$trace): void{
             $identity=$this->repository->find($id,$customer,false);$this->db->execute('SELECT id FROM orders WHERE id=? FOR UPDATE',[$identity['order_id']]);$this->db->execute('SELECT id FROM order_items WHERE id=? FOR UPDATE',[$identity['order_item_id']]);$service=$this->repository->find($id,$customer);
             if($service['status']!=='PENDING_APPROVAL'||$service['imported']){throw new HttpError(409,'SERVICE_NOT_AWAITING_APPROVAL');}
             $source=$this->db->execute('SELECT o.status,o.refund_status,b.status AS bill_status,b.refund_status AS bill_refund FROM orders o JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE o.id=? FOR UPDATE',[$service['order_id']])->fetch();if(!$source||!in_array($source['status'],['REQUIRES_APPROVAL','READY_FOR_PROVISIONING'],true)||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){throw new HttpError(409,'SERVICE_SOURCE_CHANGED');}
             $this->db->execute('INSERT INTO svc_approvals(service_id,actor_id,trace_id) VALUES (?,?,?)',[$id,$actor->actorId,$trace]);$service=$this->repository->transition($service,'QUEUED',$actor,$trace);$this->enqueueCreate($service,$actor,$trace);
-        });
+        };if($this->db->pdo->inTransaction()){$work();}else{$this->db->transaction($work);}
     }
     private function sourceDispatchable(?array $source,array $service): bool
     {

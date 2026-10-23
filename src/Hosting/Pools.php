@@ -9,13 +9,13 @@ final readonly class Pools
     public function configure(string $product,int $capacity=10,int $weight=1,array $selection=[]): array
     {
         if($this->config->environment!=='test'){throw new HttpError(403,'F3_TEST_ONLY');}
-        return $this->db->transaction(function()use($product,$capacity,$weight,$selection): array{
+        $work=function()use($product,$capacity,$weight,$selection): array{
             if($capacity<1||$weight<1||$weight>65535){throw new HttpError(422,'INVALID_POOL_LIMITS');}
             $pool=Id::uuid();$server=Id::uuid();$mapping=Id::uuid();$key=base64_decode($this->config->key,true);
             $this->db->execute("INSERT INTO hosting_pools(id,name) VALUES (?,'Synthetic test pool')",[$pool]);
             $this->db->execute("INSERT INTO hosting_servers(id,pool_id,credential_encrypted,capacity,weight,healthy,observed_at,fresh_seconds,capabilities) VALUES (?,?,?,?,?,TRUE,UTC_TIMESTAMP(6),300,?)",[$server,$pool,(new Crypto($key))->encrypt('synthetic-not-a-live-token','hosting-server:'.$server),$capacity,$weight,json_encode(['createAccount','inspectAccount','suspendAccount','unsuspendAccount','changePackage','terminateAccount'],JSON_THROW_ON_ERROR)]);
             $this->db->execute("INSERT INTO hosting_mappings(id,product_id,pool_id,package_name,reseller_scope,selection_hash) VALUES (?,?,?,'mock_basic','mock_reseller',?)",[$mapping,$product,$pool,$this->selectionHash($selection)]);return compact('pool','server','mapping');
-        });
+        };return $this->db->pdo->inTransaction()?$work():$this->db->transaction($work);
     }
     /** Called while the service/operation lock is held. Reservation is frozen before dispatch. */
     public function reserve(array $service,string $operation,array $selection): array

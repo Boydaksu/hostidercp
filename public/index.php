@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-if (PHP_SAPI==='cli-server' && in_array(parse_url($_SERVER['REQUEST_URI'] ?? '/',PHP_URL_PATH),['/assets/identity.css','/assets/identity.js','/assets/commerce.css','/assets/commerce.js'],true)) { return false; }
+if (PHP_SAPI==='cli-server' && in_array(parse_url($_SERVER['REQUEST_URI'] ?? '/',PHP_URL_PATH),['/assets/identity.css','/assets/identity.js','/assets/commerce.css','/assets/commerce.js','/assets/services.js'],true)) { return false; }
 ini_set('display_errors', '0');
 ini_set('log_errors', '0'); // Only structured, allowlisted application logs are emitted.
 ini_set('zend.exception_ignore_args', '1');
