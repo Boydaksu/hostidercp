@@ -1,0 +1,49 @@
+{
+  "results": [
+    {
+      "iteration": 1,
+      "duration_ms": 3441,
+      "result": [
+        "3 tests, 0 failures"
+      ],
+      "exit": 0
+    },
+    {
+      "iteration": 2,
+      "duration_ms": 3389,
+      "result": [
+        "3 tests, 0 failures"
+      ],
+      "exit": 0
+    },
+    {
+      "iteration": 3,
+      "duration_ms": 3597,
+      "result": [
+        "3 tests, 0 failures"
+      ],
+      "exit": 0
+    },
+    {
+      "iteration": 4,
+      "duration_ms": 3537,
+      "result": [
+        "3 tests, 0 failures"
+      ],
+      "exit": 0
+    },
+    {
+      "iteration": 5,
+      "duration_ms": 3228,
+      "result": [
+        "3 tests, 0 failures"
+      ],
+      "exit": 0
+    }
+  ],
+  "iterations": 5,
+  "os": "Windows",
+  "suite": "http",
+  "php": "8.4.24",
+  "failed_iterations": 0
+}

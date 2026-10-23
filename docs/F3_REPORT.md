@@ -1,5 +1,7 @@
 # F3 hizmet motoru — test/mock teslim raporu
 
+Son doğrulanmış uygulama commit'i: `aea970b23fae573eb0a7ba19acbb36f7390fbf10`. **PHP 8.3 ve 8.4: 232/232**, her sürümde 10 hizmet HTTP / 30 Commerce HTTP / 20 session-concurrency tekrarında sıfır başarısızlık. [Son kod CI](https://github.com/Boydaksu/hostidercp/actions/runs/40008795719), [doğrudan job logu kanıtı](evidence/f3/ci-aea970b.json).
+
 Tarih: 23 Ekim 2026. Onaylı F2 tabanı `ada37dc52b324e34380ba836ae7794cebb174ec4`; çalışma dalı `codex/f3-service-engine`. Main'e birleştirme ve F4 başlangıcı yapılmadı. Bu rapor test/mock kabulü içindir; canlı sağlayıcı veya production kabulü değildir.
 
 ## Çalışan kapsam ve izlenebilirlik
@@ -94,4 +96,4 @@ Bir ödenmiş siparişte iki farklı hosting ürünü ve 2+3 quantity için ayr�
 
 Eski sağlık HTTP testinin son tam koşudaki başarısızlığı da korunur: [ilk başarısız çıktı](evidence/f3/local-first-fixed-window-failure.txt), [log/zaman penceresi kök nedeni](evidence/f3/fixed-window-failure.json). Üretim RateLimiter doğru şekilde hizalı dakika başında sıfırlanıyordu; testin 22:01:58–22:02:00 sınırını aşması 429 yerine 200 üretmişti. Testin istek sayısı veya 429 beklentisi değiştirilmedi; burst başlangıcında dakika önkoşulu bir kez kurulur. Başarısız assertion yeniden denenerek gizlenmez. Düzeltme sonrası sağlık paketi 3/3 geçti.
 
-Bu son iki regresyonla normal paket **232** testtir; önceki 230 test kaldırılmadı. Son tam yerel PHP 8.4 / Windows / gerçek MariaDB koşusu **232/232**, PHPStan ve taramalar sıfır hatayla geçti: [tam çıktı](evidence/f3/local-final-regressions.txt), [promosyon kök nedeni](evidence/f3/protected-promotion-failure.json). Son uygulama commit'inin iki PHP sürümü CI sonuçları kapanışta ayrıca kaydedilir; önceki commit'lerin yeşil sonuçları bu değişikliklerin kanıtı yerine geçmez.
+Bu son iki regresyonla normal paket **232** testtir; önceki 230 test kaldırılmadı. Son tam yerel PHP 8.4 / Windows / gerçek MariaDB koşusu **232/232**, PHPStan ve taramalar sıfır hatayla geçti: [tam çıktı](evidence/f3/local-final-regressions.txt), [promosyon kök nedeni](evidence/f3/protected-promotion-failure.json). Bu düzeltmeyi içeren `aea970b` için PHP 8.3 ve 8.4 CI **232/232** ve tüm 10/30/20 tekrarlarıyla başarılıdır: [run 40008795719](https://github.com/Boydaksu/hostidercp/actions/runs/40008795719), [kanıt](evidence/f3/ci-aea970b.json). Sağlık HTTP paketinin düzeltme sonrası beş ek Windows tekrarında da hata yoktur: [5/5 kanıtı](evidence/f3/windows-health-http-stability.json). Önceki commit sonuçları son değişikliğin yerine kullanılmadı.
