@@ -1,0 +1,7 @@
+# ADR-009 — F3 mock transfer consent, G-T01 açık
+
+Bu karar canlı borç veya devir politikasını belirlemez. APP_ENV=test için `allow_transfer`, 1–300 saniye explicit `transfer_ttl_seconds` ve SERVICE/CUSTOMER explicit `transfer_debt_scope` zorunludur. Eksik karar fail-closed; değerler fixture kararıdır, production varsayılanı değildir. SERVICE seçeneği yalnız ilgili immutable period/original bill'leri; CUSTOMER tüm müşteri bill'lerini (1000 üstü manuel review) kontrol eder. Refund/dispute/open balance transferi engeller. Farklı para birimli hedef hesap ayrıca manuel politika incelemesi ister.
+
+Gönderen ve alıcı gerçek müşteri sahibi olmalı; staff proxy/impersonation onayı yoktur. Identity'nin fresh client session fence'i, role/grant, sender identity version ve güncel session revocation tekrar doğrulanır. Token yalnız HMAC saklanır, idempotent HTTP yanıtı F aşamasında AEAD olacak. Service version, policy HMAC ve immutable expiry bağlıdır; TTL beş dakikalık güvenlik step-up sınırını aşamaz. Bağlantı veya token gerçek müşteriye gönderilmez; mock/test kullanımında elle aktarılır.
+
+Service owner, yeni sahibin commercial current-price snapshot'ı, Identity resource scope ve append-only ownership history aynı transaction içindedir. Tarihsel period/bill/order/ledger eski müşteri ID'sini korur. Yeni malik bu belgeleri devralmaz. Wallet auto-opt-in kapatılır. Provider account sahipliği için gerçek WHM alanı/işlemi varsayılmaz. G-T01/G-C01 açık; production/staging transfer yolu yoktur.
