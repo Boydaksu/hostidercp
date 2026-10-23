@@ -62,6 +62,8 @@ final readonly class BillingService
     public function detail(string $id,string $customer): array
     {
         $row=$this->repository->request($id,$customer); $paid=$this->finance->repository->allocated($id);
-        return ['id'=>$id,'order_id'=>$row['order_id'],'status'=>$row['status'],'version'=>(string)$row['version'],'currency'=>$row['currency'],'total_minor'=>(string)$row['total_minor'],'paid_minor'=>$paid,'snapshot'=>json_decode($row['snapshot'],true,64,JSON_THROW_ON_ERROR),'customer_snapshot'=>json_decode($this->crypto->decrypt($row['customer_encrypted'],'billing-customer:'.$id),true,32,JSON_THROW_ON_ERROR),'document_type'=>'PROFORMA','official_invoice_issued'=>false];
+        $notes=$this->db->execute('SELECT id,CAST(amount_minor AS CHAR) amount_minor,CAST(net_minor AS CHAR) net_minor,CAST(tax_minor AS CHAR) tax_minor,currency,created_at FROM billing_credit_notes WHERE request_id=? ORDER BY created_at,id',[$id])->fetchAll();
+        $refunded='0';foreach($notes as $note){$refunded=(string)(new Decimal($refunded))->add(new Decimal($note['amount_minor']));}
+        return ['id'=>$id,'order_id'=>$row['order_id'],'status'=>$row['status'],'refund_status'=>$row['refund_status'],'refunded_minor'=>$refunded,'credit_notes'=>$notes,'version'=>(string)$row['version'],'currency'=>$row['currency'],'total_minor'=>(string)$row['total_minor'],'paid_minor'=>$paid,'snapshot'=>json_decode($row['snapshot'],true,64,JSON_THROW_ON_ERROR),'customer_snapshot'=>json_decode($this->crypto->decrypt($row['customer_encrypted'],'billing-customer:'.$id),true,32,JSON_THROW_ON_ERROR),'document_type'=>'PROFORMA','official_invoice_issued'=>false];
     }
 }

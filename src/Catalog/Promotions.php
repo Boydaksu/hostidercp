@@ -15,6 +15,7 @@ final readonly class Promotions
             $row=$this->db->execute('SELECT * FROM catalog_promotions WHERE code=?',[$code])->fetch();
             if(!$row){throw new HttpError(409,'PROMOTION_NOT_FOUND');}
             if($row['product_id']!==null && $row['product_id']!==$product['id'] || $row['category_id']!==null && $row['category_id']!==$product['category_id']){continue;}
+            if($row['item_id']!==null && $row['item_id']!==$product['id']){continue;}
             $this->validate($row,$customer,$renewal,$now,false); $eligible[]=$row;
         }
         return $eligible;

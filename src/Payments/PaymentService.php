@@ -44,7 +44,8 @@ final readonly class PaymentService
         Validation::text($bankReference,128);$hash=hash_hmac('sha256',$bankReference,base64_decode($this->config->key,true));
         $old=$this->db->execute('SELECT * FROM payment_bank_notices WHERE attempt_id=? FOR UPDATE',[$attempt])->fetch();
         if($old){if(!hash_equals($old['reference_hash'],$hash)){throw new HttpError(409,'BANK_NOTICE_REFERENCE_CONFLICT');}return ['id'=>$old['id'],'status'=>$old['status']];}
-        $id=Id::uuid();$this->db->execute('INSERT INTO payment_bank_notices(id,attempt_id,reference_hash) VALUES (?,?,?)',[$id,$attempt,$hash]);
+        $id=Id::uuid();$encrypted=(new \Hostider\Core\Security\Crypto(base64_decode($this->config->key,true)))->encrypt($bankReference,'bank-notice:'.$id);
+        try{$this->db->execute('INSERT INTO payment_bank_notices(id,attempt_id,reference_hash,reference_encrypted) VALUES (?,?,?,?)',[$id,$attempt,$hash,$encrypted]);}catch(\PDOException $error){if(($error->errorInfo[1]??0)===1062){throw new HttpError(409,'BANK_REFERENCE_UNAVAILABLE');}throw $error;}
         (new Audit($this->db))->record($actor,AuditEvent::PaymentChanged,$id,$trace);return ['id'=>$id,'status'=>'PENDING'];
     }
     public function approveBank(string $notice,string $customer,int $version,Principal $actor,string $trace): array
@@ -70,6 +71,11 @@ final readonly class PaymentService
             else {$result=['allocation'=>'UNALLOCATED_RECONCILIATION_REQUIRED'];$this->finance->reconcile($payment,'LATE_OR_EXCESS_PAYMENT',$actor,$trace);}
         }
         $this->db->execute("UPDATE payment_attempts SET status='SUCCEEDED',payment_id=?,version=version+1,updated_at=UTC_TIMESTAMP(6) WHERE id=?",[$payment,$attempt['id']]);return $result;
+    }
+    public function bankReference(string $notice,string $customer): string
+    {
+        $row=$this->repository->notice($notice,$customer,false);
+        return $row['reference_encrypted']===null?'Historical reference hash: '.$row['reference_hash']:(new \Hostider\Core\Security\Crypto(base64_decode($this->config->key,true)))->decrypt($row['reference_encrypted'],'bank-notice:'.$notice);
     }
     /** Synthetic test protocol, deliberately unrelated to PayTR merchant fields or signatures. */
     public function acceptTestFixture(array $fixture,Principal $actor,string $trace): array

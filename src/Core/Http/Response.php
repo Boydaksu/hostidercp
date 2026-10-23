@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace Hostider\Core\Http;
 final readonly class Response
 {
-    public function __construct(public int $status, public array $envelope, public array $headers = [],public ?string $html = null) {}
+    public function __construct(public int $status, public array $envelope, public array $headers = [],public ?string $html = null,public ?string $binary = null,public ?string $downloadName = null) {}
 
     public static function data(mixed $data, string $trace, int $status = 200): self
     {
@@ -19,6 +19,10 @@ final readonly class Response
     public function send(): void
     {
         http_response_code($this->status);
+        if($this->binary!==null){
+            if($this->downloadName===null||!preg_match('/^[a-f0-9-]{36}\.pdf$/D',$this->downloadName)){throw new \LogicException('Invalid protected download name');}
+            header('Content-Type: application/pdf');header('Content-Disposition: attachment; filename="'.$this->downloadName.'"');header('Content-Length: '.strlen($this->binary));header('Cache-Control: no-store');header('X-Content-Type-Options: nosniff');header("Content-Security-Policy: default-src 'none'; sandbox; frame-ancestors 'none'");header('Referrer-Policy: no-referrer');header('Strict-Transport-Security: max-age=31536000');echo $this->binary;return;
+        }
         if ($this->html!==null) {
             header('Content-Type: text/html; charset=utf-8'); header('Cache-Control: no-store');
             header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");

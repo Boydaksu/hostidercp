@@ -24,8 +24,10 @@ final readonly class QuoteService
             if($product['sale_status']!=='ACTIVE'){throw new HttpError(409,'PRODUCT_NOT_FOR_SALE');}
             $items=$this->selection($product,$selection); $unit=new Decimal('0'); $sources=[];
             foreach($items as $item) {
-                $price=$this->prices->resolve($product,$item,$cycle['id'],$currency,$now); $unit=$unit->add($price['amount']);
-                $sources[]=['item_id'=>$item,'amount'=>(string)$price['amount'],'price_id'=>$price['price_id'],'price_version'=>$price['price_version'],'source_currency'=>$price['source_currency'],'source_amount'=>$price['source_amount'],'fx'=>$price['fx']];
+                $itemCycle=$this->catalog->find('cycle',$item['cycle_id']);
+                if($renewal&&$itemCycle['kind']==='ONCE'){if($item['base']){throw new HttpError(409,'ONE_TIME_PRODUCT_NOT_RENEWABLE');}continue;}
+                $price=$this->prices->resolve($product,$item['id'],$itemCycle['id'],$currency,$now); $unit=$unit->add($price['amount']);
+                $sources[]=['item_id'=>$item['id'],'cycle'=>$itemCycle,'charge_kind'=>$itemCycle['kind']==='ONCE'?'ONCE':'RECURRING','amount'=>(string)$price['amount'],'price_id'=>$price['price_id'],'price_version'=>$price['price_version'],'source_currency'=>$price['source_currency'],'source_amount'=>$price['source_amount'],'fx'=>$price['fx']];
             }
             $amount=$unit->multiply(new Decimal((string)$selection['quantity']));
             $eligible=(new Promotions($this->db))->forQuote($codes,$customer,$product,$renewal,$now);
@@ -47,20 +49,23 @@ final readonly class QuoteService
             $variant=$this->catalog->find('variant',$selection['variant_id']);
             if($variant['product_id']!==$product['id']){throw new HttpError(422,'VARIANT_PRODUCT_MISMATCH');} $base=$variant['id'];
         }
-        $items=[$base]; $groups=[];
+        $items=[['id'=>$base,'cycle_id'=>$selection['cycle_id'],'base'=>true]]; $groups=[];$seenAddons=[];
         foreach(['options','addons'] as $key) {
             $values=$selection[$key]??[];
             if(!is_array($values)||!array_is_list($values)||count($values)>50||count(array_unique($values,SORT_REGULAR))!==count($values)){throw new HttpError(422,'INVALID_CONFIGURATION');}
             foreach($values as $value) {
-                if(!is_string($value)){throw new HttpError(422,'INVALID_CONFIGURATION');}
+                $itemCycle=$selection['cycle_id'];
+                if($key==='addons'&&is_array($value)){Validation::fields($value,['id','cycle_id'],['id','cycle_id']);$itemCycle=$value['cycle_id'];$value=$value['id'];}
+                if(!is_string($value)||!is_string($itemCycle)){throw new HttpError(422,'INVALID_CONFIGURATION');}
                 if($key==='options') {
                     $option=$this->catalog->find('option',$value); $group=$this->catalog->find('group',$option['group_id']);
                     if($group['product_id']!==$product['id']||isset($groups[$group['id']])){throw new HttpError(422,'OPTION_PRODUCT_OR_GROUP_MISMATCH');} $groups[$group['id']]=true;
                 } else {
+                    if(isset($seenAddons[$value])){throw new HttpError(422,'DUPLICATE_ADDON');}$seenAddons[$value]=true;
                     $this->catalog->find('addon',$value);
                     if(!$this->db->execute('SELECT 1 FROM catalog_product_addons WHERE product_id=? AND addon_id=?',[$product['id'],$value])->fetchColumn()){throw new HttpError(422,'ADDON_PRODUCT_MISMATCH');}
                 }
-                $items[]=$value;
+                $items[]=['id'=>$value,'cycle_id'=>$itemCycle,'base'=>false];
             }
         }
         foreach($this->db->execute('SELECT id FROM catalog_option_groups WHERE product_id=? AND required=TRUE',[$product['id']])->fetchAll() as $group) { if(!isset($groups[$group['id']])){throw new HttpError(422,'REQUIRED_OPTION_MISSING');} }

@@ -16,7 +16,7 @@ final readonly class Repository
     public function balance(string $wallet,bool $lock=false): string
     {
         if ($lock) { $this->db->requireTransaction(); }
-        return $this->db->execute('SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_wallet_entries WHERE wallet_id=?'.($lock?' FOR UPDATE':''),[$wallet])->fetchColumn();
+        return $this->db->execute('SELECT CAST(COALESCE(SUM(e.amount_minor),0) AS CHAR) FROM finance_wallet_entries e JOIN finance_journals j ON j.id=e.journal_id JOIN finance_wallets w ON w.id=e.wallet_id WHERE e.wallet_id=? AND j.currency=w.currency'.($lock?' FOR UPDATE':''),[$wallet])->fetchColumn();
     }
     public function payment(string $id): array
     {
@@ -32,7 +32,8 @@ final readonly class Repository
         $allocated=$this->db->execute('SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_allocations WHERE payment_id=? FOR UPDATE',[$id])->fetchColumn();
         $credited=$this->db->execute('SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_wallet_entries WHERE payment_id=? FOR UPDATE',[$id])->fetchColumn();
         $refunded=$this->db->execute("SELECT CAST(COALESCE(SUM(amount_minor),0) AS CHAR) FROM finance_refunds WHERE payment_id=? AND destination='ORIGINAL' FOR UPDATE",[$id])->fetchColumn();
-        return (string)(new Decimal((string)$payment['amount_minor']))->subtract(new Decimal($allocated))->subtract(new Decimal($credited))->subtract(new Decimal($refunded));
+        $reversed=$this->db->execute('SELECT CAST(COALESCE(SUM(r.amount_minor),0) AS CHAR) FROM finance_allocation_reversals r JOIN finance_allocations a ON a.id=r.allocation_id WHERE a.payment_id=? FOR UPDATE',[$id])->fetchColumn();
+        return (string)(new Decimal((string)$payment['amount_minor']))->subtract(new Decimal($allocated))->add(new Decimal($reversed))->subtract(new Decimal($credited))->subtract(new Decimal($refunded));
     }
     public function allocated(string $request,bool $lock=false): string
     {

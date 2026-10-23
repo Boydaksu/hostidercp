@@ -13,9 +13,10 @@ test('F2-F official PDF is stored outside webroot with owner scope checksum and 
     $f=ordersFixture($db);$root=dirname(__DIR__).'/storage/official-test-'.Id::uuid();$store=new DocumentStore($root,dirname(__DIR__).'/public');$documents=new DocumentService($db,$f['config'],$store,$f['billing']->repository);$actor=new Principal('document-test',[],staff:true);
     $id=$db->transaction(fn()=>$documents->start($f['order']['payment_request_id'],$f['customer'],$actor));$pdf="%PDF-1.4\n1 0 obj\n<< /Type /Catalog >>\nendobj\ntrailer\n<< /Root 1 0 R >>\n%%EOF\n";
     $db->transaction(fn()=>$documents->chunk($id,0,substr($pdf,0,20),$actor));$db->transaction(fn()=>$documents->chunk($id,20,substr($pdf,20),$actor));
-    $document=$db->transaction(fn()=>$documents->finish($id,'SYNTHETIC-2026-1','2026-10-22','EXTERNAL_OFFICIAL_PDF',$actor,Id::uuid()));
+    $document=$db->transaction(fn()=>$documents->finish($id,'SYNTHETIC-2026-1','2026-10-22','EXTERNAL_OFFICIAL_PDF',$actor,Id::uuid(),['issuer_tax_id'=>'SYNTHETIC-ISSUER','customer_tax_id'=>'SYNTHETIC-CUSTOMER']));
     same($pdf,$documents->download($document,$f['customer'])['bytes']);$list=$documents->list($f['order']['payment_request_id'],$f['customer']);same(hash('sha256',$pdf),$list[0]['sha256']);same('SYNTHETIC-2026-1',$list[0]['metadata']['number']);
     same(false,str_contains($db->execute('SELECT metadata_encrypted FROM billing_official_documents WHERE id=?',[$document])->fetchColumn(),'SYNTHETIC'));
+    same('SYNTHETIC-ISSUER',$list[0]['metadata']['issuer_tax_id']);same('SYNTHETIC-CUSTOMER',$list[0]['metadata']['customer_tax_id']);
     same(404,raises(HttpError::class,fn()=>$documents->download($document,Id::uuid()))->status);same(409,raises(HttpError::class,fn()=>$db->transaction(fn()=>$documents->chunk($id,strlen($pdf),'x',$actor)))->status);
     file_put_contents($root.'/'.$id.'.pdf',str_replace('Catalog','Catxxxx',$pdf));same(409,raises(HttpError::class,fn()=>$documents->download($document,$f['customer']))->status);
 });

@@ -10,6 +10,7 @@ enum AuditEvent: string
     case FinancialReconciled = 'finance.reconciled';
     case DocumentUploaded = 'billing.document_uploaded';
     case CashChanged = 'finance.cash_changed';
+    case WalletConverted = 'finance.wallet_converted';
     case AccessDenied = 'access.denied';
     case JobReconciled = 'job.reconciled';
     case SessionEnded = 'session.ended';

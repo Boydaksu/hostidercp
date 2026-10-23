@@ -1,0 +1,17 @@
+{
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/39789321694",
+  "commit": "f615214e893527dd885b343bb99fdca1aea91301",
+  "jobs": [
+    {
+      "name": "verify (8.3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "verify (8.4)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "run": 39789321694
+}

@@ -40,8 +40,9 @@ try {
             throw new InvalidArgumentException('Only bounded --once worker supported');
         }
         $worker = new Worker($db, $queue);
-        // Internal no-side-effect probe only. Commerce handlers belong to later phases.
+        // F2 handlers only record local facts; ready orders and mail remain explicitly held.
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
+        (new \Hostider\Commerce\EventSink($db))->register($worker);
         echo json_encode(['worked' => $worker->once()], JSON_THROW_ON_ERROR) . PHP_EOL;
     } elseif ($command === 'queue:attention') {
         echo json_encode(['jobs' => $db->execute("SELECT id,status,attempts,correlation_id,last_error_safe,updated_at FROM jobs WHERE status IN ('FAILED','UNKNOWN') ORDER BY updated_at,id LIMIT 100")->fetchAll()], JSON_THROW_ON_ERROR) . PHP_EOL;

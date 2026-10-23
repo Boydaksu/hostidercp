@@ -7,6 +7,12 @@ use Hostider\Core\Http\HttpError;
 final readonly class Repository
 {
     public function __construct(public Database $db) {}
+    public function customer(string $id,bool $lock=false): array
+    {
+        if($lock){$this->db->requireTransaction();}
+        $row=$this->db->execute('SELECT id,name,currency,version FROM identity_customers WHERE id=?'.($lock?' FOR UPDATE':''),[$id])->fetch();
+        if(!$row){throw new HttpError(404,'CUSTOMER_NOT_FOUND');}return $row;
+    }
     public function user(string $id,bool $lock=false): array
     {
         $u=$this->db->execute('SELECT u.*,c.password_hash,s.administrative FROM identity_users u JOIN identity_credentials c ON c.user_id=u.id LEFT JOIN identity_staff s ON s.user_id=u.id WHERE u.id=?'.($lock?' FOR UPDATE':''),[$id])->fetch();

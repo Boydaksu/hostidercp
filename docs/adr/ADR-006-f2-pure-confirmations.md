@@ -1,0 +1,11 @@
+# ADR-006 — F2 yan etkisiz plan ve tek kullanımlık onay
+
+F2 kickoff'unun açık finansal önizleme şartı uygulanır. Identity CriticalActions/savepoint yaklaşımı yeniden kullanılmaz. Commerce Commands.plan yalnız validator ve SELECT çalıştırır; prepare sadece ayrı confirmation ve güvenlik audit kaydı yazar. Gerçek command execute aşamasındadır.
+
+Identity user/session commit fence ve mevcut Idempotency korunur. HTTP Commerce transaction READ COMMITTED kullanır; kilitlenmiş güncel durumdan sonra planner önceki repeatable-read snapshot'ına dönmez. Confirmation actor/session/identity_version/action/customer/payload HMAC/current state HMAC/plan HMAC ve beş dakika TTL taşır. Ham payload, kişisel bilgi ve dosya içeriği saklanmaz. Idempotency yanıtları context-bound AEAD ile şifrelenir. Execute açık accepted=true, fresh step-up, güncel permission/scope, kullanılmamış TTL ve aynı state/plan ister; command+confirmation tüketimi+audit aynı transaction'da commit olur.
+
+F2 başlangıç ölçeğinde State konservatif olarak katalog/kur/kasa ve hedef müşteri finans satırlarını kilitler. Bu bilinçli olarak daha sık stale confirmation üretebilir; yüksek hacimli kullanım garantisi yoktur. Tablolar yalnız okunur; çapraz modül yazılar application service üzerinden gider. Daha dar aggregate version fence'e geçiş ayrı performans doğrulaması ister. Yerel deadlock/timeout rollback başarısızlıktır; hiçbir dış mali komut veya kör tekrar yoktur.
+
+013 migration yeni granular izinleri mevcut altı rol şablonuna ekler, eski kullanıcı identity_version'larını artırıp session'ları iptal eder. Staff bayrağı müşteri kapsamı vermez. Müşteri ekranı session'daki hesabı kullanır; başka customer override reddedilir. Staff hesabı seçebilmek ve ilgili işlem için ayrı açık grant gerekir. Impersonation'da bütün Commerce finans görünümleri/yazıları reddedilir. Scoped API credential için yeni finans mutation endpoint'i açılmaz.
+
+PDF indirmesi Response'un sınırlı binary attachment dalını kullanır; UUID filename, no-store/nosniff/sandbox ve SHA-256 doğrulaması zorunludur. Dosya yüklemesi actor/customer/offset bağlamında parçalara ayrılır; finalize öncesi onay planında checksum ve boyut görünür. Dosya içeriği JSON idempotency cache'e yazılmaz. Yarım dosya/DB commit ofset farkı yeniden yükleme gerektirir.

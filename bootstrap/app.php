@@ -29,6 +29,7 @@ $container->bind(RateLimiter::class, static fn(Container $c): RateLimiter => new
 $router = new Router();
 $identityConfig=$container->get(Config::class);
 (new \Hostider\Identity\Controller(static fn(): \Hostider\Identity\IdentityService => new \Hostider\Identity\IdentityService($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
+(new \Hostider\Commerce\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 foreach(['admin','client'] as $panelContext) {
     $router->add('GET','/'.$panelContext,static fn(): Response=>\Hostider\Identity\Panel::response($panelContext));
     $router->add('GET','/'.$panelContext.'/',static fn(): Response=>\Hostider\Identity\Panel::response($panelContext));

@@ -23,15 +23,21 @@ final readonly class DocumentService
         $this->mutation($actor);$row=$this->upload($id,$actor);if((int)$row['received_bytes']!==$offset){throw new HttpError(409,'UPLOAD_OFFSET_CONFLICT');}
         $size=$this->store->append($id,$offset,$bytes);$this->db->execute('UPDATE billing_uploads SET received_bytes=? WHERE id=?',[$size,$id]);return $size;
     }
-    public function finish(string $id,string $documentNumber,string $documentDate,string $documentType,Principal $actor,string $trace): string
+    public function finish(string $id,string $documentNumber,string $documentDate,string $documentType,Principal $actor,string $trace,array $taxMetadata=[]): string
     {
         $this->mutation($actor);Validation::text($documentNumber,128);if(!in_array($documentType,['EXTERNAL_E_INVOICE','EXTERNAL_E_ARCHIVE','EXTERNAL_OFFICIAL_PDF'],true)){throw new HttpError(422,'INVALID_DOCUMENT_TYPE');}
         $date=\DateTimeImmutable::createFromFormat('!Y-m-d',$documentDate,new \DateTimeZone('UTC'));if(!$date||$date->format('Y-m-d')!==$documentDate){throw new HttpError(422,'INVALID_DOCUMENT_DATE');}
+        Validation::fields($taxMetadata,['issuer_tax_id','customer_tax_id','jurisdiction'],[]);foreach($taxMetadata as $value){Validation::text($value,128);}
         $row=$this->upload($id,$actor);$bytes=$this->store->read($id,(int)$row['received_bytes']);$this->store->validate($bytes);$document=Id::uuid();
-        $metadata=$this->crypto->encrypt(json_encode(['number'=>$documentNumber,'date'=>$documentDate,'type'=>$documentType],JSON_THROW_ON_ERROR),'official-document:'.$document);
+        $metadata=$this->crypto->encrypt(json_encode(['number'=>$documentNumber,'date'=>$documentDate,'type'=>$documentType]+$taxMetadata,JSON_THROW_ON_ERROR),'official-document:'.$document);
         $this->db->execute('INSERT INTO billing_official_documents(id,request_id,customer_id,upload_id,sha256,size_bytes,metadata_encrypted,uploaded_by) VALUES (?,?,?,?,?,?,?,?)',[$document,$row['request_id'],$row['customer_id'],$id,hash('sha256',$bytes),strlen($bytes),$metadata,$actor->actorId]);
         $this->db->execute('UPDATE billing_uploads SET finalized=TRUE WHERE id=?',[$id]);(new Audit($this->db))->record($actor,AuditEvent::DocumentUploaded,$document,$trace);
         (new \Hostider\Core\Queue\Outbox($this->db,new \Hostider\Core\Queue\Queue($this->db)))->append(Id::uuid(),'billing.document_attached',$document,['document_id'=>$document],$trace);return $document;
+    }
+    public function preview(string $id,string $customer,Principal $actor): array
+    {
+        $this->mutation($actor);$row=$this->upload($id,$actor);if($row['customer_id']!==$customer){throw new HttpError(404,'UPLOAD_NOT_FOUND');}
+        $bytes=$this->store->read($id,(int)$row['received_bytes']);$this->store->validate($bytes);return ['upload_id'=>$id,'request_id'=>$row['request_id'],'size_bytes'=>strlen($bytes),'sha256'=>hash('sha256',$bytes)];
     }
     public function download(string $id,string $customer): array
     {

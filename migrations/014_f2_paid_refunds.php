@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+return [
+    "CREATE TABLE finance_allocation_reversals (id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,allocation_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,amount_minor BIGINT NOT NULL CHECK(amount_minor>0),reference VARCHAR(160) CHARACTER SET ascii COLLATE ascii_bin NOT NULL UNIQUE,journal_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL UNIQUE,created_at DATETIME(6) NOT NULL DEFAULT UTC_TIMESTAMP(6),FOREIGN KEY(allocation_id) REFERENCES finance_allocations(id),FOREIGN KEY(journal_id) REFERENCES finance_journals(id)) ENGINE=InnoDB",
+    "CREATE TABLE billing_credit_notes (id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,request_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,reference VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin NOT NULL UNIQUE,amount_minor BIGINT NOT NULL CHECK(amount_minor>0),net_minor BIGINT NOT NULL CHECK(net_minor>=0),tax_minor BIGINT NOT NULL CHECK(tax_minor>=0),currency CHAR(3) CHARACTER SET ascii NOT NULL,source_plan LONGTEXT NOT NULL CHECK(JSON_VALID(source_plan)),journal_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL UNIQUE,actor_id VARCHAR(64) CHARACTER SET ascii NOT NULL,created_at DATETIME(6) NOT NULL DEFAULT UTC_TIMESTAMP(6),CHECK(amount_minor=net_minor+tax_minor),FOREIGN KEY(request_id) REFERENCES billing_requests(id)) ENGINE=InnoDB",
+    "ALTER TABLE orders ADD refund_status VARCHAR(16) CHARACTER SET ascii NOT NULL DEFAULT 'NONE' CHECK(refund_status IN ('NONE','PARTIAL','FULL'))",
+    "ALTER TABLE billing_request_states ADD refund_status VARCHAR(16) CHARACTER SET ascii NOT NULL DEFAULT 'NONE' CHECK(refund_status IN ('NONE','PARTIAL','FULL'))",
+    "CREATE TRIGGER finance_allocation_reversals_update BEFORE UPDATE ON finance_allocation_reversals FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Immutable allocation reversal'",
+    "CREATE TRIGGER finance_allocation_reversals_delete BEFORE DELETE ON finance_allocation_reversals FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Immutable allocation reversal'",
+    "CREATE TRIGGER billing_credit_notes_update BEFORE UPDATE ON billing_credit_notes FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Immutable credit note'",
+    "CREATE TRIGGER billing_credit_notes_delete BEFORE DELETE ON billing_credit_notes FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Immutable credit note'",
+];

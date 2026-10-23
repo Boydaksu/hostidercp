@@ -111,6 +111,9 @@ test('F2-A foreign collection preserves immutable source amount and FX receipt',
     $payment=$db->transaction(fn()=>$finance->recordTestCollection($customer,$converted,Id::uuid(),$actor,Id::uuid(),$source,$fx));
     $row=$db->execute('SELECT p.*,f.rate FROM finance_payments p JOIN finance_fx_snapshots f ON f.id=p.fx_snapshot_id WHERE p.id=?',[$payment])->fetch();
     same('300',(string)$row['original_minor']); same('USD',$row['original_currency']); same('13158',(string)$row['amount_minor']); same('43.000000000000',$row['rate']);
+    same('300',(string)$db->execute("SELECT amount_minor FROM finance_lines WHERE journal_id=? AND account='cash'",[$row['original_journal_id']])->fetchColumn());
+    same('USD',$db->execute('SELECT currency FROM finance_journals WHERE id=?',[$row['original_journal_id']])->fetchColumn());
+    same(0,(int)$db->execute("SELECT COUNT(*) FROM finance_lines WHERE journal_id=? AND account='cash'",[$row['journal_id']])->fetchColumn());
     same(409,raises(HttpError::class,fn()=>$db->transaction(fn()=>$finance->requestOriginalRefund($payment,finMoney('13158'),Id::uuid(),$actor,Id::uuid())))->status);
 });
 test('F2-A wallet compensation appends linked reversal and respects original spend limit',function()use($db,$finance): void {

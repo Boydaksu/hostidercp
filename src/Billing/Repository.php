@@ -9,7 +9,7 @@ final readonly class Repository
     public function request(string $id,string $customer,bool $lock=false): array
     {
         if($lock){$this->db->requireTransaction();}
-        $row=$this->db->execute('SELECT r.*,s.status,s.version FROM billing_requests r JOIN billing_request_states s ON s.request_id=r.id WHERE r.id=? AND r.customer_id=?'.($lock?' FOR UPDATE':''),[$id,$customer])->fetch();
+        $row=$this->db->execute('SELECT r.*,s.status,s.version,s.refund_status FROM billing_requests r JOIN billing_request_states s ON s.request_id=r.id WHERE r.id=? AND r.customer_id=?'.($lock?' FOR UPDATE':''),[$id,$customer])->fetch();
         if(!$row){throw new HttpError(404,'PAYMENT_REQUEST_NOT_FOUND');} return $row;
     }
     public function list(string $customer,int $offset=0): array

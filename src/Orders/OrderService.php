@@ -21,6 +21,7 @@ final readonly class OrderService
     public function submit(string $quoteId,string $customer,array $customerSnapshot,Principal $actor,string $trace,\DateTimeImmutable $now): array
     {
         $this->mutation($actor); $quote=$this->quotes->get($quoteId,$customer,$now,true);
+        if(isset($customerSnapshot['currency'])&&$quote['currency']!==$customerSnapshot['currency']){throw new HttpError(409,'ACCOUNT_CURRENCY_CHANGED_REQUOTE_REQUIRED');}
         $old=$this->db->execute('SELECT * FROM orders WHERE quote_id=? FOR UPDATE',[$quoteId])->fetch();
         if($old){return $old;}
         $id=Id::uuid(); $this->db->execute("INSERT INTO orders(id,customer_id,quote_id,status) VALUES (?,?,?,'AWAITING_PAYMENT')",[$id,$customer,$quoteId]);
@@ -66,5 +67,12 @@ final readonly class OrderService
         (new Audit($this->db))->record($actor,AuditEvent::OrderChanged,$order,$trace);
         // Durable F2 fact only. No provisioning handler is registered in F2.
         (new Outbox($this->db,new Queue($this->db)))->append($id,'orders.'.$kind,$order,['order_id'=>$order],$trace);
+    }
+    public function markRefunded(string $order,string $customer,bool $full,Principal $actor,string $trace): void
+    {
+        $this->mutation($actor);$this->repository->find($order,$customer,true);
+        $this->db->execute('UPDATE orders SET status=?,refund_status=?,version=version+1,updated_at=UTC_TIMESTAMP(6) WHERE id=?',[$full?'CANCELLED':'REQUIRES_APPROVAL',$full?'FULL':'PARTIAL',$order]);
+        (new Audit($this->db))->record($actor,AuditEvent::OrderChanged,$order,$trace);
+        (new Outbox($this->db,new Queue($this->db)))->append(Id::uuid(),'orders.refund_recorded',$order,['order_id'=>$order],$trace);
     }
 }

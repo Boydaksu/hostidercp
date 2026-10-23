@@ -23,7 +23,7 @@ test('F2-B catalog models separate variants options addons and billing cycles',f
 test('F2-B immutable price publications are independent of cost proposals',function()use($db): void {
     $f=catalogFixture($db); $create=$f['create']; $repo=$f['service']->repository;
     $before=$repo->price($f['product'],$f['cycle'],'USD');
-    $create('cost-propose',['item_id'=>$f['product'],'cost_currency'=>'USD','cost_amount'=>'4','proposed_sale_amount'=>'6','source_reference'=>'synthetic-cost']);
+    $create('cost-propose',['item_id'=>$f['product'],'cost_currency'=>'USD','cost_amount'=>'4','proposed_sale_amount'=>'6','proposed_sale_currency'=>'USD','source_reference'=>'synthetic-cost']);
     same($before,$repo->price($f['product'],$f['cycle'],'USD'));
     $create('price-publish',['item_id'=>$f['product'],'cycle_id'=>$f['cycle'],'currency'=>'USD','amount'=>'6']);
     same(2,(int)$repo->price($f['product'],$f['cycle'],'USD')['version']);
@@ -57,5 +57,11 @@ test('F2-B rejected and interrupted catalog writes leave no partial entities',fu
     same(403,raises(HttpError::class,fn()=>$db->transaction(fn()=>$service->execute('category-create',['name'=>'Rejected'],new Principal('catalog-test',[],impersonating:true),Id::uuid())))->status);
     same(422,raises(HttpError::class,fn()=>$f['create']('cycle-create',['name'=>'Invalid','kind'=>'ONCE','interval_count'=>1]))->status);
     same(422,raises(HttpError::class,fn()=>$f['create']('tax-create',['name'=>'Invalid','rate'=>'1.1','inclusive'=>true]))->status);
+});
+test('F2-B product and category edits preserve published history and reject stale versions',function()use($db): void {
+    $f=catalogFixture($db);$create=$f['create'];$old=$f['service']->repository->price($f['product'],$f['cycle'],'USD');$tax=$create('tax-create',['name'=>'New synthetic VAT','rate'=>'0.10','inclusive'=>false]);
+    $create('category-update',['id'=>$f['category'],'name'=>'Renamed synthetic category','tax_id'=>$tax,'version'=>1]);same($tax,$f['service']->repository->product($f['product'])['tax']['id']);
+    $create('product-update',['id'=>$f['product'],'name'=>'Renamed product','category_id'=>$f['category'],'pricing_strategy'=>'FIXED_THEN_FX','source_currency'=>'USD','tax_id'=>$f['tax'],'activation_policy'=>'MANUAL','refund_policy'=>'none','version'=>2]);$product=$f['service']->repository->product($f['product']);same('Renamed product',$product['name']);same('MANUAL',$product['activation_policy']);same($f['tax'],$product['tax']['id']);same($old,$f['service']->repository->price($f['product'],$f['cycle'],'USD'));
+    same(409,raises(HttpError::class,fn()=>$create('product-status',['id'=>$f['product'],'version'=>2,'sale_status'=>'CLOSED']))->status);
 });
 runTests();

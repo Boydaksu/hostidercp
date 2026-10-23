@@ -28,7 +28,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ matrix.php }}'
-          extensions: pdo_mysql, sodium, mbstring
+          extensions: pdo_mysql, sodium, mbstring, fileinfo
           coverage: none
       - run: composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts
       - run: composer audit --working-dir=tools/analysis --locked
@@ -49,6 +49,13 @@ jobs:
       - run: php tests/finance.php
       - run: php tests/catalog.php
       - run: php tests/pricing.php
+      - run: php tests/addons.php
       - run: php tests/orders.php
       - run: php tests/payments.php
       - run: php tests/billing-cash.php
+      - run: php tests/paid-refunds.php
+      - run: php tests/commerce.php
+      - run: php tests/commerce-http.php
+      - run: php tests/currency-change.php
+      - run: php tests/commerce-events.php
+      - run: node --check public/assets/commerce.js

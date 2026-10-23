@@ -382,6 +382,18 @@ final readonly class IdentityService
             $this->db->execute('INSERT INTO identity_customers(id,name,currency) VALUES (?,?,?)',[$id,Validation::text($name),$currency]); $this->event($u['id'],AuditEvent::ConfigurationChanged,$id); return ['id'=>$id];
         });
     }
+    public function lockCustomerUsers(string $customer): array
+    {
+        $this->db->requireTransaction();$fence=[];foreach($this->db->execute('SELECT user_id FROM identity_memberships WHERE customer_id=? ORDER BY user_id FOR UPDATE',[$customer])->fetchAll() as $row){$user=$this->repository->user($row['user_id'],true);$fence[]=['user_id'=>$user['id'],'identity_version'=>(string)$user['identity_version']];}return $fence;
+    }
+    public function changeBillingCurrency(string $customer,int $version,string $currency,Principal $actor): void
+    {
+        $this->db->requireTransaction();(new Authorization())->require($actor,'finance.approve',$customer,privileged:true,administrative:true);
+        if(!in_array($currency,['TRY','USD','EUR'],true)){throw new HttpError(422,'INVALID_CURRENCY');}
+        if($this->db->execute('UPDATE identity_customers SET currency=?,version=version+1 WHERE id=? AND version=?',[$currency,$customer,$version])->rowCount()!==1){throw new HttpError(409,'CUSTOMER_VERSION_CONFLICT');}
+        $this->event($actor->actorId,AuditEvent::ConfigurationChanged,$customer,$customer);
+        foreach($this->db->execute('SELECT user_id FROM identity_memberships WHERE customer_id=? ORDER BY user_id',[$customer])->fetchAll() as $row){$this->invalidate($row['user_id']);$this->notification($row['user_id'],'billing_currency_changed',['customer_id'=>$customer,'currency'=>$currency]);}
+    }
     public function manageRole(string $reference,string $context,?string $role,string $name,array $permissions): array
     {
         return $this->locked($reference,$context,function(array $u,array $s) use($role,$name,$permissions): array {
