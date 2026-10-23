@@ -16,8 +16,8 @@ final readonly class Reconciliation
     public function inspect(string $id,string $customer,Principal $actor,string $trace): array
     {
         $this->authorize($actor,$customer,$id);$service=$this->repository->find($id,$customer,false);
-        if($service['status']!=='UNKNOWN'||$service['imported']){throw new HttpError(409,'SERVICE_NOT_RECONCILABLE');}
-        $provider=$this->db->execute("SELECT p.* FROM svc_provider_operations p JOIN svc_operations o ON o.id=p.lifecycle_operation_id WHERE o.id=? AND o.status='UNKNOWN'",[$service['current_operation_id']])->fetch();if(!$provider||!$provider['server_id']){throw new HttpError(409,'PROVIDER_BINDING_MISSING');}
+        if($service['status']!=='UNKNOWN'||$service['imported']||$service['origin_environment']!=='test'){throw new HttpError(409,'SERVICE_NOT_RECONCILABLE');}
+        $provider=$this->db->execute("SELECT p.* FROM svc_provider_operations p JOIN svc_operations o ON o.id=p.lifecycle_operation_id WHERE o.id=? AND o.status='UNKNOWN' AND o.kind='CREATE'",[$service['current_operation_id']])->fetch();if(!$provider||!$provider['server_id']){throw new HttpError(409,'PROVIDER_BINDING_MISSING');}
         $adapter=new DurableCpanel($this->db,$this->config,$provider['server_id']);$result=$adapter->inspectAccount(new Operation(Id::uuid(),'inspectAccount',null,['create_operation_id'=>$provider['id']]));$proof=$result->status==='SUCCESS'&&$result->externalResourceId!==null?$adapter->evidence($result->externalResourceId):null;
         return $this->db->transaction(function()use($id,$customer,$actor,$trace,$service,$provider,$proof): array{
             $this->authorize($actor,$customer,$id);$current=$this->repository->find($id,$customer);if($current['status']!=='UNKNOWN'||$current['version']!==$service['version']||$current['current_operation_id']!==$provider['lifecycle_operation_id']){throw new HttpError(409,'SERVICE_CHANGED_DURING_INSPECT');}

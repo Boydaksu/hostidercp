@@ -36,6 +36,10 @@ final readonly class Pools
     {
         $this->db->requireTransaction();$this->db->execute("UPDATE hosting_reservations SET status='RELEASED' WHERE operation_id=?",[$operation]);
     }
+    public function releaseTerminatedService(string $service): void
+    {
+        $this->db->requireTransaction();$this->db->execute("UPDATE hosting_reservations SET status='RELEASED' WHERE service_id=? AND status='HELD'",[$service]);
+    }
     private function selectionHash(array $selection): string
     {
         return hash('sha256',CanonicalJson::encode(array_intersect_key($selection,array_flip(['variant_id','options','addons']))));

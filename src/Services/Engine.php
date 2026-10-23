@@ -32,6 +32,7 @@ final readonly class Engine
         return $this->db->transaction(function()use($orderId,$actor,$trace): array{
             $order=$this->db->execute('SELECT * FROM orders WHERE id=? FOR UPDATE',[$orderId])->fetch();
             if(!$order){throw new HttpError(404,'ORDER_NOT_FOUND');}
+            if($this->db->execute('SELECT 1 FROM svc_renewals WHERE order_id=?',[$orderId])->fetchColumn()){throw new HttpError(409,'RENEWAL_IS_NOT_A_NEW_SERVICE');}
             $bill=$this->db->execute('SELECT r.currency,s.status,s.refund_status FROM billing_requests r JOIN billing_request_states s ON s.request_id=r.id WHERE r.id=? AND r.order_id=? AND r.customer_id=? FOR UPDATE',[$order['payment_request_id'],$orderId,$order['customer_id']])->fetch();
             if(!$bill||$order['origin_environment']!=='test'||!in_array($order['status'],['READY_FOR_PROVISIONING','REQUIRES_APPROVAL'],true)||$order['refund_status']!=='NONE'||$bill['status']!=='PAID'||$bill['refund_status']!=='NONE'){throw new HttpError(409,'SERVICE_ORDER_NOT_ELIGIBLE');}
             $order['currency']=$bill['currency'];
@@ -61,12 +62,26 @@ final readonly class Engine
         (new Outbox($this->db,new Queue($this->db)))->append(Id::uuid(),'services.execute',$id,['operation_id'=>$id],$trace);
         $this->repository->event($service,'CREATE_QUEUED',$actor,$trace);
     }
+    public function approve(string $id,string $customer,Principal $actor,string $trace): void
+    {
+        $this->guard($actor);(new \Hostider\Core\Security\Authorization())->require($actor,'services.approve',$customer,privileged:true,service:$id);if(!$actor->staff){throw new HttpError(403,'STAFF_REQUIRED');}
+        $this->db->transaction(function()use($id,$customer,$actor,$trace): void{
+            $identity=$this->repository->find($id,$customer,false);$this->db->execute('SELECT id FROM orders WHERE id=? FOR UPDATE',[$identity['order_id']]);$this->db->execute('SELECT id FROM order_items WHERE id=? FOR UPDATE',[$identity['order_item_id']]);$service=$this->repository->find($id,$customer);
+            if($service['status']!=='PENDING_APPROVAL'||$service['imported']){throw new HttpError(409,'SERVICE_NOT_AWAITING_APPROVAL');}
+            $this->db->execute('INSERT INTO svc_approvals(service_id,actor_id,trace_id) VALUES (?,?,?)',[$id,$actor->actorId,$trace]);$service=$this->repository->transition($service,'QUEUED',$actor,$trace);$this->enqueueCreate($service,$actor,$trace);
+        });
+    }
+    private function sourceDispatchable(?array $source,array $service): bool
+    {
+        if(!$source||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){return false;}
+        return $source['status']==='READY_FOR_PROVISIONING'||($source['status']==='REQUIRES_APPROVAL'&&(bool)$this->db->execute('SELECT 1 FROM svc_approvals WHERE service_id=?',[$service['id']])->fetchColumn());
+    }
     /** Claim transaction commits before a provider adapter may be invoked. */
     public function claim(Principal $actor,string $trace,?string $id=null,bool $reserve=false): ?array
     {
         $this->guard($actor);
         return $this->db->transaction(function()use($actor,$trace,$id,$reserve): ?array{
-            $candidate=$this->db->execute("SELECT service_id,id FROM svc_operations WHERE status='PENDING'".($id!==null?' AND id=?':'').' ORDER BY created_at,id LIMIT 1',$id!==null?[$id]:[])->fetch();
+            $candidate=$this->db->execute("SELECT service_id,id FROM svc_operations WHERE status='PENDING' AND kind='CREATE'".($id!==null?' AND id=?':'').' ORDER BY created_at,id LIMIT 1',$id!==null?[$id]:[])->fetch();
             if(!$candidate){return null;}
             // Same order -> service -> operation order as discovery; cancellation cannot race dispatch acceptance.
             $sourceOrder=$this->db->execute('SELECT order_id FROM svc_services WHERE id=?',[$candidate['service_id']])->fetchColumn();
@@ -78,7 +93,7 @@ final readonly class Engine
             if($service['status']!=='QUEUED'||$service['imported']||$service['origin_environment']!=='test'||$service['current_operation_id']!==$operation['id']){throw new HttpError(409,'SERVICE_CLAIM_CONFLICT');}
             // Recheck cancellation/refund/payment at dispatch, not merely at discovery.
             $source=$this->db->execute('SELECT o.status,o.refund_status,s.status AS bill_status,s.refund_status AS bill_refund FROM orders o JOIN billing_request_states s ON s.request_id=o.payment_request_id WHERE o.id=?',[$service['order_id']])->fetch();
-            if(!$source||$source['status']!=='READY_FOR_PROVISIONING'||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){throw new HttpError(409,'SERVICE_SOURCE_CHANGED');}
+            if(!$this->sourceDispatchable($source?:null,$service)){throw new HttpError(409,'SERVICE_SOURCE_CHANGED');}
             if($reserve){$reservation=(new \Hostider\Hosting\Pools($this->db,$this->config))->reserve($service,$operation['id'],$this->repository->configuration($service['id'])['selection']);$this->db->execute('UPDATE svc_provider_operations SET server_id=? WHERE lifecycle_operation_id=?',[$reservation['server_id'],$operation['id']]);}
             $token=Id::uuid();$this->db->execute("UPDATE svc_operations SET status='RUNNING',lease_token=?,lease_until=DATE_ADD(UTC_TIMESTAMP(6),INTERVAL 60 SECOND),updated_at=UTC_TIMESTAMP(6) WHERE id=?",[$token,$operation['id']]);
             $this->db->execute("UPDATE svc_provider_operations SET status='RUNNING' WHERE lifecycle_operation_id=?",[$operation['id']]);
@@ -102,6 +117,7 @@ final readonly class Engine
         $this->db->execute("UPDATE svc_operations SET status='UNKNOWN',updated_at=UTC_TIMESTAMP(6) WHERE id=?",[$op['id']]);
         $this->db->execute("UPDATE svc_provider_operations SET status='UNKNOWN' WHERE lifecycle_operation_id=?",[$op['id']]);
         $this->db->execute("INSERT INTO svc_attempt_events(operation_id,lease_token,kind,safe_code) VALUES (?,?,'FINISHED',?)",[$op['id'],$op['lease_token'],$code]);
+        if($op['kind']==='RENEW'){$this->db->execute("UPDATE svc_periods p JOIN svc_renewals r ON r.period_id=p.id SET p.status='UNKNOWN',p.version=p.version+1 WHERE r.operation_id=?",[$op['id']]);$this->db->execute("UPDATE svc_renewals SET status='UNKNOWN' WHERE operation_id=?",[$op['id']]);}
         $this->repository->transition($service,'UNKNOWN',$actor,$trace);
     }
     public function markUnknown(string $id,string $token,Principal $actor,string $trace): void
@@ -121,12 +137,13 @@ final readonly class Engine
             $service=$this->repository->find($identity['service_id']);$op=$this->db->execute('SELECT *,lease_until>UTC_TIMESTAMP(6) AS live FROM svc_operations WHERE id=? FOR UPDATE',[$id])->fetch();$provider=$this->db->execute('SELECT * FROM svc_provider_operations WHERE lifecycle_operation_id=? FOR UPDATE',[$id])->fetch();
             if($op['status']!=='RUNNING'||!hash_equals((string)$op['lease_token'],$token)||!$op['live']||$service['current_operation_id']!==$id){throw new HttpError(409,'STALE_SERVICE_LEASE');}
             if($result->operationId!==$provider['id']||$result->provider!=='cpanel'||$result->environment!=='mock'){throw new HttpError(409,'PROVIDER_RESULT_BINDING');}
-            if(!$source||$source['status']!=='READY_FOR_PROVISIONING'||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){$this->unknown($service,$op,$actor,$trace,'SOURCE_CHANGED_AFTER_DISPATCH');return;}
+            if(!$this->sourceDispatchable($source?:null,$service)){$this->unknown($service,$op,$actor,$trace,'SOURCE_CHANGED_AFTER_DISPATCH');return;}
             if($result->status==='UNKNOWN'){$this->unknown($service,$op,$actor,$trace,'PROVIDER_OUTCOME_UNKNOWN');return;}
             $success=$result->status==='SUCCESS';
             if($success){
                 $period=$this->db->execute('SELECT * FROM svc_periods WHERE id=? FOR UPDATE',[$service['current_period_id']])->fetch();
-                if(!$proof||$result->externalResourceId!==$proof['id']||$proof['server_id']!==$provider['server_id']||$proof['service_id']!==$service['id']||$proof['create_operation_id']!==$provider['id']||$proof['status']!=='ACTIVE'||$period['status']!=='PENDING_PROVIDER'){$this->unknown($service,$op,$actor,$trace,'INSPECT_PROOF_MISMATCH');return;}
+                $reservation=$this->db->execute('SELECT package_name FROM hosting_reservations WHERE operation_id=?',[$id])->fetch();
+                if(!$proof||!$reservation||$proof['package_name']!==$reservation['package_name']||$result->externalResourceId!==$proof['id']||$proof['server_id']!==$provider['server_id']||$proof['service_id']!==$service['id']||$proof['create_operation_id']!==$provider['id']||$proof['status']!=='ACTIVE'||$period['status']!=='PENDING_PROVIDER'){$this->unknown($service,$op,$actor,$trace,'INSPECT_PROOF_MISMATCH');return;}
                 $cycle=json_decode($period['cycle_snapshot'],true,32,JSON_THROW_ON_ERROR);$start=new \DateTimeImmutable($proof['starts_at'],new \DateTimeZone('UTC'));$end=$cycle['kind']==='ONCE'?null:\Hostider\Catalog\BillingCycle::next($start,$cycle['kind'],(int)$cycle['interval_count'])->format('Y-m-d H:i:s.u');
                 if($proof['ends_at']!==$end){$this->unknown($service,$op,$actor,$trace,'INSPECT_PERIOD_MISMATCH');return;}
                 $key=base64_decode($this->config->key,true);$json=CanonicalJson::encode($proof);$hash=hash_hmac('sha256',$json,$key);$evidence=Id::uuid();
