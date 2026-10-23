@@ -66,6 +66,7 @@ jobs:
       - run: php tests/services-model.php
       - run: php tests/services-engine.php
       - run: php tests/services-hosting.php
+      - run: php tests/services-reconciliation.php
       - name: Repeated commerce HTTP stability
         id: http_stability
         run: php tools/repeat-suite.php commerce-http 30
