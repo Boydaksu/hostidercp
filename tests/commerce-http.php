@@ -19,6 +19,7 @@ function httpCommand(string $context,string $action,array $payload,?string $cust
     $data=['action'=>$action,'payload'=>(object)$payload];if($customer!==null){$data['customer']=$customer;}$review=commerceHttp('/api/v1/'.$context.'/commerce/prepare',$data);if($review[0]!==200){return $review;}$data['confirmation']=(object)['id'=>$review[1]['data']['id'],'accepted'=>true];return commerceHttp('/api/v1/'.$context.'/commerce/execute',$data);
 }
 try{
+    same(200,commerceHttp('/api/v1/health')[0]);
     test('F2-G HTTP requires login fresh step-up CSRF and scoped customer ownership',function()use($buyer,$outsider): void {
         same(401,commerceHttp('/api/v1/client/commerce/wallet')[0]);same(200,commerceHttp('/api/v1/client/identity/bootstrap')[0]);same(200,commerceHttp('/api/v1/client/identity/login',['email'=>$buyer['email'],'password'=>$buyer['password']])[0]);
         $data=['action'=>'attempt-create','payload'=>(object)['minor'=>'100']];same(403,commerceHttp('/api/v1/client/commerce/prepare',$data)[0]);same(200,commerceHttp('/api/v1/client/identity/step-up',['password'=>$buyer['password'],'code'=>''])[0]);same(403,commerceHttp('/api/v1/client/commerce/prepare',$data,csrf:false)[0]);

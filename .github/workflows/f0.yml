@@ -5,6 +5,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -60,15 +61,26 @@ jobs:
       - run: php tests/currency-change.php
       - run: php tests/commerce-events.php
       - run: php tests/post-delivery.php
+      - run: php tests/http-harness.php
       - name: Repeated commerce HTTP stability
         id: http_stability
         run: php tools/repeat-suite.php commerce-http 30
+      - name: Preserve first transport failure before native debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-transport-php-${{ matrix.php }}-${{ github.run_attempt }}
+          path: |
+            storage/ci-diagnostics/*.json
+            storage/ci-stability/*.json
+          if-no-files-found: warn
       - name: Capture native HTTP server crash stack after failure
         if: failure()
+        timeout-minutes: 3
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y gdb
-          HTTP_TEST_GDB=1 php tools/repeat-suite.php commerce-http 10
+          timeout 90s env HTTP_TEST_GDB=1 php tools/repeat-suite.php commerce-http 3
       - name: Repeated session concurrency stability
         run: php tools/repeat-suite.php session-concurrency 20
       - run: node --check public/assets/commerce.js

@@ -1,0 +1,44 @@
+name: F2 HTTP engine investigation
+on: [workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4']
+        engine: ['inherit', 'interpreter']
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: isolated-ci-password
+          MARIADB_DATABASE: hostider_f0_test
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      APP_ENV: test
+      TEST_DB_DSN: mysql:host=127.0.0.1;port=3306;dbname=hostider_f0_test;charset=utf8mb4
+      TEST_DB_USER: root
+      TEST_DB_PASSWORD: isolated-ci-password
+      HTTP_TEST_ENGINE: '${{ matrix.engine }}'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php }}'
+          extensions: pdo_mysql, sodium, mbstring, fileinfo
+          coverage: none
+      - run: php tools/repeat-suite.php commerce-http 50
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: engine-${{ matrix.php }}-${{ matrix.engine }}-${{ github.run_attempt }}
+          path: |
+            storage/ci-diagnostics/*.json
+            storage/ci-stability/*.json

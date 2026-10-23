@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require __DIR__.'/harness.php';
+require __DIR__.'/support/FixtureDirectory.php';
 use Hostider\Core\Security\{Session, SessionGuard, SessionSnapshot};
 use Hostider\Core\Http\HttpError;
 ob_start(); $_SERVER['HTTPS']='on';
@@ -12,7 +13,7 @@ function sessionFixture(Closure $work): void {
     $fixture=['directory'=>$directory,'sid'=>$sid]; $file=$directory.'/fixture.json';
     file_put_contents($file,json_encode($fixture,JSON_THROW_ON_ERROR));
     try { $work($fixture,$file); }
-    finally { foreach (glob($directory.'/*') as $path) { unlink($path); } rmdir($directory); $_COOKIE=[]; }
+    finally { FixtureDirectory::remove($directory); $_COOKIE=[]; }
 }
 function sessionChild(string $file,string $mode,string $slot='0'): array {
     $pipes=[]; $p=proc_open([PHP_BINARY,__DIR__.'/session-child.php',$file,$mode,$slot],
