@@ -63,6 +63,7 @@ jobs:
       - run: php tests/commerce-events.php
       - run: php tests/post-delivery.php
       - run: php tests/http-harness.php
+      - run: php tests/services-model.php
       - name: Repeated commerce HTTP stability
         id: http_stability
         run: php tools/repeat-suite.php commerce-http 30

@@ -1,0 +1,5 @@
+PASS F3-A service state rejects activation without provisioning and terminated resurrection
+PASS F3-A multi-unit canonical paid order freezes configs prices periods and ownership once
+PASS F3-A unpaid cancelled refunded forged and legacy sources fail closed
+PASS F3-A manual service and transaction rollback preserve history and customer isolation
+4 tests, 0 failures
