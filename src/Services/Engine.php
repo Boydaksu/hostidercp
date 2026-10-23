@@ -33,6 +33,7 @@ final readonly class Engine
             $order=$this->db->execute('SELECT * FROM orders WHERE id=? FOR UPDATE',[$orderId])->fetch();
             if(!$order){throw new HttpError(404,'ORDER_NOT_FOUND');}
             if($this->db->execute('SELECT 1 FROM svc_renewals WHERE order_id=?',[$orderId])->fetchColumn()){throw new HttpError(409,'RENEWAL_IS_NOT_A_NEW_SERVICE');}
+            if($this->db->execute('SELECT 1 FROM svc_package_changes WHERE order_id=?',[$orderId])->fetchColumn()){throw new HttpError(409,'PACKAGE_CHANGE_IS_NOT_A_NEW_SERVICE');}
             $bill=$this->db->execute('SELECT r.currency,s.status,s.refund_status FROM billing_requests r JOIN billing_request_states s ON s.request_id=r.id WHERE r.id=? AND r.order_id=? AND r.customer_id=? FOR UPDATE',[$order['payment_request_id'],$orderId,$order['customer_id']])->fetch();
             if(!$bill||$order['origin_environment']!=='test'||!in_array($order['status'],['READY_FOR_PROVISIONING','REQUIRES_APPROVAL'],true)||$order['refund_status']!=='NONE'||$bill['status']!=='PAID'||$bill['refund_status']!=='NONE'){throw new HttpError(409,'SERVICE_ORDER_NOT_ELIGIBLE');}
             $order['currency']=$bill['currency'];
@@ -68,6 +69,7 @@ final readonly class Engine
         $this->db->transaction(function()use($id,$customer,$actor,$trace): void{
             $identity=$this->repository->find($id,$customer,false);$this->db->execute('SELECT id FROM orders WHERE id=? FOR UPDATE',[$identity['order_id']]);$this->db->execute('SELECT id FROM order_items WHERE id=? FOR UPDATE',[$identity['order_item_id']]);$service=$this->repository->find($id,$customer);
             if($service['status']!=='PENDING_APPROVAL'||$service['imported']){throw new HttpError(409,'SERVICE_NOT_AWAITING_APPROVAL');}
+            $source=$this->db->execute('SELECT o.status,o.refund_status,b.status AS bill_status,b.refund_status AS bill_refund FROM orders o JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE o.id=? FOR UPDATE',[$service['order_id']])->fetch();if(!$source||!in_array($source['status'],['REQUIRES_APPROVAL','READY_FOR_PROVISIONING'],true)||$source['refund_status']!=='NONE'||$source['bill_status']!=='PAID'||$source['bill_refund']!=='NONE'){throw new HttpError(409,'SERVICE_SOURCE_CHANGED');}
             $this->db->execute('INSERT INTO svc_approvals(service_id,actor_id,trace_id) VALUES (?,?,?)',[$id,$actor->actorId,$trace]);$service=$this->repository->transition($service,'QUEUED',$actor,$trace);$this->enqueueCreate($service,$actor,$trace);
         });
     }
@@ -118,6 +120,7 @@ final readonly class Engine
         $this->db->execute("UPDATE svc_provider_operations SET status='UNKNOWN' WHERE lifecycle_operation_id=?",[$op['id']]);
         $this->db->execute("INSERT INTO svc_attempt_events(operation_id,lease_token,kind,safe_code) VALUES (?,?,'FINISHED',?)",[$op['id'],$op['lease_token'],$code]);
         if($op['kind']==='RENEW'){$this->db->execute("UPDATE svc_periods p JOIN svc_renewals r ON r.period_id=p.id SET p.status='UNKNOWN',p.version=p.version+1 WHERE r.operation_id=?",[$op['id']]);$this->db->execute("UPDATE svc_renewals SET status='UNKNOWN' WHERE operation_id=?",[$op['id']]);}
+        if($op['kind']==='CHANGE_PACKAGE'){$this->db->execute("UPDATE svc_package_changes SET status='UNKNOWN' WHERE operation_id=?",[$op['id']]);}
         $this->repository->transition($service,'UNKNOWN',$actor,$trace);
     }
     public function markUnknown(string $id,string $token,Principal $actor,string $trace): void

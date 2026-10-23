@@ -44,4 +44,12 @@ final readonly class Pools
     {
         return hash('sha256',CanonicalJson::encode(array_intersect_key($selection,array_flip(['variant_id','options','addons']))));
     }
+    public function mapSelection(string $product,string $pool,string $package,string $reseller,array $selection): string
+    {
+        $this->db->requireTransaction();if($this->config->environment!=='test'||!preg_match('/^[a-zA-Z0-9_]{1,64}$/D',$package)||!preg_match('/^[a-zA-Z0-9_]{1,64}$/D',$reseller)){throw new HttpError(422,'INVALID_MOCK_MAPPING');}$id=Id::uuid();$this->db->execute('INSERT INTO hosting_mappings(id,product_id,pool_id,package_name,reseller_scope,selection_hash) VALUES (?,?,?,?,?,?)',[$id,$product,$pool,$package,$reseller,$this->selectionHash($selection)]);return $id;
+    }
+    public function existingMapping(string $server,string $product,array $selection): array
+    {
+        $this->db->requireTransaction();$row=$this->db->execute("SELECT m.* ,s.capabilities FROM hosting_servers s JOIN hosting_pools p ON p.id=s.pool_id JOIN hosting_mappings m ON m.pool_id=p.id WHERE s.id=? AND m.product_id=? AND m.selection_hash=? AND m.enabled=TRUE AND p.enabled=TRUE AND s.enabled=TRUE AND s.environment='mock' AND s.healthy=TRUE AND s.observed_at<=UTC_TIMESTAMP(6) AND TIMESTAMPDIFF(SECOND,s.observed_at,UTC_TIMESTAMP(6))<s.fresh_seconds FOR UPDATE",[$server,$product,$this->selectionHash($selection)])->fetch();if(!$row||!in_array('changePackage',json_decode($row['capabilities'],true,32,JSON_THROW_ON_ERROR),true)){throw new HttpError(409,'VERIFIED_PACKAGE_MAPPING_CAPABILITY_REQUIRED');}return $row;
+    }
 }

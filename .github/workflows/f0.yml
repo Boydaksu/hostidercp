@@ -69,6 +69,7 @@ jobs:
       - run: php tests/services-reconciliation.php
       - run: php tests/services-lifecycle.php
       - run: php tests/services-transfer.php
+      - run: php tests/services-package.php
       - name: Repeated commerce HTTP stability
         id: http_stability
         run: php tools/repeat-suite.php commerce-http 30
