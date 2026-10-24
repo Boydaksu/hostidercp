@@ -59,3 +59,8 @@
 - Uzun işlerde kullanıcıya progress/son olay/tekrar dene seçeneği (yalnız güvenli işlemler), personel escalation.
 - Kritik delete / suspend / refund / service transfer için step-up auth, onay ve özet.
 - Düşük bant genişlikli mobil panel işlevsellik korur; erişilebilir odak sırası, klavye kısayolları, ARIA, alternatif uyarılar.
+# F3 uygulanmış test/mock hizmet arayüzü
+
+`/admin/services` ve `/client/services` mevcut Identity/Commerce panellerine bağlıdır. API: `/api/v1/{admin|client}/services/{status|list|detail|pools}` GET; `prepare` ve `execute` POST. Liste sayfası en fazla 50 satır döndürür. Pools yalnız yetkili yöneticiye açıktır.
+
+Mutation doğrudan uygulanmaz: prepare salt plan ve beş dakikalık nonce üretir; execute aynı action/payload/customer, `confirmation: {id, accepted:true}`, CSRF ve Idempotency-Key ister. Güncel scope/freshness ve plan durumu yeniden doğrulanır. `inspect` HTTP transaction'ında provider çağırmaz; ayrı durable iş açar. Tam davranış, demo ve sınırlar `F3_REPORT.md` içindedir. Bu ek, canlı endpoint/WHM vendor cevabı tanımlamaz.

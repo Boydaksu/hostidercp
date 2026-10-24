@@ -6,7 +6,7 @@ final class FixtureDirectory
     public static function remove(string $directory): array
     {
         $storage=realpath(dirname(__DIR__,2).'/storage');$parent=realpath(dirname($directory));$name=basename($directory);
-        if($storage===false||$parent!==$storage||!preg_match('/^(?:session-test|harness-test)-[a-f0-9]{16}$/D',$name)||is_link($directory)){throw new LogicException('Unsafe fixture cleanup target');}
+        if($storage===false||$parent!==$storage||!preg_match('/^(?:session-test|harness-test|service-test)-[a-f0-9]{16}$/D',$name)||is_link($directory)){throw new LogicException('Unsafe fixture cleanup target');}
         $start=hrtime(true);$attempts=0;$firstVisible=null;$warningCount=0;
         do{
             ++$attempts;clearstatcache();$files=glob($directory.'/*')?:[];

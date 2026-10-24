@@ -46,3 +46,20 @@
 ## Ortam güvencesi
 - 1 dk cron olanağı doğrulandı; **gerçek uygulama timeout, CPU, memory, disk quota** ve döngülerin üst üste binmesi staging load-testinde kontrol edilir.
 - Paylaşımlı hosting PHP/cron yetersiz çıkarsa hedef uygulama tasarımı değiştirilmeden harici queue runner veya VPS kullanılabilir; V1'in başlangıç şartı değil.
+# F3 test/mock işletim eki
+
+`php bin/console.php services:discover`, `services:work`, `services:expire`, `services:schedule` aynı test DB ve APP_KEY ile çalışır. Canlı effect gate'leri kapalı kalır. Canonical operation kayıtları işin kaynağıdır; UNKNOWN mutation yeniden gönderilmez. Scheduler overlap named lock ile reddedilir; discovery ve worker kalıcı satır kilitleri/tekillik/fence kullanır. Keşif ve scheduler sınırlı batch kullanır; scheduler kontrol zamanı yoğunlukta aynı hizmetleri tekrar seçmeyi engeller.
+
+023–037 migration ve geri dönüş etkileri, gerçek test/performans kanıtı ve açık hosting/JIT kapıları için `F3_REPORT.md` okunmalıdır. Bu komutlar production cron veya restore kabulü anlamına gelmez.
+
+## F3 son denetim: hizmet worker cron'u
+
+Migration 038 sonrası test/mock ortamında dakikada bir `php bin/console.php services:work --max-operations=100 --max-seconds=20` çalıştırılabilir. Seçenekler verilmezse aynı sınırlı batch kullanılır. `--once` eski tek başarılı operasyon/inceleme davranışını korur; yoğun kuyruk için dakikada tek `--once` yeterli throughput sağlamaz. `services:discover`, `services:expire` ve `services:schedule` ayrı sınırlı görevlerdir; worker yeni siparişi keşfetmez veya süresi dolmuş lease'i tekrar create'e açmaz.
+
+Batch en çok 100 tamamlanan dispatch/inspection ve 1–20 saniye yeni işe kabul bütçesi kullanır. Her tarama en çok 100 adaydır; her adaydan önce süre kontrol edilir. 64 MiB kullanımında veya PHP memory_limit altında 8 MiB rezerv kalmadığında yeni tarama başlatılmaz. CLI InnoDB lock wait 2 saniyedir. Bunlar çalışan provider/DB çağrısını zorla kesen bir hard timeout değildir; bir çağrının tamamlanması bütçeyi aşabilir. Gerçek WHM transport kapalıdır. Canlı adapter açılmadan bağlantı/toplam istek/inspect timeout'ları, DB sorgu süreleri ve CLI dış timeout payı G-C01/G-O01 altında ölçülmelidir. PHP memory_limit ve hosting CPU/duvar saati sınırları açıkça yapılandırılmalı; süreç zorla kesilirse RUNNING lease `services:expire` ile UNKNOWN olur, otomatik create tekrarı yapılmaz.
+
+Operasyonlar `runner_checked_at,created_at,id` ile döner. Kontrol zamanı claim öncesinde kalıcılaşır; süreç kesilmesi işi silmez. Bloke işlem PENDING kalır; `runner_hold_code` ve son kontrol zamanı yalnız staff hizmet ayrıntısındaki operations listesinde görünür. Geçici kapasite geri geldiğinde aynı operation yeniden değerlendirilir. Eski/yeni sağlıklı işlerin ilerlemesi düzenli cron, sonlu/işlenebilir kuyruk ve yeterli kapasiteye bağlıdır; aşırı giriş hızında gecikme garantisi verilmez. Bir taramada yalnız bloke işler görülürse batch sonlanır, sonraki cron kalıcı sıradan devam eder.
+
+Worker overlap toptan reddedilmez: iki CLI aynı anda çalışabilir; kalıcı operation claim, lease_token, service pointer, server kapasite kilidi ve immutable attempt/resource tekilliği provider etkisini fence eder. Scheduler named lock davranışını korur; discovery order kilidi ve unit/operation tekilliğiyle korunur. Provider etkileri kısa claim transaction'ından sonra yapılır. UNKNOWN aday seçimine girmez; yalnız mevcut kanıtlı reconciliation yolu kullanılır. Eski PENDING yaşı, hold code dağılımı, UNKNOWN/RUNNING lease yaşı ve cron çıkış kodları izlenmelidir; UNKNOWN veya finans durumu değişmiş kayıtlar insan incelemesi ister.
+
+Gerçek CLI ile doğrudan Worker ölçümleri ayrı olarak `F3_POST_DELIVERY_REVIEW.md` içinde verilir. Yerel mock hızı production kapasite taahhüdü değildir. Şema rollback'i otomatik DROP değildir; cron durdurulup tutarlı kod/DB/APP_KEY yedeği restore edilir veya forward-fix yapılır. 001–037 korunur.

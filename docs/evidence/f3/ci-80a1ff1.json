@@ -1,0 +1,21 @@
+{
+  "id": 39995741905,
+  "head_sha": "80a1ff1bccfc50ed7d767e84d2da32e501c96392",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/39995741905",
+  "jobs": [
+    {
+      "name": "verify (8.4)",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Boydaksu/hostidercp/actions/runs/39995741905/job/120558667827"
+    },
+    {
+      "name": "verify (8.3)",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Boydaksu/hostidercp/actions/runs/39995741905/job/120558668376"
+    }
+  ]
+}

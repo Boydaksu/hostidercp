@@ -16,17 +16,33 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads'], true)) {
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule'], true)) {
         fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>' . PHP_EOL);
         exit(2);
     }
-    $db = Database::connect(Config::fromEnvironment());
+    $config=Config::fromEnvironment();
+    $db = Database::connect($config);
     if ($command !== 'migrate') {
         (new Migrator($db, dirname(__DIR__) . '/migrations'))->assertReady();
     }
     $queue = new Queue($db);
     if ($command === 'migrate') {
         echo json_encode(['applied' => (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command==='services:schedule') {
+        echo json_encode((new \Hostider\Services\Scheduler($db,$config))->run(),JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command==='services:work') {
+        // A contended admission transaction must not consume an entire cron interval.
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');
+        $runner=new \Hostider\Services\Runner($db,$config);$actor=new \Hostider\Core\Security\Principal('service-worker',[]);
+        if(array_slice($argv,2)===['--once']){$result=['worked'=>$runner->once($actor)];}
+        else{
+            $options=[];foreach(array_slice($argv,2) as $option){if(!preg_match('/^--(max-operations|max-seconds)=([1-9][0-9]*)$/D',$option,$match)||isset($options[$match[1]])){throw new InvalidArgumentException('Invalid service worker option');}$options[$match[1]]=(int)$match[2];}
+            $result=$runner->run($actor,$options['max-operations']??100,$options['max-seconds']??20);
+        }
+        echo json_encode($result,JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif (in_array($command,['services:discover','services:expire'],true)) {
+        $engine=new \Hostider\Services\Engine($db,$config);$actor=new \Hostider\Core\Security\Principal('service-cron',[]);$trace=Id::uuid();
+        echo json_encode(['processed'=>$command==='services:discover'?$engine->discoverBatch($actor,$trace):$engine->expire($actor,$trace)],JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command === 'outbox:dispatch') {
         $outbox = new Outbox($db, $queue);
         $count = 0;
@@ -43,6 +59,7 @@ try {
         // F2 handlers only record local facts; ready orders and mail remain explicitly held.
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
         (new \Hostider\Commerce\EventSink($db))->register($worker);
+        (new \Hostider\Services\EventSink($db,$config))->register($worker);
         echo json_encode(['worked' => $worker->once()], JSON_THROW_ON_ERROR) . PHP_EOL;
     } elseif ($command === 'queue:attention') {
         echo json_encode(['jobs' => $db->execute("SELECT id,status,attempts,correlation_id,last_error_safe,updated_at FROM jobs WHERE status IN ('FAILED','UNKNOWN') ORDER BY updated_at,id LIMIT 100")->fetchAll()], JSON_THROW_ON_ERROR) . PHP_EOL;

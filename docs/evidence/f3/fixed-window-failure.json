@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-23",
+  "environment": "Windows PHP 8.4.24, isolated MariaDB",
+  "suite": "tests/http.php",
+  "failed_assertion": "expected 429, actual 200",
+  "server_log_first_request_local": "22:01:58",
+  "server_log_last_burst_request_local": "22:02:00",
+  "source_behavior": "RateLimiter uses intdiv(database UNIX_TIMESTAMP, 60) * 60; a new aligned minute resets hits",
+  "cause": "The fixed 61st-request assertion assumed the whole burst remained within one aligned rate window; the captured burst crossed its boundary",
+  "correction": "Establish a stable minute before the burst; retain all requests and exact 429/RATE_LIMITED assertions; do not retry failed assertions",
+  "failure_preserved": "local-first-fixed-window-failure.txt",
+  "production_rate_policy_changed": false,
+  "secrets_or_request_bodies_recorded": false
+}

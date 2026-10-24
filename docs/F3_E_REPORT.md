@@ -1,0 +1,11 @@
+# F3-E test/mock lifecycle kanıtı
+
+FR-SERVICE, SVC-001/002/003, PROV-001/002/006, SEC-004. Gerçek şema 029–034; 001–028 değişmez. Ayrıntılı dilimler F3_E_PROGRESS.md ve ADR-009 içindedir.
+
+Çalışan yollar: nullable politika mirası; full-paid manuel onay; yeni quote/order/fixed bill/period ile renewal; explicit auto-wallet opt-in; bağımsız mock provider renewal+inspect; grace sonrası held notification ve tek suspend job; suspend/paid-current unsuspend; immutable deadline+explicit safeguard termination, iptal geri alma; aynı kaynağı koruyan paid upgrade/proration; gerçek Identity sahiplerinin çift taraflı süreli mock transferi ve tarihsel finans izolasyonu. Runner ve local outbox canonical operation tablosuna bağlıdır. Dört bağımsız worker tek fiziksel create, cron overlap ayrı süreçte reddedilir.
+
+10 lifecycle + 3 transfer + 4 package testi geçti. Suspend/renew/package timeout-after-mutation UNKNOWN kalır; yalnız ayrı inspect + scoped fresh operatör kararıyla mevcut sonuç bağlanır. İkinci mutation/tahsilat yok; eski UNKNOWN operation immutable kalır, ayrı resolution yazılır. CREATE found/not-found/rollback 4 testi korunur. Imported ve test/staging/production provenance retleri model suite'te doğrulandı. Tüm F3 alt suite'leri 37 yeni testtir; 180 eski testin tam güncel koşusu/iki PHP sürümü final CI ile tekrar doğrulanacak. PHPStan/lint/secret-pattern kontrolleri geçti.
+
+Sınırlar açık: downgrade kredi hedefi, ONCE bileşeni olan protected recurring fiyat ve required-notice teslim kanıtı için ticari karar/kanıt uydurulmaz; ilgili yeni işlem fail-closed/manual review'da kalır. HELD notice gerçek SMTP teslimi değildir. Gerçek WHM renewal endpoint'i varsayılmaz. Imported kaynakta create daima reddedilir; canlı veri içe alma F3 kapsamında başlatılmaz. G-T01/G-C01/G-O01 kapanmadı. Bu aşama production kabulü veya F4 GO değildir.
+
+F3-F bağımlılıkları: Identity/session doğrulamalı HTTP/arayüz, pure prepare ve tek kullanımlık state-bound confirmation, idempotency replay scope/freshness, secret allowlist, gerçek HTTP güvenlik senaryoları ve hacim/performance kanıtı. Inspection provider çağrısı HTTP DB transaction'ı dışında ayrı durable job ile yürütülecek. Geri dönüş yalnız tutarlı DB/kod/APP_KEY snapshot veya forward-fix; destructive down yok.

@@ -18,6 +18,18 @@ final readonly class IdentityService
         $this->crypto=new Crypto($this->key);
     }
     public function digest(#[\SensitiveParameter] string $secret): string { return hash_hmac('sha256',$secret,$this->key); }
+    /** Internal module boundary. Caller owns the canonical service transaction; never routed from request data. */
+    public function registerServiceResource(string $service,string $customer): void
+    {
+        $this->db->requireTransaction();$this->repository->customer($customer);$old=$this->db->execute('SELECT customer_id FROM identity_resource_scopes WHERE service_id=? FOR UPDATE',[$service])->fetchColumn();
+        if($old!==false){if($old!==$customer){throw new HttpError(409,'RESOURCE_OWNER_CONFLICT');}return;}
+        $this->db->execute('INSERT INTO identity_resource_scopes(service_id,customer_id) VALUES (?,?)',[$service,$customer]);
+    }
+    /** Called atomically with Services ownership history, never with a finance history rewrite. */
+    public function reassignServiceResource(string $service,string $from,string $to): void
+    {
+        $this->db->requireTransaction();$this->repository->customer($to);$this->repository->owns($service,$from);$this->db->execute('UPDATE identity_resource_scopes SET customer_id=?,department_id=NULL WHERE service_id=?',[$to,$service]);
+    }
     private function transaction(\Closure $work): mixed
     {
         // Explicit module-level join for the HTTP idempotency/business transaction.

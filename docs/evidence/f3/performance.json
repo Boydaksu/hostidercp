@@ -1,0 +1,104 @@
+{
+    "php": "8.4.24",
+    "os": "Windows",
+    "database": "MariaDB isolated test",
+    "workload": "1000 services on discovery customer; 32 operations per mode\/concurrency; 60 services on separate authenticated HTTP customer; 30 requests per view",
+    "results": [
+        {
+            "processes": 1,
+            "mode": "claim including healthy pool selection and reservation",
+            "samples": 32,
+            "p50_ms": 8.028,
+            "p95_ms": 21.8115,
+            "throughput_per_second": 51.17988016550933,
+            "database_status_delta": {
+                "Innodb_deadlocks": 0,
+                "Innodb_row_lock_time": 0
+            }
+        },
+        {
+            "processes": 1,
+            "mode": "complete mock worker including independent inspection",
+            "samples": 32,
+            "p50_ms": 19.4538,
+            "p95_ms": 46.1471,
+            "throughput_per_second": 31.283675777157388,
+            "database_status_delta": {
+                "Innodb_deadlocks": 0,
+                "Innodb_row_lock_time": 0
+            }
+        },
+        {
+            "processes": 4,
+            "mode": "claim including healthy pool selection and reservation",
+            "samples": 32,
+            "p50_ms": 23.4419,
+            "p95_ms": 28.5183,
+            "throughput_per_second": 54.450799873742206,
+            "database_status_delta": {
+                "Innodb_deadlocks": 0,
+                "Innodb_row_lock_time": 414
+            }
+        },
+        {
+            "processes": 4,
+            "mode": "complete mock worker including independent inspection",
+            "samples": 32,
+            "p50_ms": 39.5936,
+            "p95_ms": 58.1263,
+            "throughput_per_second": 43.41634538571081,
+            "database_status_delta": {
+                "Innodb_deadlocks": 0,
+                "Innodb_row_lock_time": 510
+            }
+        },
+        {
+            "processes": 8,
+            "mode": "claim including healthy pool selection and reservation",
+            "samples": 32,
+            "p50_ms": 40.844,
+            "p95_ms": 57.9351,
+            "throughput_per_second": 44.24204935808934,
+            "database_status_delta": {
+                "Innodb_deadlocks": 0,
+                "Innodb_row_lock_time": 946
+            }
+        },
+        {
+            "processes": 8,
+            "mode": "complete mock worker including independent inspection",
+            "samples": 32,
+            "p50_ms": 78.4432,
+            "p95_ms": 104.8215,
+            "throughput_per_second": 36.68074978203611,
+            "database_status_delta": {
+                "Innodb_deadlocks": 0,
+                "Innodb_row_lock_time": 1804
+            }
+        }
+    ],
+    "http": {
+        "client-list": {
+            "samples": 30,
+            "customer_services": 60,
+            "p50_ms": 249.3319,
+            "p95_ms": 271.79
+        },
+        "admin-operations": {
+            "samples": 30,
+            "customer_services": 60,
+            "p50_ms": 61.0387,
+            "p95_ms": 77.1558
+        }
+    },
+    "queue_age_seconds": {
+        "min_seconds": "4.5133",
+        "max_seconds": "7.5422",
+        "mean_seconds": "6.10303614"
+    },
+    "queue_wait_seconds": {
+        "min_seconds": "4.0180",
+        "max_seconds": "7.5190",
+        "mean_seconds": "5.75757405"
+    }
+}
