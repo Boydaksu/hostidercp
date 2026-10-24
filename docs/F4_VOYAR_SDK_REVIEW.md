@@ -27,3 +27,29 @@ Endpoint/auth/request bilgileri SDK'da görüldü diye uygulamaya hardcode edilm
 `Providers/VoyarMutationFence` tek dispatch için gerçek mutation transport gönderimini **önce** tüketir. Sentetik transport her mutation send'ini fence üzerinden geçirince SDK auth yenilemesini tamamlasa bile ikinci mutation 409 `VOYAR_MUTATION_REPLAY_BLOCKED` ile gönderilmeden durur; fiziksel mutation sayısı **1** kalır. G-V02/G-V03 canlı dispatch bütün test dışı ortamlarda kapalıdır. Bu sınıf kalıcı operation/lease/idempotency kaydının yerine geçmez ve henüz canlı SDK adaptörü veya Cloud worker'a bağlanmış kabul edilmez.
 
 Bağlantı timeout'u ile 200 yanıtının body kaybı ayrı sentetik transport senaryolarıdır; ikisi de SDK TransportException üretir, auth/login çalışmaz, mutation sayısı 1 kalır ve fence tekrar açılmaz. Auth yenilemesinin başarılı olması ilk mutation'ın etkisizliğini kanıtlamaz. Provider task belirsizliği bu testlerin kapsamı değildir; Cloud task/resource inspect ve manual reconciliation tamamlanmalıdır. Bu sonuçlar G-V02/G-V03'ü kapatmaz.
+
+## F4-D kalıcı mock eşlemesi
+
+Kaynak ZIP/hash aynıdır; özgün kaynak değiştirilmedi. `tests/cloud-sdk.php` SDK’yı salt okunur
+zip:// autoload ile ve yalnız enjekte sentetik transport ile çalıştırır. `Engine.fence()` callback’i
+Cloud operation/lease/fingerprint kilidi altında `cloud_dispatches` satırını I/O öncesinde commit eder.
+Auth/login sonrasında SDK ikinci POST’u denese bile hem süreç içi fence hem yeni süreçlerde kalıcı
+admission ikinci gönderimi engeller. SDK create/stop/restart/reinstall/upgrade/terminate yöntem ve
+URL sonları gerçek arşiv kaynaklarıyla test edilir; önceki testler start dahil on yöntemi korur.
+
+| Cloud eylemi | SDK kaynağı / gerçek yöntem | Mock sonucu / canlı sınır |
+|---|---|---|
+| CREATE | Api/Services.php::create | ACCEPTED task kabulüdür; VM başarısı değildir |
+| POLL / INSPECT | Services::tasks(serviceid), Service::get/unseenTasks, Vm::status | Sentetik normalize task/resource gözlemi. Gerçek array/result şeması mapper’ı YOK; G-V03 OPEN |
+| START / STOP / RESTART | Api/Service/Vm.php::start/stop/restart | Güç durumu ayrı; stop maliyet kesimi kanıtı değildir |
+| REINSTALL | Api/Service.php::reinstall(osid) | Fresh scoped staff + payload/version bağlı onay, task/resource kontrolü |
+| UPGRADE | Api/Service.php::upgrade(pid) | Yalnız explicit sentetik ücretsiz hedef; custom upgrade, genel downgrade ve ek ücretli değişim kapalı |
+| TERMINATE | Api/Service.php::terminate | Explicit onay + policy bekleme süresi + doğrulanmış terminated kaynak/task |
+| EXTEND | Api/Service.php::extend(days) | Yöntem mevcut; yeni Cloud renewal finans kaynağı tamamlanmadığından bu fazda dispatch kapalı |
+| Custom config | CustomPackageSpec::toArray; CustomPackage::options/quote | Exact spec alanları eşlenir; Hostider mock min/max/step/ratio policy sentetiktir, gerçek response alanı değildir |
+| Password / VNC | Vm::password/createVncSession | Runtime Cloud public method/DTO yok; normal log/history/projection’a taşınmaz |
+
+İç UUID ile sağlayıcının opak service/task referansı ayrıdır. cloud_effects tekil operation/task,
+account, provider resource/task ref, resource version ve MOCK provenance saklar. Bu F4-E için
+başlangıç/bitiş durum kaynağıdır; kullanım ölçümü, saatlik tick, maliyet, bakiye veya gerçek ücret
+kanıtı DEĞİLDİR. F4-E/F başlatılmadı. Canlı SDK transport ve response normalization hâlâ kapalıdır.

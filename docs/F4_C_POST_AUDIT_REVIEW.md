@@ -5,7 +5,7 @@ Başlangıç HEAD: `72e35a88ca381a5a00e0daf68e798ccb766663d7`.
 Kabul edilen önceki taban: `7f875d678e4d580a0ce5ebd42875652b8873b322` (254 test).
 Taslak [PR #2](https://github.com/Boydaksu/hostidercp/pull/2), hedef `codex/f3-service-engine`.
 
-**Durum: yerel ve GitHub doğrulamaları başarılı; bağımsız kabul bekleniyor. F4-C DONE değildir.**
+**Sonraki kullanıcı talimatı: F4-C test/mock güvenlik tabanı bağımsız kabul edilmiştir. DOMAIN-002 otomatik registrar failover PARTIAL ve MANUAL_REVIEW kalır; tam F4 DONE değildir. Aşağıdaki kanıtlar kabul edilen kaynağa aittir.**
 
 Yerel kaynak commit: `c2839dfff1179ca7ed50ac796cf1db0d12a66790`.
 Kaynak tree: `5e91e5beed4a8eac7b8ac6268e06d18bc256cb03`.
@@ -34,7 +34,7 @@ APP_ENV=test, HTTP interpreter. Tüm müşteri/sağlayıcı verisi sentetiktir.
 | 4 Kesin no-effect | PASS (yerel + CI) | `src/Domains/AttemptEvidence.php:32`, `DomainReconciliation.php:80` | Call yok, UNKNOWN+no_effect, fingerprint/account/resource uyumsuzluğu failure açmaz; bulunan fiziksel kaynak failure kararını reddeder. Uyumlu definitive call + operator kararı failure olabilir |
 | 5 Renewal finans kaynağı | PASS (yerel + CI) | `src/Services/DomainPeriods.php:17`, `DomainEngine.php:164`, `DomainEngine.php:289` | Services.Renewals.request immutable service/customer/generation/order/period/price/bill kaynağı zorunlu. HOSTING ve aynı müşterinin başka geçerli ödenmiş DOMAIN siparişi reddedilir. Claim ve sonuçta refund, manual approval ve binding tekrar kontrol edilir. İki ayrı PHP renewal request tek canonical renewal'a birleşir; 8 runner tek uzatma |
 | 6 Renewal mutabakatı | PASS (yerel + CI) | `src/Services/DomainPeriods.php:79`, `DomainReconciliation.php:80` | 1 yıl kayıt + 1 yıl yenileme + ikinci 1 yıl timeout-after-effect; reconciliation eski dönemi değiştirmez, yeni current period ve domain_renewals VERIFIED, toplam tam 3 yıl. İkinci resolve ve runner ikinci uzatma yapmaz; renew call sayısı 2 |
-| 7 Failover ticari kanıtı | PASS (güvenli blok); otomatik failover PARTIAL | `src/Domains/DomainEngine.php:494` | Güncel teklif/bakiye/ücret farkı onayı sözleşmesi yok. 3 yıllık ilk request korunur; definitive no-effect sonrası MANUAL_REVIEW, ikinci attempt/create yok. `years=1` alternatif üretimi kaldırıldı. Mock no-effect canlı kanıt sayılmaz |
+| 7 Failover ticari kanıtı | PARTIAL (güvenli blok doğrulandı) | `src/Domains/DomainEngine.php:494` | Güncel teklif/bakiye/ücret farkı onayı sözleşmesi yok. 3 yıllık ilk request korunur; definitive no-effect sonrası MANUAL_REVIEW, ikinci attempt/create yok. `years=1` alternatif üretimi kaldırıldı. Mock no-effect canlı kanıt sayılmaz |
 | 8 Transaction dışı inspection | PASS (yerel + CI) | `src/Domains/DomainReconciliation.php:41` | Snapshot transaction kapanır → registrar evidence/call → kısa fenced kayıt. Registrar evidence() transaction açıksa zaten exception üretir. Generation/active attempt/state/stamp/domain version ve 5 dk TTL; yeni inspection/versiyon eski resolve'u reddeder |
 | 9 Kaynak/test/CI bütünlüğü | PASS | 001–042 korunur; yalnız additive 043 | Yerel 41 suite / 278 test / 0 hata; son kaynak üzerinde ayrıca 12+12 / 0 hata. 001–042 byte eşliği doğrulandı. Uzak kaynak/tree/blob eşliği doğrulandı; GitHub PHP 8.3.36 ve 8.4.27 job’ları 278/278, 0 hata; run 40089306734 |
 | 10 Faz/canlı sınırları | PASS (kaynak sınırı); canlı NOT TESTED | Test-only guard'lar, mevcut transfer engeli | F3 kabulü korunur. F4-D/F5, main merge, production ve gerçek registrar/WHM/PayTR/Voyar mutation yapılmadı |

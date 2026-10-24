@@ -1,5 +1,7 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4-D geliştirme:** F4-C’nin 278 testlik güvenlik tabanı bağımsız kabul edildi; DOMAIN-002 otomatik registrar failover PARTIAL kalır. Kalıcı Voyar Cloud operation/task/mock kapsamı [F4_D_PLAN](docs/F4_D_PLAN.md) ile yürütülür. Canlı GATE’ler açık; F4-E/F, F5 ve production başlatılmaz.
+
 > **F4 geliştirme başladı; tamamlanmadı:** kabul edilen F3 tabanı üzerinde [F4 planı](docs/F4_PLAN.md), [Voyar SDK incelemesi](docs/F4_VOYAR_SDK_REVIEW.md), Domain model/kalıcı registrar mock temeli ve SDK POST replay transport koruması eklendi. [Taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2), PHP 8.3/8.4 için [251/251 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40071562182). [F4 ilerleme raporu](docs/F4_REPORT.md) eksik Domain lifecycle/failover, Cloud ve panel kapsamını açıkça ayırır. Bütün canlı GATE'ler OPEN; F5 başlamadı. Aşağıdaki önceki faz notları tarihseldir.
 
 > **F2 CI kararlılık kapanışı:** PHP 8.3 built-in server JIT SIGSEGV yeniden üretildi; test server interpreter moduna alındı, lifecycle/transport tanıları ve bounded Windows fixture cleanup eklendi. Önceki 175 + 5 yeni regression ve tekrarlı CI kanıtı: [F2_CI_STABILITY_REPORT](docs/F2_CI_STABILITY_REPORT.md). F3 ve canlı işlemler başlatılmadı.

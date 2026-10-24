@@ -1,5 +1,7 @@
 # F4 Domain + Voyar Cloud — geliştirme ve izlenebilirlik planı
 
+> F4-D güncel taban: `73468c0427e5f23553a7a8b534f7713011fafcc7`, 278 test, migration 001–043. F4-C test/mock kabul edildi; DOMAIN-002 otomatik failover PARTIAL ve MANUAL_REVIEW kalır. Yalnız F4-D kapsamı için [F4_D_PLAN](F4_D_PLAN.md) geçerlidir; aşağıdaki ilk planın sayıları tarihseldir.
+
 24 Ekim 2026. Yetkili taban `c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731`; dal `codex/f4-domain-cloud`. Bu belge kodlamadan önce oluşturulmuştur. Kapsam yalnız test/mock; F5/F6, canlı finans/registrar/Voyar/WHM ve main merge kapsam dışıdır. Önceki 238 test ve migration 001–038 korunacaktır.
 
 ## Kaynaklar ve karar sınırı
