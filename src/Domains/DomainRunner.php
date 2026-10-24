@@ -49,12 +49,6 @@ final readonly class DomainRunner
                 return false;
             }
 
-            // Record checked timestamp to avoid starvation of subsequent jobs
-            $this->db->execute(
-                "UPDATE domain_operations SET runner_checked_at=UTC_TIMESTAMP(6), runner_hold_code=NULL WHERE id=? AND status='PENDING'",
-                [$row['id']]
-            );
-
             try {
                 $claim = $this->engine->claim($actor, $trace, $row['id']);
                 if ($claim === null) {
@@ -97,10 +91,6 @@ final readonly class DomainRunner
                 if ($id !== null || !in_array($e->errorCode, ['DOMAIN_SOURCE_CHANGED', 'DOMAIN_CLAIM_CONFLICT', 'DOMAIN_NOT_PENDING'], true)) {
                     throw $e;
                 }
-                $this->db->execute(
-                    "UPDATE domain_operations SET runner_hold_code=? WHERE id=? AND status='PENDING'",
-                    [$e->errorCode, $row['id']]
-                );
             }
         }
 

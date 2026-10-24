@@ -13,10 +13,11 @@ final readonly class DurableRegistrar implements DomainManagement
     private string $key;
     public function __construct(private Database $db,Config $config,private string $account,private string $scenario='SUCCESS')
     {
-        if($config->environment!=='test'||!in_array($scenario,['SUCCESS','DEFINITIVE_FAILURE','TIMEOUT_BEFORE_EFFECT','TIMEOUT_AFTER_EFFECT'],true)){throw new HttpError(403,'F4_TEST_ONLY');}
+        if($config->environment!=='test'||!in_array($scenario,['SUCCESS','DEFINITIVE_FAILURE','UNSUPPORTED','TIMEOUT_BEFORE_EFFECT','TIMEOUT_AFTER_EFFECT'],true)){throw new HttpError(403,'F4_TEST_ONLY');}
         $this->key=base64_decode($config->key,true);
     }
     public function capabilities(): array{return ['actions'=>array_values(array_diff(TldPolicy::ACTIONS,['dns','epp'])),'liveValidated'=>false,'environment'=>'mock'];}
+    public function accountId(): string { return $this->account; }
     public function availability(Operation $operation): ProviderResult{return $this->action($operation,'availability');}
     public function register(Operation $operation): ProviderResult{return $this->action($operation,'register');}
     public function renew(Operation $operation): ProviderResult{return $this->action($operation,'renew');}
@@ -52,6 +53,7 @@ final readonly class DurableRegistrar implements DomainManagement
                 elseif($action==='status'){
                     if($domain&&$domain['account_id']===$this->account){$resource=$domain['id'];}else{$status='DEFINITIVE_FAILURE';$code='MOCK_NOT_FOUND';}$noEffect=true;
                 }elseif($this->scenario==='TIMEOUT_BEFORE_EFFECT'){$status='UNKNOWN';$code='MOCK_TIMEOUT';}
+                elseif($this->scenario==='UNSUPPORTED'){$status='UNSUPPORTED';$code='MOCK_CAPABILITY_WITHDRAWN';$noEffect=true;}
                 elseif($this->scenario==='DEFINITIVE_FAILURE'){$status='DEFINITIVE_FAILURE';$code='MOCK_NO_EFFECT';$noEffect=true;}
                 elseif(in_array($action,['register','initiateTransfer'],true)){
                     $policy->validateContact($operation->configuration['contact']??[]);
@@ -72,7 +74,8 @@ final readonly class DurableRegistrar implements DomainManagement
                 }
                 if(!in_array($action,['availability','status'],true)&&$this->scenario==='TIMEOUT_AFTER_EFFECT'&&$status==='SUCCESS'){$status='UNKNOWN';$code='MOCK_TIMEOUT';$resource=null;}
             }
-            $this->db->execute('INSERT INTO mock_registrar_calls(operation_id,account_id,action,fingerprint,status,resource_id,safe_code,no_effect) VALUES (?,?,?,?,?,?,?,?)',[$operation->id,$this->account,$action,$fingerprint,$status,$resource,$code,(int)$noEffect]);
+            $effect = !$noEffect && ($status === 'SUCCESS' || $this->scenario === 'TIMEOUT_AFTER_EFFECT') ? $this->db->execute('SELECT id,term_years FROM mock_registrar_domains WHERE account_id=? AND name_ascii=?', [$this->account,$name->ascii])->fetch() : false;
+            $this->db->execute('INSERT INTO mock_registrar_calls(operation_id,account_id,action,fingerprint,status,resource_id,safe_code,no_effect,effect_resource_id,effect_term_years) VALUES (?,?,?,?,?,?,?,?,?,?)',[$operation->id,$this->account,$action,$fingerprint,$status,$resource,$code,(int)$noEffect,$effect['id']??null,$effect['term_years']??null]);
             return new ProviderResult($operation->id,$account['provider'],$status,$resource,$code);
         });
     }

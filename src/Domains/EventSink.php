@@ -53,7 +53,7 @@ final readonly class EventSink
             $runner->once(new Principal('domain-outbox-worker', []), $payload[$field]);
             $status = $this->db->execute('SELECT status FROM domain_operations WHERE id=?', [$payload[$field]])->fetchColumn();
             if ($status !== 'SUCCEEDED') {
-                return $status === 'UNKNOWN' ? 'UNKNOWN' : 'FAILED';
+                return in_array($status, ['UNKNOWN','MANUAL_REVIEW'], true) ? 'UNKNOWN' : 'FAILED';
             }
         }
 
