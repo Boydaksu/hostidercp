@@ -83,6 +83,7 @@ jobs:
       - run: php tests/cloud-races.php
       - run: php tests/cloud-sdk.php
       - run: php tests/cloud-audit.php
+      - run: php tests/cloud-final-audit.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability

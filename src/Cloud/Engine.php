@@ -133,7 +133,7 @@ final readonly class Engine
     public function lost(array $claim): void{$this->db->transaction(function()use($claim): void{[$op,$i]=$this->lease($claim['id'],$claim['token'],'RUNNING');$this->unknown($op,$i,'TRANSPORT_OR_PROCESS_LOSS');});}
     private function unknown(array $op,array $i,string $code): void
     {
-        $this->db->execute("UPDATE cloud_operations SET status='UNKNOWN',safe_code=? WHERE id=?",[$code,$op['id']]);$this->db->execute("UPDATE cloud_instances SET status='UNKNOWN',version=version+1 WHERE id=?",[$i['id']]);$this->services->state($i['service_id'],'UNKNOWN');$this->store->history($i,$op['id'],$code,new Principal('cloud-worker',[]));
+        $this->db->execute("UPDATE cloud_operations SET status='UNKNOWN',safe_code=? WHERE id=?",[$code,$op['id']]);$this->db->execute("UPDATE cloud_instances SET status='UNKNOWN',version=version+1 WHERE id=?",[$i['id']]);if(!$op['financial_exception']){$this->services->state($i['service_id'],'UNKNOWN');}$this->store->history($i,$op['id'],$code,new Principal('cloud-worker',[]));
     }
     public function expire(): int
     {
@@ -181,8 +181,10 @@ final readonly class Engine
         $this->db->execute('UPDATE cloud_instances SET status=?,resource_id=?,provider_resource_ref=?,version=version+1 WHERE id=?',[$state,$resource['id'],$resource['provider_ref'],$i['id']]);
         $serviceState=$state==='TERMINATED'?'TERMINATED':($funded?'ACTIVE':'SUSPENDED');
         if($op['financial_exception']&&$state!=='TERMINATED'){
-            $serviceState=$this->services->status($i['service_id']);
-            if($serviceState==='UNKNOWN'){$c=$this->db->execute('SELECT * FROM cloud_containments WHERE operation_id=?',[$op['id']])->fetch();$context=$this->store->decrypt($c['context_encrypted'],$c['fingerprint'],'cloud-containment:'.$op['id']);$serviceState=$context['financial_context']['service_status'];}
+            // Historical financial_context is audit only. Never restore authorization from it.
+            $current=$this->services->status($i['service_id']);
+            $serviceState=in_array($current,['SUSPENDED','CANCEL_SCHEDULED','TERMINATING','TERMINATED'],true)
+                ?$current:((!$funded||$current==='UNKNOWN')?'SUSPENDED':$current);
         }
         $this->services->state($i['service_id'],$serviceState,$op['id']);
         $this->store->history($i,$op['id'],'TASK_RESOURCE_VERIFIED',new Principal('cloud-evidence-worker',[]));

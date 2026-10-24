@@ -27,7 +27,7 @@ final readonly class CloudServices
         if(!in_array(\Hostider\Core\CanonicalJson::encode($line),array_map(\Hostider\Core\CanonicalJson::encode(...),$billSnapshot['lines']),true)){throw new HttpError(409,'CLOUD_PURCHASE_BILL_MISMATCH');}
         return ['service_id'=>$id,'customer_id'=>$customer,'order_id'=>$s['order_id'],'order_item_id'=>$s['order_item_id'],'unit_no'=>(int)$s['unit_no'],'offer'=>$offer,'line'=>$line,'price_id'=>$price['id'],'price_currency'=>$price['currency'],'net_minor'=>(string)$price['net_minor'],'tax_minor'=>(string)$price['tax_minor'],'total_minor'=>(string)$price['total_minor'],'billing_request_id'=>$bill['id'],'bill_snapshot'=>$billSnapshot];
     }
-    public function status(string $id): string{return $this->db->execute('SELECT status FROM svc_services WHERE id=?',[$id])->fetchColumn();}
+    public function status(string $id): string{$this->db->requireTransaction();return $this->db->execute('SELECT status FROM svc_services WHERE id=? FOR UPDATE',[$id])->fetchColumn();}
     public function financialContext(string $id): array
     {
         return $this->db->execute('SELECT v.status service_status,o.id order_id,o.status order_status,o.refund_status order_refund,b.request_id,b.status payment_status,b.refund_status payment_refund FROM svc_services v LEFT JOIN orders o ON o.id=v.order_id LEFT JOIN billing_request_states b ON b.request_id=o.payment_request_id WHERE v.id=?',[$id])->fetch();

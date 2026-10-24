@@ -52,7 +52,8 @@ final readonly class EventSink
             $runner = new DomainRunner($this->db, $this->config);
             $runner->once(new Principal('domain-outbox-worker', []), $payload[$field]);
             $status = $this->db->execute('SELECT status FROM domain_operations WHERE id=?', [$payload[$field]])->fetchColumn();
-            if ($status !== 'SUCCEEDED') {
+            // A delivered event may leave durable work pending for an independent cron.
+            if (!in_array($status, ['SUCCEEDED', 'PENDING'], true)) {
                 return in_array($status, ['UNKNOWN','MANUAL_REVIEW'], true) ? 'UNKNOWN' : 'FAILED';
             }
         }
