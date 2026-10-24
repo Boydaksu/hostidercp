@@ -1,0 +1,241 @@
+{
+  "job_id": 120858531833,
+  "os": "ubuntu-latest",
+  "mariadb_image": "mariadb:10.11",
+  "suites": [
+    {
+      "suite": "tests/run.php",
+      "tests": 19,
+      "failures": 0
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-http.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/integration.php",
+      "tests": 26,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity.php",
+      "tests": 16,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/catalog.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/pricing.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/addons.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/orders.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/payments.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-model.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-package.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "tests": 12,
+      "failures": 0
+    }
+  ],
+  "tests": 278,
+  "failures": 0,
+  "domainEvidence": [
+    "2026-10-24T11:19:18.9306306Z PASS DOMAIN-003 internal TLD capability and required contact validation are fail closed",
+    "2026-10-24T11:19:29.7652438Z PASS DOMAIN-001: registrar timeout produces UNKNOWN, forbids retry and alternative dispatch",
+    "2026-10-24T11:19:30.8370892Z PASS DOMAIN-001 reconciliation: independent inspect verifies external registrar; rejects forged proof",
+    "2026-10-24T11:19:31.9190944Z PASS DOMAIN-001 reconciliation with funding revoked decouples physical domain from active service",
+    "2026-10-24T11:19:32.9668495Z PASS DOMAIN-002: verified definitive failure holds failover without current commercial evidence",
+    "2026-10-24T11:19:33.9750448Z PASS DOMAIN-002: unsupported capability does not trigger failover and rejects operation",
+    "2026-10-24T11:19:35.4118872Z PASS Domain renewal blocks concurrent in-flight renewals and rejects another paid DOMAIN order",
+    "2026-10-24T11:19:36.6796580Z PASS Domain renewal increment remains exact through second timeout-after-effect reconciliation",
+    "2026-10-24T11:19:54.3071594Z PASS Queue starvation avoidance: healthy domain operation progresses behind 101 blocked operations",
+    "2026-10-24T11:19:57.1018415Z PASS CLI and outbox integration executes domain operations idempotently",
+    "2026-10-24T11:20:00.0067972Z MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS",
+    "2026-10-24T11:20:00.2316015Z PASS F4-C missing resource and UNKNOWN call never prove no effect; replay stays held",
+    "2026-10-24T11:20:00.4161308Z PASS F4-C crash before call cannot be confirmed failed; expiry fences old worker",
+    "2026-10-24T11:20:00.6069702Z PASS F4-C independently recorded definitive no effect permits explicit failure only",
+    "2026-10-24T11:20:01.3039356Z PASS F4-C mismatched call fingerprint status account and resource fail closed",
+    "2026-10-24T11:20:01.5451418Z PASS F4-C stale inspection generation domain version and newer inspection fence resolution",
+    "2026-10-24T11:20:01.7070354Z PASS F4-C hold timestamp and reason commit together and roll back together",
+    "2026-10-24T11:20:02.0646707Z PASS F4-C SKIP LOCKED bypasses contended first operation without losing its state",
+    "2026-10-24T11:20:03.1130329Z PASS F4-C 1 4 and 8 independent PHP runners produce one physical registration per domain",
+    "2026-10-24T11:20:03.6323875Z PASS F4-C renewal finance rechecked at claim and result; refund never dispatches or extends again",
+    "2026-10-24T11:20:03.8779642Z PASS F4-C manual approval and immutable renewal binding cannot be bypassed",
+    "2026-10-24T11:20:04.1860002Z PASS F4-C crash after effect and duplicate queue job cannot replay a registration",
+    "2026-10-24T11:20:04.8191231Z PASS F4-C parallel canonical renewal requests converge and eight runners extend only once"
+  ],
+  "mariadb_version": "10.11.19-MariaDB-ubu2204",
+  "php": "8.4.27"
+}

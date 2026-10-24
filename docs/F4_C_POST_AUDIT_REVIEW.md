@@ -5,11 +5,16 @@ Başlangıç HEAD: `72e35a88ca381a5a00e0daf68e798ccb766663d7`.
 Kabul edilen önceki taban: `7f875d678e4d580a0ce5ebd42875652b8873b322` (254 test).
 Taslak [PR #2](https://github.com/Boydaksu/hostidercp/pull/2), hedef `codex/f3-service-engine`.
 
-**Durum: yerel düzeltme ve doğrulama tamam; GitHub CI ve bağımsız kabul bekleniyor. F4-C DONE değildir.**
+**Durum: yerel ve GitHub doğrulamaları başarılı; bağımsız kabul bekleniyor. F4-C DONE değildir.**
 
 Yerel kaynak commit: `c2839dfff1179ca7ed50ac796cf1db0d12a66790`.
 Kaynak tree: `5e91e5beed4a8eac7b8ac6268e06d18bc256cb03`.
-Yeni uzak commit oluşturulmadı; GitHub doğrulanmış HEAD başlangıç SHA’sıdır.
+Uzak kaynak commit: `a52ee336cc1f14ba56d89fc4abf687d92a5f231a`.
+İlk uzak kanıt HEAD: `457ee9a5c6cae3b6ecb007cf1ac4dac8a3cedecb`.
+Yerel kaynak commit ile uzak kaynak commit aynı `5e91e5beed4a8eac7b8ac6268e06d18bc256cb03` tree’sine;
+yerel kanıt commit’i `c6f3522` ile ilk uzak kanıt HEAD aynı
+`087bf4ab661491b3c3291279316fc85e4d027719` tree’sine sahiptir. 16 kaynak dosyasının Git blob eşliği
+ayrıca doğrulandı. Commit SHA farkı metadata’dan gelir; içerik farkı yoktur.
 Önceki bu dosyada yer alan doğrulanmamış 12 PASS ve “düzeltmeler tamamlanmıştır” ifadeleri
 ikinci denetim kararıyla geri çekilmiştir. Eski CI fatal hatası bu oturumda yeniden üretildi.
 Plan: [F4_C_SECOND_AUDIT_PLAN](F4_C_SECOND_AUDIT_PLAN.md);
@@ -23,15 +28,15 @@ APP_ENV=test, HTTP interpreter. Tüm müşteri/sağlayıcı verisi sentetiktir.
 
 | # | Durum | Kaynak ve düzeltme | Gerçek assertion / kanıt |
 |---|---|---|---|
-| 1 Harness | PASS (ilgili suite) | `tests/domains-operations.php:3` harness → database → fixture sırası | 12 test tanımı ve 12 çalıştırılan senaryo; tam koşu/CI sonucu aşağıda |
-| 2 Starvation | PASS (ilgili suite) | `src/Domains/DomainRunner.php:40`, `DomainEngine.php:312` | 101 bloke + 1 sağlıklı; ilk çağrı false/100 hold, ikinci çağrı SUCCEEDED/1 fiziksel create; yeni gelen sağlıklı iş de ilerler. `domains-audit.php`: hold rollback ve SKIP LOCKED; 1/4/8 ayrı PHP runner |
-| 3 CLI/outbox | PASS (ilgili suite) | `tests/domains-fixture.php:domainCli`, `src/Domains/EventSink.php:consume` | `proc_open([PHP_BINARY,bin/console.php,...])`: bounded dispatch, boolean queue worker drain, domain sonucu ve fiziksel create/call sayısı. Aynı event ve ayrı duplicate queue job; crash-after-effect CLI expire ve replay engeli |
-| 4 Kesin no-effect | PASS (ilgili suite) | `src/Domains/AttemptEvidence.php:32`, `DomainReconciliation.php:80` | Call yok, UNKNOWN+no_effect, fingerprint/account/resource uyumsuzluğu failure açmaz; bulunan fiziksel kaynak failure kararını reddeder. Uyumlu definitive call + operator kararı failure olabilir |
-| 5 Renewal finans kaynağı | PASS (ilgili suite) | `src/Services/DomainPeriods.php:14`, `DomainEngine.php:164`, `DomainEngine.php:289` | Services.Renewals.request immutable service/customer/generation/order/period/price/bill kaynağı zorunlu. HOSTING ve aynı müşterinin başka geçerli ödenmiş DOMAIN siparişi reddedilir. Claim ve sonuçta refund, manual approval ve binding tekrar kontrol edilir. İki ayrı PHP renewal request tek canonical renewal'a birleşir; 8 runner tek uzatma |
-| 6 Renewal mutabakatı | PASS (ilgili suite) | `src/Services/DomainPeriods.php:76`, `DomainReconciliation.php:80` | 1 yıl kayıt + 1 yıl yenileme + ikinci 1 yıl timeout-after-effect; reconciliation eski dönemi değiştirmez, yeni current period ve domain_renewals VERIFIED, toplam tam 3 yıl. İkinci resolve ve runner ikinci uzatma yapmaz; renew call sayısı 2 |
+| 1 Harness | PASS (yerel + CI) | `tests/domains-operations.php:3` harness → database → fixture sırası | 12 test tanımı ve 12 çalıştırılan senaryo; iki CI job’unda da 12/12; tam sonuç aşağıda |
+| 2 Starvation | PASS (yerel + CI) | `src/Domains/DomainRunner.php:40`, `DomainEngine.php:312` | 101 bloke + 1 sağlıklı; ilk çağrı false/100 hold, ikinci çağrı SUCCEEDED/1 fiziksel create; yeni gelen sağlıklı iş de ilerler. `domains-audit.php`: hold rollback ve SKIP LOCKED; 1/4/8 ayrı PHP runner |
+| 3 CLI/outbox | PASS (yerel + CI) | `tests/domains-fixture.php:domainCli`, `src/Domains/EventSink.php:consume` | `proc_open([PHP_BINARY,bin/console.php,...])`: bounded dispatch, boolean queue worker drain, domain sonucu ve fiziksel create/call sayısı. Aynı event ve ayrı duplicate queue job; crash-after-effect CLI expire ve replay engeli |
+| 4 Kesin no-effect | PASS (yerel + CI) | `src/Domains/AttemptEvidence.php:32`, `DomainReconciliation.php:80` | Call yok, UNKNOWN+no_effect, fingerprint/account/resource uyumsuzluğu failure açmaz; bulunan fiziksel kaynak failure kararını reddeder. Uyumlu definitive call + operator kararı failure olabilir |
+| 5 Renewal finans kaynağı | PASS (yerel + CI) | `src/Services/DomainPeriods.php:17`, `DomainEngine.php:164`, `DomainEngine.php:289` | Services.Renewals.request immutable service/customer/generation/order/period/price/bill kaynağı zorunlu. HOSTING ve aynı müşterinin başka geçerli ödenmiş DOMAIN siparişi reddedilir. Claim ve sonuçta refund, manual approval ve binding tekrar kontrol edilir. İki ayrı PHP renewal request tek canonical renewal'a birleşir; 8 runner tek uzatma |
+| 6 Renewal mutabakatı | PASS (yerel + CI) | `src/Services/DomainPeriods.php:79`, `DomainReconciliation.php:80` | 1 yıl kayıt + 1 yıl yenileme + ikinci 1 yıl timeout-after-effect; reconciliation eski dönemi değiştirmez, yeni current period ve domain_renewals VERIFIED, toplam tam 3 yıl. İkinci resolve ve runner ikinci uzatma yapmaz; renew call sayısı 2 |
 | 7 Failover ticari kanıtı | PASS (güvenli blok); otomatik failover PARTIAL | `src/Domains/DomainEngine.php:494` | Güncel teklif/bakiye/ücret farkı onayı sözleşmesi yok. 3 yıllık ilk request korunur; definitive no-effect sonrası MANUAL_REVIEW, ikinci attempt/create yok. `years=1` alternatif üretimi kaldırıldı. Mock no-effect canlı kanıt sayılmaz |
-| 8 Transaction dışı inspection | PASS (ilgili suite) | `src/Domains/DomainReconciliation.php:41` | Snapshot transaction kapanır → registrar evidence/call → kısa fenced kayıt. Registrar evidence() transaction açıksa zaten exception üretir. Generation/active attempt/state/stamp/domain version ve 5 dk TTL; yeni inspection/versiyon eski resolve'u reddeder |
-| 9 Kaynak/test/CI bütünlüğü | PARTIAL | 001–042 korunur; yalnız additive 043 | Yerel 41 suite / 278 test / 0 hata; son kaynak üzerinde ayrıca 12+12 / 0 hata. 001–042 byte eşliği doğrulandı. GitHub PHP 8.3/8.4 NOT TESTED: yayın onayı bekleniyor; uzak SHA/tree eşliği henüz yok |
+| 8 Transaction dışı inspection | PASS (yerel + CI) | `src/Domains/DomainReconciliation.php:41` | Snapshot transaction kapanır → registrar evidence/call → kısa fenced kayıt. Registrar evidence() transaction açıksa zaten exception üretir. Generation/active attempt/state/stamp/domain version ve 5 dk TTL; yeni inspection/versiyon eski resolve'u reddeder |
+| 9 Kaynak/test/CI bütünlüğü | PASS | 001–042 korunur; yalnız additive 043 | Yerel 41 suite / 278 test / 0 hata; son kaynak üzerinde ayrıca 12+12 / 0 hata. 001–042 byte eşliği doğrulandı. Uzak kaynak/tree/blob eşliği doğrulandı; GitHub PHP 8.3.36 ve 8.4.27 job’ları 278/278, 0 hata; run 40089306734 |
 | 10 Faz/canlı sınırları | PASS (kaynak sınırı); canlı NOT TESTED | Test-only guard'lar, mevcut transfer engeli | F3 kabulü korunur. F4-D/F5, main merge, production ve gerçek registrar/WHM/PayTR/Voyar mutation yapılmadı |
 
 ## Runner sözleşmesi
@@ -92,15 +97,29 @@ Ham kanıtlar:
 - [PHPStan/lint/mimari/audit](evidence/f4/second-audit-checks.txt)
 - [001–042 checksum ve önceki test kaynağı koruması](evidence/f4/second-audit-preservation.json)
 - [Kaynak commit/blob manifesti ve yayın durumu](evidence/f4/second-audit-source.json)
+- [CI job/adım sonuçları](evidence/f4/second-audit-ci.json)
+- [PHP 8.3 gerçek suite sayımı](evidence/f4/second-audit-ci-83.json)
+- [PHP 8.4 gerçek suite sayımı](evidence/f4/second-audit-ci-84.json)
 
-GitHub PHP 8.3/8.4 CI **NOT TESTED**. Önceki başarısız koşular
-[40086094886](https://github.com/Boydaksu/hostidercp/actions/runs/40086094886) ve
-[40086092542](https://github.com/Boydaksu/hostidercp/actions/runs/40086092542) başarı kanıtı sayılmadı.
-GitHub connector create_tree gönderimi otomatik onay denetimince reddedildi: kod/test/migration/belgelerin
-Boydaksu/hostidercp deposuna yüklenmesi için açık kullanıcı izni gerektiği bildirildi. Uzak commit/ref
-oluşturulmadı; alternatif yöntemle bu ret aşılmadı. Kullanıcı onayı gelirse aynı dal/PR üzerinde yayın,
-gerçek uzak commit/tree/blob eşliği, PHP 8.3/8.4 iki başarılı job ve CI bağlantıları tamamlanmalıdır.
-Bu eksik nedeniyle F4-C kabul/DONE iddiası yoktur.
+## GitHub CI — doğrulanmış kaynak
+
+[Run 40089306734](https://github.com/Boydaksu/hostidercp/actions/runs/40089306734),
+test edilen HEAD `457ee9a5c6cae3b6ecb007cf1ac4dac8a3cedecb`:
+
+| Job | Ortam | Sonuç | Ana test sayımı |
+|---|---|---|---|
+| [verify (8.3)](https://github.com/Boydaksu/hostidercp/actions/runs/40089306734/job/120858531630) | Ubuntu, PHP 8.3.36, MariaDB 10.11.19 | SUCCESS | 41 suite / 278 test / 0 hata |
+| [verify (8.4)](https://github.com/Boydaksu/hostidercp/actions/runs/40089306734/job/120858531833) | Ubuntu, PHP 8.4.27, MariaDB 10.11.19 | SUCCESS | 41 suite / 278 test / 0 hata |
+
+Her job’da 254 önceki test + 12 operasyon + 12 ek denetim testi çalıştı. Sayım indirilen gerçek job
+günlüklerinden test dosyası/adım bazında çıkarıldı; 10 Services HTTP, 30 Commerce HTTP ve 20 session
+concurrency kararlılık tekrarı ana 278 sayısına eklenmedi. Bu tekrarlar da başarılıdır. Composer locked
+audit, PHPStan, lint/mimari, güvenlik örüntü taraması ve iki JS syntax kontrolü başarılıdır.
+
+İlk otomatik onay reddinden sonra kullanıcı aynı dal/PR için açık yükleme ve CI onayı verdi; yayın bu
+onayla yapıldı. Önceki başarısız koşular 40086094886/40086092542 başarı kanıtı sayılmadı.
+Bu rapor ve kanıt güncellemesi PHP/migration/test/workflow kaynağını değiştirmez; final rapor commit’i
+ayrı GitHub CI tetikleyebilir. F4-C bağımsız kabul gelmeden DONE değildir.
 
 Açık GATE’ler: G-R01/G-D01, G-V01–04, G-C01, G-P01–02, G-X01–02, G-O01–04 ve G-T01 OPEN.
 Canlı registrar fiyat/bakiye/no-effect sözleşmesi NOT TESTED. Otomatik alternatif registrar dispatch
