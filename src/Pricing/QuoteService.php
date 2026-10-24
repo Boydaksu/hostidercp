@@ -36,6 +36,7 @@ final readonly class QuoteService
             $calculated=(new TaxCalculator())->calculate($discounted['amount'],$currency,$product['tax']);
             $net=$net->add(new Money($calculated['net_minor'],$currency)); $tax=$tax->add(new Money($calculated['tax_minor'],$currency)); $total=$total->add(new Money($calculated['total_minor'],$currency));
             $lines[]=['product_id'=>$product['id'],'name'=>$product['name'],'product_version'=>(string)$product['version'],'quantity'=>$selection['quantity'],'cycle'=>$cycle,'selection'=>$selection,'sources'=>$sources,'original_minor'=>Money::fromDecimal($amount,$currency,Rounding::HalfUp)->minor,'discount_minor'=>Money::fromDecimal($discounted['discount'],$currency,Rounding::HalfUp)->minor,'promotions'=>$discounted['promotions'],'activation_policy'=>$product['activation_policy'],'refund_policy'=>$product['refund_policy']]+$calculated;
+            if($product['product_type']==='CLOUD'){$lines[array_key_last($lines)]['cloud_entitlement']=(new \Hostider\Catalog\CloudOffers($this->db))->snapshot($product['id'],$sources,$selection);}
         }
         if(count($promotions)!==count($codes)){throw new HttpError(409,'PROMOTION_NOT_APPLICABLE');}
         if(count($promotions)>1 && in_array(false,array_column($promotions,'combinable'),true)){throw new HttpError(409,'PROMOTION_COMBINATION_FORBIDDEN');}

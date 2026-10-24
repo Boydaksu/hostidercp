@@ -18,12 +18,14 @@ final readonly class Engine
     {
         return $this->db->transaction(function()use($service,$customer,$catalog,$spec,$actor): string{
             $s=$this->services->source($service,$customer);$mapping=$this->catalog->find($catalog);$this->catalog->validate($mapping['policy'],$spec);
+            $purchase=$this->services->purchase($service,$customer);
+            if($purchase['offer']['catalog_id']!==$catalog||$this->store->hash($purchase['offer']['spec'])!==$this->store->hash($spec)){throw new HttpError(409,'CLOUD_SPEC_NOT_PURCHASED');}
             $this->store->authorize(['service_id'=>$service,'customer_id'=>$customer],$actor);
             if($s['product_id']!==$mapping['product_id']){throw new HttpError(409,'CLOUD_PRODUCT_MAPPING_MISMATCH');}
             $old=$this->db->execute('SELECT * FROM cloud_instances WHERE service_id=? FOR UPDATE',[$service])->fetch();
             if($old){if($old['catalog_id']!==$catalog||!hash_equals($old['fingerprint'],$this->store->hash($spec))){throw new HttpError(409,'CLOUD_ATTACH_CONFLICT');}return $old['id'];}
             $id=Id::uuid();$this->db->execute('INSERT INTO cloud_instances(id,service_id,customer_id,account_id,catalog_id,spec_encrypted,fingerprint) VALUES (?,?,?,?,?,?,?)',[$id,$service,$customer,$mapping['account_id'],$catalog,$this->store->encrypt($spec,'cloud-spec:'.$id),$this->store->hash($spec)]);
-            $this->store->history($this->store->instance($id),null,'ATTACHED',$actor);return $id;
+            (new Entitlements($this->db,$this->config))->bind($this->store->instance($id),$purchase,$spec);$this->store->history($this->store->instance($id),null,'ATTACHED',$actor);return $id;
         });
     }
     public function prepare(string $instance,string $kind,array $payload,Principal $actor): string
@@ -59,6 +61,7 @@ final readonly class Engine
     {
         return $this->db->transaction(function()use($instance,$kind,$payload,$actor,$confirmation): string{
             $i=$this->store->instance($instance);$this->store->authorize($i,$actor,$kind!=='CREATE');
+            if(!$this->store->source($i)){throw new HttpError(409,'CLOUD_SOURCE_CHANGED');}
             if($i['current_operation_id']){$old=$this->store->operation($i['current_operation_id']);if($kind==='CREATE'&&$old['kind']==='CREATE'){if($i['imported']){throw new HttpError(409,'CLOUD_IMPORTED_CREATE_FORBIDDEN');}return $old['id'];}if(!in_array($old['status'],['SUCCEEDED','FAILED'],true)){throw new HttpError(409,'CLOUD_OPERATION_IN_FLIGHT');}}
             if($kind==='CREATE'){
                 if($i['imported']||$i['resource_id']!==null||$i['status']!=='PENDING'){throw new HttpError(409,'CLOUD_CREATE_FORBIDDEN');}
@@ -70,7 +73,7 @@ final readonly class Engine
                 $this->confirmation($i,$kind,$payload,$actor,$confirmation);
             }
             $policy=$this->catalog->find($i['catalog_id'])['policy'];if($kind==='CREATE'){$this->catalog->validate($policy,$payload);if(!in_array('CREATE',$policy['actions'],true)){throw new HttpError(409,'CLOUD_ACTION_UNSUPPORTED');}}else{$this->catalog->action($policy,$kind,$payload);}
-            if(!$this->store->source($i)){throw new HttpError(409,'CLOUD_SOURCE_CHANGED');}
+            (new Entitlements($this->db,$this->config))->action($i,$kind,$payload);
             $id=Id::uuid();$request=['id'=>$id,'account_id'=>$i['account_id'],'instance_id'=>$instance,'kind'=>$kind,'generation'=>(int)$i['generation']+1,'resource_id'=>$i['resource_id'],'provider_resource_ref'=>$i['provider_resource_ref'],'data'=>$payload];
             $this->db->execute('INSERT INTO cloud_operations(id,instance_id,kind,generation,request_encrypted,fingerprint) VALUES (?,?,?,?,?,?)',[$id,$instance,$kind,$request['generation'],$this->store->encrypt($request,'cloud-request:'.$id),$this->store->hash($request)]);
             $this->db->execute('UPDATE cloud_instances SET current_operation_id=?,generation=generation+1,version=version+1 WHERE id=?',[$id,$instance]);
@@ -82,7 +85,7 @@ final readonly class Engine
         return $this->db->transaction(function()use($id): ?array{
             $rows=$this->db->execute("SELECT * FROM cloud_operations WHERE status IN ('PENDING','WAITING_TASK')".($id?' AND id=?':'').' ORDER BY runner_checked_at,created_at,id LIMIT 100 FOR UPDATE SKIP LOCKED',$id?[$id]:[])->fetchAll();
             foreach($rows as $op){$i=$this->store->instance($op['instance_id']);$poll=$op['status']==='WAITING_TASK';
-                if($i['current_operation_id']!==$op['id']||(!$poll&&!$this->store->source($i))){$this->db->execute("UPDATE cloud_operations SET runner_checked_at=UTC_TIMESTAMP(6),safe_code='CLOUD_SOURCE_CHANGED' WHERE id=?",[$op['id']]);continue;}
+                if($i['current_operation_id']!==$op['id']||(!$poll&&!$this->dispatchable($op,$i))){$this->db->execute("UPDATE cloud_operations SET runner_checked_at=UTC_TIMESTAMP(6),safe_code='CLOUD_SOURCE_CHANGED' WHERE id=?",[$op['id']]);continue;}
                 if(!$poll&&$this->db->execute('SELECT 1 FROM cloud_dispatches WHERE operation_id=?',[$op['id']])->fetchColumn()){$this->unknown($op,$i,'DISPATCH_ALREADY_CONSUMED');continue;}
                 $request=$this->store->request($op);$token=Id::uuid();
                 $this->db->execute('UPDATE cloud_operations SET status=?,lease_token=?,lease_until=DATE_ADD(UTC_TIMESTAMP(6),INTERVAL 60 SECOND),runner_checked_at=UTC_TIMESTAMP(6) WHERE id=?',[$poll?'POLLING':'RUNNING',$token,$op['id']]);
@@ -90,6 +93,11 @@ final readonly class Engine
                 return ['id'=>$op['id'],'token'=>$token,'poll'=>$poll,'account_id'=>$i['account_id'],'instance_id'=>$i['id'],'request'=>$request,'fingerprint'=>$op['fingerprint'],'task_id'=>$op['task_id']];
             }return null;
         });
+    }
+    private function dispatchable(array $op,array $instance): bool
+    {
+        if(!$op['financial_exception']){return $this->store->source($instance);}
+        return (new Containment($this->db,$this->config))->dispatchable($op,$instance);
     }
     private function lease(string $id,string $token,string $status): array
     {
@@ -100,7 +108,7 @@ final readonly class Engine
         return new VoyarMutationFence($this->config,function()use($claim): void{
             $this->db->transaction(function()use($claim): void{
                 [$op,$i]=$this->lease($claim['id'],$claim['token'],'RUNNING');
-                if(!$this->store->source($i)){throw new HttpError(409,'CLOUD_SOURCE_CHANGED');}
+                if(!$this->dispatchable($op,$i)){throw new HttpError(409,'CLOUD_SOURCE_CHANGED');}
                 if($this->db->execute('SELECT 1 FROM cloud_dispatches WHERE operation_id=?',[$op['id']])->fetchColumn()){throw new HttpError(409,'CLOUD_DURABLE_REPLAY_BLOCKED');}
                 $this->db->execute('INSERT INTO cloud_dispatches(operation_id,lease_token,fingerprint) VALUES (?,?,?)',[$op['id'],$claim['token'],$op['fingerprint']]);
             });
@@ -171,7 +179,12 @@ final readonly class Engine
         $this->db->execute("INSERT INTO cloud_effects(operation_id,instance_id,account_id,task_id,resource_id,resource_version,kind,state,provider_task_ref,provider_resource_ref,provenance) VALUES (?,?,?,?,?,?,?,?,?,?,'MOCK')",[$op['id'],$i['id'],$i['account_id'],$task['id'],$resource['id'],$resource['version'],$op['kind'],$state,$task['provider_ref'],$resource['provider_ref']]);
         $this->db->execute("UPDATE cloud_operations SET status='SUCCEEDED',task_id=?,resource_id=?,safe_code='TASK_RESOURCE_VERIFIED',lease_token=NULL,lease_until=NULL WHERE id=?",[$task['id'],$resource['id'],$op['id']]);
         $this->db->execute('UPDATE cloud_instances SET status=?,resource_id=?,provider_resource_ref=?,version=version+1 WHERE id=?',[$state,$resource['id'],$resource['provider_ref'],$i['id']]);
-        $this->services->state($i['service_id'],$state==='TERMINATED'?'TERMINATED':($funded?'ACTIVE':'SUSPENDED'),$op['id']);
+        $serviceState=$state==='TERMINATED'?'TERMINATED':($funded?'ACTIVE':'SUSPENDED');
+        if($op['financial_exception']&&$state!=='TERMINATED'){
+            $serviceState=$this->services->status($i['service_id']);
+            if($serviceState==='UNKNOWN'){$c=$this->db->execute('SELECT * FROM cloud_containments WHERE operation_id=?',[$op['id']])->fetch();$context=$this->store->decrypt($c['context_encrypted'],$c['fingerprint'],'cloud-containment:'.$op['id']);$serviceState=$context['financial_context']['service_status'];}
+        }
+        $this->services->state($i['service_id'],$serviceState,$op['id']);
         $this->store->history($i,$op['id'],'TASK_RESOURCE_VERIFIED',new Principal('cloud-evidence-worker',[]));
     }
     public function view(string $instance,Principal $actor): array

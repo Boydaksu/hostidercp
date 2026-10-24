@@ -23,11 +23,11 @@ test('F4-D original SDK auth POST replay is blocked by committed Cloud operation
     foreach(['CREATE','START','STOP','RESTART','REINSTALL','UPGRADE','TERMINATE'] as $kind){$f=cloudFixture($db);if($kind!=='CREATE'){activateCloud($db,$f);}
         if($kind==='CREATE'){$op=$f['engine']->enqueue($f['instance'],$kind,[],$f['actor']);}
         elseif($kind==='TERMINATE'){$c=$f['engine']->prepare($f['instance'],$kind,[],$f['actor']);usleep(1100000);$op=$f['engine']->enqueue($f['instance'],$kind,[],$f['actor'],$c);}
-        else{$op=cloudAction($f,$kind,match($kind){'REINSTALL'=>['osid'=>2],'UPGRADE'=>['pid'=>2],default=>[]});}
+        else{$op=cloudAction($f,$kind,match($kind){'REINSTALL'=>['osid'=>1],'UPGRADE'=>['pid'=>1],default=>[]});}
         $claim=$f['engine']->claim($op);$transport=new DurableSyntheticCloudTransport($claim,$f['engine'],new DurableVoyar($db,$f['config'],$claim['account_id']));
         $tokens=new \Voyar\Client\Auth\InMemoryTokenStore();$tokens->save(new \Voyar\Client\Auth\Token('synthetic-token'));
         $client=\Voyar\Client\Client::withCredentials('synthetic@example.invalid','synthetic-password',$tokens,['base_url'=>'https://synthetic.example.invalid','max_retries'=>0],$transport);
-        $invoke=function()use($client,$kind,$claim): void{if($kind==='CREATE'){$client->services()->create($claim['request']['data']);return;}$s=$client->service($claim['request']['provider_resource_ref']);match($kind){'START'=>$s->vm()->start(),'STOP'=>$s->vm()->stop(),'RESTART'=>$s->vm()->restart(),'REINSTALL'=>$s->reinstall(['osid'=>2]),'UPGRADE'=>$s->upgrade(['pid'=>2]),'TERMINATE'=>$s->terminate()};};
+        $invoke=function()use($client,$kind,$claim): void{if($kind==='CREATE'){$client->services()->create($claim['request']['data']);return;}$s=$client->service($claim['request']['provider_resource_ref']);match($kind){'START'=>$s->vm()->start(),'STOP'=>$s->vm()->stop(),'RESTART'=>$s->vm()->restart(),'REINSTALL'=>$s->reinstall(['osid'=>1]),'UPGRADE'=>$s->upgrade(['pid'=>1]),'TERMINATE'=>$s->terminate()};};
         same('VOYAR_MUTATION_REPLAY_BLOCKED',raises(HttpError::class,$invoke)->errorCode);same(1,$transport->mutations);same(1,$transport->logins);same(1,(int)$db->execute('SELECT COUNT(*) FROM cloud_dispatches WHERE operation_id=?',[$op])->fetchColumn());same(1,(int)$db->execute('SELECT COUNT(*) FROM mock_voyar_calls WHERE operation_id=?',[$op])->fetchColumn());$f['engine']->lost($claim);same('UNKNOWN',$db->execute('SELECT status FROM cloud_operations WHERE id=?',[$op])->fetchColumn());
     }
 });

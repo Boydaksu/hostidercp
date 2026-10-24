@@ -25,7 +25,7 @@ final readonly class Store
     public function source(array $instance): bool
     {
         if($instance['imported']){return true;}
-        try{(new \Hostider\Services\CloudServices($this->db,$this->config))->source($instance['service_id'],$instance['customer_id'],['QUEUED','PROVISIONING','ACTIVE','SUSPENDED','UNKNOWN']);return true;}catch(HttpError){return false;}
+        return (new Entitlements($this->db,$this->config))->valid($instance);
     }
     public function authorize(array $instance,Principal $actor,bool $staff=false): void
     {

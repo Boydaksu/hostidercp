@@ -14,7 +14,7 @@ $copied=[];
 try {
     foreach(glob(dirname(__DIR__).'/migrations/*.php') as $source){if(basename($source)<'043'){$target=$upgradeDir.'/'.basename($source);copy($source,$target);$copied[]=$target;}}
     same(42,count((new Migrator($db,$upgradeDir))->migrate()));
-    $migrator=new Migrator($db,dirname(__DIR__).'/migrations');same(['043_f4_domain_audit_safety.php','044_f4_cloud_operations.php'],$migrator->migrate());same([],$migrator->migrate());$migrator->assertReady();
+    $migrator=new Migrator($db,dirname(__DIR__).'/migrations');same(['043_f4_domain_audit_safety.php','044_f4_cloud_operations.php','045_cloud_purchase_containment.php'],$migrator->migrate());same([],$migrator->migrate());$migrator->assertReady();
     echo 'MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS'.PHP_EOL;
 } finally {foreach($copied as $target){unlink($target);}rmdir($upgradeDir);}
 function auditDomain($db,bool $registered=false): array {

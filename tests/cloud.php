@@ -4,7 +4,7 @@ require __DIR__.'/harness.php';require __DIR__.'/database.php';require __DIR__.'
 use Hostider\Core\{Id,Config};use Hostider\Core\Database\{Database,Migrator};use Hostider\Core\Http\HttpError;use Hostider\Core\Security\Principal;
 use Hostider\Cloud\{Catalog,Engine,Worker};use Hostider\Providers\Mock\DurableVoyar;
 $db=isolatedDomainDb();$upgrade=dirname(__DIR__).'/storage/f4-d-upgrade-'.bin2hex(random_bytes(6));mkdir($upgrade,0700);$copies=[];
-try{foreach(glob(dirname(__DIR__).'/migrations/*.php') as $source){if(basename($source)<'044'){$target=$upgrade.'/'.basename($source);copy($source,$target);$copies[]=$target;}}same(43,count((new Migrator($db,$upgrade))->migrate()));$m=new Migrator($db,dirname(__DIR__).'/migrations');same(['044_f4_cloud_operations.php'],$m->migrate());same([],$m->migrate());$m->assertReady();echo 'MIGRATION 001-043 preserved; 043 to 044 additive upgrade; replay no-op PASS'.PHP_EOL;}finally{foreach($copies as $target){unlink($target);}rmdir($upgrade);}
+try{foreach(glob(dirname(__DIR__).'/migrations/*.php') as $source){if(basename($source)<'045'){$target=$upgrade.'/'.basename($source);copy($source,$target);$copies[]=$target;}}same(44,count((new Migrator($db,$upgrade))->migrate()));$m=new Migrator($db,dirname(__DIR__).'/migrations');same(['045_cloud_purchase_containment.php'],$m->migrate());same([],$m->migrate());$m->assertReady();echo 'MIGRATION 001-044 preserved; 044 to 045 additive upgrade; replay no-op PASS'.PHP_EOL;}finally{foreach($copies as $target){unlink($target);}rmdir($upgrade);}
 test('F4-D canonical paid CLOUD source scope unit and immutable specification',function()use($db): void{
     $f=cloudFixture($db,false);$engine=$f['engine'];
     $bad=new Principal('wrong',['services.manage'],customerId:Id::uuid(),expiresAt:time()+3600,verifiedAt:time());
@@ -22,8 +22,8 @@ test('F4-D catalog OS location custom bounds and secret fields fail closed',func
     $policy=array_replace($f['policy'],['custom'=>true,'custom_limits'=>['group_id'=>1,'cpu_min'=>2,'cpu_max'=>8,'cpu_step'=>2,'ram_min'=>2,'ram_max'=>32,'ram_per_core_max'=>4,'disk_min'=>10,'disk_max'=>400,'disk_per_ram_max'=>20,'ipv4_max'=>2]]);
     $custom=['custom_package'=>['product_group_id'=>1,'cpu_cores'=>2,'ram_gb'=>4,'disk_gb'=>40,'ipv4_count'=>1],'osid'=>1,'locationid'=>1,'type'=>'ondemand'];$catalog->validate($policy,$custom);
     foreach(['cpu_cores'=>3,'ram_gb'=>32,'disk_gb'=>400,'ipv4_count'=>3] as $key=>$value){$bad=$custom;$bad['custom_package'][$key]=$value;raises(HttpError::class,fn()=>$catalog->validate($policy,$bad));}
-    $id=$catalog->configure($f['product'],$policy);$instance=$f['engine']->attach($f['service']['id'],$f['customer'],$id,$custom,$f['actor']);$customF=array_replace($f,['catalog'=>$id,'spec'=>$custom,'instance'=>$instance]);activateCloud($db,$customF);
-    $c=$f['engine']->prepare($instance,'UPGRADE',['pid'=>2],$f['actor']);same('CLOUD_CUSTOM_UPGRADE_UNSUPPORTED',raises(HttpError::class,fn()=>$f['engine']->enqueue($instance,'UPGRADE',['pid'=>2],$f['actor'],$c))->errorCode);
+    $id=$catalog->configure($f['product'],$policy);raises(HttpError::class,fn()=>$f['engine']->attach($f['service']['id'],$f['customer'],$id,$custom,$f['actor']));$customF=cloudFixture($db,true,1,$custom,$policy);$instance=$customF['instance'];activateCloud($db,$customF);
+    $c=$customF['engine']->prepare($instance,'UPGRADE',['pid'=>2],$customF['actor']);same('CLOUD_CUSTOM_UPGRADE_UNSUPPORTED',raises(HttpError::class,fn()=>$customF['engine']->enqueue($instance,'UPGRADE',['pid'=>2],$customF['actor'],$c))->errorCode);
 });
 test('F4-D create acceptance is not ACTIVE until independent task and resource evidence',function()use($db): void{
     $f=cloudFixture($db);$op=$f['engine']->enqueue($f['instance'],'CREATE',[],$f['actor']);same($op,$f['engine']->enqueue($f['instance'],'CREATE',[],$f['actor']));
@@ -34,7 +34,7 @@ test('F4-D create acceptance is not ACTIVE until independent task and resource e
 });
 test('F4-D power reinstall upgrade and terminate use confirmation and verified tasks',function()use($db): void{
     $f=cloudFixture($db);activateCloud($db,$f);$worker=new Worker($db,$f['config']);$journals=$db->execute('SELECT COUNT(*) FROM finance_journals')->fetchColumn();
-    foreach(['STOP','START','RESTART','REINSTALL','UPGRADE'] as $kind){$data=match($kind){'REINSTALL'=>['osid'=>2],'UPGRADE'=>['pid'=>2],default=>[]};raises(HttpError::class,fn()=>$f['engine']->enqueue($f['instance'],$kind,$data,$f['actor']));$op=cloudAction($f,$kind,$data);same(true,$worker->once($op));same(true,$worker->once($op));same('SUCCEEDED',$db->execute('SELECT status FROM cloud_operations WHERE id=?',[$op])->fetchColumn());}
+    foreach(['STOP','START','RESTART','REINSTALL','UPGRADE'] as $kind){$data=match($kind){'REINSTALL'=>['osid'=>1],'UPGRADE'=>['pid'=>1],default=>[]};raises(HttpError::class,fn()=>$f['engine']->enqueue($f['instance'],$kind,$data,$f['actor']));$op=cloudAction($f,$kind,$data);same(true,$worker->once($op));same(true,$worker->once($op));same('SUCCEEDED',$db->execute('SELECT status FROM cloud_operations WHERE id=?',[$op])->fetchColumn());}
     raises(HttpError::class,fn()=>$f['engine']->prepare($f['instance'],'UPGRADE',['pid'=>3],$f['actor']));
     $c=$f['engine']->prepare($f['instance'],'TERMINATE',[],$f['actor']);raises(HttpError::class,fn()=>$f['engine']->enqueue($f['instance'],'TERMINATE',[],$f['actor'],$c));
     usleep(1100000);$op=$f['engine']->enqueue($f['instance'],'TERMINATE',[],$f['actor'],$c);$worker->once($op);same('ACTIVE',$f['engine']->view($f['instance'],$f['actor'])['status']);$worker->once($op);same('TERMINATED',$f['engine']->view($f['instance'],$f['actor'])['status']);

@@ -31,6 +31,7 @@ final readonly class DurableVoyar implements \Hostider\Providers\Contract\AsyncC
                 }else{
                     $r=$this->db->execute('SELECT * FROM mock_voyar_resources WHERE id=? AND account_id=? FOR UPDATE',[$request['resource_id'],$this->account])->fetch();
                     if(!$r||$r['state']==='TERMINATED'||$r['provider_ref']!==$request['provider_resource_ref']){throw new HttpError(409,'CLOUD_MOCK_RESOURCE_MISMATCH');}$resource=$r['id'];
+                    if(($request['financial_exception']??false)&&(!in_array($request['kind'],['STOP','TERMINATE'],true)||(int)$r['version']!==($request['expected_resource_version']??null))){throw new HttpError(409,'CLOUD_CONTAINMENT_RESOURCE_CHANGED');}
                 }
                 $task=Id::uuid();$this->db->execute('INSERT INTO mock_voyar_tasks(id,account_id,provider_ref,operation_id,resource_id,fingerprint,kind,payload_json) VALUES (?,?,?,?,?,?,?,?)',[$task,$this->account,'MOCK-TASK-'.$task,$request['id'],$resource,$fingerprint,$request['kind'],CanonicalJson::encode($request['data'])]);
                 if(in_array($scenario,['TIMEOUT_AFTER_EFFECT','BODY_LOST','AUTH_AFTER_EFFECT'],true)){$outcome='UNKNOWN';}
