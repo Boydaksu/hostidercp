@@ -17,3 +17,13 @@ Kaynak: `references/voyar-api-client-user-provided.zip`, SHA-256 `6f76355c1fb32b
 G-V01: 30 günlük müşteri peşin satışı, sağlayıcıda 30 gün prepaid satın alma zorunluluğu anlamına gelmez. SDK'nın `hourly_price`/`daily_price` alanları gerçek muhasebeleştirilmiş maliyet değildir. Minimum ücret, stop/suspend/terminate etkisi ve addon maliyeti hesap kanıtı ister. Gerçek iki saat ondemand billing ve termination görülmeden PROV-005 canlı PASS değildir.
 
 Endpoint/auth/request bilgileri SDK'da görüldü diye uygulamaya hardcode edilmedi. ResellerClub/DomainNameAPI gerçek hesap sözleşmesi incelemesi G-R01/G-D01 olarak OPEN kalır. Genel `src/Providers/Mock/Voyar.php` önceki F0 mock'udur; F4 kalıcı Cloud dünyası veya tamamlanmış entegrasyon sayılmaz.
+
+## Ara denetim: sentetik transport ile yeniden üretim
+
+Özgün `src/Voyar/Client/Http/HttpClient.php`: satır 193 network/5xx retry'ı GET ile sınırlar; satır 223–227 AuthenticationException catch'i method kontrolü yapmadan `retriedAuth=true`, token clear ve `continue` uygular. Böylece POST da auth yenilemesi ardından yeniden gönderilir. Satır numaraları yukarıdaki hash'i sabit ZIP içindir; güncel vendor sürümü iddiası değildir.
+
+`tests/voyar-sdk.php` özgün ZIP'in SHA-256'sını doğrular ve `zip://` ile yalnız test sürecinde kaynak sınıflarını okur. ZIP çıkarılmaz/değiştirilmez; CurlTransport yaratılmaz ve gerçek ağ kullanılmaz. Sabit synthetic token ile ilk POST 401/logout döndürülür, auth/login başarılı olur ve özgün SDK'nın aynı mali etkili POST'u ikinci kez gönderdiği çağrı sayımıyla kanıtlanır. Create, extend/renew, terminate, reinstall, upgrade, start/stop/restart, password ve VNC için mutation sayısı **2**'dir. `max_retries=0` bunu engellemez: bu ayar auth replay'i kapsamıyor.
+
+`Providers/VoyarMutationFence` tek dispatch için gerçek mutation transport gönderimini **önce** tüketir. Sentetik transport her mutation send'ini fence üzerinden geçirince SDK auth yenilemesini tamamlasa bile ikinci mutation 409 `VOYAR_MUTATION_REPLAY_BLOCKED` ile gönderilmeden durur; fiziksel mutation sayısı **1** kalır. G-V02/G-V03 canlı dispatch bütün test dışı ortamlarda kapalıdır. Bu sınıf kalıcı operation/lease/idempotency kaydının yerine geçmez ve henüz canlı SDK adaptörü veya Cloud worker'a bağlanmış kabul edilmez.
+
+Bağlantı timeout'u ile 200 yanıtının body kaybı ayrı sentetik transport senaryolarıdır; ikisi de SDK TransportException üretir, auth/login çalışmaz, mutation sayısı 1 kalır ve fence tekrar açılmaz. Auth yenilemesinin başarılı olması ilk mutation'ın etkisizliğini kanıtlamaz. Provider task belirsizliği bu testlerin kapsamı değildir; Cloud task/resource inspect ve manual reconciliation tamamlanmalıdır. Bu sonuçlar G-V02/G-V03'ü kapatmaz.

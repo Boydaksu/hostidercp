@@ -1,6 +1,6 @@
 # F4 ilerleme raporu — tamamlanmamış test/mock kapsamı
 
-24 Ekim 2026. Dal `codex/f4-domain-cloud`, kabul edilen taban `c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731`. **F4 mock teslimi tamamlanmadı; teknik kabul veya DONE önerilmez.** F5 başlamadı. Main push/merge, production veya gerçek finans/sağlayıcı işlemi yapılmadı.
+24 Ekim 2026. Dal `codex/f4-domain-cloud`, kabul edilen taban `c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731`. **F4 mock teslimi tamamlanmadı; teknik kabul veya DONE önerilmez.** F5 başlamadı. Main push/merge, production veya gerçek finans/sağlayıcı işlemi yapılmadı. Ara denetim sonrası A/B kaynağı GitHub'a yayımlandı; [taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2) yalnız onaylı F3 dalını hedefler. Yerel/uzak Git tree eşitliği [yayın eşlemesinde](evidence/f4/github-publication.json) doğrulandı; sunucu commit metadata'sı nedeniyle commit SHA'ları değişti, dosya blob/tree SHA'ları değişmedi.
 
 ## Uygulanan kapsam
 
@@ -40,7 +40,7 @@ Yerel PHP **8.4.24**, gerçek MariaDB **10.11.18**: önceki **238** + yeni **10*
 
 İlk model koşusunda canonical JSON anahtar sırası assertion'ı ve provider fixture config değişkeni düzeltildi. İlk tam koşuda önceki domain fixture verisinin ortak test şemasında kalması Identity cleanup FK hatasına yol açtı: [ilk çıktı](evidence/f4/local-tests.txt). Test izolasyonu düzeltildi, sonraki koşu temiz ayrı şemada 248/248 geçti. DB constraint kaldırılarak test gevşetilmedi; önceki testler değiştirilmedi.
 
-[Statik kontrol](evidence/f4/checks.txt): 246 PHP dosyası/0 ihlal, PHPStan level 5/0 hata, 256 source/config/test dosyası güvenlik örüntü taraması/0 bulgu. Bu örüntü taraması tam güvenlik denetimi değildir. Workflow'a intl ve yeni üç suite eklendi. **PHP 8.3/8.4 uzak CI henüz çalıştırılmadı, CI bağlantısı yoktur.** Eski F3 CI bu yeni kaynağın kanıtı olarak kullanılmaz. Yeni Composer bağımlılığı yoktur; özgün SDK runtime'a yüklenmez.
+[İlk statik kontrol](evidence/f4/checks.txt): 246 PHP dosyası/0 ihlal, PHPStan level 5/0 hata, 256 source/config/test dosyası güvenlik örüntü taraması/0 bulgu. Bu örüntü taraması tam güvenlik denetimi değildir. Workflow'a intl ve yeni üç suite eklendi. İlk A/B uzak kaynak **141346eaa58ee74874ebc60a42a53d3916253061**: [GitHub Actions 40071016379](https://github.com/Boydaksu/hostidercp/actions/runs/40071016379), PHP 8.3 ve 8.4 için **248/248**, iki job success. Doğrudan job loglarından sayım, suite/step ve runtime kanıtı [ci-initial.json](evidence/f4/ci-initial.json) içindedir. Önceki F3 CI bu yeni kaynağın kanıtı olarak kullanılmadı. Composer locked audit, PHPStan, lint/mimari, 10 hizmet HTTP / 30 Commerce HTTP / 20 session-concurrency tekrarı ve JS kontrolleri de başarılıdır. Yeni Composer bağımlılığı yoktur; özgün SDK uygulama runtime'ına yüklenmez.
 
 Demo komutları: `php tests/domains-unit.php`, `php tests/domains-model.php`, `php tests/domains-provider.php`. DB testleri yalnız `APP_ENV=test` ve `TEST_DB_DSN` içinde `hostider_f0_test*` izole şema kabul eder. CLI process çıktıları synthetic status/resource ile sınırlıdır. Kullanıcıya açık yeni ekran henüz yoktur.
 
@@ -51,3 +51,7 @@ Geri dönüş: additive DDL için otomatik destructive down yoktur. Worker durdu
 ## Sonraki bağımlılıklar
 
 F4-A/B hâlâ kısmi; domain lifecycle state binding, provider response evidence, operation/lease/fencing, finans hizmetleriyle domain order/renewal bağlantısı ve DOMAIN-001/002 failover ilk sıradadır. Mevcut service ownership transferine domain owner/contact bağlamı henüz eklenmedi; bu nedenle Domain ürünlerine müşteri transferi veya lifecycle HTTP erişimi açılmaz. Sonra Cloud D/E ve ortak HTTP/panel F tamamlanmalı, tüm concurrency/performance/CI/demolar doğrulanmalıdır. **Tam F4 mock teslimi ve gerçek roadmap çıkış şartları karşılanmadı; kabul bekleyen bitmiş F4 teslimi olarak sunulmaz.**
+
+## Ara denetim sonrası SDK regresyonu
+
+[Devam planı](F4_CONTINUATION_PLAN.md) ve [güncellenmiş SDK kaynak incelemesi](F4_VOYAR_SDK_REVIEW.md) eklendi. `VoyarMutationFence` ile özgün ZIP üzerinde üç yeni sentetik transport testi yerel PHP 8.4'te **3/3** geçti: [çıktı](evidence/f4/voyar-sdk-local.txt). On işlem türünde auth sonrası gizli ikinci POST yeniden üretildi; fence bunu transport gönderiminden önce engeller. Network timeout ve body loss ayrı senaryolardır. Bu test yalnız SDK kaynak davranışı ve tek dispatch transport korumasıdır; kalıcı Cloud operation/task/UNKNOWN reconciliation tamamlanmış sayılmaz. Yeni migration yoktur. Workflow zip extension ve SDK suite içerir; yeni kaynağın uzak CI kanıtı ayrıca kaydedilecektir. İlk 248-test CI, bu üç yeni testin kanıtı değildir.

@@ -31,7 +31,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ matrix.php }}'
-          extensions: pdo_mysql, sodium, mbstring, fileinfo, intl
+          extensions: pdo_mysql, sodium, mbstring, fileinfo, intl, zip
           coverage: none
       - run: composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts
       - run: composer audit --working-dir=tools/analysis --locked
@@ -75,6 +75,7 @@ jobs:
       - run: php tests/domains-unit.php
       - run: php tests/domains-model.php
       - run: php tests/domains-provider.php
+      - run: php tests/voyar-sdk.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability

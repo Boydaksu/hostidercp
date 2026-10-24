@@ -1,0 +1,27 @@
+{
+  "base": "c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731",
+  "mapping": [
+    {
+      "local_sha": "6f4a9d7b3f006a672fde7a9da5a936d824d4a718",
+      "remote_sha": "4e6d860da9127e06a941e580e5f523bb8b0ac208",
+      "verified_tree": "c3c3a194f34c61672e5286b8fedcf7f2532c68c8"
+    },
+    {
+      "local_sha": "eeba15d1abb95b250827e0fd4e968c603a1a4f69",
+      "remote_sha": "dbd3aa8055c93c0a4d8960d6e5d0d54715922fad",
+      "verified_tree": "ddf79c06893edd65c8babcabf5715305c2905b04"
+    },
+    {
+      "local_sha": "4d902e5f926e575fbea709e0c46dfb75cbec54e8",
+      "remote_sha": "a20a70a584086261c829877fa47466891d4d4866",
+      "verified_tree": "8b4d4b63844622df072d899ef641c2b68b1c899d"
+    },
+    {
+      "local_sha": "2dc3c699ef4265f16c9a6b38bdd90076358ebc65",
+      "remote_sha": "141346eaa58ee74874ebc60a42a53d3916253061",
+      "verified_tree": "e910482cff2ee607c00ed884538d6d7cd1eb29fd"
+    }
+  ],
+  "head": "141346eaa58ee74874ebc60a42a53d3916253061",
+  "ci_run": 40071016379
+}
