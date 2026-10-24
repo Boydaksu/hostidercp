@@ -59,3 +59,5 @@ Bu paket çalışma tasarımıdır; kullanıcı API anahtarlarını, canlı DB d
 ## Uygulama durumu — F3 test/mock
 
 Güncel uygulama ve doğrulanmış sınırlar [F3 teslim raporunda](docs/F3_REPORT.md) bulunur. Hizmet motoru ve Identity/Commerce ile bağlı müşteri/yönetici hizmet panelleri test/mock ortamında uygulanmıştır; canlı sağlayıcı onayı ve production kullanımı açık GATE'lere bağlıdır. F4 başlatılmadı.
+
+F3 son denetiminde Runner kuyruk açlığı ve cron batch işleme düzeltildi; yeniden üretim, gerçek CLI ölçümü ve kabul kararları [F3_POST_DELIVERY_REVIEW](docs/F3_POST_DELIVERY_REVIEW.md) içindedir. Migration 038 additive'dir; 001–037 korunur. F4 kullanıcı kabulü bekler, canlı GATE'ler açıktır.

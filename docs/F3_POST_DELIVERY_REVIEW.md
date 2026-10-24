@@ -1,6 +1,6 @@
 # F3 son denetim — 24 Ekim 2026
 
-Dal `codex/f3-service-engine`; denetim tabanı `4c6c98e911a40ba56940a9f07cc5ca8d5684e3f8`. Yalnız F3 test/mock kapsamı. F4, production, gerçek WHM, ödeme ve dış bildirim başlatılmadı. Bu raporun CI/commit bölümü doğrulama tamamlandığında güncellenir.
+Dal `codex/f3-service-engine`; denetim tabanı `4c6c98e911a40ba56940a9f07cc5ca8d5684e3f8`. Uygulama düzeltmesi `036ad546d798976985f0473233f81b76fb0545af`; son test kaynağı `9b0dd8f8f3de1c16959f7570a8df0d83f04773fe`. Yalnız F3 test/mock kapsamı. F4, production, gerçek WHM, ödeme ve dış bildirim başlatılmadı.
 
 ## Kök neden ve yeniden üretim
 
@@ -15,6 +15,8 @@ Gerçek MariaDB 10.11.18/PHP 8.4.24 üzerinde 101 eski, mappingsiz/kapasitesiz P
 - Staff görünümünde son kontrol ve blokaj kodu bulunur; müşteri allowlist'i korunur. Kaynak ödeme değişimi güncel claim kontrolünde hâlâ reddedilir.
 - `services:work` varsayılan 100 işlem/20 saniye kabul bütçeli batch olur; `--once` korunur. Daha düşük sınırlar açık seçeneklerle seçilir. Bellek rezervi ve 2 saniyelik CLI InnoDB lock wait yeni iş kabulünü sınırlar. Süre her aday öncesi kontrol edilir; in-flight çağrıya hard deadline iddiası yoktur.
 - Mevcut operation/service claim ve lease/fence, transaction dışı provider etkisi ve UNKNOWN mutasyonunu yeniden göndermeme kuralları korunur. Overlap çalışan iki CLI desteklenir; Scheduler named lock'ı farklı amaçla korunur.
+
+[Gerçek EXPLAIN](evidence/f3/review-runner-explain.txt) aday sorgusunda `ix_svc_runner_fairness` kullanımını ve filesort bulunmadığını gösterir; satır sayısı optimizer tahminidir, büyük üretim yükü ölçümü değildir. Engine/Pools claim, current-payment, server-capacity ve transaction sınırları incelendi; bu servislerin iş kuralları değiştirilmedi.
 
 ## Regresyonlar ve demo
 
@@ -33,16 +35,25 @@ Gereksinim izi: PROV-001/002 → UNKNOWN/no-retry ve reconciliation paketleri; P
 
 ## CI, ölçüm ve kalan riskler
 
-Yerel PHP 8.4.24 / MariaDB 10.11.18 tam suite **237/237**: önceki 232 ve ilk 5 test geçti. Ardından yalnız test eklenerek genişletilen runner paketi **6/6** geçti: [son altı test](evidence/f3/review-runner-six-tests.txt). Böylece güncel normal paket **238** senaryodur; önceki 232 kaldırılmadı. PHPStan, lint/mimari kontrol, Composer locked audit ve güvenlik örüntü taraması başarılı: [kontroller](evidence/f3/review-checks.txt). Eski testler ve 001–037 için taban karşılaştırması sıfır değişikliktir. PHP 8.3/8.4 CI SHA/URL sonuçları tamamlanınca kesinleştirilir. Önceki yeşil CI yeni kodun kanıtı olarak kullanılmaz.
+Yerel PHP 8.4.24 / MariaDB 10.11.18 ilk tam suite **237/237** geçti; ardından doğrudan Worker testi eklendi ve runner **6/6** geçti. Son güncel tam suite **238/238**, sıfır hata: [nihai tam çıktı](evidence/f3/review-final-tests.txt). Önceki 232 kaldırılmadı. PHPStan, lint/mimari kontrol, Composer locked audit ve güvenlik örüntü taraması başarılı: [kontroller](evidence/f3/review-checks.txt). Eski testler ve 001–037 için taban karşılaştırması sıfır değişikliktir: [muhafaza kanıtı](evidence/f3/review-preservation.json).
 
-| Ölçüm, 16 kaynak | Süre | İşlem/sn |
+Uygulama `036ad546d798976985f0473233f81b76fb0545af`: [CI 40068003587](https://github.com/Boydaksu/hostidercp/actions/runs/40068003587), PHP 8.3/8.4 **237/237**, iki job success ([doğrudan log özeti](evidence/f3/review-ci-initial.json)). Son test kaynağı `9b0dd8f8f3de1c16959f7570a8df0d83f04773fe`: [PR CI 40068193993](https://github.com/Boydaksu/hostidercp/actions/runs/40068193993), PHP **8.3.36 ve 8.4.27**, MariaDB **10.11.19**, her sürümde **238/238**, iki job success ([doğrudan job logu kanıtı](evidence/f3/review-ci-final.json)). Her job'da 10 hizmet HTTP / 30 Commerce HTTP / 20 session-concurrency suite tekrarının tamamı ve PHPStan/Composer audit/lint/mimari/güvenlik/JS sözdizimi adımları başarılıdır. Önceki 232-test CI sonucu yeni kodun kanıtı olarak kullanılmadı. Sonraki teslim commit'i yalnız dokümantasyon ve kanıt ekler.
+
+| Yerel koşu, her biri 16 kaynak | Doğrudan Worker süre / işlem/sn | Gerçek services:work CLI süre / işlem/sn |
 |---|---|---|
-| Doğrudan Worker, tek PHP süreç | 306,84 ms | 52,14 |
-| Gerçek services:work CLI, bir çağrı | 671,04 ms | 23,84 |
+| İlk tam suite | 306,84 ms / 52,14 | 671,04 ms / 23,84 |
+| Altı-test runner tekrarı | 356,25 ms / 44,91 | 757,23 ms / 21,13 |
+| Nihai 238-test tam suite | 445,18 ms / 35,94 | 887,93 ms / 18,02 |
+| Linux CI PHP 8.3.36 | 445,98 ms / 35,88 | 541,20 ms / 29,56 |
+| Linux CI PHP 8.4.27 | 425,53 ms / 37,60 | 525,31 ms / 30,46 |
 
-Tablo tam suite koşusuna aittir. Son 6-test tekrarında doğrudan Worker 44,91 işlem/sn ve gerçek CLI 21,13 işlem/sn ölçüldü; iki koşu da ayrı saklandı. Fixture süreç peak memory: 4 MiB; bu değer ayrı CLI çocuğunun peak bellek ölçümü değildir. İşlem sayısı/tekillik DB'den ayrıca doğrulanır; sayısal throughput assertion'ı kullanılmaz.
+Üç koşu ayrı saklandı: ilk [JSON](evidence/f3/review-throughput.json), ara [runner çıktısı](evidence/f3/review-runner-six-tests.txt), nihai [JSON](evidence/f3/review-final-throughput.json). Her CLI ölçümü tek bağımsız komut çağrısıdır. Fixture süreç peak memory: 4 MiB; bu değer ayrı CLI çocuğunun peak bellek ölçümü değildir. İşlem sayısı/tekillik DB'den ayrıca doğrulanır; sayısal throughput assertion'ı kullanılmaz.
+
+Aynı son test SHA'sının [push CI 40068190133](https://github.com/Boydaksu/hostidercp/actions/runs/40068190133) job'ları da PHP 8.3/8.4 için success'tir; yukarıdaki ayrıntılı sayım ve ölçümler PR CI job loglarından çıkarılmıştır.
 
 Yerel ölçüm son ham JSON'a göre raporlanır. Örneklem küçük ve ağsız mock'tur; gerçek hosting CPU, bellek, DB contention, provider rate limit ve timeout'ları ölçülmedi. Bir dakikada sayısal üretim kapasitesi veya sonlu gecikme garantisi verilmez. Sürekli geliş hızı işleme kapasitesini aşarsa backlog büyür. Her cron'un yeni işe kabul süresi sınırlıdır; in-flight provider/DB çağrısını güvenli biçimde zorla kesmek vaat edilmez. Gerçek ortam sınırları G-O01/G-C01'de açıktır.
+
+Eski dakikada bir `--once` düzeni çağrı başına en fazla bir dispatch yapıyordu. Yeni gerçek CLI deneyinde tek çağrı 16 işi tamamlar; bu, dakika başına üretim kapasitesine çevrilmez. Testler ardışık bağımsız cron komutlarını çalıştırır; gerçek hosting panelinin dakika tetiklemesi/CLI kapatması bu testte doğrulanmaz.
 
 ## Migration, geri dönüş ve kabul sınırı
 
@@ -52,4 +63,15 @@ Main salt okunur denetimde hâlâ `ada37dc52b324e34380ba836ae7794cebb174ec4`, `p
 
 G-C01 (gerçek WHM ACL/endpoint/TLS/timeout/inspect), G-O01 (gerçek hosting cron/runtime/deployment/restore), G-T01 (canlı transfer politikası) açık. Ayrıca G-V01..04, G-P01..02, G-R01, G-D01, G-X01..02, G-O02..04 açık; [tam kapı listesi](14_OPEN_VALIDATIONS.md) değişmez. Gerçek WHM staging kabulü yapılmadı. HELD bildirim gerçek SMTP teslimi değildir; F4/F5/F6 ve V1 release blocker'ları tamamlanmış sayılmaz.
 
-Nihai altı kabul kararı yeni CI sonucu alındığında aşağıda kesinleştirilir. F4 kodlaması kullanıcı kabulüne kadar başlamaz.
+## Nihai kabul kararları
+
+| Soru | Karar ve sınır |
+|---|---|
+| 1. 100'den fazla bloke operasyon arkasındaki sağlıklı iş işleniyor mu? | **Evet.** 101 bloke aday arkasındaki uygun hizmet hem Runner hem doğrudan Worker yolunda işler. Blokaj metadata'sı görünür, geçici kapasite/health düzelince aynı işler tamamlanır; UNKNOWN tekrar gönderilmez ve kaynak sayısı aşılmaz. |
+| 2. Bir dakikalık cron güvenli ve ilerleme sağlayabilir mi? | **Test/mock komut düzeyinde evet.** Sınırlı batch, kalıcı adil sıra, claim/fence ve sonraki komutla devam doğrulandı. Gerçek hosting dakika tetiklemesi, CPU/bellek/CLI timeout'u ve ağ gecikmesi için **G-O01/G-C01 açık**; üretim kapasite garantisi yok. |
+| 3. Önceki 232 test korundu mu? | **Evet.** Test dosyaları ve 001–037 değişmedi; güncel 232+6=238 test yerelde ve PHP 8.3/8.4 CI'da geçti. |
+| 4. F3 mock geliştirme kapsamı teknik kabule hazır mı? | **Evet, yalnız test/mock teknik inceleme ve kullanıcı kabulüne hazır.** Gerçek WHM staging doğrulaması olmadığı için canlı entegrasyon veya tam roadmap F3 exit kabulü önerilmez. |
+| 5. F4 mock geliştirmesine geçilebilir mi? | **Bu F3 mock teslimini kullanıcı kabul ettikten ve F4 kapsamını onayladıktan sonra teknik olarak evet.** Bu görevde F4 başlamadı; kullanıcı kabulü beklenir. İlk merge öncesinde repository sahibi PR incelemesi ve zorunlu verify kurallarını açmalıdır. |
+| 6. V1 üretim/WHM canlı kabulünde hangi GATE'ler açık? | **G-C01, G-O01, G-T01 ve G-V01/V02/V03/V04, G-P01/P02, G-R01, G-D01, G-X01/X02, G-O02/O03/O04.** Yedek/restore, least-privilege deployment, bildirim teslimi, göç/cutover ve ilgili bütün V1 P0 release blocker'ları ayrıca kabul edilmelidir. |
+
+F3 mock incelemesine sunulur. Kullanıcı kabulü olmadan F4 kodlaması, merge veya canlı işlem yapılmaz.

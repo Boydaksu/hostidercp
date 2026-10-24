@@ -1,0 +1,23 @@
+{
+  "baseline": "4c6c98e911a40ba56940a9f07cc5ca8d5684e3f8",
+  "source_commit": "9b0dd8f8f3de1c16959f7570a8df0d83f04773fe",
+  "previous_tests_unchanged": 232,
+  "new_tests": 6,
+  "local_passed": 238,
+  "ci_php83_passed": 238,
+  "ci_php84_passed": 238,
+  "migrations_001_037_changed": 0,
+  "additive_migration": "038_service_runner_fairness.php",
+  "main": {
+    "sha": "ada37dc52b324e34380ba836ae7794cebb174ec4",
+    "protected": false,
+    "required_status_checks": {
+      "enforcement_level": "off",
+      "contexts": [],
+      "checks": []
+    }
+  },
+  "rules_read": "Unavailable via connected API; no assertion that rules were enumerated",
+  "repository_settings_changed": false,
+  "live_effects_started": false
+}

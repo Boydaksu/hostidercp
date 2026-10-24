@@ -1,0 +1,2 @@
+id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
+1	SIMPLE	svc_operations	range	ix_svc_pending,ix_svc_expiry,ix_svc_runner_fairness	ix_svc_runner_fairness	26	NULL	215	Using where
