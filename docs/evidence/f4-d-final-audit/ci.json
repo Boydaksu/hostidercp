@@ -1,0 +1,636 @@
+{
+  "run_id": 40112735157,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40112735157",
+  "source_sha": "19826883fab6361b169be72b2633cdf18e0419cb",
+  "tree_sha": "d9f9c2208c77fc5e7cc43bae59db2732abfeeab6",
+  "jobs": [
+    {
+      "id": 120927666901,
+      "name": "verify (8.3)",
+      "conclusion": "success",
+      "php": [
+        "Updated to PHP 8.3.36"
+      ],
+      "mariadb": [
+        "Version: '10.11.19-MariaDB-ubu2204'",
+        "Version: '10.11.19-MariaDB-ubu2204'"
+      ],
+      "checkout": "19826883fab6361b169be72b2633cdf18e0419cb",
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        }
+      ],
+      "tests": 325,
+      "failures": 0,
+      "counterexamples": [
+        "PASS Final P0 already refunded VM STOP preserves SUSPENDED and immutable finance",
+        "PASS Final P0 paid ACTIVE STOP UNKNOWN then FULL refund reconciles STOPPED SUSPENDED once",
+        "PASS Final P0 cancellation after STOP UNKNOWN cannot restore historical ACTIVE",
+        "PASS Final P0 pending unverified task remains UNKNOWN without another STOP",
+        "PASS Final P0 currently funded service with no suspension preserves ACTIVE independently of STOPPED",
+        "PASS Final P0 independent suspension before transport loss is never erased",
+        "PASS Final P0 independent suspension after transport loss is never reactivated",
+        "PASS Final P0 legacy UNKNOWN never uses historical ACTIVE audit as authorization",
+        "PASS Final P0 repeated reconciliation cannot duplicate financial or provider effect",
+        "PASS Final P1 Cloud WAITING_TASK after successful receipt resumes through independent cron",
+        "PASS Final P1 Cloud PENDING after receipt resumes through independent cron with one CREATE",
+        "PASS Final P1 Domain PENDING after receipt resumes through independent cron without duplicate register"
+      ],
+      "measurements": [
+        [
+          {
+            "workers": 1,
+            "instances": 1,
+            "wall_us": 47649,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 4,
+            "instances": 1,
+            "wall_us": 110909,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 8,
+            "instances": 1,
+            "wall_us": 196935,
+            "physical_create": 1,
+            "applied_effect": 1
+          }
+        ]
+      ],
+      "stability": [
+        {
+          "command": "Run php tools/repeat-suite.php services-http 10",
+          "tail": [
+            "10 iterations; 0 failed (failures are not retried away)"
+          ]
+        },
+        {
+          "command": "Run php tools/repeat-suite.php commerce-http 30",
+          "tail": [
+            "30 iterations; 0 failed (failures are not retried away)"
+          ]
+        },
+        {
+          "command": "Run php tools/repeat-suite.php session-concurrency 20",
+          "tail": [
+            "20 iterations; 0 failed (failures are not retried away)"
+          ]
+        }
+      ],
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "284 PHP files checked; 0 violations",
+        "294 source/config/test files scanned; 0 findings"
+      ],
+      "log_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40112735157/job/120927666901",
+      "raw_log_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/120927666901/logs"
+    },
+    {
+      "id": 120927666834,
+      "name": "verify (8.4)",
+      "conclusion": "success",
+      "php": [
+        "Installed PHP 8.4.27"
+      ],
+      "mariadb": [
+        "Version: '10.11.19-MariaDB-ubu2204'",
+        "Version: '10.11.19-MariaDB-ubu2204'"
+      ],
+      "checkout": "19826883fab6361b169be72b2633cdf18e0419cb",
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        }
+      ],
+      "tests": 325,
+      "failures": 0,
+      "counterexamples": [
+        "PASS Final P0 already refunded VM STOP preserves SUSPENDED and immutable finance",
+        "PASS Final P0 paid ACTIVE STOP UNKNOWN then FULL refund reconciles STOPPED SUSPENDED once",
+        "PASS Final P0 cancellation after STOP UNKNOWN cannot restore historical ACTIVE",
+        "PASS Final P0 pending unverified task remains UNKNOWN without another STOP",
+        "PASS Final P0 currently funded service with no suspension preserves ACTIVE independently of STOPPED",
+        "PASS Final P0 independent suspension before transport loss is never erased",
+        "PASS Final P0 independent suspension after transport loss is never reactivated",
+        "PASS Final P0 legacy UNKNOWN never uses historical ACTIVE audit as authorization",
+        "PASS Final P0 repeated reconciliation cannot duplicate financial or provider effect",
+        "PASS Final P1 Cloud WAITING_TASK after successful receipt resumes through independent cron",
+        "PASS Final P1 Cloud PENDING after receipt resumes through independent cron with one CREATE",
+        "PASS Final P1 Domain PENDING after receipt resumes through independent cron without duplicate register"
+      ],
+      "measurements": [
+        [
+          {
+            "workers": 1,
+            "instances": 1,
+            "wall_us": 80978,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 4,
+            "instances": 1,
+            "wall_us": 191043,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 8,
+            "instances": 1,
+            "wall_us": 350723,
+            "physical_create": 1,
+            "applied_effect": 1
+          }
+        ]
+      ],
+      "stability": [
+        {
+          "command": "Run php tools/repeat-suite.php services-http 10",
+          "tail": [
+            "10 iterations; 0 failed (failures are not retried away)"
+          ]
+        },
+        {
+          "command": "Run php tools/repeat-suite.php commerce-http 30",
+          "tail": [
+            "30 iterations; 0 failed (failures are not retried away)"
+          ]
+        },
+        {
+          "command": "Run php tools/repeat-suite.php session-concurrency 20",
+          "tail": [
+            "20 iterations; 0 failed (failures are not retried away)"
+          ]
+        }
+      ],
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "284 PHP files checked; 0 violations",
+        "294 source/config/test files scanned; 0 findings"
+      ],
+      "log_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40112735157/job/120927666834",
+      "raw_log_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/120927666834/logs"
+    }
+  ]
+}
