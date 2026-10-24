@@ -1,0 +1,15 @@
+{
+  "scope": "102-row temporary InnoDB admission probe, MariaDB10.11.18, before/after same ORDER BY LIMIT1 locking query",
+  "before": {
+    "key": "ix_old(status,checked_at,created_at,id)",
+    "rows_estimate": "102",
+    "Extra": "Using index condition; Using filesort"
+  },
+  "after": {
+    "key": "ix_new(admissible,checked_at,created_at,id)",
+    "rows_estimate": "102",
+    "Extra": "Using where"
+  },
+  "actual_race_plan": "See MEASURE_COST_FAIR admission_plan in local/CI evidence; filesort forbidden by test",
+  "not_a_production_benchmark": true
+}

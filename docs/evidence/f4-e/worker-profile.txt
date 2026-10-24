@@ -1,0 +1,8 @@
+MEASURE_COST [{"processes":1,"sample_count":1,"work_wall_us":345931,"submit_wall_us":377695,"p50_worker_us":9492,"p95_worker_us":9492,"costs":1,"journals":1,"outbox_facts":1,"costs_per_second":"2.89075"},{"processes":4,"sample_count":4,"work_wall_us":451016,"submit_wall_us":431460,"p50_worker_us":853,"p95_worker_us":11684,"costs":1,"journals":1,"outbox_facts":1,"costs_per_second":"2.217216"},{"processes":8,"sample_count":8,"work_wall_us":575454,"submit_wall_us":589608,"p50_worker_us":938,"p95_worker_us":17617,"costs":1,"journals":1,"outbox_facts":1,"costs_per_second":"1.737758"}]
+PASS F4-E one four eight independent PHP processes dedupe submit cost journal and outbox
+PASS F4-E parallel overlapping usage refs serialize on the resource and cannot double accrue
+PASS F4-E SKIP LOCKED admission never waits or creates a partial journal
+MEASURE_COST_FAIR {"blocked":101,"healthy_costs":1,"overlap_crons":2,"wall_us":598801,"checked":[51,51],"db_retry_counts":[[],[]],"admission_plan":[{"id":1,"select_type":"SIMPLE","table":"cloud_cost_work","type":"ref","possible_keys":"ix_cloud_cost_admission","key":"ix_cloud_cost_admission","key_len":"2","ref":"const","rows":"1","Extra":"Using where"}]}
+PASS F4-E overlapping bounded crons rotate 101 blocked works and reach healthy metering
+PASS F4-E consumed cost receipt is not proposal completion and independent proposal cron recovers
+5 tests, 0 failures

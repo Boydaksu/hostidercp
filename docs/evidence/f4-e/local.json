@@ -1,0 +1,324 @@
+{
+  "source": "f0af03a816a523a4e822cdf86c96261efb80194b",
+  "php": "8.4.24",
+  "mariadb": "10.11.18",
+  "suites": [
+    {
+      "suite": "tests/run.php",
+      "tests": 19,
+      "failures": 0
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-http.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/integration.php",
+      "tests": 26,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity.php",
+      "tests": 16,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/catalog.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/pricing.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/addons.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/orders.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/payments.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-model.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-package.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-audit.php",
+      "tests": 15,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-final-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-costs.php",
+      "tests": 24,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-cost-races.php",
+      "tests": 5,
+      "failures": 0
+    }
+  ],
+  "tests": 354,
+  "failures": 0,
+  "workers": [
+    [
+      {
+        "processes": 1,
+        "sample_count": 1,
+        "work_wall_us": 346635,
+        "submit_wall_us": 326121,
+        "p50_worker_us": 11292,
+        "p95_worker_us": 11292,
+        "costs": 1,
+        "journals": 1,
+        "outbox_facts": 1,
+        "costs_per_second": "2.884879"
+      },
+      {
+        "processes": 4,
+        "sample_count": 4,
+        "work_wall_us": 422245,
+        "submit_wall_us": 440764,
+        "p50_worker_us": 750,
+        "p95_worker_us": 11478,
+        "costs": 1,
+        "journals": 1,
+        "outbox_facts": 1,
+        "costs_per_second": "2.368293"
+      },
+      {
+        "processes": 8,
+        "sample_count": 8,
+        "work_wall_us": 559959,
+        "submit_wall_us": 576116,
+        "p50_worker_us": 740,
+        "p95_worker_us": 15297,
+        "costs": 1,
+        "journals": 1,
+        "outbox_facts": 1,
+        "costs_per_second": "1.785845"
+      }
+    ]
+  ],
+  "fairness": [
+    {
+      "blocked": 101,
+      "healthy_costs": 1,
+      "overlap_crons": 2,
+      "wall_us": 581009,
+      "checked": [
+        53,
+        53
+      ],
+      "db_retry_counts": [
+        [],
+        []
+      ],
+      "admission_plan": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "cloud_cost_work",
+          "type": "ref",
+          "possible_keys": "ix_cloud_cost_admission",
+          "key": "ix_cloud_cost_admission",
+          "key_len": "2",
+          "ref": "const",
+          "rows": "3",
+          "Extra": "Using where"
+        }
+      ]
+    }
+  ],
+  "phpstan": "PASS",
+  "locked_composer_audit": "PASS, no advisories",
+  "lint": "299 PHP files, 0 violations",
+  "pattern_scan": "309 files, 0 findings; not a complete security audit",
+  "scope": "test/mock only"
+}

@@ -1,0 +1,24 @@
+{
+  "tests_exit": 0,
+  "after": [
+    "Innodb_deadlocks\t0",
+    "Innodb_row_lock_time\t4400",
+    "Innodb_row_lock_time_max\t1010",
+    "Innodb_row_lock_waits\t112"
+  ],
+  "scope": "isolated MariaDB port33316; entire 5-test cloud-cost-races suite; no concurrent local tests",
+  "elapsed_ms": 18938,
+  "before": [
+    "Innodb_deadlocks\t0",
+    "Innodb_row_lock_time\t4390",
+    "Innodb_row_lock_time_max\t1010",
+    "Innodb_row_lock_waits\t106"
+  ],
+  "source": "f0af03a816a523a4e822cdf86c96261efb80194b",
+  "counter_deltas": {
+    "Innodb_deadlocks": 0,
+    "Innodb_row_lock_time": 10,
+    "Innodb_row_lock_waits": 6
+  },
+  "max_counter_note": "Global maximum is historical; not attributable to this suite"
+}
