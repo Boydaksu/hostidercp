@@ -7,6 +7,7 @@
 **F4-C Öncesi Başarılı Taban:** `7f875d678e4d580a0ce5ebd42875652b8873b322` (254 test)  
 **İlk Teslim Kod Commit:** `2988eb448ba88fa07ce1dc7bdd9b1fc47b73ef84`  
 **İlk Teslim Dokümantasyon HEAD:** `c338391089623f93dfeb921343b4e5568dc6548f`  
+**Düzeltme Teslim Kod Commit:** `7c1dac9c9adbbfe166164ae12e5fb7eb6a2ba278`  
 **Başarısız CI Koşusu:** [GitHub Actions Run 40085079771](https://github.com/Boydaksu/hostidercp/actions/runs/40085079771)  
 **Hedef Taslak PR:** [Boydaksu/hostidercp#2](https://github.com/Boydaksu/hostidercp/pull/2) (Hedef: `codex/f3-service-engine`)
 
