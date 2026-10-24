@@ -10,8 +10,9 @@ final readonly class Worker
     {
         $engine=new Engine($this->db,$this->config);$trace=Id::uuid();
         if($id===null){
-            $candidates=$this->db->execute("SELECT o.id FROM svc_operations o JOIN svc_services s ON s.id=o.service_id JOIN orders source ON source.id=s.order_id WHERE o.status='PENDING' AND s.status='QUEUED' AND source.status='READY_FOR_PROVISIONING' AND source.refund_status='NONE' AND EXISTS(SELECT 1 FROM hosting_mappings m WHERE m.product_id=s.product_id AND m.enabled=TRUE) ORDER BY o.created_at,o.id LIMIT 100")->fetchAll();
-            foreach($candidates as $candidate){try{if($this->once($actor,$candidate['id'],$scenario)){return true;}}catch(\Hostider\Core\Http\HttpError $e){if($e->status!==409){throw $e;}}}return false;
+            $deadline=hrtime(true)+20_000_000_000;
+            $candidates=$this->db->execute("SELECT o.id FROM svc_operations o JOIN svc_services s ON s.id=o.service_id JOIN orders source ON source.id=s.order_id WHERE o.status='PENDING' AND o.kind='CREATE' AND s.status='QUEUED' AND source.status='READY_FOR_PROVISIONING' AND source.refund_status='NONE' AND EXISTS(SELECT 1 FROM hosting_mappings m WHERE m.product_id=s.product_id AND m.enabled=TRUE) ORDER BY o.runner_checked_at,o.created_at,o.id LIMIT 100")->fetchAll();
+            foreach($candidates as $candidate){if(hrtime(true)>=$deadline){break;}$this->db->execute("UPDATE svc_operations SET runner_checked_at=UTC_TIMESTAMP(6) WHERE id=? AND status='PENDING'",[$candidate['id']]);try{if($this->once($actor,$candidate['id'],$scenario)){return true;}}catch(\Hostider\Core\Http\HttpError $e){if($e->status!==409){throw $e;}}}return false;
         }
         $claim=$engine->claim($actor,$trace,$id,true);if(!$claim){return false;}
         try{

@@ -1,0 +1,7 @@
+PASS F3 review repeated cron reaches healthy work behind 101 blocked operations
+PASS F3 review changed payment stays visible and UNKNOWN is never redispatched by cron
+PASS F3 review two overlapping bounded CLI workers fence creates and next cron continues
+PASS F3 review expired admission budget makes no claim and invalid batch bounds fail closed
+MEASUREMENT {"environment":"local test\/mock; no deployment capacity guarantee","php":"8.4.24","mariadb":"10.11.18-MariaDB","sample":16,"direct_worker":{"elapsed_ns":334619900,"operations_per_second":47.815446720293686},"actual_cli":{"elapsed_ns":708379500,"operations_per_second":22.586763168612304,"invocations":1},"peak_memory_bytes":4194304}
+PASS F3 review direct worker and actual services work CLI throughput are measured separately
+5 tests, 0 failures

@@ -71,6 +71,7 @@ jobs:
       - run: php tests/services-transfer.php
       - run: php tests/services-package.php
       - run: php tests/services-http.php
+      - run: php tests/services-runner.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability

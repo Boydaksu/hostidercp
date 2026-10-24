@@ -31,8 +31,15 @@ try {
     } elseif ($command==='services:schedule') {
         echo json_encode((new \Hostider\Services\Scheduler($db,$config))->run(),JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command==='services:work') {
-        if(($argv[2]??'')!=='--once'){throw new InvalidArgumentException('Only bounded --once worker supported');}
-        echo json_encode(['worked'=>(new \Hostider\Services\Runner($db,$config))->once(new \Hostider\Core\Security\Principal('service-worker',[]))],JSON_THROW_ON_ERROR).PHP_EOL;
+        // A contended admission transaction must not consume an entire cron interval.
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');
+        $runner=new \Hostider\Services\Runner($db,$config);$actor=new \Hostider\Core\Security\Principal('service-worker',[]);
+        if(array_slice($argv,2)===['--once']){$result=['worked'=>$runner->once($actor)];}
+        else{
+            $options=[];foreach(array_slice($argv,2) as $option){if(!preg_match('/^--(max-operations|max-seconds)=([1-9][0-9]*)$/D',$option,$match)||isset($options[$match[1]])){throw new InvalidArgumentException('Invalid service worker option');}$options[$match[1]]=(int)$match[2];}
+            $result=$runner->run($actor,$options['max-operations']??100,$options['max-seconds']??20);
+        }
+        echo json_encode($result,JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif (in_array($command,['services:discover','services:expire'],true)) {
         $engine=new \Hostider\Services\Engine($db,$config);$actor=new \Hostider\Core\Security\Principal('service-cron',[]);$trace=Id::uuid();
         echo json_encode(['processed'=>$command==='services:discover'?$engine->discoverBatch($actor,$trace):$engine->expire($actor,$trace)],JSON_THROW_ON_ERROR).PHP_EOL;

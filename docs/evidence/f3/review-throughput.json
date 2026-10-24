@@ -1,0 +1,16 @@
+{
+    "environment": "local test\/mock; no deployment capacity guarantee",
+    "php": "8.4.24",
+    "mariadb": "10.11.18-MariaDB",
+    "sample": 16,
+    "direct_worker": {
+        "elapsed_ns": 306836900,
+        "operations_per_second": 52.14496691890708
+    },
+    "actual_cli": {
+        "elapsed_ns": 671043000,
+        "operations_per_second": 23.843479478960365,
+        "invocations": 1
+    },
+    "peak_memory_bytes": 4194304
+}
