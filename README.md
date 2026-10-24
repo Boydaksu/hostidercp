@@ -1,5 +1,7 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4 geliştirme başladı; tamamlanmadı:** kabul edilen F3 tabanı üzerinde [F4 planı](docs/F4_PLAN.md), [Voyar SDK incelemesi](docs/F4_VOYAR_SDK_REVIEW.md), Domain model/kalıcı registrar mock temeli ve yerel 248/248 test kanıtı eklendi. [F4 ilerleme raporu](docs/F4_REPORT.md) eksik Domain lifecycle/failover, Cloud ve panel/CI kapsamını açıkça ayırır. Bütün canlı GATE'ler OPEN; F5 başlamadı. Aşağıdaki önceki faz notları tarihseldir.
+
 > **F2 CI kararlılık kapanışı:** PHP 8.3 built-in server JIT SIGSEGV yeniden üretildi; test server interpreter moduna alındı, lifecycle/transport tanıları ve bounded Windows fixture cleanup eklendi. Önceki 175 + 5 yeni regression ve tekrarlı CI kanıtı: [F2_CI_STABILITY_REPORT](docs/F2_CI_STABILITY_REPORT.md). F3 ve canlı işlemler başlatılmadı.
 
 > **F2 teslim sonrası denetim:** kanıtlı mutabakat kapanışı, daraltılmış onay kilitleri, idempotency replay yetki kontrolü ve güvenli F3 devir sözleşmesi: [F2_POST_DELIVERY_REVIEW](docs/F2_POST_DELIVERY_REVIEW.md). Production ve F3 başlatılmadı; önceki F2 raporu tarihsel teslim kaydıdır.
