@@ -77,6 +77,7 @@ jobs:
       - run: php tests/domains-provider.php
       - run: php tests/voyar-sdk.php
       - run: php tests/domains-boundaries.php
+      - run: php tests/domains-operations.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability
