@@ -1,8 +1,8 @@
 {
   "base": "dc70fa50e969ab1822723fdf9df4c89b657dacb4",
-  "source": "f0af03a816a523a4e822cdf86c96261efb80194b",
-  "local_commit": "a4bfb37417b10167f6bcce67c7a09a044942e733",
-  "tree": "cefc14af198947a38b50ef780f4125275bd1fe55",
+  "source": "9cc105c6ed4d00099f5892a894d2b772ec52ba52",
+  "local_commit": "b82f7ca73bb83e0ff8668775889700c3d931aab3",
+  "tree": "9ba0cca0055cf988bc71eb7d52ef75afa148d242",
   "same_tree_verified": true,
   "initial_source": "ba9acafb3ac128a97e2a6d1e4a678638e2c87bef",
   "initial_local_commit": "7bde505ec256ad55965b9c61adae1162f27d3fb0",
@@ -16,8 +16,8 @@
     },
     {
       "path": "README.md",
-      "blob": "08b869aba1d7af75875c0bf9e30ba5799d848cb4",
-      "sha256": "fc6ab40530cf44d03075971c6a19dee3a4e5a3159a62c683a83ff9fdbff1ee6d"
+      "blob": "d4c9d4fa59354f87db5895749076128f3eb63e6b",
+      "sha256": "afffed3fefd156188b6909504b6697076b6b399c08b5669d63ae15d8ae0f5dd7"
     },
     {
       "path": "bin/console.php",
@@ -36,8 +36,8 @@
     },
     {
       "path": "docs/adr/ADR-014-cloud-metering-ledger-proposals.md",
-      "blob": "4d3b401e1f34360ab18f3aa90a78d57663e50b79",
-      "sha256": "ac7583d591db5aa91d59978c5c876c40678e252f6426c3e1318094de203dad03"
+      "blob": "386b9d95ed2570e5f75583ce4af42b18084a8fe4",
+      "sha256": "be42938f331d77dff6ef492e44fbaed25087738b32cfe38434b8f6ca861e7c84"
     },
     {
       "path": "migrations/046_cloud_metering_costs.php",
@@ -66,8 +66,8 @@
     },
     {
       "path": "src/CloudCosts/Engine.php",
-      "blob": "a079be009eb107171bd7630c3708e1c57edecdad",
-      "sha256": "50279fcc9f5db85c4761177070dc3fc6a9dea2937293546654f44f1f44bdfcdc"
+      "blob": "93868aff94478d4ce1c20692ab8026adbceed799",
+      "sha256": "8af41b37f41328c4f4f92ebca9a19222143e552cd47d94866814bc1edef55614"
     },
     {
       "path": "src/CloudCosts/EventSink.php",
@@ -81,8 +81,8 @@
     },
     {
       "path": "src/CloudCosts/Store.php",
-      "blob": "79d09487d178f1decd668cd18ac2ae4cc7e4d5b4",
-      "sha256": "6e495c9882c606ecc6579855cfccc3126ee609d1dc241bcfe74b3edb4f268248"
+      "blob": "c1c429b37e139078644202e99693216bebfdf94c",
+      "sha256": "d767e956f3597c5238f52d069096a962d1a0c473f1980ea047a6a41d59e99bf2"
     },
     {
       "path": "src/CloudCosts/Tariffs.php",
@@ -116,8 +116,8 @@
     },
     {
       "path": "tests/cloud-cost-fixture.php",
-      "blob": "28662f733cf28a2876e3614e35b007e56288d809",
-      "sha256": "1b5155a62f68d096b3368aff0db4d41fa56148dcf9ec32336c811da5123b9ccf"
+      "blob": "edd02e1e35f825ee840e3c77a940bbf904d5b59d",
+      "sha256": "a3fd3ef219f4dd989fec5fb92a886ac6a6fb25878b1f623ea793a161ccb0b9dd"
     },
     {
       "path": "tests/cloud-cost-races.php",
@@ -126,8 +126,8 @@
     },
     {
       "path": "tests/cloud-costs.php",
-      "blob": "b337eeab420b2e02fb3e37079889deed11276759",
-      "sha256": "ff935c135609ed8e68229875ac10c34c83f49379925b4d9d955796355e79536a"
+      "blob": "149b7c78c28cd0ef0e99f20cab3ab8affcd9c038",
+      "sha256": "9a5018bd6daac407121f38e681a9e2dc06ab3d2e21bfab1161033e1c5ba4b679"
     },
     {
       "path": "tests/cloud.php",
@@ -321,5 +321,7 @@
       "path": "migrations/045_cloud_purchase_containment.php",
       "sha256": "6b9d1a8324a99ee24db6d59e2abc9f2acdde2a15031325d1516962db21c826db"
     }
-  ]
+  ],
+  "previous_validated_source": "f0af03a816a523a4e822cdf86c96261efb80194b",
+  "previous_tree": "cefc14af198947a38b50ef780f4125275bd1fe55"
 }

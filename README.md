@@ -1,6 +1,6 @@
 # Hostider Automation — V1.0 Master Specification
 
-> **F4-E test/mock teslimi; bağımsız kabul bekleniyor:** F4-D güvenlik tabanı bağımsız kabul edildi (325 test, HEAD dc70fa5). Kullanım/sağlayıcı maliyeti, mevcut Ledger ve manual fiyat önerisi kapsamı [F4_E_PLAN](docs/F4_E_PLAN.md) ve [F4_E_DELIVERY_REPORT](docs/F4_E_DELIVERY_REPORT.md) ile belgelenir (354 test). 30 günlük peşin müşteri satışı ayrı kalır; PROV-005 gerçek kabulü ve tüm canlı GATE’ler açıktır. F4-F/F5, merge ve production başlatılmaz.
+> **F4-E test/mock teslimi; bağımsız kabul bekleniyor:** F4-D güvenlik tabanı bağımsız kabul edildi (325 test, HEAD dc70fa5). Kullanım/sağlayıcı maliyeti, mevcut Ledger ve manual fiyat önerisi kapsamı [F4_E_PLAN](docs/F4_E_PLAN.md) ve [F4_E_DELIVERY_REPORT](docs/F4_E_DELIVERY_REPORT.md) ile belgelenir (355 test). 30 günlük peşin müşteri satışı ayrı kalır; PROV-005 gerçek kabulü ve tüm canlı GATE’ler açıktır. F4-F/F5, merge ve production başlatılmaz.
 
 
 > **F4-D geliştirme:** F4-C’nin 278 testlik güvenlik tabanı bağımsız kabul edildi; DOMAIN-002 otomatik registrar failover PARTIAL kalır. Kalıcı Voyar Cloud operation/task/mock kapsamı [F4_D_PLAN](docs/F4_D_PLAN.md) ile yürütülür. Canlı GATE’ler açık; F4-E/F, F5 ve production başlatılmaz.

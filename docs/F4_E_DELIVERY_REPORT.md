@@ -1,6 +1,6 @@
 # F4-E — Cloud finans ve maliyet motoru test/mock teslimi
 
-24 Ekim 2026. Dal `codex/f4-domain-cloud`. F4-D bağımsız kabul edildi; taban
+25 Ekim 2026 son güncelleme. Dal `codex/f4-domain-cloud`. F4-D bağımsız kabul edildi; taban
 `dc70fa50e969ab1822723fdf9df4c89b657dacb4`, 325 test, migration 001–045.
 **Yalnız F4-E test/mock teslimi; bağımsız kabul bekler. Tam F4 DONE değildir.**
 FIN-010, R5-04, R7-02/03/06 ve PROV-005 yalnız mock izlenebilirlik kapsamındadır.
@@ -8,14 +8,32 @@ F4-F/F5, merge, production ve gerçek sağlayıcı işlemi yapılmadı.
 
 ## Kaynak / CI / regresyon kimliği
 
-Gerçek GitHub uygulama SHA: `f0af03a816a523a4e822cdf86c96261efb80194b`.
-Yerel source metadata SHA `a4bfb37417b10167f6bcce67c7a09a044942e733` ile aynı
-`cefc14af198947a38b50ef780f4125275bd1fe55` tree doğrulandı. 26 source dosyası ve
+Gerçek son GitHub uygulama SHA: `9cc105c6ed4d00099f5892a894d2b772ec52ba52`.
+Yerel source metadata SHA `b82f7ca73bb83e0ff8668775889700c3d931aab3` ile aynı
+`9ba0cca0055cf988bc71eb7d52ef75afa148d242` tree doğrulandı. 26 source dosyası ve
 001–045 hash eşliği [yayın manifestinde](evidence/f4-e/publication.json).
-[Uygulama commit'i](https://github.com/Boydaksu/hostidercp/commit/f0af03a816a523a4e822cdf86c96261efb80194b),
+[Uygulama commit'i](https://github.com/Boydaksu/hostidercp/commit/9cc105c6ed4d00099f5892a894d2b772ec52ba52),
 [mevcut taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2).
 
-Doğrulanmış kaynak branch CI: [40119824445](https://github.com/Boydaksu/hostidercp/actions/runs/40119824445).
+### Son kaynak: ondemand sınırı dahil 355 test
+
+[PR CI 40133951931](https://github.com/Boydaksu/hostidercp/actions/runs/40133951931):
+- [PHP 8.3 / job 120991383888](https://github.com/Boydaksu/hostidercp/actions/runs/40133951931/job/120991383888): **48 suite / 355 test / 0 hata**, SUCCESS.
+- [PHP 8.4 / job 120991384025](https://github.com/Boydaksu/hostidercp/actions/runs/40133951931/job/120991384025): **48 suite / 355 test / 0 hata**, SUCCESS.
+
+[Branch CI 40133946978](https://github.com/Boydaksu/hostidercp/actions/runs/40133946978) da iki
+sürümde SUCCESS. 325 mevcut + 25 cost functional + 5 worker testi korunur. Ham job günlüklerinden
+ayrı ayrı sayıldı; Composer audit/PHPStan/lint, HTTP/session tekrarları ve 1/4/8 worker geçti.
+[Son CI kanıtı ve ham log API adresleri](evidence/f4-e/ondemand-ci.json),
+[güncel hedefli yerel 25/25](evidence/f4-e/ondemand-local.txt).
+PR checkout `cd91e77b6e7e74304f9b3834e1aaeefa8cc6c00f` fetch edildi; son source ile aynı
+`9ba0cca0055cf988bc71eb7d52ef75afa148d242` tree ve sıfır dosya farkı doğrulandı.
+Son mode guard yalnız source/test değişikliğidir; 001–047 migration'ları değiştirilmez.
+Bu fazın final regresyon sayımı **48/355/0**; aşağıdaki 354 kayıtları önceki doğrulanmış tabandır.
+
+### Önceki 354-test tabanı (f0af03a)
+
+Doğrulanmış önceki kaynak branch CI: [40119824445](https://github.com/Boydaksu/hostidercp/actions/runs/40119824445).
 - [PHP 8.3.36 / job 120948736264](https://github.com/Boydaksu/hostidercp/actions/runs/40119824445/job/120948736264): **48 suite / 354 test / 0 hata**, SUCCESS.
 - [PHP 8.4.27 / job 120948736453](https://github.com/Boydaksu/hostidercp/actions/runs/40119824445/job/120948736453): **48 suite / 354 test / 0 hata**, SUCCESS.
 
@@ -28,8 +46,9 @@ Gerçek PR checkout `f8c18dd87030cf8bb2923d2b39a90a64b07aee3f` fetch edildi; kay
 `cefc14af198947a38b50ef780f4125275bd1fe55` tree ve sıfır dosya farkı doğrulandı.
 Bu test checkout'udur; hedef dala merge yapılmadı.
 
-Yerel PHP 8.4.24 / MariaDB 10.11.18 temiz schema: **48 suite / 354 test / 0 hata**.
-325 önceki + 24 yeni functional + 5 yeni worker testi. [Tam suite sayımı](evidence/f4-e/local.json),
+Önceki f0af03a için yerel PHP 8.4.24 / MariaDB 10.11.18 temiz schema: **48 suite / 354 test / 0 hata**.
+Bu taban 325 önceki + 24 functional + 5 worker testidir. Son ondemand negatif testiyle
+nihai toplam 325 + 25 + 5 = 355 olur; güncel hedefli yerel 25/25 ve worker5/5 geçti. [Tam suite sayımı](evidence/f4-e/local.json),
 [allowlist ham cost/worker çıktısı](evidence/f4-e/local-cost-tests.txt).
 PHPStan; Composer locked audit (0 advisory); 299 PHP lint/mimari kontrolü; 309 dosya pattern
 scan başarılıdır. Pattern taraması tam secret/vulnerability denetimi değildir.
@@ -67,6 +86,15 @@ connection loss veya provider POST tekrar edilmez. Forced 1213 testi Ledger/outb
 attempt'inin geri alındığını ve tek kayıt kaldığını doğrular. SQL infrastructure hatası business
 REVIEW'a çevrilmez; rollback/retry veya güvenli CLI failure olur. Child testleri hata olsa da
 bütün süreçleri drain eder; yalnız güvenli driver code ve retry sayacı kaydedilir.
+
+### Sağlayıcı billing mode sınırı
+
+Saatlik maliyet motoru immutable ve HMAC doğrulanmış VM spec'inde type=ondemand ister.
+Prepaid **müşteri 30 DAYS satışı** ile prepaid **provider VM tipi** aynı kavram değildir.
+Onaylı MOCK tarife bulunsa bile prepaid provider VM REVIEW/CLOUD_ONDEMAND_HOURLY_REQUIRED
+olur; cost/journal üretmez. Mevcut cost okumaları ve invoice reconciliation da bu mode'u
+kontrol eder; yeni migration veya F4-D mutation değişikliği yoktur. Bu son eksik sınır 25 Ekim
+son kontrolde tamamlandı; negatif test source9cc105c içindedir.
 
 ## Usage kanıtı ve durum makineleri
 
@@ -163,6 +191,7 @@ sayılmaz. F4-F öncesi yeni controller/panel veya müşteri seçilebilir ücret
 | Review öneri publishable değildir | FX mismatch, one-off fee, missing cost, changed catalog/price ve replay negatives |
 | Hata journal bırakmaz | cost insert fault rollback; 1213 known local rollback/retry: tek Ledger/outbox/cost |
 | Worker race/fairness | parallel overlap, SKIP LOCKED, iki cron+101 blocked, consumed receipt sonrası ayrı proposal CLI |
+| Provider ondemand zorunluluğu | Onaylı tarife + prepaid provider VM: REVIEW, sıfır cost/journal; invoice de REVIEW |
 | 30 günlük prepaid | MONTHS cycle Cloud offer reddi; DAYS/30 period korunur |
 
 ## Cron, demo ve performans sınırı
