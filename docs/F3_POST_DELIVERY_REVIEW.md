@@ -18,13 +18,14 @@ Gerçek MariaDB 10.11.18/PHP 8.4.24 üzerinde 101 eski, mappingsiz/kapasitesiz P
 
 ## Regresyonlar ve demo
 
-`tests/services-runner.php` bağımsız PHP CLI süreçleri ve kendi izole gerçek MariaDB şemasıyla beş senaryo ekler:
+`tests/services-runner.php` bağımsız PHP CLI süreçleri ve kendi izole gerçek MariaDB şemasıyla altı senaryo ekler:
 
 1. 101 bloke kaydın arkasındaki sağlıklı iş işler; 101 kayıt PENDING ve güvenli hata koduyla görünür kalır. Kapasite eklendikten sonra gerçek CLI çağrıları aynı 101 operasyonu tamamlar; her hizmet için bir fiziksel mock hesap oluşur.
 2. Ödeme kaynağı değişmiş PENDING görünür kalır; timeout-after-create UNKNOWN üç CLI çağrısında ikinci create almaz. Arkadaki sağlıklı iş tamamlanır.
 3. İki eşzamanlı CLI, ayrı 5 işlem sınırıyla yarışır; sonraki cron kalan işi tamamlar. 12 operasyon için 12 STARTED attempt, 12 create çağrısı ve 12 fiziksel hesap doğrulanır.
 4. Süresi geçmiş kabul bütçesi claim yapmaz; geçersiz limitler ve açık transaction ret edilir.
 5. 16 kaynak için doğrudan Worker ve gerçek `bin/console.php services:work` süreleri ayrı ölçülür; CLI açılışı ve schema readiness maliyeti CLI ölçümüne dahildir, fixture hazırlığı hariçtir.
+6. Doğrudan CREATE Worker taramasında 101 mapped fakat unhealthy aday sağlıklı işi engellemez; health düzeldiğinde aynı 101 iş tamamlanır.
 
 [İlk düzeltme sonrası aynı assertion](evidence/f3/review-starvation-after.txt), [genişletilmiş test sonucu](evidence/f3/review-runner-after.txt), [tam suite](evidence/f3/review-all-tests.txt), [ham ölçüm](evidence/f3/review-throughput.json). Otomatik demo komutu `php tests/services-runner.php`; yalnız `APP_ENV=test` ve `hostider_f0_test*` DSN kabul eder, geçici test şemasını kapatır. Production verisine veya sağlayıcıya erişmez.
 
@@ -32,14 +33,14 @@ Gereksinim izi: PROV-001/002 → UNKNOWN/no-retry ve reconciliation paketleri; P
 
 ## CI, ölçüm ve kalan riskler
 
-Yerel PHP 8.4.24 / MariaDB 10.11.18 tam suite **237/237**: önceki 232 ve yeni 5 test geçti. PHPStan, lint/mimari kontrol, Composer locked audit ve güvenlik örüntü taraması başarılı: [kontroller](evidence/f3/review-checks.txt). Eski testler ve 001–037 için taban karşılaştırması sıfır değişikliktir. PHP 8.3/8.4 CI SHA/URL sonuçları tamamlanınca kesinleştirilir. Önceki yeşil CI yeni kodun kanıtı olarak kullanılmaz.
+Yerel PHP 8.4.24 / MariaDB 10.11.18 tam suite **237/237**: önceki 232 ve ilk 5 test geçti. Ardından yalnız test eklenerek genişletilen runner paketi **6/6** geçti: [son altı test](evidence/f3/review-runner-six-tests.txt). Böylece güncel normal paket **238** senaryodur; önceki 232 kaldırılmadı. PHPStan, lint/mimari kontrol, Composer locked audit ve güvenlik örüntü taraması başarılı: [kontroller](evidence/f3/review-checks.txt). Eski testler ve 001–037 için taban karşılaştırması sıfır değişikliktir. PHP 8.3/8.4 CI SHA/URL sonuçları tamamlanınca kesinleştirilir. Önceki yeşil CI yeni kodun kanıtı olarak kullanılmaz.
 
 | Ölçüm, 16 kaynak | Süre | İşlem/sn |
 |---|---|---|
 | Doğrudan Worker, tek PHP süreç | 306,84 ms | 52,14 |
 | Gerçek services:work CLI, bir çağrı | 671,04 ms | 23,84 |
 
-Fixture süreç peak memory: 4 MiB; bu değer ayrı CLI çocuğunun peak bellek ölçümü değildir. İşlem sayısı/tekillik DB'den ayrıca doğrulanır; sayısal throughput assertion'ı kullanılmaz.
+Tablo tam suite koşusuna aittir. Son 6-test tekrarında doğrudan Worker 44,91 işlem/sn ve gerçek CLI 21,13 işlem/sn ölçüldü; iki koşu da ayrı saklandı. Fixture süreç peak memory: 4 MiB; bu değer ayrı CLI çocuğunun peak bellek ölçümü değildir. İşlem sayısı/tekillik DB'den ayrıca doğrulanır; sayısal throughput assertion'ı kullanılmaz.
 
 Yerel ölçüm son ham JSON'a göre raporlanır. Örneklem küçük ve ağsız mock'tur; gerçek hosting CPU, bellek, DB contention, provider rate limit ve timeout'ları ölçülmedi. Bir dakikada sayısal üretim kapasitesi veya sonlu gecikme garantisi verilmez. Sürekli geliş hızı işleme kapasitesini aşarsa backlog büyür. Her cron'un yeni işe kabul süresi sınırlıdır; in-flight provider/DB çağrısını güvenli biçimde zorla kesmek vaat edilmez. Gerçek ortam sınırları G-O01/G-C01'de açıktır.
 

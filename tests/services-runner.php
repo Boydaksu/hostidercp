@@ -81,6 +81,18 @@ test('F3 review expired admission budget makes no claim and invalid batch bounds
     same(true,(new Worker($db,$f['config']))->once($f['actor'],$f['operations'][0]));
 });
 
+test('F3 review direct CREATE worker also rotates 101 mapped but unhealthy candidates',function()use($db): void{
+    $blocked=runnerFixture($db,101);$db->execute('UPDATE hosting_servers SET healthy=FALSE WHERE id=?',[$blocked['pool']['server']]);
+    $db->execute("UPDATE svc_operations SET created_at='2000-01-01' WHERE order_item_id=?",[$blocked['item']['id']]);
+    $healthy=runnerFixture($db);$worker=new Worker($db,$healthy['config']);for($i=0;$i<5;++$i){$worker->once($healthy['actor']);}
+    same('ACTIVE',$healthy['engine']->repository->find($healthy['ids'][0],lock:false)['status']);
+    same(101,(int)$db->execute("SELECT COUNT(*) FROM svc_operations WHERE order_item_id=? AND status='PENDING'",[$blocked['item']['id']])->fetchColumn());
+    same(0,(int)$db->execute('SELECT COUNT(*) FROM mock_hosting_accounts WHERE server_id=?',[$blocked['pool']['server']])->fetchColumn());
+    $db->execute('UPDATE hosting_servers SET healthy=TRUE,observed_at=UTC_TIMESTAMP(6) WHERE id=?',[$blocked['pool']['server']]);
+    for($i=0;$i<3;++$i){runnerCliResult(runnerCli($blocked));}
+    same(101,(int)$db->execute('SELECT COUNT(*) FROM mock_hosting_accounts WHERE server_id=?',[$blocked['pool']['server']])->fetchColumn());
+});
+
 test('F3 review direct worker and actual services work CLI throughput are measured separately',function()use($db): void{
     $direct=runnerFixture($db,16);$worker=new Worker($db,$direct['config']);$start=hrtime(true);foreach($direct['operations'] as $id){same(true,$worker->once($direct['actor'],$id));}$directNs=hrtime(true)-$start;
     $cli=runnerFixture($db,16);$start=hrtime(true);$worked=0;$runs=0;do{$result=runnerCliResult(runnerCli($cli));$worked+=$result['worked'];++$runs;}while($worked<16&&$runs<5);$cliNs=hrtime(true)-$start;same(16,$worked);
