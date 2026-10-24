@@ -1,0 +1,14 @@
+MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS
+PASS F4-C missing resource and UNKNOWN call never prove no effect; replay stays held
+PASS F4-C crash before call cannot be confirmed failed; expiry fences old worker
+PASS F4-C independently recorded definitive no effect permits explicit failure only
+PASS F4-C mismatched call fingerprint status account and resource fail closed
+PASS F4-C stale inspection generation domain version and newer inspection fence resolution
+PASS F4-C hold timestamp and reason commit together and roll back together
+PASS F4-C SKIP LOCKED bypasses contended first operation without losing its state
+PASS F4-C 1 4 and 8 independent PHP runners produce one physical registration per domain
+PASS F4-C renewal finance rechecked at claim and result; refund never dispatches or extends again
+PASS F4-C manual approval and immutable renewal binding cannot be bypassed
+PASS F4-C crash after effect and duplicate queue job cannot replay a registration
+PASS F4-C parallel canonical renewal requests converge and eight runners extend only once
+12 tests, 0 failures

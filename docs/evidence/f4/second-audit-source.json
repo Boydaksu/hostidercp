@@ -1,0 +1,97 @@
+{
+  "local_source_commit": "c2839dfff1179ca7ed50ac796cf1db0d12a66790",
+  "local_source_tree": "5e91e5beed4a8eac7b8ac6268e06d18bc256cb03",
+  "remote_verified_head": "72e35a88ca381a5a00e0daf68e798ccb766663d7",
+  "remote_publication": "BLOCKED_PENDING_EXPLICIT_UPLOAD_AUTHORIZATION",
+  "php83_ci": "NOT_TESTED",
+  "php84_ci": "NOT_TESTED",
+  "source_files": [
+    {
+      "path": ".github/workflows/f0.yml",
+      "git_blob": "eb2c4de70e86f7cd76c5bf5b53483691f15dab91",
+      "sha256": "d62335f6cad995638938220c4a48db9609efe3c937d56af74d71bf59165a69a3"
+    },
+    {
+      "path": "docs/F4_C_SECOND_AUDIT_PLAN.md",
+      "git_blob": "b96f69f3e0c96f86860f80cbe960faa39800e5ae",
+      "sha256": "c12ef7c84025f703ae53fe93f768f50a2e417981dc65ccd15f72d3752262bfbd"
+    },
+    {
+      "path": "docs/adr/ADR-010-f4-domain-audit-safety.md",
+      "git_blob": "ebc533d083e9f9b0222375839a60839ca55c2d31",
+      "sha256": "0bed90a1a9d387b7f72d19d8aa1f9ff8d55e0be430f336daae7ed97c41819355"
+    },
+    {
+      "path": "migrations/043_f4_domain_audit_safety.php",
+      "git_blob": "e1a5b5cd3795ecd173107d97454747a0dd511e02",
+      "sha256": "d9a786fcaa6cfb6531f5130b6934f5b0be8aa9da8a9bc85209258140f1ae9351"
+    },
+    {
+      "path": "src/Domains/AttemptEvidence.php",
+      "git_blob": "9374e4c05698a00954510afe8efe7975d9e50e04",
+      "sha256": "6e0acd530fde1c4fbfade157afc99f3a349ff03c452d6d64a7fdbe57bab9fdb8"
+    },
+    {
+      "path": "src/Domains/DomainEngine.php",
+      "git_blob": "67b4d5ca2a7023768f99a6742164060cd46d8e1a",
+      "sha256": "9c50201534dac86534d3e16f0a12b1802aaf4ac4ace3b3c855bd1e9312818d0f"
+    },
+    {
+      "path": "src/Domains/DomainReconciliation.php",
+      "git_blob": "7951db13e6904931a4de72478d6fa011ce26c135",
+      "sha256": "f167244bd2ac11147566a3e7183cfb92dceea4571be0ab5deefcd1dfddf1f01f"
+    },
+    {
+      "path": "src/Domains/DomainRunner.php",
+      "git_blob": "e67648a36339ed808a75542980d0a2c1eac4364d",
+      "sha256": "471be6e82e6d293fba35635829c001db4db27df30f7cafcc238867e615e836f7"
+    },
+    {
+      "path": "src/Domains/EventSink.php",
+      "git_blob": "1a91daa8e0bc1befbc7e58c0da6874ca26485a9a",
+      "sha256": "e1855ad29842a68af673c2d98ee44bd4d3dad26658f8d128820d4d64154890d4"
+    },
+    {
+      "path": "src/Providers/Mock/DurableRegistrar.php",
+      "git_blob": "c9b9aa20b1e4827e7850f2b0e1505f927ee89b72",
+      "sha256": "5e7f93a23bfc26a5b3e70754a78bd7292d22c1e8d5df460e9c2798a0f16fefc9"
+    },
+    {
+      "path": "src/Services/DomainPeriods.php",
+      "git_blob": "f32ef2e21d605f052715e571509ad99abe0ae8dc",
+      "sha256": "d29c5abe5ff660a016c792fef685dbbbd0814f614859f32476c37ff64d734e1d"
+    },
+    {
+      "path": "src/Services/RegistrationEligibility.php",
+      "git_blob": "c9b58638950f985796e751df98bc1e90182189a8",
+      "sha256": "e10fa37f8d3e733c22e0996d753fec3b37b158c9c57347639449293fe1767665"
+    },
+    {
+      "path": "tests/domains-audit.php",
+      "git_blob": "8f3deed32a8ff09fb9598695c48eecb339e2b209",
+      "sha256": "36d259b25b3db6a7e6054296f7ae617ca26744d6aede8b1eb005557ecd0c715b"
+    },
+    {
+      "path": "tests/domains-concurrency-child.php",
+      "git_blob": "fcd876609d57c02c227d04e708de6ae6a9ee1a9a",
+      "sha256": "55b12bf5fb4cb6d466e532efbfd89ceeb83d9b86c14f19ade0f02b56173e7639"
+    },
+    {
+      "path": "tests/domains-fixture.php",
+      "git_blob": "b5bfdbd35c4cd5a6c9b36ba39f99723c4c8c11ae",
+      "sha256": "966d9bf394bf54caba674656d90b8df7cf788ed5d167baaaa2824710e1fe405a"
+    },
+    {
+      "path": "tests/domains-operations.php",
+      "git_blob": "fdd336b71b2d0bfa4d06253d176799a42a701b7d",
+      "sha256": "3abf99b1c6d385f481db0d38afbb6ff7c68c472319e7d69eb728e3dd3a31a02a"
+    }
+  ],
+  "local_tests": {
+    "full_suites": 41,
+    "full_tests": 278,
+    "failures": 0,
+    "final_operations": 12,
+    "final_audit": 12
+  }
+}

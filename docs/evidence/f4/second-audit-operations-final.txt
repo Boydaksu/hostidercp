@@ -1,0 +1,13 @@
+PASS domain operation enqueue requires canonical paid order, item and queued service
+PASS domain operation claim locks funding source, assigns lease token and fences race
+PASS domain operation register success: verified proof creates domain_evidence and transitions domain to REGISTERED
+PASS DOMAIN-001: registrar timeout produces UNKNOWN, forbids retry and alternative dispatch
+PASS DOMAIN-001 reconciliation: independent inspect verifies external registrar; rejects forged proof
+PASS DOMAIN-001 reconciliation with funding revoked decouples physical domain from active service
+PASS DOMAIN-002: verified definitive failure holds failover without current commercial evidence
+PASS DOMAIN-002: unsupported capability does not trigger failover and rejects operation
+PASS Domain renewal blocks concurrent in-flight renewals and rejects another paid DOMAIN order
+PASS Domain renewal increment remains exact through second timeout-after-effect reconciliation
+PASS Queue starvation avoidance: healthy domain operation progresses behind 101 blocked operations
+PASS CLI and outbox integration executes domain operations idempotently
+12 tests, 0 failures
