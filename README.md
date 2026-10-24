@@ -1,5 +1,8 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4-E test/mock geliştirme:** F4-D güvenlik tabanı bağımsız kabul edildi (325 test, HEAD dc70fa5). Kullanım/sağlayıcı maliyeti, mevcut Ledger ve manual fiyat önerisi kapsamı [F4_E_PLAN](docs/F4_E_PLAN.md) ile yürütülür. 30 günlük peşin müşteri satışı ayrı kalır; PROV-005 gerçek kabulü ve tüm canlı GATE’ler açıktır. F4-F/F5, merge ve production başlatılmaz.
+
+
 > **F4-D geliştirme:** F4-C’nin 278 testlik güvenlik tabanı bağımsız kabul edildi; DOMAIN-002 otomatik registrar failover PARTIAL kalır. Kalıcı Voyar Cloud operation/task/mock kapsamı [F4_D_PLAN](docs/F4_D_PLAN.md) ile yürütülür. Canlı GATE’ler açık; F4-E/F, F5 ve production başlatılmaz.
 
 > **F4 geliştirme başladı; tamamlanmadı:** kabul edilen F3 tabanı üzerinde [F4 planı](docs/F4_PLAN.md), [Voyar SDK incelemesi](docs/F4_VOYAR_SDK_REVIEW.md), Domain model/kalıcı registrar mock temeli ve SDK POST replay transport koruması eklendi. [Taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2), PHP 8.3/8.4 için [251/251 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40071562182). [F4 ilerleme raporu](docs/F4_REPORT.md) eksik Domain lifecycle/failover, Cloud ve panel kapsamını açıkça ayırır. Bütün canlı GATE'ler OPEN; F5 başlamadı. Aşağıdaki önceki faz notları tarihseldir.

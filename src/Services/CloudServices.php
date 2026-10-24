@@ -27,6 +27,13 @@ final readonly class CloudServices
         if(!in_array(\Hostider\Core\CanonicalJson::encode($line),array_map(\Hostider\Core\CanonicalJson::encode(...),$billSnapshot['lines']),true)){throw new HttpError(409,'CLOUD_PURCHASE_BILL_MISMATCH');}
         return ['service_id'=>$id,'customer_id'=>$customer,'order_id'=>$s['order_id'],'order_item_id'=>$s['order_item_id'],'unit_no'=>(int)$s['unit_no'],'offer'=>$offer,'line'=>$line,'price_id'=>$price['id'],'price_currency'=>$price['currency'],'net_minor'=>(string)$price['net_minor'],'tax_minor'=>(string)$price['tax_minor'],'total_minor'=>(string)$price['total_minor'],'billing_request_id'=>$bill['id'],'bill_snapshot'=>$billSnapshot];
     }
+    /** Historical purchased period only; provider expenses remain payable after refund/cancel. */
+    public function costTerms(string $id): array
+    {
+        $this->db->requireTransaction();$s=(new Repository($this->db,$this->config))->find($id);$p=$this->db->execute('SELECT cycle_snapshot FROM svc_periods WHERE service_id=? AND generation=1',[$id])->fetch();
+        if(!$p){throw new HttpError(409,'CLOUD_PREPAID_PERIOD_REQUIRED');}$cycle=json_decode($p['cycle_snapshot'],true,32,JSON_THROW_ON_ERROR);
+        if($cycle['kind']!=='DAYS'||(int)$cycle['interval_count']!==30){throw new HttpError(409,'CLOUD_30_DAY_PREPAID_REQUIRED');}return ['service'=>$s,'cycle'=>$cycle];
+    }
     public function status(string $id): string{$this->db->requireTransaction();return $this->db->execute('SELECT status FROM svc_services WHERE id=? FOR UPDATE',[$id])->fetchColumn();}
     public function financialContext(string $id): array
     {

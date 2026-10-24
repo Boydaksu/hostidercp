@@ -16,7 +16,7 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire'], true)) {
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire','cloud-costs:work','cloud-costs:propose'], true)) {
         fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>, domains:work, domains:expire' . PHP_EOL);
         exit(2);
     }
@@ -61,8 +61,14 @@ try {
         (new \Hostider\Commerce\EventSink($db))->register($worker);
         (new \Hostider\Services\EventSink($db,$config))->register($worker);
         (new \Hostider\Domains\EventSink($db,$config))->register($worker);
-        (new \Hostider\Cloud\EventSink($db,$config))->register($worker);
+        (new \Hostider\Cloud\EventSink($db,$config))->register($worker);(new \Hostider\CloudCosts\EventSink($db,$config))->register($worker);
         echo json_encode(['worked' => $worker->once()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif (in_array($command,['cloud-costs:work','cloud-costs:propose'],true)) {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');$options=[];$margin=null;
+        foreach(array_slice($argv,2) as $option){if($command==='cloud-costs:propose'&&preg_match('/^--margin-rate=([0-9]+(?:\.[0-9]+)?)$/D',$option,$v)){if($margin!==null){throw new InvalidArgumentException('Duplicate margin');}$margin=$v[1];continue;}if(!preg_match('/^--(max-operations|max-seconds)=([1-9][0-9]*)$/D',$option,$m)||isset($options[$m[1]])){throw new InvalidArgumentException('Invalid cost worker option');}$options[$m[1]]=(int)$m[2];}
+        $runner=$command==='cloud-costs:work'?new \Hostider\CloudCosts\Engine($db,$config):new \Hostider\Catalog\CloudCostProposals($db,$config);
+        $result=$command==='cloud-costs:work'?$runner->run($options['max-operations']??100,$options['max-seconds']??20):$runner->run($options['max-operations']??100,$options['max-seconds']??20,$margin);
+        echo json_encode($result,JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command === 'cloud:work') {
         $db->execute('SET SESSION innodb_lock_wait_timeout=2');
         $worker=new \Hostider\Cloud\Worker($db,$config);
