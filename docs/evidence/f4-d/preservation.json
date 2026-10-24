@@ -1,0 +1,227 @@
+{
+  "base": "73468c0427e5f23553a7a8b534f7713011fafcc7",
+  "previous_tests": 278,
+  "migrations_001_043": [
+    {
+      "path": "migrations/001_f0_infrastructure.php",
+      "sha256": "b3eb10070a1c21180d3fbe0611d388d6b5bb435d521daa001a26e6c068bb8965",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/002_f0_1_retention.php",
+      "sha256": "921b6f9e2edc3766e0244fddae14c8c4cb17881152a8dd518f715a044c92ae15",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/003_f1_identity.php",
+      "sha256": "33cea76f09cd1b8c98fe81801b2bc0612191afb909a935953b22554ea36a042b",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/004_f1_1_confirmations.php",
+      "sha256": "5f8cf9a4c6b954b8fd9b2eb3f0f6309bf35a289d4b3dad3e7571fc2f903930a9",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/005_f1_1_reset_step_up.php",
+      "sha256": "4dc9c03e57a962fa4ffa691e9d5b550c5bef1e4ea59fc6bd269b69b208086b7e",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/006_f2_finance.php",
+      "sha256": "97e2a3507deb26ee2e1b9c8c6c4d1d886f30a40df04ed5a7db5d4b839754655f",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/007_f2_wallet_credits.php",
+      "sha256": "9cd6d260745ee58d7be371ebdd41c9292e3f1b1f6b41c6562f774aef6d6e058e",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/008_f2_catalog.php",
+      "sha256": "7feb55ed7ac53a2f2bc95e5811123fe6e82efb1fe1f47e07298db34f0e6ae7bf",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/009_f2_pricing.php",
+      "sha256": "dc5f34fa318e0ac77f2370a6b644ca26a8d3b747019062ed650f7bf017b5cbef",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/010_f2_orders_billing.php",
+      "sha256": "51ccfdfadf8d293a48b4efd21dd4b2db702b1334715606a14aedbf41dd0099e5",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/011_f2_payment_workflows.php",
+      "sha256": "b1e9f9adb4c265e6604ab66834b16a151535a9b2f14a00c455d924f271659d63",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/012_f2_documents_cash.php",
+      "sha256": "7633bcbb49fdc13ac021d103488468d174814b6d9f3508321aaa3a96ceb496a4",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/013_f2_commerce_confirmations.php",
+      "sha256": "cc847c3045bbc668214050048b8d4998e45273f3e03e5338ef915777da593166",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/014_f2_paid_refunds.php",
+      "sha256": "046ed51e9fdec380758633b519d0b2a290f100b0d3d65a657590ae2a17f06798",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/015_f2_standalone_addons.php",
+      "sha256": "a6a355224d0bcdbbfb02415d583cdf7492c74de4844c6c0563810c2547498a6b",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/016_f2_source_evidence.php",
+      "sha256": "d3f5ccb378f1f576d697c28d23b372a4fb6c00ed3c7b7188de022075113061be",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/017_f2_wallet_currency.php",
+      "sha256": "8623261999d5fc4af0d2944112c8ff3ee6411fd3d75e087847dc674d32df9651",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/018_f2_wallet_refund_fx.php",
+      "sha256": "c0fd259c0d3d7796794d713df4b3bd9df35d3405e0541ed1ee598a1a7821537f",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/019_f2_held_facts.php",
+      "sha256": "f2b2c7849508be7a57eb7ebc8647a2667838ec0fc75dbd41ee21e220b56e4bfa",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/020_f2_reconciliation_resolution.php",
+      "sha256": "dcad3cdb3a90793a35f56f49da8445139fe9dfbe832cf87a0dab4a906acf5a40",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/021_f2_order_provenance.php",
+      "sha256": "e317363a343b59b0fa474af931f610d575747fd50c31fb50fe0ee249e765cc83",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/022_f2_confirmation_versions.php",
+      "sha256": "127ca8c342844298a5871567c7d39c06429d9c29b2f1e1760ed01ffb391c0840",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/023_f3_service_model.php",
+      "sha256": "e24894460b0cdcf7ab7bf88b45e81efab8fa74caf494152e6fac4a77ed5f8e2f",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/024_f3_resources.php",
+      "sha256": "edae51ba5c7de0170964c8dda6043a04ed928822619acb27aed34662d4b88f87",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/025_f3_operations.php",
+      "sha256": "02cd485070124e6aefa002d2303c1ecd87d57257f10512cd7703a5394a188b1e",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/026_f3_mock_hosting.php",
+      "sha256": "8b86ab9c4e0420091cf0670424ff709242f5150601b5319e0217eb5b35d1a775",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/027_f3_mapping_integrity.php",
+      "sha256": "40a82ee6133785afa750b0a0782064ba5b8c26e47c2fde6a4173f0fd85c60033",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/028_f3_reconciliation.php",
+      "sha256": "8d4b5884d7d5bb20347cc32db9eb43ab7b497022a6c574f02222ea966a20af94",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/029_f3_lifecycle_policy.php",
+      "sha256": "ea2c81044f4167f141b7a4e29f53a699b7b3d041f1260fc1e1e25006b4bd5251",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/030_f3_renewals.php",
+      "sha256": "4789d3393bb64c740a20755777b69995b2b68cb6888119f4217e3283fa30b247",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/031_f3_cancellations.php",
+      "sha256": "85b4cf29dd39c77519fe85677a7f23f0484262ac620d12fce7ee7bc2c4c0b142",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/032_f3_action_evidence.php",
+      "sha256": "97664416a465123d72bee94020906658b85d02430bd45e48da9455fc67659fe8",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/033_f3_transfer.php",
+      "sha256": "92396c6b1ab777838dc0b27511670cc2fbad4da15d541d435c63f32e715d384c",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/034_f3_package_changes.php",
+      "sha256": "f555a64dd9924be65416bb02543268ab509495f26cb54cf4ed15aed31d4a8d96",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/035_f3_http_confirmations.php",
+      "sha256": "ffd9aeefa7b2a07ea514e23e7039b45cbc20f56f85b53503cf75b16c91966ab8",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/036_f3_scope_and_query_guards.php",
+      "sha256": "ca02859608f5b437134ab6c4f59a7405dbc3c852a8b76831bfa4d496587c3caa",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/037_f3_scheduler_fairness.php",
+      "sha256": "e67f0a93a4194d217af3ec6ff969aa483c411e46e0e83266b7a3d19cb07227e7",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/038_service_runner_fairness.php",
+      "sha256": "95c745e3feb8dd7806ed7b3c49a85a4c3c0f077cb67b54245851c9670a63af35",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/039_f4_domain_model.php",
+      "sha256": "144f0eed70100d92788aab0b8d4450c702d6fba6970e38d71a9411aa447817bb",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/040_f4_mock_registrar.php",
+      "sha256": "f8490c5ca09ed2a21dba294840641401515c54e92b1b389d3cee714a1267b453",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/041_f4_domain_operations.php",
+      "sha256": "456db8c758f758bdab4f4f2a68829dcef4d568dfb476776a42fc8720398e145f",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/042_f4_domain_runner_fairness.php",
+      "sha256": "72c9c6bec7919d5efb56f448d5059fc604eda0d9ff6b6766fda874135f9b2968",
+      "equal_to_base": true
+    },
+    {
+      "path": "migrations/043_f4_domain_audit_safety.php",
+      "sha256": "d9a786fcaa6cfb6531f5130b6934f5b0be8aa9da8a9bc85209258140f1ae9351",
+      "equal_to_base": true
+    }
+  ],
+  "changed_baseline_test_files": [
+    "tests/domains-audit.php"
+  ],
+  "compatibility_change": "Exact additive migration list extended with 044; all 278 test definitions/assertions retained.",
+  "sdk_sha256": "6f76355c1fb32b9c86889e74c68f5caafec03c3670e140e61b53543432c3eb7c",
+  "sdk_unchanged": true
+}

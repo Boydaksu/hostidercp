@@ -1,0 +1,258 @@
+{
+  "job_id": 120872143793,
+  "job_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40093933860/job/120872143793",
+  "php": "8.3.36",
+  "mariadb": "10.11.19-MariaDB-ubu2204",
+  "suites": [
+    {
+      "suite": "tests/run.php",
+      "tests": 19,
+      "failures": 0
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-http.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/integration.php",
+      "tests": 26,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity.php",
+      "tests": 16,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/catalog.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/pricing.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/addons.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/orders.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/payments.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-model.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-package.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "tests": 1,
+      "failures": 0
+    }
+  ],
+  "tests": 298,
+  "failures": 0,
+  "cloud_evidence": [
+    "2026-10-24T12:28:22.0787482Z MIGRATION 001-043 preserved; 043 to 044 additive upgrade; replay no-op PASS",
+    "2026-10-24T12:28:22.1565300Z PASS F4-D canonical paid CLOUD source scope unit and immutable specification",
+    "2026-10-24T12:28:22.2358813Z PASS F4-D catalog OS location custom bounds and secret fields fail closed",
+    "2026-10-24T12:28:22.3171887Z PASS F4-D create acceptance is not ACTIVE until independent task and resource evidence",
+    "2026-10-24T12:28:23.6228128Z PASS F4-D power reinstall upgrade and terminate use confirmation and verified tasks",
+    "2026-10-24T12:28:23.9007785Z PASS F4-D before after body-loss and auth-loss never trigger a second create",
+    "2026-10-24T12:28:24.0404809Z PASS F4-D UNKNOWN absent call or pending task cannot become successful",
+    "2026-10-24T12:28:24.1164821Z PASS F4-D timeout after effect reconciles one existing task with explicit scoped operator decision",
+    "2026-10-24T12:28:24.1863242Z PASS F4-D crash after effect expires lease; stale response and durable send replay are fenced",
+    "2026-10-24T12:28:24.5804539Z PASS F4-D alien task status resource account and fingerprint never mean success",
+    "2026-10-24T12:28:24.6548869Z PASS F4-D refund after dispatch preserves resource evidence and suspends funded service",
+    "2026-10-24T12:28:24.7099461Z PASS F4-D imported VM binds verified external resource and cannot CREATE",
+    "2026-10-24T12:28:24.7847753Z PASS F4-D projections immutable usage provenance and non-test environments exclude secrets",
+    "2026-10-24T12:28:26.4520230Z MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":43358,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":101335,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":188634,\"physical_create\":1,\"applied_effect\":1}]",
+    "2026-10-24T12:28:26.4521625Z PASS F4-D 1 4 8 PHP workers create one VM and apply one task completion",
+    "2026-10-24T12:28:26.7082208Z PASS F4-D durable send permission remains consumed in eight new PHP processes",
+    "2026-10-24T12:28:26.7770196Z PASS F4-D SKIP LOCKED and rollback keep operation and hold records consistent",
+    "2026-10-24T12:28:26.8582576Z PASS F4-D polling crash expired lease fences late task completion then reconciles once",
+    "2026-10-24T12:28:27.0249618Z PASS F4-D confirmation payload version actor freshness and observation fences reject reuse",
+    "2026-10-24T12:28:28.3623569Z PASS F4-D bounded cron progresses past 101 blocked canonical units without replay",
+    "2026-10-24T12:28:30.1089580Z PASS F4-D real CLI and bounded outbox queue execute once without leaking payloads",
+    "2026-10-24T12:28:32.7180344Z PASS F4-D original SDK auth POST replay is blocked by committed Cloud operation dispatch admission"
+  ],
+  "checkout_evidence": [
+    "2026-10-24T12:26:55.2624481Z HEAD is now at bb4a8db Merge a7489b938292530cba73e4dd22c625e66328f112 into c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731",
+    "2026-10-24T12:26:55.2666915Z [command]/usr/bin/git log -1 --format=%H"
+  ]
+}
