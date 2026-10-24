@@ -28,3 +28,15 @@ ONE_OFF_FEES_REQUIRE_REVIEW kalır; tekrarlayan katalog fiyatına sessiz yayılm
 bileşende HALF_UP, net kullanım policy rounding ile hesaplanır; gerçek vergi sözleşmesi değildir.
 Provisional invoice eşliği final kullanım/fatura bağı değildir. Final kanıt ayrıca eşleştirilir;
 invoice match bir nakit settlement veya payable borcunun sıfırlanması sayılmaz.
+
+İlk Linux CI cron yarışında child failure görüldü. Cost/proposal local transaction'ları
+sonraki tek transaction için READ COMMITTED kullanır; F3/F4-D session isolation değişmez.
+Instance lock ve unique/idempotency sınırları korunur. Yalnız Database.transaction'ın
+rollback ettiği 1205/1213 için en fazla üç local deneme vardır. Network/unknown commit
+veya provider POST bu mekanizmayla tekrarlanmaz. Child testleri hata olsa da tüm süreçleri
+drainer; güvenli driver code ve retry sayaçları ham kanıtta tutulur.
+
+EXPLAIN karşı-örneği: status IN iki değer + global checked_at sırası Using filesort üretir.
+FOR UPDATE LIMIT 1 aday taramasını tek satıra indirmiyordu; iki cron'dan biri boş dönebiliyordu.
+047'de türetilmiş admissible=TRUE equality-prefix ve sıralı FORCE INDEX ile filesort kaldırılır;
+proposal için de status/proposal_checked_at sırası indekslenir. Finans kaydı veya 046 değişmez.

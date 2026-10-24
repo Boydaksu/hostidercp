@@ -11,9 +11,7 @@ test('F4-E one four eight independent PHP processes dedupe submit cost journal a
     }echo 'MEASURE_COST '.json_encode($measure,JSON_THROW_ON_ERROR).PHP_EOL;
 });
 test('F4-E parallel overlapping usage refs serialize on the resource and cannot double accrue',function()use($db): void{
-    $f=costFixture($db);$a=costUsage($db,$f,'overlap-a');$b=costUsage($db,$f,'overlap-b');$children=[];
-    foreach([$a,$b] as $u){$pipes=[];$p=proc_open([PHP_BINARY,__DIR__.'/cloud-cost-child.php','work',$u['work']],[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes,null,cloudEnv($f));if(!is_resource($p)){throw new RuntimeException('Cost overlap child unavailable');}fclose($pipes[0]);$children[]=[$p,$pipes];}
-    foreach($children as [$p,$pipes]){$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);same(0,proc_close($p));same('',$err);same(true,json_decode($out,true)['checked']);}
+    $f=costFixture($db);$a=costUsage($db,$f,'overlap-a');$b=costUsage($db,$f,'overlap-b');$r=costChildrenJobs($f,[['work',$a['work']],['work',$b['work']]]);foreach($r['results'] as $result){same(true,$result['checked']);}
     $states=$db->execute('SELECT status FROM cloud_cost_work WHERE id IN (?,?) ORDER BY status',[$a['work'],$b['work']])->fetchAll(PDO::FETCH_COLUMN);same(['COSTED_MOCK','REVIEW'],$states);same(1,(int)$db->execute('SELECT COUNT(*) FROM cloud_usage_costs WHERE instance_id=?',[$f['instance']])->fetchColumn());
 });
 test('F4-E SKIP LOCKED admission never waits or creates a partial journal',function()use($db): void{
@@ -22,9 +20,11 @@ test('F4-E SKIP LOCKED admission never waits or creates a partial journal',funct
     costProcess($db,$f,$u);
 });
 test('F4-E overlapping bounded crons rotate 101 blocked works and reach healthy metering',function()use($db): void{
-    $f=costFixture($db);for($n=0;$n<101;++$n){$f['cost']->submit($f['instance'],'missing-meter-'.$n);}$u=costUsage($db,$f,'healthy-last');$r=costChildren($f,['run'],2);foreach($r['results'] as $result){same(true,$result['checked']<=100);}
+    $f=costFixture($db);
+    $plan=$db->execute("EXPLAIN SELECT * FROM cloud_cost_work FORCE INDEX(ix_cloud_cost_admission) WHERE admissible=TRUE ORDER BY checked_at,created_at,id LIMIT 1 FOR UPDATE SKIP LOCKED")->fetchAll();foreach($plan as $row){same(false,str_contains($row['Extra']??'','filesort'));}
+    for($n=0;$n<101;++$n){$f['cost']->submit($f['instance'],'missing-meter-'.$n);}$u=costUsage($db,$f,'healthy-last');$r=costChildren($f,['run'],2);foreach($r['results'] as $result){same(true,$result['checked']<=100);}
     same('COSTED_MOCK',$db->execute('SELECT status FROM cloud_cost_work WHERE id=?',[$u['work']])->fetchColumn());same(101,(int)$db->execute("SELECT COUNT(*) FROM cloud_cost_work WHERE instance_id=? AND status='UNVERIFIED'",[$f['instance']])->fetchColumn());same(1,(int)$db->execute('SELECT COUNT(*) FROM cloud_usage_costs WHERE instance_id=?',[$f['instance']])->fetchColumn());
-    $cli=domainCli($f,['cloud-costs:work','--max-operations=5','--max-seconds=1']);same(true,$cli['checked']<=5);echo 'MEASURE_COST_FAIR '.json_encode(['blocked'=>101,'healthy_costs'=>1,'overlap_crons'=>2,'wall_us'=>$r['wall_us'],'checked'=>array_column($r['results'],'checked')],JSON_THROW_ON_ERROR).PHP_EOL;
+    $cli=domainCli($f,['cloud-costs:work','--max-operations=5','--max-seconds=1']);same(true,$cli['checked']<=5);echo 'MEASURE_COST_FAIR '.json_encode(['blocked'=>101,'healthy_costs'=>1,'overlap_crons'=>2,'wall_us'=>$r['wall_us'],'checked'=>array_column($r['results'],'checked'),'db_retry_counts'=>array_column($r['results'],'db_retry_counts'),'admission_plan'=>$plan],JSON_THROW_ON_ERROR).PHP_EOL;
 });
 test('F4-E consumed cost receipt is not proposal completion and independent proposal cron recovers',function()use($db): void{
     $f=costFixture($db);$u=costUsage($db,$f);costProcess($db,$f,$u);$q=new \Hostider\Core\Queue\Queue($db);$db->transaction(fn()=>$q->enqueue('cloud-cost.recorded',['cost_id'=>$u['work']],'cost-fact:'.$u['work'],Id::uuid()));$w=new \Hostider\Core\Queue\Worker($db,$q);(new \Hostider\CloudCosts\EventSink($db,$f['config']))->register($w);same(true,$w->once());same('SUCCEEDED',$db->execute('SELECT status FROM jobs WHERE dedupe_key=?',['cost-fact:'.$u['work']])->fetchColumn());

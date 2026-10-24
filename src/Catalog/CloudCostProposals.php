@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace Hostider\Catalog;
 use Hostider\Core\{Config,Id};use Hostider\Core\Database\Database;use Hostider\Core\Http\HttpError;
-use Hostider\CloudCosts\{Store,Engine};use Hostider\Finance\{Currency,Decimal,Money,Rounding};use Hostider\Identity\IdentityService;use Hostider\Commerce\{Services,Commands,Confirmations};
+use Hostider\CloudCosts\{Store,Engine,LocalTransactions};use Hostider\Finance\{Currency,Decimal,Money,Rounding};use Hostider\Identity\IdentityService;use Hostider\Commerce\{Services,Commands,Confirmations};
 /** FIN-010 uses existing catalog_cost_proposals and existing Commerce publication confirmations. */
 final readonly class CloudCostProposals
 {
@@ -11,7 +11,7 @@ final readonly class CloudCostProposals
     public function suggest(string $costId,string $margin): ?string
     {
         $m=new Decimal($margin);$margin=(string)$m;if($m->compare(new Decimal('0'))<0||$m->compare(new Decimal('0.9'))>0){throw new HttpError(422,'CLOUD_MARGIN_INVALID');}
-        return $this->db->transaction(function()use($costId,$margin,$m): ?string{
+        return LocalTransactions::run($this->db,function()use($costId,$margin,$m): ?string{
             $work=$this->db->execute('SELECT * FROM cloud_cost_work WHERE id=? FOR UPDATE',[$costId])->fetch();if(!$work||$work['status']!=='COSTED_MOCK'){throw new HttpError(409,'CLOUD_COST_UNVERIFIED');}
             $c=(new Engine($this->db,$this->config))->cost($costId);$i=$c['instance'];$terms=(new \Hostider\Services\CloudServices($this->db,$this->config))->costTerms($i['service_id']);
             $mapping=$this->db->execute('SELECT product_id FROM cloud_catalog WHERE id=?',[$i['catalog_id']])->fetch();$product=(new Repository($this->db))->product($mapping['product_id']);
@@ -86,8 +86,8 @@ final readonly class CloudCostProposals
         if($margin===null){throw new HttpError(409,'CLOUD_EXPLICIT_MOCK_MARGIN_REQUIRED');}$m=new Decimal($margin);if($m->compare(new Decimal('0'))<0||$m->compare(new Decimal('0.9'))>0){throw new HttpError(422,'CLOUD_MARGIN_INVALID');}
         if($maximum<1||$maximum>100||$seconds<1||$seconds>20){throw new \InvalidArgumentException('Invalid proposal worker budget');}$start=hrtime(true);$n=0;$review=0;$before=$this->db->execute('SELECT UTC_TIMESTAMP(6)')->fetchColumn();
         while($n<$maximum&&hrtime(true)-$start<$seconds*1_000_000_000&&memory_get_usage(true)<64*1024*1024){
-            $id=$this->db->transaction(function()use($before): ?string{$w=$this->db->execute("SELECT id FROM cloud_cost_work WHERE status='COSTED_MOCK' AND (proposal_checked_at IS NULL OR proposal_checked_at<?) ORDER BY proposal_checked_at,created_at,id LIMIT 1 FOR UPDATE SKIP LOCKED",[$before])->fetchColumn();if(!$w){return null;}$this->db->execute('UPDATE cloud_cost_work SET proposal_checked_at=UTC_TIMESTAMP(6) WHERE id=?',[$w]);return $w;});
+            $id=LocalTransactions::run($this->db,function()use($before): ?string{$w=$this->db->execute("SELECT id FROM cloud_cost_work FORCE INDEX(ix_cloud_cost_proposal_admission) WHERE status='COSTED_MOCK' AND (proposal_checked_at IS NULL OR proposal_checked_at<?) ORDER BY proposal_checked_at,created_at,id LIMIT 1 FOR UPDATE SKIP LOCKED",[$before])->fetchColumn();if(!$w){return null;}$this->db->execute('UPDATE cloud_cost_work SET proposal_checked_at=UTC_TIMESTAMP(6) WHERE id=?',[$w]);return $w;});
             if($id===null){break;}try{$this->suggest($id,$margin);}catch(HttpError){++$review;}++$n;
-        }return ['checked'=>$n,'review'=>$review,'budget_seconds'=>$seconds];
+        }return ['checked'=>$n,'review'=>$review,'budget_seconds'=>$seconds,'db_retry_counts'=>LocalTransactions::counters()];
     }
 }

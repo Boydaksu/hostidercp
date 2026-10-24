@@ -34,8 +34,13 @@ function costFinanceHash($db): string
 {
     $v=[];foreach(['orders','order_items','billing_requests','billing_request_states','svc_prices','finance_payments','finance_wallets'] as $t){$v[$t]=$db->execute('SELECT * FROM '.$t.' ORDER BY 1')->fetchAll();}return hash('sha256',\Hostider\Core\CanonicalJson::encode($v));
 }
-function costChildren(array $f,array $args,int $count): array
+function costChildren(array $f,array $args,int $count): array{return costChildrenJobs($f,array_fill(0,$count,$args));}
+function costChildrenJobs(array $f,array $jobs): array
 {
-    $start=hrtime(true);$children=[];for($n=0;$n<$count;++$n){$pipes=[];$p=proc_open(array_merge([PHP_BINARY,__DIR__.'/cloud-cost-child.php'],$args),[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes,null,cloudEnv($f));if(!is_resource($p)){throw new RuntimeException('Cost child unavailable');}fclose($pipes[0]);$children[]=[$p,$pipes];}
-    $results=[];foreach($children as [$p,$pipes]){$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);same(0,proc_close($p));same('',$err);$results[]=json_decode($out,true,32,JSON_THROW_ON_ERROR);}return ['results'=>$results,'wall_us'=>intdiv(hrtime(true)-$start,1000)];
+    $start=hrtime(true);$children=[];$failures=[];
+    foreach($jobs as $args){$pipes=[];$p=proc_open(array_merge([PHP_BINARY,__DIR__.'/cloud-cost-child.php'],$args),[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes,null,cloudEnv($f));if(!is_resource($p)){$failures[]=['exit'=>-1,'code'=>'COST_CHILD_UNAVAILABLE'];break;}fclose($pipes[0]);$children[]=[$p,$pipes];}
+    $results=[];
+    foreach($children as [$p,$pipes]){$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);$exit=proc_close($p);$r=json_decode($out,true,32);if($exit!==0||$err!==''||!is_array($r)){$failures[]=['exit'=>$exit,'code'=>is_array($r)?($r['code']??'UNKNOWN'):'INVALID_RESULT'];}else{$results[]=$r;}}
+    if($failures!==[]){throw new RuntimeException('Cost children drained before failure: '.json_encode($failures,JSON_THROW_ON_ERROR));}
+    return ['results'=>$results,'wall_us'=>intdiv(hrtime(true)-$start,1000)];
 }

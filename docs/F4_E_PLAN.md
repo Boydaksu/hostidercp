@@ -34,3 +34,7 @@ Rollback: cron durdur; provider POST replay yok. Tutarlı DB/kod/APP_KEY restore
 immutable journals/evidence silinmez, destructive down yok. PROV-005 gerçek iki saat kanıtı
 NOT PROVEN; G-V01–04 ve diğer GATE OPEN, DOMAIN-002 PARTIAL/MANUAL_REVIEW.
 F4-E mock tesliminde dur; F4-F/F5/merge/production yok.
+
+CI sonrası plan eki: 046 değişmez; 047 additive generated admissible flag ve ordered admission
+indeksleri eklenir. İki durumlu filesort lock taraması kaldırılır. Yeni kodun tüm migration
+expectation'ları 047'yi de içerir; READ COMMITTED yalnız yeni cost local transaction'larına aittir.
