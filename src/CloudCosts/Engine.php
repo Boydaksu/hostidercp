@@ -26,7 +26,7 @@ final readonly class Engine
     {
         return LocalTransactions::run($this->db,function()use($id,$before): bool{
             $w=$this->db->execute("SELECT * FROM cloud_cost_work ".($id?'':'FORCE INDEX(ix_cloud_cost_admission) ')."WHERE admissible=TRUE".($id?' AND id=?':'').($before?' AND (checked_at IS NULL OR checked_at<?)':'').' ORDER BY checked_at,created_at,id LIMIT 1 FOR UPDATE SKIP LOCKED',array_merge($id?[$id]:[],$before?[$before]:[]))->fetch();if(!$w){return false;}
-            $i=$this->store->instance($w['instance_id']);if(!hash_equals($w['fingerprint'],$this->store->hash(['instance_id'=>$w['instance_id'],'account_id'=>$w['account_id'],'usage_ref'=>$w['usage_ref']]))){$this->hold($w,'REVIEW','CLOUD_COST_WORK_INTEGRITY');return true;}$proof=$this->store->binding($i);
+            $i=$this->store->instance($w['instance_id']);if(!hash_equals($w['fingerprint'],$this->store->hash(['instance_id'=>$w['instance_id'],'account_id'=>$w['account_id'],'usage_ref'=>$w['usage_ref']]))){$this->hold($w,'REVIEW','CLOUD_COST_WORK_INTEGRITY');return true;}if(!$this->store->ondemand($i)){$this->hold($w,'REVIEW','CLOUD_ONDEMAND_HOURLY_REQUIRED');return true;}$proof=$this->store->binding($i);
             $event=$this->event($i['account_id'],'USAGE',$w['usage_ref']);if(!$event){$this->hold($w,'UNVERIFIED','METERING_REQUIRED');return true;}
             if(!$proof){$this->hold($w,'UNVERIFIED','RESOURCE_PROOF_REQUIRED');return true;}$u=$event['payload'];
             try{
@@ -56,12 +56,12 @@ final readonly class Engine
     /** Trusted internal evidence gateway; no customer projection is exposed. */
     public function cost(string $id): array
     {
-        $r=$this->db->execute('SELECT * FROM cloud_usage_costs WHERE id=?',[$id])->fetch();if(!$r){throw new HttpError(409,'CLOUD_COST_UNVERIFIED');}$r['calculation']=$this->store->decrypt($r['calculation_encrypted'],$r['fingerprint'],'cloud-cost:'.$id);$r['instance']=$this->store->instance($r['instance_id'],false);return $r;
+        $r=$this->db->execute('SELECT * FROM cloud_usage_costs WHERE id=?',[$id])->fetch();if(!$r){throw new HttpError(409,'CLOUD_COST_UNVERIFIED');}$r['calculation']=$this->store->decrypt($r['calculation_encrypted'],$r['fingerprint'],'cloud-cost:'.$id);$r['instance']=$this->store->instance($r['instance_id'],false);if(!$this->store->ondemand($r['instance'])){throw new HttpError(409,'CLOUD_ONDEMAND_HOURLY_REQUIRED');}return $r;
     }
     public function reconcile(string $instance,string $invoiceReference): array
     {
         return LocalTransactions::run($this->db,function()use($instance,$invoiceReference): array{
-            $i=$this->store->instance($instance);$event=$this->event($i['account_id'],'INVOICE',$invoiceReference);if(!$event){return ['status'=>'UNVERIFIED','reason'=>'INVOICE_EVIDENCE_REQUIRED'];}
+            $i=$this->store->instance($instance);if(!$this->store->ondemand($i)){return ['status'=>'REVIEW','reason'=>'CLOUD_ONDEMAND_HOURLY_REQUIRED'];}$event=$this->event($i['account_id'],'INVOICE',$invoiceReference);if(!$event){return ['status'=>'UNVERIFIED','reason'=>'INVOICE_EVIDENCE_REQUIRED'];}
             $old=$this->db->execute("SELECT * FROM cloud_cost_reconciliations WHERE instance_id=? AND invoice_event_id=? AND status='MATCHED_MOCK' LIMIT 1",[$instance,$event['id']])->fetch();if($old){return ['id'=>$old['id'],'status'=>$old['status']];}
             $dependencies=[];foreach(array_slice(is_array($event['payload']['usage_refs'])?$event['payload']['usage_refs']:[],0,100) as $ref){if(is_string($ref)){$dependencies[]=$this->db->execute('SELECT id,usage_ref,currency,total_minor,starts_at,ends_at FROM cloud_usage_costs WHERE instance_id=? AND usage_ref=?',[$instance,$ref])->fetch();}}
             $basis=$this->store->hash(['resource'=>$i['resource_id'],'proof'=>$this->store->binding($i),'costs'=>$dependencies]);

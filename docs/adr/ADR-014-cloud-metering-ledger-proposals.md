@@ -40,3 +40,7 @@ EXPLAIN karşı-örneği: status IN iki değer + global checked_at sırası Usin
 FOR UPDATE LIMIT 1 aday taramasını tek satıra indirmiyordu; iki cron'dan biri boş dönebiliyordu.
 047'de türetilmiş admissible=TRUE equality-prefix ve sıralı FORCE INDEX ile filesort kaldırılır;
 proposal için de status/proposal_checked_at sırası indekslenir. Finans kaydı veya 046 değişmez.
+
+25 Ekim son sınır: hourly engine immutable VM spec type=ondemand ister; prepaid provider VM
+onaylı mock tarife olsa bile REVIEW olur, cost/journal üretmez. Bu müşteri 30 DAYS prepaid
+satışından farklıdır. Eski cost okumalarında da mode kontrolü vardır; migration değişmez.

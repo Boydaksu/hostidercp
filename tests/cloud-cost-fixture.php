@@ -9,9 +9,9 @@ function costAdmin($db,$config): array
     $identity=new \Hostider\Identity\IdentityService($db,$config);$password=bin2hex(random_bytes(20));$email='synthetic-cost-admin@example.invalid';$user=$identity->bootstrap($email,'Synthetic cost admin',$password);$reference=\Hostider\Core\Id::uuid();$identity->login($email,$password,'admin',$reference,\Hostider\Core\Id::uuid());$factor=$identity->enroll($reference,'admin',$password);$codes=$identity->confirmEnrollment($reference,'admin',\Hostider\Identity\Totp::code($factor['secret'],intdiv(time(),30)))['recovery_codes'];$identity->stepUp($reference,'admin',$password,array_pop($codes));
     return $admins[$schema]=compact('user','reference');
 }
-function costFixture($db,array $changes=[],bool $activate=true): array
+function costFixture($db,array $changes=[],bool $activate=true,?array $vmSpec=null): array
 {
-    $f=cloudFixture($db);if($activate){activateCloud($db,$f);}
+    $f=cloudFixture($db,true,1,$vmSpec);if($activate){activateCloud($db,$f);}
     $admin=costAdmin($db,$f['config']);$i=$f['engine']->store->instance($f['instance'],false);$now=new DateTimeImmutable('now',new DateTimeZone('UTC'));$now=CostStore::date($now->format('Y-m-d H:i:s'));
     $policy=array_replace(['currency'=>'USD','hourly'=>'0.2','quantum_seconds'=>1,'minimum_seconds'=>0,'minimum_minor'=>'0','rounding'=>'HALF_UP','tax_rate'=>'0','addons'=>['ipv4'=>['hourly'=>'0.05','max_quantity'=>2]],'fees'=>['setup'=>['minor'=>'25','max_quantity'=>1]],'valid_from'=>$now->modify('-2 days')->format('Y-m-d H:i:s'),'valid_until'=>$now->modify('+365 days')->format('Y-m-d H:i:s'),'max_age_seconds'=>86400,'spec_hash'=>$i['fingerprint'],'fx'=>null,'provenance'=>'MOCK'],$changes);
     $tariff=(new Tariffs($db,$f['config']))->publish($i['account_id'],$policy,$admin['reference']);
