@@ -8,12 +8,12 @@ use Hostider\Core\Http\HttpError;
 use Hostider\Core\Queue\{Outbox,Queue};
 use Hostider\Core\Security\{Audit,AuditEvent,Authorization,Crypto,Principal};
 use Hostider\Domains\{DomainName,TldPolicy};
-use Hostider\Providers\Contract\{Operation,ProviderResult};
+use Hostider\Providers\Contract\ProviderResult;
 
 /**
  * Domain Lifecycle & Operations Engine (F4-C).
- * Guarantees DOMAIN-001 (UNKNOWN/reconciliation), DOMAIN-002 (safe definitive failover),
- * lease fencing, concurrency and financial funding invariants.
+ * Strictly guarantees DOMAIN-001 (UNKNOWN/reconciliation), DOMAIN-002 (safe definitive failover),
+ * lease fencing, concurrency, anti-starvation runner fairness and financial funding invariants.
  */
 final readonly class DomainEngine
 {
@@ -158,7 +158,8 @@ final readonly class DomainEngine
     }
 
     /**
-     * Enqueue a domain renewal operation. Must have a separate paid renewal order!
+     * Enqueue a domain renewal operation.
+     * Enforces single in-flight renewal, strict order product matching, actor authorization and distinct financial funding.
      */
     public function enqueueRenewal(string $domainId, string $renewalOrderId, string $periodId, int $termYears, Principal $actor, string $trace): string
     {
@@ -172,23 +173,59 @@ final readonly class DomainEngine
             if (!$domain) {
                 throw new HttpError(404, 'DOMAIN_NOT_FOUND');
             }
-            if (!in_array($domain['status'], ['REGISTERED', 'GRACE', 'RENEWING'], true)) {
+
+            // Actor authorization
+            (new Authorization())->require($actor, 'services.manage', $domain['customer_id'], privileged: true, service: $domain['service_id']);
+
+            // Atomic in-flight renewal guard (P0): if already RENEWING or pending renewal operation exists, block!
+            if ($domain['status'] === 'RENEWING') {
+                throw new HttpError(409, 'DOMAIN_RENEWAL_ALREADY_IN_FLIGHT');
+            }
+            if (!in_array($domain['status'], ['REGISTERED', 'GRACE'], true)) {
                 throw new HttpError(409, 'DOMAIN_NOT_RENEWABLE');
             }
 
-            // Renewal order must NOT be the initial registration order!
-            if ($domain['service_id']) {
-                $service = $this->db->execute('SELECT * FROM svc_services WHERE id=? FOR UPDATE', [$domain['service_id']])->fetch();
-                if ($service && $service['order_id'] === $renewalOrderId) {
-                    throw new HttpError(409, 'RENEWAL_CANNOT_REUSE_INITIAL_ORDER');
-                }
+            $inFlightOp = $this->db->execute(
+                "SELECT id FROM domain_operations WHERE domain_id=? AND kind='RENEW' AND status IN ('PENDING','RUNNING') FOR UPDATE",
+                [$domainId]
+            )->fetchColumn();
+            if ($inFlightOp) {
+                throw new HttpError(409, 'DOMAIN_RENEWAL_ALREADY_IN_FLIGHT');
             }
 
-            // Validate renewal order and billing state
+            // Renewal order must NOT be the initial registration order!
+            $service = $this->db->execute('SELECT * FROM svc_services WHERE id=? FOR UPDATE', [$domain['service_id']])->fetch();
+            if ($service && $service['order_id'] === $renewalOrderId) {
+                throw new HttpError(409, 'RENEWAL_CANNOT_REUSE_INITIAL_ORDER');
+            }
+
+            // Validate renewal order
             $order = $this->db->execute('SELECT * FROM orders WHERE id=? AND customer_id=? FOR UPDATE', [$renewalOrderId, $domain['customer_id']])->fetch();
             if (!$order) {
                 throw new HttpError(404, 'ORDER_NOT_FOUND');
             }
+
+            // Strict product type validation: renewal order item MUST be a DOMAIN product!
+            $orderItems = $this->db->execute(
+                'SELECT i.*, p.product_type, p.source_currency
+                 FROM order_items i
+                 JOIN catalog_products p ON p.id=i.product_id
+                 WHERE i.order_id=? FOR UPDATE',
+                [$renewalOrderId]
+            )->fetchAll();
+
+            $domainItem = null;
+            foreach ($orderItems as $item) {
+                if ($item['product_type'] === 'DOMAIN') {
+                    $domainItem = $item;
+                    break;
+                }
+            }
+            if (!$domainItem) {
+                throw new HttpError(409, 'RENEWAL_PRODUCT_MISMATCH');
+            }
+
+            // Verify billing state
             $bill = $this->db->execute(
                 'SELECT r.currency, s.status, s.refund_status FROM billing_requests r JOIN billing_request_states s ON s.request_id=r.id WHERE r.id=? AND r.order_id=? AND r.customer_id=? FOR UPDATE',
                 [$order['payment_request_id'], $renewalOrderId, $domain['customer_id']]
@@ -198,6 +235,7 @@ final readonly class DomainEngine
                 throw new HttpError(409, 'RENEWAL_ORDER_NOT_ELIGIBLE');
             }
 
+            // Period validation
             $period = $this->db->execute('SELECT * FROM svc_periods WHERE id=? AND service_id=? FOR UPDATE', [$periodId, $domain['service_id']])->fetch();
             if (!$period || $period['status'] !== 'PENDING_PROVIDER') {
                 throw new HttpError(409, 'RENEWAL_PERIOD_NOT_ELIGIBLE');
@@ -229,7 +267,7 @@ final readonly class DomainEngine
                 'configuration' => [
                     'domain' => $domain['name_ascii'],
                     'rule_id' => $rule['id'],
-                    'years' => $termYears,
+                    'years' => $termYears, // purchased renewal increment
                 ],
             ];
             $requestJson = CanonicalJson::encode($payload);
@@ -278,92 +316,103 @@ final readonly class DomainEngine
     /**
      * Claim next pending domain operation.
      * Transaction commits BEFORE invoking any provider mutation.
+     * Prevents queue starvation using runner_checked_at fairness ordering.
      */
     public function claim(Principal $actor, string $trace, ?string $id = null): ?array
     {
         $this->guard($actor);
 
-        return $this->db->transaction(function () use ($actor, $trace, $id): ?array {
-            $candidate = $this->db->execute(
+        return $this->db->transaction(function () use ($id): ?array {
+            // Anti-starvation ordering: runner_checked_at first, then created_at, id
+            $candidates = $this->db->execute(
                 "SELECT id, domain_id, active_attempt_id FROM domain_operations WHERE status='PENDING'" .
                 ($id !== null ? ' AND id=?' : '') .
-                ' ORDER BY created_at, id LIMIT 1 FOR UPDATE SKIP LOCKED',
+                ' ORDER BY runner_checked_at, created_at, id LIMIT 20 FOR UPDATE SKIP LOCKED',
                 $id !== null ? [$id] : []
-            )->fetch();
+            )->fetchAll();
 
-            if (!$candidate) {
-                return null;
+            foreach ($candidates as $cand) {
+                $op = $this->db->execute('SELECT * FROM domain_operations WHERE id=? FOR UPDATE', [$cand['id']])->fetch();
+                if (!$op || $op['status'] !== 'PENDING') {
+                    continue;
+                }
+
+                $domain = $this->db->execute('SELECT * FROM domains WHERE id=? FOR UPDATE', [$op['domain_id']])->fetch();
+                if (!$domain) {
+                    continue;
+                }
+
+                // Verify funding source
+                $source = $this->db->execute(
+                    'SELECT o.status, o.refund_status, s.status AS bill_status, s.refund_status AS bill_refund
+                     FROM orders o JOIN billing_request_states s ON s.request_id=o.payment_request_id
+                     WHERE o.id=? FOR UPDATE',
+                    [$op['order_id']]
+                )->fetch();
+
+                if (!$this->sourceDispatchable($source ?: null)) {
+                    // Deprioritize blocked operation to avoid queue starvation!
+                    $this->db->execute(
+                        "UPDATE domain_operations SET runner_checked_at=UTC_TIMESTAMP(6), runner_hold_code='DOMAIN_SOURCE_CHANGED', updated_at=UTC_TIMESTAMP(6) WHERE id=?",
+                        [$op['id']]
+                    );
+                    if ($id !== null) {
+                        throw new HttpError(409, 'DOMAIN_SOURCE_CHANGED');
+                    }
+                    continue; // Skip blocked operation and process next healthy operation
+                }
+
+                $attempt = $this->db->execute(
+                    'SELECT * FROM domain_registrar_attempts WHERE id=? FOR UPDATE',
+                    [$op['active_attempt_id']]
+                )->fetch();
+                if (!$attempt || !in_array($attempt['status'], ['PENDING', 'RUNNING'], true)) {
+                    continue;
+                }
+
+                $token = Id::uuid();
+                $this->db->execute(
+                    "UPDATE domain_operations SET status='RUNNING',lease_token=?,lease_until=DATE_ADD(UTC_TIMESTAMP(6),INTERVAL 60 SECOND),runner_checked_at=UTC_TIMESTAMP(6),runner_hold_code=NULL,updated_at=UTC_TIMESTAMP(6) WHERE id=?",
+                    [$token, $op['id']]
+                );
+
+                $this->db->execute(
+                    "UPDATE domain_registrar_attempts SET status='RUNNING' WHERE id=?",
+                    [$attempt['id']]
+                );
+
+                $this->db->execute(
+                    "INSERT INTO domain_attempt_events(operation_id,attempt_id,lease_token,kind,safe_code)
+                     VALUES (?,?,?,'STARTED','DISPATCH_CLAIMED')",
+                    [$op['id'], $attempt['id'], $token]
+                );
+
+                $account = $this->db->execute('SELECT * FROM domain_registrar_accounts WHERE id=?', [$attempt['account_id']])->fetch();
+                $unfrozen = json_decode(
+                    $this->crypto->decrypt($attempt['request_encrypted'], 'domain-attempt:' . $attempt['id']),
+                    true,
+                    64,
+                    JSON_THROW_ON_ERROR
+                );
+
+                return [
+                    'operation_id' => $op['id'],
+                    'attempt_id' => $attempt['id'],
+                    'attempt_no' => (int)$attempt['attempt_no'],
+                    'lease_token' => $token,
+                    'account' => $account,
+                    'payload' => $unfrozen,
+                ];
             }
 
-            $op = $this->db->execute('SELECT * FROM domain_operations WHERE id=? FOR UPDATE', [$candidate['id']])->fetch();
-            if ($op['status'] !== 'PENDING') {
-                return null;
-            }
-
-            $domain = $this->db->execute('SELECT * FROM domains WHERE id=? FOR UPDATE', [$op['domain_id']])->fetch();
-            if (!$domain) {
-                return null;
-            }
-
-            // Verify funding source
-            $source = $this->db->execute(
-                'SELECT o.status, o.refund_status, s.status AS bill_status, s.refund_status AS bill_refund
-                 FROM orders o JOIN billing_request_states s ON s.request_id=o.payment_request_id
-                 WHERE o.id=? FOR UPDATE',
-                [$op['order_id']]
-            )->fetch();
-
-            if (!$this->sourceDispatchable($source ?: null)) {
-                throw new HttpError(409, 'DOMAIN_SOURCE_CHANGED');
-            }
-
-            $attempt = $this->db->execute(
-                'SELECT * FROM domain_registrar_attempts WHERE id=? FOR UPDATE',
-                [$op['active_attempt_id']]
-            )->fetch();
-            if (!$attempt || !in_array($attempt['status'], ['PENDING', 'RUNNING'], true)) {
-                throw new HttpError(409, 'DOMAIN_ATTEMPT_CONFLICT');
-            }
-
-            $token = Id::uuid();
-            $this->db->execute(
-                "UPDATE domain_operations SET status='RUNNING',lease_token=?,lease_until=DATE_ADD(UTC_TIMESTAMP(6),INTERVAL 60 SECOND),updated_at=UTC_TIMESTAMP(6) WHERE id=?",
-                [$token, $op['id']]
-            );
-
-            $this->db->execute(
-                "UPDATE domain_registrar_attempts SET status='RUNNING' WHERE id=?",
-                [$attempt['id']]
-            );
-
-            $this->db->execute(
-                "INSERT INTO domain_attempt_events(operation_id,attempt_id,lease_token,kind,safe_code)
-                 VALUES (?,?,?,'STARTED','DISPATCH_CLAIMED')",
-                [$op['id'], $attempt['id'], $token]
-            );
-
-            $account = $this->db->execute('SELECT * FROM domain_registrar_accounts WHERE id=?', [$attempt['account_id']])->fetch();
-            $unfrozen = json_decode(
-                $this->crypto->decrypt($attempt['request_encrypted'], 'domain-attempt:' . $attempt['id']),
-                true,
-                64,
-                JSON_THROW_ON_ERROR
-            );
-
-            return [
-                'operation_id' => $op['id'],
-                'attempt_id' => $attempt['id'],
-                'attempt_no' => (int)$attempt['attempt_no'],
-                'lease_token' => $token,
-                'account' => $account,
-                'payload' => $unfrozen,
-            ];
+            return null;
         });
     }
 
     /**
      * Complete provider attempt processing.
-     * Enforces DOMAIN-001 (UNKNOWN/reconciliation) and DOMAIN-002 (safe definitive failover).
+     * Enforces DOMAIN-001 (UNKNOWN/reconciliation), DOMAIN-002 (safe definitive failover),
+     * precise term increment calculation and operation/provider contract binding.
      */
     public function finishAttempt(string $opId, string $token, ProviderResult $result, ?array $proof, Principal $actor, string $trace): void
     {
@@ -378,6 +427,16 @@ final readonly class DomainEngine
             $attempt = $this->db->execute('SELECT * FROM domain_registrar_attempts WHERE id=? FOR UPDATE', [$op['active_attempt_id']])->fetch();
             if (!$attempt) {
                 throw new HttpError(404, 'DOMAIN_ATTEMPT_NOT_FOUND');
+            }
+
+            // Operation and Attempt binding verification
+            if ($result->operationId !== $attempt['id']) {
+                throw new HttpError(409, 'PROVIDER_RESULT_ATTEMPT_MISMATCH');
+            }
+
+            $account = $this->db->execute('SELECT * FROM domain_registrar_accounts WHERE id=?', [$attempt['account_id']])->fetch();
+            if (!$account || $result->provider !== $account['provider']) {
+                throw new HttpError(409, 'PROVIDER_RESULT_PROVIDER_MISMATCH');
             }
 
             // Stale worker fencing
@@ -401,6 +460,8 @@ final readonly class DomainEngine
                 $this->markUnknown($op, $attempt, $domain, $service, 'SOURCE_CHANGED_AFTER_DISPATCH', $actor, $trace);
                 return;
             }
+
+            $safeCode = $result->safeErrorCode ?? 'MOCK_OK';
 
             // 1. UNKNOWN outcome: DOMAIN-001
             if ($result->status === 'UNKNOWN') {
@@ -426,7 +487,7 @@ final readonly class DomainEngine
 
                 $this->db->execute(
                     "UPDATE domain_registrar_attempts SET status='SUCCEEDED',external_resource_id=?,safe_code=?,finished_at=UTC_TIMESTAMP(6) WHERE id=?",
-                    [$result->externalResourceId, $result->safeCode, $attempt['id']]
+                    [$result->externalResourceId, $safeCode, $attempt['id']]
                 );
 
                 $this->db->execute(
@@ -441,8 +502,9 @@ final readonly class DomainEngine
                 );
 
                 if ($op['kind'] === 'REGISTER') {
+                    $termYears = (int)$proof['term_years'];
                     $expiresAt = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
-                        ->add(new \DateInterval('P' . ((int)$proof['term_years']) . 'Y'))
+                        ->add(new \DateInterval('P' . $termYears . 'Y'))
                         ->format('Y-m-d H:i:s.u');
 
                     $this->db->execute(
@@ -465,16 +527,18 @@ final readonly class DomainEngine
 
                     $this->recordHistory($domain['id'], $domain['customer_id'], 'REGISTER_SUCCEEDED', $actor, $trace);
                 } elseif ($op['kind'] === 'RENEW') {
-                    $termYears = (int)$proof['term_years'];
+                    // P1: Differentiate purchased renewal increment from cumulative provider term counter
+                    $renewal = $this->db->execute('SELECT * FROM domain_renewals WHERE operation_id=? FOR UPDATE', [$opId])->fetch();
+                    $incrementYears = $renewal ? (int)$renewal['term_years'] : 1;
+
                     $currentExpiry = $domain['expires_at'] ? new \DateTimeImmutable($domain['expires_at'], new \DateTimeZone('UTC')) : new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
-                    $newExpiry = $currentExpiry->add(new \DateInterval('P' . $termYears . 'Y'))->format('Y-m-d H:i:s.u');
+                    $newExpiry = $currentExpiry->add(new \DateInterval('P' . $incrementYears . 'Y'))->format('Y-m-d H:i:s.u');
 
                     $this->db->execute(
                         "UPDATE domains SET status='REGISTERED',expires_at=?,version=version+1,updated_at=UTC_TIMESTAMP(6) WHERE id=?",
                         [$newExpiry, $domain['id']]
                     );
 
-                    $renewal = $this->db->execute('SELECT * FROM domain_renewals WHERE operation_id=? FOR UPDATE', [$opId])->fetch();
                     if ($renewal) {
                         $this->db->execute("UPDATE domain_renewals SET status='VERIFIED' WHERE id=?", [$renewal['id']]);
                         $this->db->execute(
@@ -489,21 +553,28 @@ final readonly class DomainEngine
                 return;
             }
 
-            // 3. DEFINITIVE_FAILURE outcome: DOMAIN-002 Failover check
-            $noEffect = (bool)$result->noEffect;
+            // 3. DEFINITIVE_FAILURE / UNSUPPORTED outcome: DOMAIN-002 Failover check
+            // Query verified no_effect evidence directly from durable registrar calls table!
+            $mockCall = $this->db->execute(
+                'SELECT no_effect, status, safe_code FROM mock_registrar_calls WHERE operation_id=? AND account_id=?',
+                [$attempt['id'], $attempt['account_id']]
+            )->fetch();
+
+            $noEffect = $mockCall ? (bool)$mockCall['no_effect'] : false;
+
             $this->db->execute(
-                "UPDATE domain_registrar_attempts SET status='DEFINITIVE_FAILURE',no_effect=?,safe_code=?,finished_at=UTC_TIMESTAMP(6) WHERE id=?",
-                [(int)$noEffect, $result->safeCode, $attempt['id']]
+                "UPDATE domain_registrar_attempts SET status=?,no_effect=?,safe_code=?,finished_at=UTC_TIMESTAMP(6) WHERE id=?",
+                [$result->status, (int)$noEffect, $safeCode, $attempt['id']]
             );
 
             // Failover can ONLY occur if:
             // a) Attempt 1
-            // b) Result is DEFINITIVE_FAILURE with proven no_effect=TRUE
-            // c) Operation is REGISTER (Renewals are tied to current registrar)
-            if ((int)$attempt['attempt_no'] === 1 && $noEffect && $op['kind'] === 'REGISTER') {
+            // b) Result is DEFINITIVE_FAILURE (UNSUPPORTED does not trigger failover!)
+            // c) Verified no_effect=TRUE from mock registrar call record
+            // d) Operation is REGISTER (Renewals are tied to current registrar)
+            if ((int)$attempt['attempt_no'] === 1 && $result->status === 'DEFINITIVE_FAILURE' && $noEffect && $op['kind'] === 'REGISTER') {
                 $failover = $this->resolveFailoverAttempt($op, $attempt, $domain);
                 if ($failover !== null) {
-                    // Failover available: schedule 2nd attempt
                     $attempt2Id = $failover['attempt_id'];
                     $this->db->execute(
                         "UPDATE domain_operations SET status='PENDING',active_attempt_id=?,lease_token=NULL,lease_until=NULL,updated_at=UTC_TIMESTAMP(6) WHERE id=?",
@@ -529,8 +600,8 @@ final readonly class DomainEngine
 
             $this->db->execute(
                 "INSERT INTO domain_attempt_events(operation_id,attempt_id,lease_token,kind,safe_code)
-                 VALUES (?,?,?,'FINISHED','MOCK_DEFINITIVE_FAILURE')",
-                [$opId, $attempt['id'], $token]
+                 VALUES (?,?,?,'FINISHED',?)",
+                [$opId, $attempt['id'], $token, $safeCode]
             );
 
             $this->db->execute("UPDATE domains SET status='FAILED',version=version+1,updated_at=UTC_TIMESTAMP(6) WHERE id=?", [$domain['id']]);
@@ -546,10 +617,10 @@ final readonly class DomainEngine
 
     /**
      * Resolve and configure an alternative registrar attempt (DOMAIN-002).
+     * Re-validates TLD capability, contact policy, enabled account, and pricing consistency.
      */
     private function resolveFailoverAttempt(array $op, array $attempt1, array $domain): ?array
     {
-        // Find alternative enabled registrar rule for this TLD
         $rules = $this->db->execute(
             "SELECT r.*, a.provider, a.enabled, a.environment
              FROM domain_tld_provider_rules r

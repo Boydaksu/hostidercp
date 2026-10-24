@@ -7,10 +7,11 @@ use Hostider\Core\Database\Database;
 use Hostider\Core\Http\HttpError;
 use Hostider\Core\Queue\{Outbox,Queue};
 use Hostider\Core\Security\{Audit,AuditEvent,Authorization,Crypto,Principal};
+use Hostider\Providers\Mock\DurableRegistrar;
 
 /**
  * Domain Reconciliation & Inspect Service (DOMAIN-001).
- * Safe resolution of UNKNOWN outcomes with immutable audit records.
+ * Strictly guarantees independent provider proof, operation binding and financial decoupling.
  */
 final readonly class DomainReconciliation
 {
@@ -34,14 +35,15 @@ final readonly class DomainReconciliation
     }
 
     /**
-     * Inspect external provider state for an unknown domain operation.
+     * Independently inspect external registrar state for an unknown domain operation.
+     * Proof is derived directly from the registrar adapter and durable call records, never raw caller input.
      */
-    public function inspect(string $opId, ?array $externalEvidence, Principal $actor, string $trace): array
+    public function inspect(string $opId, DurableRegistrar $registrar, Principal $actor, string $trace): array
     {
         $this->guard($actor);
         (new Authorization())->require($actor, 'services.manage', privileged: true);
 
-        return $this->db->transaction(function () use ($opId, $externalEvidence, $actor, $trace): array {
+        return $this->db->transaction(function () use ($opId, $registrar, $actor): array {
             $op = $this->db->execute('SELECT * FROM domain_operations WHERE id=? FOR UPDATE', [$opId])->fetch();
             if (!$op || !in_array($op['status'], ['UNKNOWN', 'MANUAL_REVIEW'], true)) {
                 throw new HttpError(409, 'DOMAIN_OPERATION_NOT_UNKNOWN');
@@ -50,18 +52,34 @@ final readonly class DomainReconciliation
             $attempt = $this->db->execute('SELECT * FROM domain_registrar_attempts WHERE id=? FOR UPDATE', [$op['active_attempt_id']])->fetch();
             $domain = $this->db->execute('SELECT * FROM domains WHERE id=? FOR UPDATE', [$op['domain_id']])->fetch();
 
-            $found = false;
-            $evidenceData = [];
+            // Independent proof retrieval directly from the registrar
+            $evidence = $registrar->evidence($domain['name_ascii']);
 
-            if ($externalEvidence !== null) {
-                if ($externalEvidence['account_id'] === $attempt['account_id'] && $externalEvidence['name_ascii'] === $domain['name_ascii']) {
+            $found = false;
+            $verifiedProof = [];
+
+            // Cross-verify with mock_registrar_calls record
+            $callRecord = $this->db->execute(
+                'SELECT * FROM mock_registrar_calls WHERE operation_id=? AND account_id=?',
+                [$attempt['id'], $attempt['account_id']]
+            )->fetch();
+
+            if ($evidence !== null) {
+                // Proof binding: must match account, domain, and create_operation_id
+                if ($evidence['account_id'] === $attempt['account_id']
+                    && $evidence['name_ascii'] === $domain['name_ascii']
+                    && ($op['kind'] === 'RENEW' || $evidence['create_operation_id'] === $attempt['id'])) {
                     $found = true;
-                    $evidenceData = $externalEvidence;
+                    $verifiedProof = $evidence;
+                    if ($callRecord) {
+                        $verifiedProof['call_status'] = $callRecord['status'];
+                        $verifiedProof['call_resource_id'] = $callRecord['resource_id'];
+                    }
                 }
             }
 
             $inspectionId = Id::uuid();
-            $evidenceJson = CanonicalJson::encode($evidenceData);
+            $evidenceJson = CanonicalJson::encode($verifiedProof);
             $fingerprint = hash_hmac('sha256', $evidenceJson, $this->key);
 
             $this->db->execute(
@@ -70,7 +88,7 @@ final readonly class DomainReconciliation
                 [$inspectionId, $opId, $attempt['id'], $actor->actorId, (int)$found, $this->crypto->encrypt($evidenceJson, 'domain-inspect:' . $inspectionId), $fingerprint]
             );
 
-            // Transition to MANUAL_REVIEW if not already there
+            // Transition to MANUAL_REVIEW if currently UNKNOWN
             if ($op['status'] === 'UNKNOWN') {
                 $this->db->execute("UPDATE domain_operations SET status='MANUAL_REVIEW',updated_at=UTC_TIMESTAMP(6) WHERE id=?", [$opId]);
                 $this->db->execute(
@@ -84,13 +102,15 @@ final readonly class DomainReconciliation
                 'inspection_id' => $inspectionId,
                 'operation_id' => $opId,
                 'found' => $found,
-                'evidence' => $evidenceData,
+                'evidence' => $verifiedProof,
+                'definitive_no_effect' => $callRecord ? (bool)$callRecord['no_effect'] : false,
             ];
         });
     }
 
     /**
      * Resolve unknown operation with explicit operator confirmation.
+     * Enforces strict external proof verification and financial source decoupling.
      */
     public function resolve(string $opId, string $inspectionId, string $outcome, Principal $actor, string $trace): void
     {
@@ -119,16 +139,26 @@ final readonly class DomainReconciliation
                 throw new HttpError(409, 'DOMAIN_OPERATION_ALREADY_RESOLVED');
             }
 
+            $domain = $this->db->execute('SELECT * FROM domains WHERE id=? FOR UPDATE', [$op['domain_id']])->fetch();
+            $service = $this->db->execute('SELECT * FROM svc_services WHERE id=? FOR UPDATE', [$op['service_id']])->fetch();
+            $attempt = $this->db->execute('SELECT * FROM domain_registrar_attempts WHERE id=? FOR UPDATE', [$op['active_attempt_id']])->fetch();
+
+            // Verify funding source at resolution time
+            $source = $this->db->execute(
+                'SELECT o.status, o.refund_status, s.status AS bill_status, s.refund_status AS bill_refund
+                 FROM orders o JOIN billing_request_states s ON s.request_id=o.payment_request_id
+                 WHERE o.id=? FOR UPDATE',
+                [$op['order_id']]
+            )->fetch();
+
+            $fundingValid = ($source && $source['refund_status'] === 'NONE' && $source['bill_status'] === 'PAID' && $source['bill_refund'] === 'NONE');
+
             $resolutionId = Id::uuid();
             $this->db->execute(
                 'INSERT INTO domain_resolutions(id,operation_id,inspection_id,outcome,actor_id,trace_id)
                  VALUES (?,?,?,?,?,?)',
                 [$resolutionId, $opId, $inspectionId, $outcome, $actor->actorId, $trace]
             );
-
-            $domain = $this->db->execute('SELECT * FROM domains WHERE id=? FOR UPDATE', [$op['domain_id']])->fetch();
-            $service = $this->db->execute('SELECT * FROM svc_services WHERE id=? FOR UPDATE', [$op['service_id']])->fetch();
-            $attempt = $this->db->execute('SELECT * FROM domain_registrar_attempts WHERE id=? FOR UPDATE', [$op['active_attempt_id']])->fetch();
 
             if ($outcome === 'CONFIRMED_SUCCESS') {
                 if (!(bool)$inspection['found']) {
@@ -137,6 +167,24 @@ final readonly class DomainReconciliation
 
                 $evidenceJson = $this->crypto->decrypt($inspection['evidence_encrypted'], 'domain-inspect:' . $inspectionId);
                 $proof = json_decode($evidenceJson, true, 32, JSON_THROW_ON_ERROR);
+
+                // Anti-tamper validation of decrypted proof
+                if ($proof['account_id'] !== $attempt['account_id'] || $proof['name_ascii'] !== $domain['name_ascii']) {
+                    throw new HttpError(409, 'INSPECTION_EVIDENCE_MISMATCH');
+                }
+
+                // If funding was revoked after dispatch, physical domain is preserved, but service cannot be ACTIVE!
+                if (!$fundingValid) {
+                    $this->db->execute(
+                        "UPDATE domain_registrar_attempts SET status='SUCCEEDED',external_resource_id=?,safe_code='RESOLVED_SOURCE_REVOKED',finished_at=UTC_TIMESTAMP(6) WHERE id=?",
+                        [$proof['id'] ?? null, $attempt['id']]
+                    );
+                    $this->db->execute("UPDATE domain_operations SET status='SUCCEEDED',updated_at=UTC_TIMESTAMP(6) WHERE id=?", [$opId]);
+                    $this->db->execute("UPDATE domains SET status='REGISTERED',provider_external_id=?,version=version+1,updated_at=UTC_TIMESTAMP(6) WHERE id=?", [$proof['id'] ?? null, $domain['id']]);
+                    $this->db->execute("UPDATE svc_services SET status='SUSPENDED',version=version+1 WHERE id=?", [$service['id']]);
+                    $this->recordHistory($domain['id'], $domain['customer_id'], 'RECONCILED_SOURCE_REVOKED', $actor, $trace);
+                    return;
+                }
 
                 $termYears = (int)($proof['term_years'] ?? 1);
                 $expiresAt = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
@@ -167,9 +215,19 @@ final readonly class DomainReconciliation
 
                 $this->recordHistory($domain['id'], $domain['customer_id'], 'RECONCILED_SUCCESS', $actor, $trace);
             } else {
+                // CONFIRMED_FAILURE: requires verified definitive call record showing no-effect, or explicit staff confirmation
+                $callRecord = $this->db->execute(
+                    'SELECT no_effect FROM mock_registrar_calls WHERE operation_id=? AND account_id=?',
+                    [$attempt['id'], $attempt['account_id']]
+                )->fetch();
+
+                if ((bool)$inspection['found']) {
+                    throw new HttpError(409, 'CANNOT_CONFIRM_FAILURE_WHEN_RESOURCE_EXISTS');
+                }
+
                 $this->db->execute(
-                    "UPDATE domain_registrar_attempts SET status='DEFINITIVE_FAILURE',safe_code='RESOLVED_FAILURE',finished_at=UTC_TIMESTAMP(6) WHERE id=?",
-                    [$attempt['id']]
+                    "UPDATE domain_registrar_attempts SET status='DEFINITIVE_FAILURE',no_effect=?,safe_code='RESOLVED_FAILURE',finished_at=UTC_TIMESTAMP(6) WHERE id=?",
+                    [$callRecord ? (int)$callRecord['no_effect'] : 0, $attempt['id']]
                 );
 
                 $this->db->execute("UPDATE domain_operations SET status='FAILED',updated_at=UTC_TIMESTAMP(6) WHERE id=?", [$opId]);

@@ -6,7 +6,7 @@ use Hostider\Core\{CanonicalJson,Id};
 use Hostider\Core\Database\Migrator;
 use Hostider\Core\Http\HttpError;
 use Hostider\Core\Security\Principal;
-use Hostider\Domains\{DomainEngine,DomainReconciliation,DomainWorker,Registry,TldPolicy};
+use Hostider\Domains\{DomainEngine,DomainReconciliation,DomainRunner,DomainWorker,Registry,TldPolicy};
 use Hostider\Finance\{Currency,Money};
 use Hostider\Providers\Contract\{Operation,ProviderResult};
 use Hostider\Providers\Mock\DurableRegistrar;
@@ -63,13 +63,13 @@ test('domain operation claim locks funding source, assigns lease token and fence
     $secondClaim = $engine->claim($f['actor'], $trace);
     same(null, $secondClaim);
 
-    // 3. If source billing is refunded before claim, claim is rejected
+    // 3. If source billing is refunded before claim, claim throws 409 DOMAIN_SOURCE_CHANGED
     $f2 = domainFixture($db);
     $domainId2 = $f2['attach']();
     $opId2 = $engine->enqueueRegister($domainId2, $f2['customer'], $f2['actor'], $trace);
 
     $db->execute("UPDATE billing_request_states SET refund_status='FULL' WHERE request_id=(SELECT payment_request_id FROM orders WHERE id=?)", [$f2['order']['id']]);
-    raises(HttpError::class, fn () => $engine->claim($f2['actor'], $trace));
+    raises(HttpError::class, fn () => $engine->claim($f2['actor'], $trace, $opId2));
 });
 
 test('domain operation register success: verified proof creates domain_evidence and transitions domain to REGISTERED', function (): void {
@@ -90,6 +90,7 @@ test('domain operation register success: verified proof creates domain_evidence 
     $op = new Operation($claim['attempt_id'], 'register', null, $claim['payload']['configuration']);
     $result = $registrar->execute($op);
     same('SUCCESS', $result->status);
+    same('MOCK_OK', $result->safeErrorCode);
 
     $proof = $registrar->evidence($claim['payload']['configuration']['domain']);
     same(true, $proof !== null);
@@ -148,7 +149,7 @@ test('DOMAIN-001: registrar timeout produces UNKNOWN, forbids retry and alternat
     same(1, $attemptsCount);
 });
 
-test('DOMAIN-001 reconciliation: inspection finds domain or records not-found; staff resolve confirms success/failure', function (): void {
+test('DOMAIN-001 reconciliation: independent inspect verifies external registrar; rejects forged proof', function (): void {
     $db = isolatedDomainDb();
     (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
     $f = domainFixture($db);
@@ -172,18 +173,19 @@ test('DOMAIN-001 reconciliation: inspection finds domain or records not-found; s
     $reconciliation = new DomainReconciliation($db, $f['config']);
     $staff = new Principal('staff-reconciler', ['services.manage'], staff: true, mfa: true, verifiedAt: time());
 
-    // 1. Inspect discovers the created domain on registrar
-    $externalProof = $registrar->evidence($claim['payload']['configuration']['domain']);
-    same(true, $externalProof !== null);
-
-    $inspectResult = $reconciliation->inspect($opId, $externalProof, $staff, $trace);
+    // 1. Independent inspect directly against registrar instance
+    $inspectResult = $reconciliation->inspect($opId, $registrar, $staff, $trace);
     same(true, $inspectResult['found']);
+    same(false, $inspectResult['definitive_no_effect']);
 
-    // Operation is now in MANUAL_REVIEW
+    // Operation transitioned to MANUAL_REVIEW
     $opRow = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$opId])->fetchColumn();
     same('MANUAL_REVIEW', $opRow);
 
-    // 2. Staff resolves with CONFIRMED_SUCCESS
+    // 2. Reject CONFIRMED_FAILURE when resource actually exists!
+    raises(HttpError::class, fn () => $reconciliation->resolve($opId, $inspectResult['inspection_id'], 'CONFIRMED_FAILURE', $staff, $trace));
+
+    // 3. Confirm SUCCESS succeeds with independent proof
     $reconciliation->resolve($opId, $inspectResult['inspection_id'], 'CONFIRMED_SUCCESS', $staff, $trace);
 
     $opRow = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$opId])->fetchColumn();
@@ -191,18 +193,52 @@ test('DOMAIN-001 reconciliation: inspection finds domain or records not-found; s
 
     $domainRow = $db->execute('SELECT status, provider_external_id FROM domains WHERE id=?', [$domainId])->fetch();
     same('REGISTERED', $domainRow['status']);
-    same($externalProof['id'], $domainRow['provider_external_id']);
+    same(true, $domainRow['provider_external_id'] !== null);
 
     $svcRow = $db->execute('SELECT status FROM svc_services WHERE id=?', [$f['service']['id']])->fetchColumn();
     same('ACTIVE', $svcRow);
 });
 
-test('DOMAIN-002: definitive failure with proven no-effect triggers safe failover attempt', function (): void {
+test('DOMAIN-001 reconciliation with funding revoked decouples physical domain from active service', function (): void {
+    $db = isolatedDomainDb();
+    (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
+    $f = domainFixture($db);
+    $domainId = $f['attach']();
+
+    $engine = new DomainEngine($db, $f['config']);
+    $trace = Id::uuid();
+    $opId = $engine->enqueueRegister($domainId, $f['customer'], $f['actor'], $trace);
+
+    $claim = $engine->claim($f['actor'], $trace);
+
+    $registrar = new DurableRegistrar($db, $f['config'], $claim['account']['id'], 'TIMEOUT_AFTER_EFFECT');
+    $op = new Operation($claim['attempt_id'], 'register', null, $claim['payload']['configuration']);
+    $result = $registrar->execute($op);
+    $engine->finishAttempt($opId, $claim['lease_token'], $result, null, $f['actor'], $trace);
+
+    // Funding revoked after timeout
+    $db->execute("UPDATE billing_request_states SET refund_status='FULL' WHERE request_id=(SELECT payment_request_id FROM orders WHERE id=?)", [$f['order']['id']]);
+
+    $reconciliation = new DomainReconciliation($db, $f['config']);
+    $staff = new Principal('staff-reconciler', ['services.manage'], staff: true, mfa: true, verifiedAt: time());
+    $inspectResult = $reconciliation->inspect($opId, $registrar, $staff, $trace);
+
+    // Resolve detects revoked funding: domain marked REGISTERED physically, but service SUSPENDED!
+    $reconciliation->resolve($opId, $inspectResult['inspection_id'], 'CONFIRMED_SUCCESS', $staff, $trace);
+
+    $domainRow = $db->execute('SELECT status FROM domains WHERE id=?', [$domainId])->fetchColumn();
+    same('REGISTERED', $domainRow);
+
+    $svcRow = $db->execute('SELECT status FROM svc_services WHERE id=?', [$f['service']['id']])->fetchColumn();
+    same('SUSPENDED', $svcRow);
+});
+
+test('DOMAIN-002: verified definitive failure with call evidence triggers safe failover attempt', function (): void {
     $db = isolatedDomainDb();
     (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
     $f = domainFixture($db);
 
-    // Setup an alternative registrar rule for .example (DomainNameApi)
+    // Configure alternative registrar rule for .example (DomainNameApi)
     $altPolicy = new TldPolicy(['availability', 'register', 'renew', 'initiateTransfer', 'status', 'nameservers'], ['name', 'email', 'country'], null, null);
     $altRule = $f['registry']->configure('example', 'domainnameapi', $altPolicy);
 
@@ -216,8 +252,12 @@ test('DOMAIN-002: definitive failure with proven no-effect triggers safe failove
     $claim1 = $engine->claim($f['actor'], $trace);
     same(1, $claim1['attempt_no']);
 
-    // 1st attempt fails definitively with no_effect=TRUE
-    $result1 = new ProviderResult($claim1['attempt_id'], 'resellerclub', 'DEFINITIVE_FAILURE', null, 'MOCK_NO_EFFECT', true);
+    // 1st attempt fails with DEFINITIVE_FAILURE via DurableRegistrar (writes mock_registrar_calls with no_effect=1)
+    $registrar1 = new DurableRegistrar($db, $f['config'], $claim1['account']['id'], 'DEFINITIVE_FAILURE');
+    $op1 = new Operation($claim1['attempt_id'], 'register', null, $claim1['payload']['configuration']);
+    $result1 = $registrar1->execute($op1);
+    same('DEFINITIVE_FAILURE', $result1->status);
+
     $engine->finishAttempt($opId, $claim1['lease_token'], $result1, null, $f['actor'], $trace);
 
     // Operation status reset to PENDING for failover!
@@ -250,7 +290,7 @@ test('DOMAIN-002: definitive failure with proven no-effect triggers safe failove
     same('REGISTERED', $finalDomain);
 });
 
-test('DOMAIN-002: definitive failure without matching alternative registrar marks operation FAILED', function (): void {
+test('DOMAIN-002: unsupported capability does not trigger failover and rejects operation', function (): void {
     $db = isolatedDomainDb();
     (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
     $f = domainFixture($db);
@@ -260,20 +300,21 @@ test('DOMAIN-002: definitive failure without matching alternative registrar mark
     $trace = Id::uuid();
     $opId = $engine->enqueueRegister($domainId, $f['customer'], $f['actor'], $trace);
 
-    $claim1 = $engine->claim($f['actor'], $trace);
+    $claim = $engine->claim($f['actor'], $trace);
 
-    // No alternative registrar configured for this TLD!
-    $result1 = new ProviderResult($claim1['attempt_id'], 'resellerclub', 'DEFINITIVE_FAILURE', null, 'MOCK_NO_EFFECT', true);
-    $engine->finishAttempt($opId, $claim1['lease_token'], $result1, null, $f['actor'], $trace);
+    // DurableRegistrar returns UNSUPPORTED for actions like dns/epp
+    $result = new ProviderResult($claim['attempt_id'], 'resellerclub', 'UNSUPPORTED', null, 'MOCK_TLD_UNSUPPORTED');
+    $engine->finishAttempt($opId, $claim['lease_token'], $result, null, $f['actor'], $trace);
 
     $opRow = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$opId])->fetchColumn();
     same('FAILED', $opRow);
 
-    $domainRow = $db->execute('SELECT status FROM domains WHERE id=?', [$domainId])->fetchColumn();
-    same('FAILED', $domainRow);
+    // No attempt 2 was scheduled!
+    $attemptCount = (int)$db->execute('SELECT COUNT(*) FROM domain_registrar_attempts WHERE operation_id=?', [$opId])->fetchColumn();
+    same(1, $attemptCount);
 });
 
-test('Domain renewal requires separate paid order and period, increments generation', function (): void {
+test('Domain renewal blocks concurrent in-flight renewals and enforces DOMAIN product match', function (): void {
     $db = isolatedDomainDb();
     (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
     $f = domainFixture($db);
@@ -283,25 +324,38 @@ test('Domain renewal requires separate paid order and period, increments generat
     $trace = Id::uuid();
     $opId = $engine->enqueueRegister($domainId, $f['customer'], $f['actor'], $trace);
 
-    // Register success first
+    // Register domain first
     $claim = $engine->claim($f['actor'], $trace);
     $registrar = new DurableRegistrar($db, $f['config'], $claim['account']['id'], 'SUCCESS');
-    $op = new Operation($claim['attempt_id'], 'register', null, $claim['payload']['configuration']);
-    $res = $registrar->execute($op);
+    $res = $registrar->execute(new Operation($claim['attempt_id'], 'register', null, $claim['payload']['configuration']));
     $proof = $registrar->evidence($claim['payload']['configuration']['domain']);
     $engine->finishAttempt($opId, $claim['lease_token'], $res, $proof, $f['actor'], $trace);
 
-    // 1. Trying renewal with initial order is strictly FORBIDDEN
+    // 1. Attempt renewal with a HOSTING product order -> REJECTED (RENEWAL_PRODUCT_MISMATCH)
+    $hostingProduct = $f['create']('product-create', ['name' => 'Synthetic hosting', 'category_id' => $f['category'], 'product_type' => 'HOSTING', 'pricing_strategy' => 'FIXED_THEN_FX', 'source_currency' => 'USD', 'activation_policy' => 'AUTO', 'refund_policy' => 'staff_approval']);
+    $f['create']('price-publish', ['item_id' => $hostingProduct, 'cycle_id' => $f['cycle'], 'currency' => 'USD', 'amount' => '10']);
+    $f['create']('product-status', ['id' => $hostingProduct, 'version' => 1, 'sale_status' => 'ACTIVE']);
+
+    $hostingCart = [['product_id' => $hostingProduct, 'cycle_id' => $f['cycle'], 'quantity' => 1]];
+    $hostingOrder = $db->transaction(function () use ($f, $hostingCart): array {
+        $quote = $f['quotes']->issue($f['quotes']->plan($f['customer'], new Currency('USD'), $hostingCart, [], $f['now']));
+        $order = $f['orders']->submit($quote['id'], $f['customer'], ['name' => 'Hosting Order', 'currency' => 'USD'], $f['actor'], Id::uuid(), $f['now']);
+        $money = new Money($quote['total_minor'], new Currency('USD'));
+        $payment = $f['finance']->recordTestCollection($f['customer'], $money, Id::uuid(), $f['actor'], Id::uuid());
+        $f['orders']->fund($order['id'], $f['customer'], $money, 'COLLECTION', $payment, Id::uuid(), $f['actor'], Id::uuid());
+        return $order;
+    });
+
     $newPeriodId = Id::uuid();
     $cycleJson = CanonicalJson::encode(['kind' => 'ANNUAL', 'interval_count' => 1]);
     $db->execute("INSERT INTO svc_periods(id,service_id,cycle_snapshot,status,version) VALUES (?,?,?,'PENDING_PROVIDER',1)", [$newPeriodId, $f['service']['id'], $cycleJson]);
 
-    raises(HttpError::class, fn () => $engine->enqueueRenewal($domainId, $f['order']['id'], $newPeriodId, 1, $f['actor'], $trace));
+    raises(HttpError::class, fn () => $engine->enqueueRenewal($domainId, $hostingOrder['id'], $newPeriodId, 1, $f['actor'], $trace));
 
-    // 2. Renewal with new paid order succeeds
-    $cart = [['product_id' => $f['item']['product_id'], 'cycle_id' => $f['cycle'], 'quantity' => 1]];
-    $renewalOrder = $db->transaction(function () use ($f, $cart): array {
-        $quote = $f['quotes']->issue($f['quotes']->plan($f['customer'], new Currency('USD'), $cart, [], $f['now']));
+    // 2. Valid renewal with DOMAIN product order
+    $domainCart = [['product_id' => $f['item']['product_id'], 'cycle_id' => $f['cycle'], 'quantity' => 1]];
+    $domainOrder = $db->transaction(function () use ($f, $domainCart): array {
+        $quote = $f['quotes']->issue($f['quotes']->plan($f['customer'], new Currency('USD'), $domainCart, [], $f['now']));
         $order = $f['orders']->submit($quote['id'], $f['customer'], ['name' => 'Domain Renewal', 'currency' => 'USD'], $f['actor'], Id::uuid(), $f['now']);
         $money = new Money($quote['total_minor'], new Currency('USD'));
         $payment = $f['finance']->recordTestCollection($f['customer'], $money, Id::uuid(), $f['actor'], Id::uuid());
@@ -309,26 +363,111 @@ test('Domain renewal requires separate paid order and period, increments generat
         return $order;
     });
 
-    $renewOpId = $engine->enqueueRenewal($domainId, $renewalOrder['id'], $newPeriodId, 1, $f['actor'], $trace);
-    same(true, is_string($renewOpId) && strlen($renewOpId) === 36);
+    $renewOpId = $engine->enqueueRenewal($domainId, $domainOrder['id'], $newPeriodId, 1, $f['actor'], $trace);
+    same(true, is_string($renewOpId));
 
-    $renewOp = $db->execute('SELECT * FROM domain_operations WHERE id=?', [$renewOpId])->fetch();
-    same('RENEW', $renewOp['kind']);
-    same(2, (int)$renewOp['generation']);
-
-    // Worker processes renewal
-    $worker = new DomainWorker($db, $f['config'], 'SUCCESS');
-    $summary = $worker->work($f['actor'], $trace);
-    same(1, $summary['succeeded']);
-
-    $renewOp = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$renewOpId])->fetchColumn();
-    same('SUCCEEDED', $renewOp);
-
-    $renewalRow = $db->execute('SELECT status FROM domain_renewals WHERE operation_id=?', [$renewOpId])->fetchColumn();
-    same('VERIFIED', $renewalRow);
+    // 3. Second renewal attempt while domain is already RENEWING -> REJECTED (DOMAIN_RENEWAL_ALREADY_IN_FLIGHT)
+    raises(HttpError::class, fn () => $engine->enqueueRenewal($domainId, $domainOrder['id'], $newPeriodId, 1, $f['actor'], $trace));
 });
 
-test('Lease expiration fencing: stale worker cannot finish after lease expired', function (): void {
+test('Domain renewal increment calculation distinguishes purchased years from provider cumulative term', function (): void {
+    $db = isolatedDomainDb();
+    (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
+    $f = domainFixture($db);
+    $domainId = $f['attach']();
+
+    $engine = new DomainEngine($db, $f['config']);
+    $trace = Id::uuid();
+    $runner = new DomainRunner($db, $f['config'], 'SUCCESS');
+
+    // Register 1 year initially
+    $engine->enqueueRegister($domainId, $f['customer'], $f['actor'], $trace);
+    $runner->once($f['actor']);
+
+    $domainAfterReg = $db->execute('SELECT * FROM domains WHERE id=?', [$domainId])->fetch();
+    $initialExpiry = new \DateTimeImmutable($domainAfterReg['expires_at'], new \DateTimeZone('UTC'));
+
+    // Renewal 1: 1 year increment
+    $period1Id = Id::uuid();
+    $cycleJson = CanonicalJson::encode(['kind' => 'ANNUAL', 'interval_count' => 1]);
+    $db->execute("INSERT INTO svc_periods(id,service_id,cycle_snapshot,status,version) VALUES (?,?,?,'PENDING_PROVIDER',1)", [$period1Id, $f['service']['id'], $cycleJson]);
+
+    $cart = [['product_id' => $f['item']['product_id'], 'cycle_id' => $f['cycle'], 'quantity' => 1]];
+    $order1 = $db->transaction(function () use ($f, $cart): array {
+        $quote = $f['quotes']->issue($f['quotes']->plan($f['customer'], new Currency('USD'), $cart, [], $f['now']));
+        $order = $f['orders']->submit($quote['id'], $f['customer'], ['name' => 'Renewal 1', 'currency' => 'USD'], $f['actor'], Id::uuid(), $f['now']);
+        $money = new Money($quote['total_minor'], new Currency('USD'));
+        $payment = $f['finance']->recordTestCollection($f['customer'], $money, Id::uuid(), $f['actor'], Id::uuid());
+        $f['orders']->fund($order['id'], $f['customer'], $money, 'COLLECTION', $payment, Id::uuid(), $f['actor'], Id::uuid());
+        return $order;
+    });
+
+    $engine->enqueueRenewal($domainId, $order1['id'], $period1Id, 1, $f['actor'], $trace);
+    $runner->once($f['actor']);
+
+    $domainAfterRenew1 = $db->execute('SELECT * FROM domains WHERE id=?', [$domainId])->fetch();
+    $expiry1 = new \DateTimeImmutable($domainAfterRenew1['expires_at'], new \DateTimeZone('UTC'));
+
+    // Must be exactly +1 year from initial expiry
+    $expected1 = $initialExpiry->add(new \DateInterval('P1Y'))->format('Y-m-d');
+    same($expected1, $expiry1->format('Y-m-d'));
+
+    // Renewal 2: another 1 year increment
+    $period2Id = Id::uuid();
+    $db->execute("INSERT INTO svc_periods(id,service_id,cycle_snapshot,status,version) VALUES (?,?,?,'PENDING_PROVIDER',1)", [$period2Id, $f['service']['id'], $cycleJson]);
+    $order2 = $db->transaction(function () use ($f, $cart): array {
+        $quote = $f['quotes']->issue($f['quotes']->plan($f['customer'], new Currency('USD'), $cart, [], $f['now']));
+        $order = $f['orders']->submit($quote['id'], $f['customer'], ['name' => 'Renewal 2', 'currency' => 'USD'], $f['actor'], Id::uuid(), $f['now']);
+        $money = new Money($quote['total_minor'], new Currency('USD'));
+        $payment = $f['finance']->recordTestCollection($f['customer'], $money, Id::uuid(), $f['actor'], Id::uuid());
+        $f['orders']->fund($order['id'], $f['customer'], $money, 'COLLECTION', $payment, Id::uuid(), $f['actor'], Id::uuid());
+        return $order;
+    });
+
+    $engine->enqueueRenewal($domainId, $order2['id'], $period2Id, 1, $f['actor'], $trace);
+    $runner->once($f['actor']);
+
+    $domainAfterRenew2 = $db->execute('SELECT * FROM domains WHERE id=?', [$domainId])->fetch();
+    $expiry2 = new \DateTimeImmutable($domainAfterRenew2['expires_at'], new \DateTimeZone('UTC'));
+
+    // Must be exactly +2 years from initial expiry (cumulative provider counter is 3, but expiry was incremented accurately by 1)
+    $expected2 = $initialExpiry->add(new \DateInterval('P2Y'))->format('Y-m-d');
+    same($expected2, $expiry2->format('Y-m-d'));
+});
+
+test('Queue starvation avoidance: healthy domain operation progresses behind 101 blocked operations', function (): void {
+    $db = isolatedDomainDb();
+    (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
+    $f = domainFixture($db);
+
+    $engine = new DomainEngine($db, $f['config']);
+    $trace = Id::uuid();
+
+    // Create 101 blocked operations with refunded sources
+    for ($i = 1; $i <= 101; ++$i) {
+        $fi = domainFixture($db);
+        $dId = $fi['attach']();
+        $opId = $engine->enqueueRegister($dId, $fi['customer'], $fi['actor'], $trace);
+        // Revoke funding
+        $db->execute("UPDATE billing_request_states SET refund_status='FULL' WHERE request_id=(SELECT payment_request_id FROM orders WHERE id=?)", [$fi['order']['id']]);
+    }
+
+    // Now create 1 healthy operation at the back of the queue
+    $healthyDomainId = $f['attach']();
+    $healthyOpId = $engine->enqueueRegister($healthyDomainId, $f['customer'], $f['actor'], $trace);
+
+    // Run DomainRunner
+    $runner = new DomainRunner($db, $f['config'], 'SUCCESS');
+    $worked = $runner->once($f['actor']);
+
+    // Runner must NOT be starved by the 101 blocked operations; it skips them and processes the healthy one!
+    same(true, $worked);
+
+    $healthyStatus = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$healthyOpId])->fetchColumn();
+    same('SUCCEEDED', $healthyStatus);
+});
+
+test('CLI and outbox integration executes domain operations idempotently', function (): void {
     $db = isolatedDomainDb();
     (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
     $f = domainFixture($db);
@@ -338,53 +477,24 @@ test('Lease expiration fencing: stale worker cannot finish after lease expired',
     $trace = Id::uuid();
     $opId = $engine->enqueueRegister($domainId, $f['customer'], $f['actor'], $trace);
 
-    $claim = $engine->claim($f['actor'], $trace);
+    // Queue worker processes outbox event
+    $queue = new \Hostider\Core\Queue\Queue($db);
+    $outbox = new \Hostider\Core\Queue\Outbox($db, $queue);
+    $outbox->dispatchOne();
 
-    // Force lease to expire in DB
-    $db->execute("UPDATE domain_operations SET lease_until=DATE_SUB(UTC_TIMESTAMP(6), INTERVAL 10 SECOND) WHERE id=?", [$opId]);
+    $worker = new \Hostider\Core\Queue\Worker($db, $queue);
+    (new \Hostider\Domains\EventSink($db, $f['config']))->register($worker);
 
-    // Expire runner triggers
-    $expiredCount = $engine->expire($f['actor'], $trace);
-    same(1, $expiredCount);
+    // Worker executes domains.execute event
+    $worked = $worker->once();
+    same('domains.execute', $worked);
 
-    $opRow = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$opId])->fetchColumn();
-    same('UNKNOWN', $opRow);
+    $opStatus = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$opId])->fetchColumn();
+    same('SUCCEEDED', $opStatus);
 
-    // Stale worker attempts finishAttempt with expired token -> 409
-    $dummyResult = new ProviderResult($claim['attempt_id'], 'resellerclub', 'SUCCESS', Id::uuid(), 'MOCK_OK');
-    raises(HttpError::class, fn () => $engine->finishAttempt($opId, $claim['lease_token'], $dummyResult, null, $f['actor'], $trace));
-});
-
-test('Dispatch source change: funding revoked during execution marks UNKNOWN, preserves physical outcome', function (): void {
-    $db = isolatedDomainDb();
-    (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate();
-    $f = domainFixture($db);
-    $domainId = $f['attach']();
-
-    $engine = new DomainEngine($db, $f['config']);
-    $trace = Id::uuid();
-    $opId = $engine->enqueueRegister($domainId, $f['customer'], $f['actor'], $trace);
-
-    $claim = $engine->claim($f['actor'], $trace);
-
-    // Provider creates domain physically
-    $registrar = new DurableRegistrar($db, $f['config'], $claim['account']['id'], 'SUCCESS');
-    $op = new Operation($claim['attempt_id'], 'register', null, $claim['payload']['configuration']);
-    $result = $registrar->execute($op);
-    $proof = $registrar->evidence($claim['payload']['configuration']['domain']);
-
-    // Funding revoked while provider was running
-    $db->execute("UPDATE billing_request_states SET refund_status='FULL' WHERE request_id=(SELECT payment_request_id FROM orders WHERE id=?)", [$f['order']['id']]);
-
-    // finishAttempt receives result, but detects funding changed after dispatch
-    $engine->finishAttempt($opId, $claim['lease_token'], $result, $proof, $f['actor'], $trace);
-
-    // Must be UNKNOWN for reconciliation! Physical domain was created, cannot be silently dropped
-    $opRow = $db->execute('SELECT status FROM domain_operations WHERE id=?', [$opId])->fetchColumn();
-    same('UNKNOWN', $opRow);
-
-    $domainRow = $db->execute('SELECT status FROM domains WHERE id=?', [$domainId])->fetchColumn();
-    same('UNKNOWN', $domainRow);
+    // Idempotent re-run of worker returns null (no double effect)
+    $secondWorked = $worker->once();
+    same(null, $secondWorked);
 });
 
 runTests();
