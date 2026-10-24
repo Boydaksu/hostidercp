@@ -1,0 +1,265 @@
+{
+  "php": "8.4.24",
+  "mariadb": "10.11.18",
+  "environment": "isolated test/mock; interpreter HTTP",
+  "tests": 313,
+  "failures": 0,
+  "suites": [
+    {
+      "suite": "tests/run.php",
+      "tests": 19,
+      "failures": 0
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-http.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/integration.php",
+      "tests": 26,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity.php",
+      "tests": 16,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/catalog.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/pricing.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/addons.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/orders.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/payments.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-model.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-package.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-audit.php",
+      "tests": 15,
+      "failures": 0
+    }
+  ],
+  "measurements": [
+    [
+      {
+        "workers": 1,
+        "instances": 1,
+        "wall_us": 390349,
+        "physical_create": 1,
+        "applied_effect": 1
+      },
+      {
+        "workers": 4,
+        "instances": 1,
+        "wall_us": 480830,
+        "physical_create": 1,
+        "applied_effect": 1
+      },
+      {
+        "workers": 8,
+        "instances": 1,
+        "wall_us": 622874,
+        "physical_create": 1,
+        "applied_effect": 1
+      }
+    ]
+  ],
+  "phpstan": "PASS",
+  "composer_locked_audit": "PASS: no advisories",
+  "lint": "283 PHP files, 0 violations",
+  "source_scan": "293 files, 0 findings",
+  "js_syntax": "PASS",
+  "initial_failed_attempts": "See F4_D_POST_AUDIT_REVIEW.md; no checksum or lock bypass"
+}

@@ -1,0 +1,1109 @@
+{
+  "run_id": 40110274172,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40110274172",
+  "source_sha": "3296eca0631e41d49ad78545d49a6ac7fa9ec5f1",
+  "jobs": [
+    {
+      "job_id": 120920357495,
+      "name": "verify (8.4)",
+      "status": "success",
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40110274172/job/120920357495",
+      "php": [
+        "Installed PHP 8.4.27"
+      ],
+      "mariadb": [
+        "Version: '10.11.19-MariaDB-ubu2204'",
+        "Version: '10.11.19-MariaDB-ubu2204'"
+      ],
+      "checkout": "028da04c89346b6b898791d8dc4fac360bbf6daf",
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        }
+      ],
+      "test_count": 313,
+      "failure_count": 0,
+      "measurements": [
+        [
+          {
+            "workers": 1,
+            "instances": 1,
+            "wall_us": 81578,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 4,
+            "instances": 1,
+            "wall_us": 200428,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 8,
+            "instances": 1,
+            "wall_us": 383792,
+            "physical_create": 1,
+            "applied_effect": 1
+          }
+        ]
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run shivammathur/setup-php@v2",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer audit --working-dir=tools/analysis --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/check.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/run.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/hardening-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-concurrency.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/integration.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-security.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/catalog.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/pricing.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/addons.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/orders.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/payments.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/billing-cash.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/paid-refunds.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/commerce.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/commerce-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/currency-change.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/commerce-events.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/post-delivery.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http-harness.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-model.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-engine.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-hosting.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-reconciliation.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-lifecycle.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-transfer.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-package.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-runner.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-model.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-provider.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/voyar-sdk.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-boundaries.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-operations.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud-races.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud-sdk.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud-audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repeated service HTTP stability",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repeated commerce HTTP stability",
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve first transport failure before native debugging",
+          "conclusion": "success"
+        },
+        {
+          "name": "Capture native HTTP server crash stack after failure",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Repeated session concurrency stability",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --check public/assets/commerce.js",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --check public/assets/services.js",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload allowlisted test process diagnostics",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ],
+      "success_lines": [
+        "MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS",
+        "MIGRATION 001-044 preserved; 044 to 045 additive upgrade; replay no-op PASS",
+        "MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":81578,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":200428,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":383792,\"physical_create\":1,\"applied_effect\":1}]",
+        "PASS P0-1 catalog capability never grants a higher PID or another product offer",
+        "PASS P0-1 exact purchased custom CPU RAM disk and IPv4 cannot be expanded",
+        "PASS P0-1 entitlement binds canonical customer order item unit and exact immutable price",
+        "PASS P0-1 refund cancellation and changed service price refuse CREATE before dispatch",
+        "PASS P0-1 fixed offers and historical price snapshots are immutable and cannot be forged",
+        "PASS P0-2 refunded VM rejects normal CREATE UPGRADE and REINSTALL",
+        "PASS P0-2 real fresh scoped Identity session can terminate refunded VM without finance writes",
+        "PASS P0-2 customer unscoped staff stale step-up and unsupported kinds are denied",
+        "PASS P0-2 stale confirmation and parallel termination produce one operation and one POST",
+        "PASS P0-2 terminate timeout-after-effect reconciles existing task without a second POST",
+        "PASS P0-2 other account or changed external resource cannot authorize containment",
+        "PASS P0-2 mismatched task resource cannot produce TERMINATED",
+        "PASS P0-2 STOP preserves suspended financial service and makes no cost-stopped claim",
+        "PASS P1 pending task has successful queue delivery and remains WAITING_TASK",
+        "PASS P0-2 revoked staff session after enqueue cannot dispatch an emergency mutation"
+      ]
+    },
+    {
+      "job_id": 120920357543,
+      "name": "verify (8.3)",
+      "status": "success",
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40110274172/job/120920357543",
+      "php": [
+        "Updated to PHP 8.3.36"
+      ],
+      "mariadb": [
+        "Version: '10.11.19-MariaDB-ubu2204'",
+        "Version: '10.11.19-MariaDB-ubu2204'"
+      ],
+      "checkout": "028da04c89346b6b898791d8dc4fac360bbf6daf",
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        }
+      ],
+      "test_count": 313,
+      "failure_count": 0,
+      "measurements": [
+        [
+          {
+            "workers": 1,
+            "instances": 1,
+            "wall_us": 104944,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 4,
+            "instances": 1,
+            "wall_us": 165298,
+            "physical_create": 1,
+            "applied_effect": 1
+          },
+          {
+            "workers": 8,
+            "instances": 1,
+            "wall_us": 332988,
+            "physical_create": 1,
+            "applied_effect": 1
+          }
+        ]
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run shivammathur/setup-php@v2",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run composer audit --working-dir=tools/analysis --locked",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/check.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tools/audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/run.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/hardening-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-concurrency.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/session-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/integration.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-security.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/identity-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/finance.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/catalog.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/pricing.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/addons.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/orders.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/payments.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/billing-cash.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/paid-refunds.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/commerce.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/commerce-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/currency-change.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/commerce-events.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/post-delivery.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/http-harness.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-model.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-engine.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-hosting.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-reconciliation.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-lifecycle.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-transfer.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-package.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-http.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/services-runner.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-unit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-model.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-provider.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/voyar-sdk.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-boundaries.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-operations.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/domains-audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud-races.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud-sdk.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run php tests/cloud-audit.php",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repeated service HTTP stability",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repeated commerce HTTP stability",
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve first transport failure before native debugging",
+          "conclusion": "success"
+        },
+        {
+          "name": "Capture native HTTP server crash stack after failure",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Repeated session concurrency stability",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --check public/assets/commerce.js",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --check public/assets/services.js",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload allowlisted test process diagnostics",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ],
+      "success_lines": [
+        "MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS",
+        "MIGRATION 001-044 preserved; 044 to 045 additive upgrade; replay no-op PASS",
+        "MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":104944,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":165298,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":332988,\"physical_create\":1,\"applied_effect\":1}]",
+        "PASS P0-1 catalog capability never grants a higher PID or another product offer",
+        "PASS P0-1 exact purchased custom CPU RAM disk and IPv4 cannot be expanded",
+        "PASS P0-1 entitlement binds canonical customer order item unit and exact immutable price",
+        "PASS P0-1 refund cancellation and changed service price refuse CREATE before dispatch",
+        "PASS P0-1 fixed offers and historical price snapshots are immutable and cannot be forged",
+        "PASS P0-2 refunded VM rejects normal CREATE UPGRADE and REINSTALL",
+        "PASS P0-2 real fresh scoped Identity session can terminate refunded VM without finance writes",
+        "PASS P0-2 customer unscoped staff stale step-up and unsupported kinds are denied",
+        "PASS P0-2 stale confirmation and parallel termination produce one operation and one POST",
+        "PASS P0-2 terminate timeout-after-effect reconciles existing task without a second POST",
+        "PASS P0-2 other account or changed external resource cannot authorize containment",
+        "PASS P0-2 mismatched task resource cannot produce TERMINATED",
+        "PASS P0-2 STOP preserves suspended financial service and makes no cost-stopped claim",
+        "PASS P1 pending task has successful queue delivery and remains WAITING_TASK",
+        "PASS P0-2 revoked staff session after enqueue cannot dispatch an emergency mutation"
+      ]
+    }
+  ],
+  "tested_tree_sha": "013ed3112b043026fa5e12762815263b115d8199",
+  "checkout_tree_equals_source": true
+}
