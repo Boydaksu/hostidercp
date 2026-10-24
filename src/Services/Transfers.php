@@ -8,9 +8,14 @@ final readonly class Transfers
     private Repository $repository;private \Hostider\Identity\IdentityService $identity;private \Hostider\Commerce\Services $commerce;
     public function __construct(private Database $db,private Config $config){$this->repository=new Repository($db,$config);$this->identity=new \Hostider\Identity\IdentityService($db,$config);$this->commerce=new \Hostider\Commerce\Services($db,$config);}
     private function guard(): void{if($this->config->environment!=='test'){throw new HttpError(403,'G_T01_LIVE_TRANSFER_CLOSED');}}
+    public static function requireSupportedProduct(string $type): void
+    {
+        if($type!=='HOSTING'){throw new HttpError(409,'MODULE_TRANSFER_WORKFLOW_REQUIRED');}
+    }
     private function lock(string $id,string $customer): array
     {
         $identity=$this->repository->find($id,$customer,false);$this->db->execute('SELECT id FROM orders WHERE id=? FOR UPDATE',[$identity['order_id']]);$this->db->execute('SELECT id FROM order_items WHERE id=? FOR UPDATE',[$identity['order_item_id']]);$service=$this->repository->find($id,$customer);
+        self::requireSupportedProduct((string)$this->db->execute('SELECT product_type FROM catalog_products WHERE id=?',[$service['product_id']])->fetchColumn());
         if($service['origin_environment']!=='test'||$service['imported']||!in_array($service['status'],['ACTIVE','SUSPENDED'],true)){throw new HttpError(409,'SERVICE_NOT_TRANSFERABLE');}
         if($service['current_operation_id']!==null&&$this->db->execute("SELECT 1 FROM svc_operations o WHERE o.id=? AND (o.status IN ('PENDING','RUNNING') OR (o.status='UNKNOWN' AND NOT EXISTS(SELECT 1 FROM svc_resolutions r WHERE r.operation_id=o.id)))",[$service['current_operation_id']])->fetchColumn()){throw new HttpError(409,'SERVICE_OPERATION_IN_FLIGHT');}
         if($this->db->execute("SELECT 1 FROM svc_renewals WHERE service_id=? AND status IN ('AWAITING_PAYMENT','PENDING_PROVIDER','UNKNOWN')",[$id])->fetchColumn()){throw new HttpError(409,'RENEWAL_TRANSFER_CONFLICT');}if($this->db->execute("SELECT 1 FROM svc_package_changes WHERE service_id=? AND status IN ('AWAITING_PAYMENT','PENDING_PROVIDER','UNKNOWN')",[$id])->fetchColumn()){throw new HttpError(409,'PACKAGE_TRANSFER_CONFLICT');}return $service;

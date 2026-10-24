@@ -40,7 +40,7 @@ final readonly class Registry
         $this->db->requireTransaction();
         (new Authorization())->require($actor,'services.manage',$customer,privileged:true,service:$serviceId);
         if($actor->impersonating){throw new HttpError(403,'DOMAIN_IMPERSONATION_FORBIDDEN');}
-        $service=(new \Hostider\Services\Repository($this->db,$this->config))->find($serviceId,$customer);
+        $service=(new \Hostider\Services\RegistrationEligibility($this->db,$this->config))->lock($serviceId,$customer,'DOMAIN');
         $product=$this->db->execute('SELECT product_type FROM catalog_products WHERE id=?',[$service['product_id']])->fetchColumn();
         if($product!=='DOMAIN'||$service['origin_environment']!=='test'||$service['imported']){throw new HttpError(409,'DOMAIN_SERVICE_REQUIRED');}
         $name=new DomainName($name);$rule=$this->policy($ruleId);$policy=TldPolicy::fromSnapshot(json_decode($rule['policy_json'],true,32,JSON_THROW_ON_ERROR));
