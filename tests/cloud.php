@@ -52,7 +52,7 @@ test('F4-D timeout after effect reconciles one existing task with explicit scope
     raises(HttpError::class,fn()=>$f['engine']->resolve($op,$obs,$c,$f['actor']));same(1,(int)$db->execute('SELECT COUNT(*) FROM mock_voyar_resources WHERE create_operation_id=?',[$op])->fetchColumn());
 });
 test('F4-D crash after effect expires lease; stale response and durable send replay are fenced',function()use($db): void{
-    $f=cloudFixture($db);$op=$f['engine']->enqueue($f['instance'],'CREATE',[],$f['actor']);$c=$f['engine']->claim($op);$p=new DurableVoyar($db,$f['config'],$c['account_id']);$result=$f['engine']->fence($c)->send(fn()=>$p->mutate($c['request'],$c['fingerprint']));
+    $f=cloudFixture($db);$op=$f['engine']->enqueue($f['instance'],'CREATE',[],$f['actor']);$c=$f['engine']->claim($op);$p=new DurableVoyar($db,$f['config'],$c['account_id']);$altered=$c['request'];$altered['data']['pid']=99;raises(HttpError::class,fn()=>$p->mutate($altered,$c['fingerprint']));same(0,(int)$db->execute('SELECT COUNT(*) FROM mock_voyar_calls WHERE operation_id=?',[$op])->fetchColumn());$result=$f['engine']->fence($c)->send(fn()=>$p->mutate($c['request'],$c['fingerprint']));
     raises(HttpError::class,fn()=>$f['engine']->fence($c)->send(fn()=>null));$db->execute('UPDATE cloud_operations SET lease_until=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 1 SECOND) WHERE id=?',[$op]);same(1,$f['engine']->expire());raises(HttpError::class,fn()=>$f['engine']->accepted($c,$result));same(false,(new Worker($db,$f['config']))->once($op));same(1,(int)$db->execute('SELECT COUNT(*) FROM mock_voyar_calls WHERE operation_id=?',[$op])->fetchColumn());
 });
 test('F4-D alien task status resource account and fingerprint never mean success',function()use($db): void{
