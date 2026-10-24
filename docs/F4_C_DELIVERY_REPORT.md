@@ -5,7 +5,7 @@
 **Repository:** `Boydaksu/hostidercp`  
 **Geliştirme Dalı:** `codex/f4-domain-cloud`  
 **Başlangıç HEAD SHA:** `7f875d678e4d580a0ce5ebd42875652b8873b322`  
-**Teslim HEAD SHA:** `2988eb4a86f918e692cf85e49cf9444391fa877f`  
+**Teslim HEAD SHA:** `7bc2931215b4936b7b28db724b0f948bfbc4d62b` (kod commit: `2988eb4a86f918e692cf85e49cf9444391fa877f`)  
 **Kabul Edilmiş F3 Tabanı:** `c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731`  
 **F4 Taslak PR:** [#2](https://github.com/Boydaksu/hostidercp/pull/2) (Hedef: `codex/f3-service-engine`)
 
