@@ -1,5 +1,14 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-B P1 hedefli test/mock düzeltmesi — bağımsız yeniden kabul bekliyor.**
+> Kaynak[`5869483`](https://github.com/Boydaksu/hostidercp/commit/5869483fd0d977ede646cbef02bdf4a9f2b12bc8);
+> [gerçek PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426):
+> **51 suite /472 test /0 hata**; eski461 + yeni11. Staff-reopen FIRST sonucu ve
+> SLA calendar publication/failure isolation düzeltildi. [Denetim raporu](docs/F5_B_POST_AUDIT_REVIEW.md).
+> 001–050 korunur, yalnız additive051. F4/F5-A mock kabulü ve canlı GATE'ler değişmez;
+> PR #3 açık/taslak, sonraki fazlar ve canlı işlemler kapalıdır. Aşağıdaki ilk F5-B
+> teslim kaydı tarihseldir; F5-B bağımsız kabul edilmiş sayılmaz.
+
 > **F5-B test/mock geliştirmesi yetkilendirildi; bağımsız teknik kabul bekliyor.**
 > SLA takvimleri ve manuel/RR/ağırlıklı atama kapsamı:
 > [plan](docs/F5_B_PLAN.md), [ADR-018](docs/adr/ADR-018-support-calendars-assignment.md),

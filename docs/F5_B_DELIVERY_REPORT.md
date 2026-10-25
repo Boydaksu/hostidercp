@@ -1,5 +1,9 @@
 # F5-B — SLA takvimleri ve personel atama motoru
 
+Son iki P1'in hedefli düzeltmesi,5869483 kaynak/472 test kanıtı ve bağımsız yeniden
+kabul sınırı [F5_B_POST_AUDIT_REVIEW](F5_B_POST_AUDIT_REVIEW.md) içindedir.
+Aşağıdaki461 testlik ilk teslim kaydı tarihsel olarak korunur; kabul kararı değildir.
+
 25 Ekim 2026. **TEST/MOCK — bağımsız teknik kabul bekliyor.** F5-A'nın
 LIMITED MOCK TECHNICAL BASELINE kabulü ve F4'ün sınırlı mock kabulü korunur.
 Yetki tabanı563b79e5ab201fb73ba38e37d2a6b86506df6e9b; kabul edilmiş F5-A
