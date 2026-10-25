@@ -61,6 +61,7 @@ try {
         $worker = new Worker($db, $queue);
         // F2 handlers only record local facts; ready orders and mail remain explicitly held.
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
+        (new \Hostider\Support\EventSink($db,$config))->register($worker);
         (new \Hostider\Commerce\EventSink($db))->register($worker);
         (new \Hostider\Services\EventSink($db,$config))->register($worker);
         (new \Hostider\Domains\EventSink($db,$config))->register($worker);

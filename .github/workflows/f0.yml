@@ -87,6 +87,8 @@ jobs:
       - run: php tests/cloud-costs.php
       - run: php tests/cloud-cost-races.php
       - run: php tests/provider-panel-http.php
+      - run: php tests/support-migrations.php
+      - run: php tests/support-http.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability
