@@ -3,6 +3,8 @@
 > **F5-A hedefli denetim düzeltmesi:** Event receipt UUID bağlaması ve açık unsupported
 > şifreli arama sözleşmesi [F5_A_POST_AUDIT_REVIEW](docs/F5_A_POST_AUDIT_REVIEW.md)
 > altında izlenir. Bağımsız yeniden kabul bekler; F5-B/C/D/E veya canlı geçiş yetkisi yoktur.
+> Kaynak `d3712ed`: [PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626)
+> her sürümde **51 suite / 433 test / 0 hata**. 001–049 ve CI workflow korunur; yeni migration yoktur.
 
 > **F5-A test/mock geliştirmesi:** Ticket, departman, immutable mesaj/dahili not,
 > native Identity kapsamı ve minimal HTTP çekirdeği ayrı `codex/f5-support-center`

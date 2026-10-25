@@ -4,6 +4,12 @@
 5389825e93af183f79753e8f00ed6025939909dc; denetlenen uygulama a38e8da.
 **Yalnız test/mock; bağımsız yeniden kabul bekler. F5-A DONE değildir.**
 
+Gerçek GitHub uygulama SHA:
+[`d3712eda6b3d9156187727ced85fff04de7457c5`](https://github.com/Boydaksu/hostidercp/commit/d3712eda6b3d9156187727ced85fff04de7457c5).
+[Tabana göre kaynak diff'i](https://github.com/Boydaksu/hostidercp/compare/5389825e93af183f79753e8f00ed6025939909dc...d3712eda6b3d9156187727ced85fff04de7457c5).
+Bu SHA sonrası kanıt güncellemesi yalnız docs/README içerir; runtime/test/migration
+ve workflow aynı kalır. [PR #3](https://github.com/Boydaksu/hostidercp/pull/3) açık taslaktır.
+
 ## İki P1 ve karşı-örnek
 
 P1-1: önceki EventSink ticket_id/message_id eşliğindeki bütün outbox satırlarını
@@ -81,9 +87,33 @@ native dispatch üzerinden gider. Test silme/gevşetme/skip/ignore yoktur.
 
 ## Doğrulama durumu
 
-Hedef toplam 51 suite / 433 test (Support HTTP 30→35). Yerel PHP8.4.24/MariaDB10.11.18 beş yeni test PASS;
-tam regresyon ve PHP8.3/8.4 CI sürüyor. Gerçek son kaynak SHA ve CI sonuçları teslim
-kanıtı tamamlandığında bu bölüme bağlanır; henüz tüm CI için PASS iddia edilmez.
+**Tam kaynak CI SUCCESS: 51 suite / 433 test / 0 hata, iki PHP sürümünde.**
+
+| Runtime | Gerçek CI job | Sonuç |
+|---|---|---|
+| PHP8.3.36 / MariaDB10.11.19 | [121225660648](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626/job/121225660648) | 51 / 433 / 0 |
+| PHP8.4.27 / MariaDB10.11.19 | [121225660244](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626/job/121225660244) | 51 / 433 / 0 |
+
+[CI özeti](evidence/f5-a-post-audit/ci.json) iki gerçek ham günlükten çıkarıldı.
+Her sürümde 433 PASS satırı ve 51 suite özeti; eski F5-A job 121213753410'daki
+428 test adının tamamı mevcut, eksik 0, yeni 5. Böylece eski F4 394 + F5-A 34
+tabanı ve yeni 5 korunur. Support HTTP 30→35, migration4 ve diğer suite'ler aynı.
+PHPStan sıfır hata; locked Composer audit sıfır advisory; 323 PHP lint dosyasında
+sıfır ihlal, 335 dosya pattern scan'de sıfır bulgu. Services HTTP10, Commerce HTTP30,
+session concurrency20 tekrar ve üç JS syntax kontrolü başarılıdır. 1/4/8 süreç
+yarışları, native HTTP/cookie/session ve önceki Domain/Cloud/Finance regresyonları PASS.
+
+PR test checkout d0c69414330189276c6750498626120c0170f540, uygulamayla aynı
+5a45f99c8d63e7d8b52d0e3104384dbd645a9240 tree'yi taşır. Bu GitHub sanal test
+checkout'udur; gerçek merge yapılmadı. Yerel/GitHub kaynak tree eşliği de doğrulandı.
+Ham CI logları projeye kaydedilmedi; CI JSON yalnız güvenli sayım/kontrol özeti ve
+GitHub log API bağlantılarını tutar. Workflow dosyası byte olarak korunmuştur.
+
+Yerel PHP8.4.24/MariaDB10.11.18: [51 CI grubu / 433 PASS özeti](evidence/f5-a-post-audit/local.json),
+[test satırları](evidence/f5-a-post-audit/local-tests.txt), [kalite kontrolleri](evidence/f5-a-post-audit/checks.txt).
+Ek standalone P1 çalıştırması da 5 PASS; aynı testler toplam 433'e ikinci kez sayılmadı.
+[Koruma manifesti](evidence/f5-a-post-audit/preservation.json) 49 migration ile native
+Identity/Queue dosyalarının taban Git blob ve SHA256 eşliğini gösterir.
 
 ## Migration, geri dönüş ve açık sınırlar
 
