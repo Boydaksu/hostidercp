@@ -3,7 +3,10 @@
 > **F5-B test/mock geliştirmesi yetkilendirildi; bağımsız teknik kabul bekliyor.**
 > SLA takvimleri ve manuel/RR/ağırlıklı atama kapsamı:
 > [plan](docs/F5_B_PLAN.md), [ADR-018](docs/adr/ADR-018-support-calendars-assignment.md),
-> [teslim ve doğrulama raporu](docs/F5_B_DELIVERY_REPORT.md). Additive050 dışında
+> [teslim ve doğrulama raporu](docs/F5_B_DELIVERY_REPORT.md).
+> Uygulama`4d58b81823deb2b44ce52ef89bae77dce468ef3b`;
+> [gerçek PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40226687244):
+> **51 suite / 461 test / 0 hata**; eski433 + yeni28. Additive050 dışında
 > 001–049 korunur. Ticari SLA/roster değerleri onaylanmış sayılmaz. F5-A/F4 sınırlı
 > mock kabulleri ve bütün canlı GATE'ler korunur. PR #3 açık/taslak kalır;
 > F5-C/D/E/F6, gerçek mail, merge, staging veya production başlatılmaz.

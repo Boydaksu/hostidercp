@@ -8,8 +8,32 @@ SUP-006'nın aşağıdaki teknik kapsamıdır; V1 veya production kabulü değil
 
 ## Kaynak ve doğrulama kaydı
 
-Uygulama SHA / gerçek PHP8.3 ve8.4 CI bağlantıları doğrulama tamamlandıktan sonra
-bu bölümde kaydedilecektir. Doğrulanmamış CI başarı sayılmaz. Plan:
+Uygulama SHA:
+[`4d58b81823deb2b44ce52ef89bae77dce468ef3b`](https://github.com/Boydaksu/hostidercp/commit/4d58b81823deb2b44ce52ef89bae77dce468ef3b).
+[Kabul tabanından kaynak diff'i](https://github.com/Boydaksu/hostidercp/compare/563b79e5ab201fb73ba38e37d2a6b86506df6e9b...4d58b81823deb2b44ce52ef89bae77dce468ef3b).
+Gerçek CI her sürümde **51 suite / 461 test / 0 hata**:
+[PHP8.3.36](https://github.com/Boydaksu/hostidercp/actions/runs/40226687244/job/121269441131),
+[PHP8.4.27](https://github.com/Boydaksu/hostidercp/actions/runs/40226687244/job/121269440672).
+PR CI'nın sentetik checkout'ucac59f3913cbe7e1e16420aa132b581133870d9f,
+source tree5c67316186a85542b0d717a7bf4a171db0a1501f ile eşittir; bu gerçek merge değildir.
+
+İlk uygulama SHA'sıce994e395fb85027fbc74feb01bd0f872702c381 aynı51/461 tam CI'ı
+geçti: [ilk CI kanıtı](evidence/f5-b/initial-ci.json). Ardından yalnız worker testine
+actual child progress assertion'ı eklendi; uygulama/migration kodu değişmedi.
+Son kaynak4d58b8, tek worker'ın8 ticket'ı işlemesini ve4/8 süreçte gerçek child
+ilerlemesini zorunlu tutar; busy ticket'lar kontrollü drain ile tamamlanır.
+Son kaynağın tam CI'ı yukarıdadır. Bu belge/kanıt kaydı yalnız README/docs değiştirir.
+
+Yerel PHP8.4.24 / MariaDB10.11.18 ilk kaynakta51 suite /461 test /0 hata; güçlendirilmiş
+son worker testi ayrıca1/0 geçti: [worker kanıtı](evidence/f5-b/race-check.txt). Eski kabul edilmiş
+GitHub günlüğündeki433 test adı iki yeni CI günlüğünde ve yerel sonuçta eksiksizdir;
+yeni28 regresyon PASS. PHPStan0, lint338 dosya/0 ihlal, pattern scan350 dosya/0 bulgu,
+Composer locked audit temiz; service HTTP10, commerce HTTP30 ve session concurrency20
+tekrarının her biri iki sürümde0 hata. Pattern scan tam güvenlik denetimi garantisi değildir.
+Kanıtlar: [CI](evidence/f5-b/ci.json), [yerel özet](evidence/f5-b/local.json),
+[yerel PASS günlüğü](evidence/f5-b/local-tests.txt), [koruma](evidence/f5-b/preservation.json),
+[kontroller](evidence/f5-b/checks.txt). Ham CI logları diske/projeye kaydedilmedi;
+yalnız test adları/özetler ve GitHub log API bağlantıları saklandı. Plan:
 [F5_B_PLAN](F5_B_PLAN.md); karar: [ADR-018](adr/ADR-018-support-calendars-assignment.md).
 [Taslak PR #3](https://github.com/Boydaksu/hostidercp/pull/3), mevcut F4 dalı üstünde
 açık kalır; main merge veya ortam yayını yapılmaz.
@@ -65,6 +89,9 @@ risk ve assignment projection verir. settings administrative/fresh erişimlidir;
 session ID veya private body döndürmez. unassigned native ACL'yi pagination'dan
 önce uygular. Customer support-work route'u yoktur. F5-A q parametresi hâlâ açık422
 SUPPORT_SEARCH_UNSUPPORTED; plaintext subject indeksi veya note/body araması yoktur.
+Detail bir özettir: güncel cycle'ın FIRST/RESOLUTION ve en çok100 pending NEXT
+clock'u, ayrıca yalnız güncel departmanın son20 cycle'ı gösterilir; tam geçmiş
+export API'si değildir. Immutable geçmiş DB'de korunur. Unassigned sayfa boyutu50'dir.
 
 `support.work.held` yalnız test consumer'ıdır: immutable event UUID, ticket,
 published outbox, native outbox:<uuid> job, canonical payload ve fingerprint beraber
@@ -119,6 +146,11 @@ ile değerlendirilir. Native reply/note/pause akışı ve HTTP detail doğrulan�
 fixture'ların NORMAL=1/HIGH=2/CRITICAL=4 ve süreleri ticari kabul değildir.
 
 ## Açık sınırlar ve durma noktası
+
+İlk yerel ön denemede izole DB henüz oluşturulmadığı için19 DB senaryosu
+başlatılamadı; bunlar PASS sayılmadı. İzole DB hazırlandıktan sonra26 ilk regresyon,
+ardından51/461 tam tur hatasız geçti. Son worker assertion'ı ayrıca gerçek1/4/8
+süreçte doğrulandı. Bu test DB'si temizlendi, açılan özel MariaDB süreci kapatıldı.
 
 2000–2099 tarih,3660 yerel gün hesap ufku,7 açık weekday, günde8 interval,
 3660 exception, roster başına100 leave,64 native staff ve cycle başına100 pending

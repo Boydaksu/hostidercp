@@ -1,6 +1,7 @@
 # ADR-018 — F5-B zaman, snapshot ve atama sınırı
 
 25 Ekim 2026. D4, R2-02/03, R3-09, SUP-005/006 teknik normalleştirmesi.
+Durum: yalnız F5-B test/mock teknik kararı; bağımsız teknik kabul bekler.
 
 Calendar business time gerçek UTC elapsed microseconds'tır. Local shift aralıkları
 zone transition segmentlerinde UTC'ye map edilir; spring missing wall time yok,
