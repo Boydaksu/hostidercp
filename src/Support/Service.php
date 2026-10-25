@@ -123,6 +123,7 @@ final readonly class Service
     {
         $id=Id::uuid();$this->c->db->execute("INSERT INTO support_events(id,ticket_id,customer_id,subject_id,kind,actor_id,session_id,identity_version,ticket_version,from_state,to_state,from_department,to_department,trace_id,provenance) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,'TEST_PANEL')",[$id,$row['id'],$row['customer_id'],$message??$row['id'],$kind,$u['id'],$s['id'],$u['identity_version'],$row['version'],$old['status']??null,$row['status'],$old['department_id']??null,$row['department_id'],$trace]);(new Audit($this->c->db))->record($this->access->actor($u,$s),AuditEvent::SupportChanged,$row['id'],$trace);
         if($public){(new Outbox($this->c->db,new Queue($this->c->db)))->append($id,'support.changed',$row['id'],['event_uuid'=>$id,'ticket_id'=>$row['id'],'message_id'=>$message],$trace);}
+        (new \Hostider\Support\Work\Engine($this->c))->observe($row,$kind,$id);
     }
     public function view(string $reference,string $context,string $view,array $p): array
     {

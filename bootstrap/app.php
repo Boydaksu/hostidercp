@@ -28,6 +28,7 @@ $container->bind(Database::class, static function (Container $c): Database {
 $container->bind(RateLimiter::class, static fn(Container $c): RateLimiter => new RateLimiter($c->get(Database::class), base64_decode($c->get(Config::class)->key, true)));
 $router = new Router();
 $identityConfig=$container->get(Config::class);
+(new \Hostider\Support\Work\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 (new \Hostider\Support\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 (new \Hostider\Identity\Controller(static fn(): \Hostider\Identity\IdentityService => new \Hostider\Identity\IdentityService($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 (new \Hostider\Commerce\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);

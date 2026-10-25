@@ -1,5 +1,11 @@
 # F5 — Gelişmiş Destek Merkezi planı
 
+Güncel yetki: F5-A bağımsız sınırlı mock kabulünden sonra yalnız F5-B test/mock
+geliştirmesi. [F5_B_PLAN](F5_B_PLAN.md), [ADR-018](adr/ADR-018-support-calendars-assignment.md)
+ve [F5_B_DELIVERY_REPORT](F5_B_DELIVERY_REPORT.md) güncel kapsam/kanıt/sınırları verir.
+SUP-005/006 bağımsız teknik kabul bekler. F5-C/D/E/F6, gerçek mail, merge veya
+ortam yayını yetkili değildir. Aşağıdaki başlangıç planı tarihsel olarak korunur.
+
 25 Ekim 2026. Yetki: yalnız F5-A test/mock. Başlangıç HEAD
 `5d944dcb9abbf5e0f447272d8273346349aab3c8`, dal `codex/f5-support-center`.
 F4/PR #2 değiştirilmez; merge, staging, production, SMTP/IMAP ve provider IO yoktur.

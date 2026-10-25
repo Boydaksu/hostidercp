@@ -16,7 +16,7 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire','cloud-costs:work','cloud-costs:propose','panel:inspect'], true)) {
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire','cloud-costs:work','cloud-costs:propose','panel:inspect','support:work'], true)) {
         fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>, domains:work, domains:expire' . PHP_EOL);
         exit(2);
     }
@@ -28,6 +28,9 @@ try {
     $queue = new Queue($db);
     if ($command === 'migrate') {
         echo json_encode(['applied' => (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command==='support:work') {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');$options=[];foreach(array_slice($argv,2) as $option){if(!preg_match('/^--(max-tickets|max-seconds)=([1-9][0-9]*)$/D',$option,$m)||isset($options[$m[1]])){throw new InvalidArgumentException('Invalid support worker option');}$options[$m[1]]=(int)$m[2];}
+        echo json_encode((new \Hostider\Support\Work\Engine(new \Hostider\Commerce\Services($db,$config)))->run($options['max-tickets']??25,$options['max-seconds']??20),JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command==='services:schedule') {
         echo json_encode((new \Hostider\Services\Scheduler($db,$config))->run(),JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command==='panel:inspect') {
@@ -62,6 +65,7 @@ try {
         // F2 handlers only record local facts; ready orders and mail remain explicitly held.
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
         (new \Hostider\Support\EventSink($db,$config))->register($worker);
+        (new \Hostider\Support\Work\HeldSink($db,$config))->register($worker);
         (new \Hostider\Commerce\EventSink($db))->register($worker);
         (new \Hostider\Services\EventSink($db,$config))->register($worker);
         (new \Hostider\Domains\EventSink($db,$config))->register($worker);

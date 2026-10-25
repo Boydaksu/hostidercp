@@ -1,5 +1,14 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-B test/mock geliştirmesi yetkilendirildi; bağımsız teknik kabul bekliyor.**
+> SLA takvimleri ve manuel/RR/ağırlıklı atama kapsamı:
+> [plan](docs/F5_B_PLAN.md), [ADR-018](docs/adr/ADR-018-support-calendars-assignment.md),
+> [teslim ve doğrulama raporu](docs/F5_B_DELIVERY_REPORT.md). Additive050 dışında
+> 001–049 korunur. Ticari SLA/roster değerleri onaylanmış sayılmaz. F5-A/F4 sınırlı
+> mock kabulleri ve bütün canlı GATE'ler korunur. PR #3 açık/taslak kalır;
+> F5-C/D/E/F6, gerçek mail, merge, staging veya production başlatılmaz.
+> Aşağıdaki önceki faz notları tarihsel kabul kayıtlarıdır.
+
 > **F5-A LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.** Proje sahibinin son bağımsız
 > kabul kararı yalnız F5-A test/mock çekirdeğini kapsar. Kabul edilen uygulama
 > [`d3712eda6b3d9156187727ced85fff04de7457c5`](https://github.com/Boydaksu/hostidercp/commit/d3712eda6b3d9156187727ced85fff04de7457c5);
