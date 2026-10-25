@@ -2,11 +2,14 @@
 
 25 Ekim 2026. **Bağımsız kabul bekler; DONE veya production-ready değildir.**
 Başlangıç `5d944dcb9abbf5e0f447272d8273346349aab3c8`; dal `codex/f5-support-center`.
-Yalnız F5-A uygulandı. Kaynak/CI kanıtı bu raporun son doğrulama bölümüne eklenir.
+Yalnız F5-A uygulandı. [Uygulama SHA a38e8da89bef9fa0476210a8ad021d250606c81a](https://github.com/Boydaksu/hostidercp/commit/a38e8da89bef9fa0476210a8ad021d250606c81a).
+Bu SHA sonrası teslim kanıtı güncellemesi yalnız README/docs dosyalarıdır; runtime,
+migration ve test kaynakları aynı kalır. [Taslak PR #3](https://github.com/Boydaksu/hostidercp/pull/3).
 
 ## Kapsam ve dosya envanteri
 
 FR-SUPPORT, FR-ID, SEC-001/002/004, OPS-001/003; SUP-003/004 çekirdek ve SUP-007.
+Karar izi: R1-09, R2-01, R2-05/06 temel politika, R3-09, R4-01/02/04/07.
 
 | Dosya | Değişiklik |
 |---|---|
@@ -140,16 +143,34 @@ Bu teslim production restore provası değildir.
 ## Doğrulama ve başarısızlık kaydı
 
 Yerel toplam **51 suite / 428 PASS**: önceki 49/394 + yeni HTTP30/migration4.
-Eski 49 suite ve migration suite temiz batch'te; HTTP suite aşağıdaki EventSink
-düzeltmesi ardından yeniden çalıştırıldı. [Yerel özet](evidence/f5-a/local.json),
+Eski 49 suite ve migration suite temiz batch'te; HTTP suite EventSink ve pagination
+gizlilik düzeltmeleri ardından yeniden çalıştırıldı. [Yerel özet](evidence/f5-a/local.json),
 [PASS satırları](evidence/f5-a/local-tests.txt), [migration kanıtı](evidence/f5-a/migrations.json),
 [001–048 / eski test koruması](evidence/f5-a/preservation.json).
-PHP8.3/8.4 son CI sonucu henüz bu belgeye bağlanmadı; yerel PASS çift sürüm CI yerine geçmez.
+Son kaynak için gerçek CI **SUCCESS**:
+
+| Runtime | Suite / test / hata | Gerçek job |
+|---|---|---|
+| PHP 8.3.36 / MariaDB 10.11.19 | 51 / 428 / 0 | [121213753537](https://github.com/Boydaksu/hostidercp/actions/runs/40208255513/job/121213753537) |
+| PHP 8.4.27 / MariaDB 10.11.19 | 51 / 428 / 0 | [121213753410](https://github.com/Boydaksu/hostidercp/actions/runs/40208255513/job/121213753410) |
+
+[CI kanıtı](evidence/f5-a/ci.json): gerçek ham günlüklerden her sürümde 428 PASS ve
+51 suite özeti sayıldı. Kabul edilen F4 job 121174901258'deki **394 test adının tamamı**
+her iki son job'da bulundu; eksik 0, yeni 34. PHPStan 0 hata, locked Composer audit
+0 advisory, 322 PHP lint dosyası 0 ihlal, 334 dosya pattern scan 0 bulgu.
+Services HTTP 10, Commerce HTTP 30, session concurrency 20 tekrarın tamamı hatasız;
+üç mevcut JS syntax kontrolü başarılıdır. Eski Domain/Cloud/finance/identity/commerce
+ve 1/4/8 worker regresyonları aynı CI içinde korunur.
+
+PR test checkout `045de363b49643bf5505ec2f10792fad8a968226` kaynakla aynı
+`bb8be164b74b82f29445100df762fb934898847f` tree'yi taşır; bu GitHub'ın sanal test
+checkout'udur, gerçek branch merge yapılmadı. Yerel ve GitHub kaynak tree eşliği
+ayrıca doğrulandı. Belge/kanıt follow-up'ı test edilen runtime'ı değiştirmez.
 Yerel runtime PHP8.4.24 / MariaDB10.11.18; yerel PHP8.3 mevcut değildir.
 
 İlk ara regresyon sırasında 049 şeması geliştirilirken değiştirilmesi Domain CLI
 testinde başarısızlık oluşturdu; checksum güvenliği aşılmadı. Kaynak sabitlendikten
-sonra temiz şemada tekrar yapılır. Ayrı HTTP suite'i aynı MariaDB server'daki global
+sonra temiz şemadaki 49 eski suite'in tamamı PASS oldu. Ayrı HTTP suite'i aynı MariaDB server'daki global
 migration lock ile çakışınca startup reddedildi; test atlanmadı, bağımsız suite'ler
 aynı server'da eşzamanlı migration çalıştırılmıyor. Assertion gevşetme/skip yoktur.
 
@@ -157,6 +178,44 @@ Yeni native Queue testi EventSink'in alan sırasına bağımlılığını yakala
 canonical JSON anahtarlarını sıraladığı için public receipt FAILED oluyordu.
 Field allowlist artık sıralanmış alan kümesini doğrular; ek alanlar hâlâ reddedilir.
 Son HTTP30 testi bu düzeltmeyle PASS; önceki başarısız koşu PASS diye sayılmadı.
+İlk GitHub PR koşusu 40207426955 iki sürümde bu Queue testinde başarısızdı;
+düzeltme sonrası yukarıdaki son kaynak CI'ı başarılıdır. Hiçbir eski veya yeni test
+silinmedi, assertion gevşetilmedi, skip/ignore kullanılmadı.
+
+### Zorunlu negatif senaryo eşlemesi
+
+Aşağıdaki adlar `tests/support-http.php` içindeki bağımsız testlerdir; ham PASS
+satırları local-tests.txt ve son CI job loglarında bulunur.
+
+| No | Senaryo | Test adı / kanıt |
+|---|---|---|
+| 1 | Başka müşteri ticket okuma | another customer cannot read reply or enumerate ticket |
+| 2 | Yetkisiz departman başlık/arama/varlık | staff role without department membership; membership role customer grant (pagination öncesi filtre dahil) |
+| 3 | Çapraz müşteri mesaj bağlama | client cannot forge message kind; database visibility CHECK and composite customer FK |
+| 4 | Müşteri internal_note oluşturma | client cannot forge message kind visibility author or other customer binding |
+| 5 | Dahili not müşteri response/notification | internal note never enters client response search or outbox notifications; queue held receipt testi |
+| 6 | Not permission iptali | note permission revoked next request also blocks cached idempotency replay |
+| 7 | Impersonation | impersonation does not confer privileged support permission |
+| 8 | Başka müşterinin service link'i | service link uses canonical ownership and transfer never opens old conversations |
+| 9 | Service transfer eski konuşma gizliliği | Aynı service link/transfer testi; yeni malik HTTP 404 |
+| 10 | CSRF | CSRF missing wrong method and missing idempotency key cannot mutate |
+| 11 | Yanlış method | native HTTP authentication MFA and method gates; CSRF testi |
+| 12 | Aynı key tek ticket/mesaj | create and message retry same key; 1 4 8 independent HTTP processes |
+| 13 | Aynı key farklı payload | create and message retry same key are single durable effects different payload conflicts |
+| 14 | İki farklı personel paralel yanıt | two different staff in independent HTTP processes conflict and explicit retry preserves both |
+| 15 | Stale version | stale state version returns explicit 409 without message or audit loss |
+| 16 | Session/identity_version iptali | identity version invalidation; session revocation; native staff removal; requester membership revocation |
+| 17 | Atomic rollback | failed audit insert rolls back message state event outbox and idempotency |
+| 18 | HTML/XSS | HTML XSS text is JSON data under no-store CSP and no HTML renderer |
+| 19 | Closed yanlış reopen policy | closed reopen and hold obey explicit department policy allowlist; explicit department reopen policy testi |
+| 20 | Departman move izolasyonu | department move requires both scopes and invalidates old staff access |
+
+SUP-003: private satır SQL filtresi + sunucu türü/CHECK + outbox/held receipt negatif
+testleri; upload/export/mail endpoint'i olmadığı için bu alt alanlar ACCEPTED değildir.
+SUP-004: role/grant/member/customer kesişimi, başlık/arama/list pagination ve move
+testleri çekirdeği kanıtlar; attachment kapsamı F5-C'ye kalır.
+SUP-007: iki farklı native staff, iki HTTP server ve iki client process 200/409;
+fresh version ile retry sonrası iki yanıt korunur, 1/4/8 process dedupe tek mesajdır.
 
 ## Açık kapsam, risk ve durma noktası
 

@@ -5,6 +5,8 @@
 > dalındadır. [Plan](docs/F5_PLAN.md), [A sözleşmesi](docs/F5_A_PLAN.md),
 > [teslim ve doğrulama durumu](docs/F5_A_DELIVERY_REPORT.md),
 > [taslak PR #3](https://github.com/Boydaksu/hostidercp/pull/3).
+> Kaynak `a38e8da`: [PHP 8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40208255513)
+> her sürümde **51 suite / 428 test / 0 hata**; önceki 394 test korunur, 049 additive.
 > Bağımsız kabul bekler; yalnız F5-A yetkilidir. F5-B/C/D/E, F6 ve canlı işlemler kapalıdır.
 
 > **F4 bütünleşik mock kabul paketi:** C/D/E/F teknik mock kabulleri ve 49 suite / 394 test

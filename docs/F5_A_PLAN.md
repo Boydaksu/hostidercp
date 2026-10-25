@@ -2,6 +2,7 @@
 
 Kapsam: FR-SUPPORT, FR-ID, SEC-001/002/004, OPS-001/003; SUP-003/004 çekirdek,
 SUP-007. Yalnız APP_ENV=test. Native Identity değiştirilmeden kullanılır.
+Karar izi: R1-09, R2-01, R2-05/06 temel politika, R3-09, R4-01/02/04/07.
 
 Dosyalar: src/Support/{Access,State,Service,Controller,EventSink}.php, Services içinde salt
 okuma sahiplik application service, AuditEvent enum eki, bootstrap route kaydı,

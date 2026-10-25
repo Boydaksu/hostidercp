@@ -4,6 +4,10 @@
 `5d944dcb9abbf5e0f447272d8273346349aab3c8`, dal `codex/f5-support-center`.
 F4/PR #2 değiştirilmez; merge, staging, production, SMTP/IMAP ve provider IO yoktur.
 
+Karar izi: R1-09 ve R2-01/R3-09 A çekirdeğinde; R2-02/03 B'de,
+R2-04 mail C'de, R2-05 öncelik A temel + D override, R2-06 A explicit reopen +
+B auto-close, R2-07/08/09 D'de; R1-08/SUP-010 F6 aktarımına bağlıdır.
+
 | Alt faz | Kapsam / dosyalar | Bağımlılık | Kabul izi | Migration / test / geri dönüş |
 |---|---|---|---|---|
 | A | src/Support, native HTTP, departman/ticket/mesaj/audit; bu teslim | Identity, Services, Audit, Idempotency, Outbox | SUP-003/004 çekirdek; SUP-007 | 049+ additive; gerçek MariaDB/HTTP ve paralel süreç; backup restore veya forward-fix |
