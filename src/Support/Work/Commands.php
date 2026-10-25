@@ -45,6 +45,7 @@ final readonly class Commands
     }
     private function validate(string $action,array $p,array $state,int $at): void
     {
+        if($action==='policy-publish'){Policy::schedulable($p['policy'],$at);}
         $version=match($action){'policy-publish'=>$state['head']['version'],'roster-set'=>$state['roster']['version'],default=>$state['ticket']['version']};if((int)$version!==$p['version']){throw new HttpError(409,'SUPPORT_VERSION_CONFLICT');}
         if($action==='roster-set'){if(!$this->c->db->execute('SELECT 1 FROM identity_staff WHERE user_id=?',[$p['user_id']])->fetchColumn()||Time::parse($p['roster']['expires_at'])<=$at){throw new HttpError(422,'VALID_STAFF_ROSTER_REQUIRED');}}
         if(in_array($action,['assign','auto','enroll'],true)){
@@ -75,7 +76,7 @@ final readonly class Commands
     }
     private function summary(array $t): array
     {
-        $db=$this->c->db;$w=$db->execute('SELECT * FROM support_work_tickets WHERE ticket_id=?',[$t['id']])->fetch();$out=['id'=>$t['id'],'version'=>(int)$t['version'],'department_id'=>$t['department_id'],'assignee_id'=>$w['assignee_id']??null,'manual_override'=>(bool)($w['manual_override']??false),'assignment_reason'=>$w['reason']??'UNCONFIGURED','policy_id'=>$w['policy_id']??null,'cycle_id'=>$w['cycle_id']??null,'clocks'=>[]];if(($w['cycle_id']??null)===null){return $out;}$policy=$this->store->policy($w['policy_id']);$at=Time::now($db);$cal=new Calendar($policy['data']['calendar']);
+        $db=$this->c->db;$w=$db->execute('SELECT * FROM support_work_tickets WHERE ticket_id=?',[$t['id']])->fetch();$out=['id'=>$t['id'],'version'=>(int)$t['version'],'department_id'=>$t['department_id'],'assignee_id'=>$w['assignee_id']??null,'manual_override'=>(bool)($w['manual_override']??false),'assignment_reason'=>$w['reason']??'UNCONFIGURED','sla_status'=>$w['sla_status']??'UNCONFIGURED','policy_id'=>$w['policy_id']??null,'cycle_id'=>$w['cycle_id']??null,'clocks'=>[]];if(($w['cycle_id']??null)===null||$out['sla_status']==='UNAVAILABLE'){return $out;}$policy=$this->store->policy($w['policy_id']);$at=Time::now($db);$cal=new Calendar($policy['data']['calendar']);
         $rows=$db->execute("SELECT * FROM support_sla_clocks WHERE cycle_id=? AND (metric<>'NEXT' OR status IN ('RUNNING','PAUSED')) ORDER BY metric,id LIMIT 102",[$w['cycle_id']])->fetchAll();foreach($rows as $clock){$spent=(int)$clock['consumed_us'];if($clock['status']==='RUNNING'){$spent+=$cal->elapsed(Time::parse($clock['last_at']),$at);}$target=(int)$clock['target_us'];$out['clocks'][]=['id'=>$clock['id'],'metric'=>$clock['metric'],'status'=>$clock['status'],'deadline_at'=>$clock['deadline_at'],'remaining_business_minutes'=>Time::minutes($target-$spent),'risk'=>$spent>=$target?'BREACH':($spent>=intdiv($target*$policy['data']['risk_percent']+99,100)?'RISK':'NORMAL'),'evaluated_at'=>$clock['last_at'],'alerts'=>array_column($db->execute('SELECT level FROM support_sla_alerts WHERE clock_id=? ORDER BY level',[$clock['id']])->fetchAll(),'level')];}$out['policy_revision']=(int)$policy['revision'];$out['cycles']=$db->execute('SELECT id,policy_id,department_id,opened_at,closed_at,close_reason FROM support_sla_cycles WHERE ticket_id=? AND department_id=? ORDER BY opened_at DESC,id DESC LIMIT 20',[$t['id'],$t['department_id']])->fetchAll();return $out;
     }
 }

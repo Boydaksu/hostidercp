@@ -74,7 +74,7 @@ final readonly class Service
         $this->c->db->execute("INSERT INTO support_tickets(id,number,customer_id,requester_id,department_id,subject_encrypted,requested_priority,effective_priority,channel,status,opened_by,session_id,provenance) VALUES (?,?,?,?,?,?,?,?,'PANEL','NEW',?,?,'TEST_PANEL')",[$id,$number,$a->customerId,$u['id'],$p['department_id'],$this->crypto->encrypt($p['subject'],'support-subject:'.$id),$p['priority'],$p['priority'],$u['id'],$s['id']]);
         $row=$this->access->ticket($u,$s,$id);$message=$this->message($u,$s,$row,'customer_reply',$p['body']);
         foreach($p['service_ids']??[] as $service){$this->c->db->execute('INSERT INTO support_ticket_links(ticket_id,customer_id,service_id,created_by) VALUES (?,?,?,?)',[$id,$row['customer_id'],$service,$u['id']]);}
-        $this->event($u,$s,$row,'CREATED',$trace,true,message:$message);return ['id'=>$id,'number'=>$number,'version'=>1,'message_id'=>$message];
+        $this->event($u,$s,$row,'CREATED',$trace,true,message:$message);return $this->slaResult(['id'=>$id,'number'=>$number,'version'=>1,'message_id'=>$message]);
     }
     private function message(array $u,array $s,array $row,string $type,string $body): string
     {
@@ -88,7 +88,11 @@ final readonly class Service
             if(in_array($to,['CLOSED','RESOLVED'],true)){State::transition($to,'WAITING_STAFF',$d);$to='WAITING_STAFF';}
             if($to!==$target){State::transition($to,$target,$d);}$to=$target;
         }
-        $message=$this->message($u,$s,$row,$type,$p['body']);$next=$this->update($row,$to,$row['department_id']);$this->event($u,$s,$next,strtoupper($type),$trace,$type!=='internal_note',$row,message:$message);return ['id'=>$row['id'],'message_id'=>$message,'version'=>(int)$next['version']];
+        $message=$this->message($u,$s,$row,$type,$p['body']);$next=$this->update($row,$to,$row['department_id']);$this->event($u,$s,$next,strtoupper($type),$trace,$type!=='internal_note',$row,message:$message);return $this->slaResult(['id'=>$row['id'],'message_id'=>$message,'version'=>(int)$next['version']]);
+    }
+    private function slaResult(array $result): array
+    {
+        if($this->c->db->execute('SELECT sla_status FROM support_work_tickets WHERE ticket_id=?',[$result['id']])->fetchColumn()==='UNAVAILABLE'){$result+=['sla_status'=>'UNAVAILABLE','warning'=>'SLA_CALENDAR_UNAVAILABLE'];}return $result;
     }
     private function expected(array $row,int $version): void{if((int)$row['version']!==$version){throw new HttpError(409,'SUPPORT_VERSION_CONFLICT');}}
     private function update(array $row,string $status,string $department): array
@@ -99,7 +103,7 @@ final readonly class Service
     {
         $row=$this->access->ticket($u,$s,$p['id'],'support.ticket.manage');$this->expected($row,$p['version']);$status=$row['status'];$dep=$row['department_id'];
         if($action==='state'){State::transition($status,$p['status'],$this->access->department($dep));$status=$p['status'];}else{$dep=$p['department_id'];if($dep===$row['department_id']){throw new HttpError(409,'SUPPORT_DEPARTMENT_UNCHANGED');}}
-        $next=$this->update($row,$status,$dep);$this->event($u,$s,$next,strtoupper($action),$trace,true,$row);return ['id'=>$row['id'],'version'=>$next['version']];
+        $next=$this->update($row,$status,$dep);$this->event($u,$s,$next,strtoupper($action),$trace,true,$row);return $this->slaResult(['id'=>$row['id'],'version'=>$next['version']]);
     }
     private function department(array $u,array $s,array $p,string $trace): array
     {

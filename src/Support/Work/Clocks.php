@@ -10,15 +10,15 @@ final readonly class Clocks
     {
         $this->store->c->db->execute('INSERT INTO support_sla_history(id,clock_id,source_event,kind,snapshot,observed_at) VALUES (?,?,?,?,?,?)',[Id::uuid(),$clock['id'],$source,$kind,CanonicalJson::encode(array_intersect_key($clock,array_flip(['status','target_us','consumed_us','last_at','deadline_at','completed_at','version']))),Time::format($at)]);
     }
-    public function start(array $t,string $policyId,string $source,int $at): string
+    public function start(array $t,string $policyId,string $source,int $at,bool $answered=false): string
     {
-        $db=$this->store->c->db;$cycle=Id::uuid();$db->execute('INSERT INTO support_sla_cycles(id,ticket_id,customer_id,department_id,policy_id,source_event,opened_at) VALUES (?,?,?,?,?,?,?)',[$cycle,$t['id'],$t['customer_id'],$t['department_id'],$policyId,$source,Time::format($at)]);$db->execute('UPDATE support_work_tickets SET cycle_id=?,policy_id=?,version=version+1 WHERE ticket_id=?',[$cycle,$policyId,$t['id']]);$this->add($cycle,'FIRST',$source,$t,$at);$this->add($cycle,'RESOLUTION',$source,$t,$at);return $cycle;
+        $db=$this->store->c->db;$cycle=Id::uuid();$db->execute('INSERT INTO support_sla_cycles(id,ticket_id,customer_id,department_id,policy_id,source_event,opened_at) VALUES (?,?,?,?,?,?,?)',[$cycle,$t['id'],$t['customer_id'],$t['department_id'],$policyId,$source,Time::format($at)]);$db->execute("UPDATE support_work_tickets SET cycle_id=?,policy_id=?,sla_status='ACTIVE',reason=IF(assignee_id IS NULL,'AWAITING_CRON',reason),version=version+1 WHERE ticket_id=?",[$cycle,$policyId,$t['id']]);$this->add($cycle,'FIRST',$source,$t,$at,$answered);$this->add($cycle,'RESOLUTION',$source,$t,$at);return $cycle;
     }
-    public function add(string $cycle,string $metric,string $source,array $t,int $at): void
+    public function add(string $cycle,string $metric,string $source,array $t,int $at,bool $answered=false): void
     {
         if($metric==='NEXT'&&(int)$this->store->c->db->execute("SELECT COUNT(*) FROM support_sla_clocks WHERE cycle_id=? AND metric='NEXT' AND status IN ('RUNNING','PAUSED')",[$cycle])->fetchColumn()>=100){throw new \Hostider\Core\Http\HttpError(409,'SLA_CLOCK_CAPACITY');}
-        $db=$this->store->c->db;$p=$this->store->policy($db->execute('SELECT policy_id FROM support_sla_cycles WHERE id=?',[$cycle])->fetchColumn());$target=$p['data']['targets'][$t['effective_priority']][$metric]*Time::MINUTE;$paused=in_array($t['status'],$p['data']['pause'][$metric],true);$id=Id::uuid();$deadline=$paused?null:Time::format((new Calendar($p['data']['calendar']))->deadline($at,$target));
-        $db->execute('INSERT INTO support_sla_clocks(id,cycle_id,metric,source_event,target_us,last_at,status,deadline_at) VALUES (?,?,?,?,?,?,?,?)',[$id,$cycle,$metric,$source,$target,Time::format($at),$paused?'PAUSED':'RUNNING',$deadline]);$this->history($db->execute('SELECT * FROM support_sla_clocks WHERE id=?',[$id])->fetch(),$source,'STARTED',$at);
+        $db=$this->store->c->db;$p=$this->store->policy($db->execute('SELECT policy_id FROM support_sla_cycles WHERE id=?',[$cycle])->fetchColumn());$target=$p['data']['targets'][$t['effective_priority']][$metric]*Time::MINUTE;$paused=in_array($t['status'],$p['data']['pause'][$metric],true);$id=Id::uuid();$deadline=$paused||$answered?null:Time::format((new Calendar($p['data']['calendar']))->deadline($at,$target));
+        $db->execute('INSERT INTO support_sla_clocks(id,cycle_id,metric,source_event,target_us,last_at,status,deadline_at,completed_at) VALUES (?,?,?,?,?,?,?,?,?)',[$id,$cycle,$metric,$source,$target,Time::format($at),$answered?'COMPLETED':($paused?'PAUSED':'RUNNING'),$deadline,$answered?Time::format($at):null]);$this->history($db->execute('SELECT * FROM support_sla_clocks WHERE id=?',[$id])->fetch(),$source,$answered?'COMPLETED':'STARTED',$at);
     }
     public function advance(array $t,?string $cycle,int $at,Principal $actor,string $trace,?string $source=null,?string $end=null,bool $reply=false): void
     {

@@ -1,0 +1,10 @@
+FAIL F5-B P1 resolved staff reopen completes exactly one new FIRST and preserves old cycle: Assertion failed: 'COMPLETED' != 'RUNNING'
+FAIL F5-B P1 permitted CLOSED staff reopen completes FIRST and replay is an exact no-op: Assertion failed: 'COMPLETED' != 'RUNNING'
+PASS F5-B P1 customer reopen leaves FIRST pending until a genuine staff reply
+FAIL F5-B P1 parallel native HTTP reopen replies create one cycle completion and public outbox: Assertion failed: 'COMPLETED' != 'RUNNING'
+FAIL F5-B P1 HTTP empty weekly policy is rejected without writes and client can still create: Assertion failed: 422 != 200
+FAIL F5-B P1 HTTP exception horizon policy is rejected and previous policy stays usable: Assertion failed: 422 != 200
+FAIL F5-B P1 future calendar failure preserves HTTP ticket message and explicit idempotent unavailable result: Assertion failed: 200 != 422
+PASS F5-B P1 valid HTTP create is atomic and SQL failure leaves no partial support or idempotency rows
+FAIL F5-B P1 active-cycle horizon failure preserves snapshots replies and cross-department recovery: Validation failed
+9 tests, 7 failures

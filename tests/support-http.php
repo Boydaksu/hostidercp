@@ -69,6 +69,7 @@ test('F5-A identity version invalidation rejects next HTTP request',function()us
 test('F5-A session revocation rejects read and cached mutation',function()use($db,$admin): void{$db->execute("UPDATE identity_sessions SET revoked_at=UTC_TIMESTAMP(6) WHERE user_id=? AND context='admin'",[$admin['user']]);same(401,sh('admin','support/list')[0]);same(401,sh('admin','support/department-new',['name'=>'Denied','enabled'=>true,'allow_reopen'=>false,'allow_hold'=>false])[0]);});
 require __DIR__.'/support-post-audit.php';
 require __DIR__.'/support-b.php';
+require __DIR__.'/support-b-post-audit.php';
 $exit=executeTests(true);
 if($exit===0&&getenv('F5_EVIDENCE')==='1'){file_put_contents(dirname(__DIR__).'/docs/evidence/f5-a/http-examples.json',json_encode(['environment'=>'test','synthetic'=>true,'provider_io'=>false,'examples'=>$examples],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));}
 }finally{$server->stop();$second->stop();}
