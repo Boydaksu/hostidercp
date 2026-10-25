@@ -1,0 +1,1222 @@
+{
+  "application_sha": "131859cbb5c02e5e6d2f63b8af928c63edc78782",
+  "tree": "4f876496d6ea86269ed87820badca5abda8b00d2",
+  "pr_checkout": "0c83c18859e8443348654937b98dea1544ace503",
+  "checkout_tree_equal": true,
+  "pr_merged": false,
+  "environment": "test/mock; MariaDB real; provider synthetic",
+  "jobs": [
+    {
+      "job": 121104941027,
+      "suites": 49,
+      "tests": 383,
+      "failures": 0,
+      "checkout": "0c83c18859e8443348654937b98dea1544ace503",
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "309 PHP files checked; 0 violations",
+        "321 source/config/test files scanned; 0 findings"
+      ],
+      "newRegressions": [
+        "PASS F4-F native authentication protects HTML and API; wrong HTTP methods create nothing",
+        "PASS F4-F real login cookie MFA and fresh step-up chain opens customer/admin panels",
+        "PASS F4-F client projection separates physical VM financial service and 30 day sale without secrets",
+        "PASS F4-F cross customer service ID and customer override cannot read or mutate",
+        "PASS F4-F staff needs exact tenant service grant; customer cannot read cost projection",
+        "PASS F4-F CSRF explicit acceptance and strict purchased spec reject before any provider call",
+        "PASS F4-F pure preparation changes no service operation ledger outbox; payload tampering rejected",
+        "PASS F4-F stale service version and stale confirmation cannot enqueue",
+        "PASS F4-F duplicate submit and cached replay retain one durable operation and one provider POST",
+        "PASS F4-F two independent HTTP servers same confirmation serialize one accepted action",
+        "PASS F4-F two independent HTTP requests same idempotency key return identical operation",
+        "PASS F4-F stale native step-up blocks preparation and replay",
+        "PASS F4-F refunded source blocks normal action while scoped native staff containment remains safe",
+        "PASS F4-F UNKNOWN inspect queues without HTTP provider IO then independent cron resolves no second POST",
+        "PASS F4-F latest session revocation rejects cached HTTP result and HTML",
+        "PASS F4-F domain HTTP nameserver expiry registration and UNKNOWN differ without contact PII",
+        "PASS F4-F finance HTTP distinguishes missing cost invoice difference and separate approval publication",
+        "PASS F4-F client correct reinstall then power operations remain task verified",
+        "PASS F4-F native terminate wait and two HTTP requests preserve one termination",
+        "PASS F4-F concurrent financial change after prepare invalidates HTTP confirmation",
+        "PASS F4-F identity version change blocks prepared action before native enqueue",
+        "PASS F4-F permission revocation invalidates cached response authorization",
+        "PASS F4-F HTML and JSON use no-store CSP and safe dynamic text encoding",
+        "PASS F4-F accepted CREATE task is not exposed as active VM or completed service",
+        "PASS F4-F impersonation cannot read provider panels or authorize critical operation",
+        "PASS F4-F stale staff authorization before inspection cron preserves UNKNOWN without provider retry",
+        "PASS F4-F invoice match remains MOCK and does not settle payable or publish catalog price",
+        "PASS F4-F second distinct confirmation is stale after first HTTP operation wins"
+      ],
+      "suiteCounts": [
+        {
+          "file": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "file": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-costs.php",
+          "tests": 25,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/provider-panel-http.php",
+          "tests": 28,
+          "failures": 0
+        }
+      ],
+      "measurements": [
+        "MEASUREMENT {\"environment\":\"local test\\/mock; no deployment capacity guarantee\",\"php\":\"8.3.36\",\"mariadb\":\"10.11.19-MariaDB-ubu2204\",\"sample\":16,\"direct_worker\":{\"elapsed_ns\":425428823,\"operations_per_second\":37.6091114071037},\"actual_cli\":{\"elapsed_ns\":518355058,\"operations_per_second\":30.86687349349642,\"invocations\":1},\"peak_memory_bytes\":4194304}",
+        "MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":83728,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":161258,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":347703,\"physical_create\":1,\"applied_effect\":1}]",
+        "MEASURE_COST [{\"processes\":1,\"sample_count\":1,\"work_wall_us\":64782,\"submit_wall_us\":56266,\"p50_worker_us\":11868,\"p95_worker_us\":11868,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"15.436387\"},{\"processes\":4,\"sample_count\":4,\"work_wall_us\":154095,\"submit_wall_us\":140670,\"p50_worker_us\":1571,\"p95_worker_us\":13249,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"6.489503\"},{\"processes\":8,\"sample_count\":8,\"work_wall_us\":313813,\"submit_wall_us\":297672,\"p50_worker_us\":4320,\"p95_worker_us\":48974,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"3.186611\"}]",
+        "MEASURE_COST_FAIR {\"blocked\":101,\"healthy_costs\":1,\"overlap_crons\":2,\"wall_us\":305349,\"checked\":[51,51],\"db_retry_counts\":[[],[]],\"admission_plan\":[{\"id\":1,\"select_type\":\"SIMPLE\",\"table\":\"cloud_cost_work\",\"type\":\"ref\",\"possible_keys\":\"ix_cloud_cost_admission\",\"key\":\"ix_cloud_cost_admission\",\"key_len\":\"2\",\"ref\":\"const\",\"rows\":\"3\",\"Extra\":\"Using where\"}]}"
+      ],
+      "stability": [
+        "10 iterations; 0 failed (failures are not retried away)",
+        "30 iterations; 0 failed (failures are not retried away)",
+        "20 iterations; 0 failed (failures are not retried away)"
+      ],
+      "job_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40172108437/job/121104941027",
+      "raw_logs_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121104941027/logs"
+    },
+    {
+      "job": 121104940912,
+      "suites": 49,
+      "tests": 383,
+      "failures": 0,
+      "checkout": "0c83c18859e8443348654937b98dea1544ace503",
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "309 PHP files checked; 0 violations",
+        "321 source/config/test files scanned; 0 findings"
+      ],
+      "newRegressions": [
+        "PASS F4-F native authentication protects HTML and API; wrong HTTP methods create nothing",
+        "PASS F4-F real login cookie MFA and fresh step-up chain opens customer/admin panels",
+        "PASS F4-F client projection separates physical VM financial service and 30 day sale without secrets",
+        "PASS F4-F cross customer service ID and customer override cannot read or mutate",
+        "PASS F4-F staff needs exact tenant service grant; customer cannot read cost projection",
+        "PASS F4-F CSRF explicit acceptance and strict purchased spec reject before any provider call",
+        "PASS F4-F pure preparation changes no service operation ledger outbox; payload tampering rejected",
+        "PASS F4-F stale service version and stale confirmation cannot enqueue",
+        "PASS F4-F duplicate submit and cached replay retain one durable operation and one provider POST",
+        "PASS F4-F two independent HTTP servers same confirmation serialize one accepted action",
+        "PASS F4-F two independent HTTP requests same idempotency key return identical operation",
+        "PASS F4-F stale native step-up blocks preparation and replay",
+        "PASS F4-F refunded source blocks normal action while scoped native staff containment remains safe",
+        "PASS F4-F UNKNOWN inspect queues without HTTP provider IO then independent cron resolves no second POST",
+        "PASS F4-F latest session revocation rejects cached HTTP result and HTML",
+        "PASS F4-F domain HTTP nameserver expiry registration and UNKNOWN differ without contact PII",
+        "PASS F4-F finance HTTP distinguishes missing cost invoice difference and separate approval publication",
+        "PASS F4-F client correct reinstall then power operations remain task verified",
+        "PASS F4-F native terminate wait and two HTTP requests preserve one termination",
+        "PASS F4-F concurrent financial change after prepare invalidates HTTP confirmation",
+        "PASS F4-F identity version change blocks prepared action before native enqueue",
+        "PASS F4-F permission revocation invalidates cached response authorization",
+        "PASS F4-F HTML and JSON use no-store CSP and safe dynamic text encoding",
+        "PASS F4-F accepted CREATE task is not exposed as active VM or completed service",
+        "PASS F4-F impersonation cannot read provider panels or authorize critical operation",
+        "PASS F4-F stale staff authorization before inspection cron preserves UNKNOWN without provider retry",
+        "PASS F4-F invoice match remains MOCK and does not settle payable or publish catalog price",
+        "PASS F4-F second distinct confirmation is stale after first HTTP operation wins"
+      ],
+      "suiteCounts": [
+        {
+          "file": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "file": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-costs.php",
+          "tests": 25,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/provider-panel-http.php",
+          "tests": 28,
+          "failures": 0
+        }
+      ],
+      "measurements": [
+        "MEASUREMENT {\"environment\":\"local test\\/mock; no deployment capacity guarantee\",\"php\":\"8.4.27\",\"mariadb\":\"10.11.19-MariaDB-ubu2204\",\"sample\":16,\"direct_worker\":{\"elapsed_ns\":438487054,\"operations_per_second\":36.48910464754565},\"actual_cli\":{\"elapsed_ns\":512172041,\"operations_per_second\":31.23950297786755,\"invocations\":1},\"peak_memory_bytes\":4194304}",
+        "MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":81662,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":193628,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":300029,\"physical_create\":1,\"applied_effect\":1}]",
+        "MEASURE_COST [{\"processes\":1,\"sample_count\":1,\"work_wall_us\":60588,\"submit_wall_us\":52520,\"p50_worker_us\":11375,\"p95_worker_us\":11375,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"16.504918\"},{\"processes\":4,\"sample_count\":4,\"work_wall_us\":147392,\"submit_wall_us\":141553,\"p50_worker_us\":1610,\"p95_worker_us\":20053,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"6.784629\"},{\"processes\":8,\"sample_count\":8,\"work_wall_us\":334178,\"submit_wall_us\":330187,\"p50_worker_us\":4813,\"p95_worker_us\":27241,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"2.992417\"}]",
+        "MEASURE_COST_FAIR {\"blocked\":101,\"healthy_costs\":1,\"overlap_crons\":2,\"wall_us\":297907,\"checked\":[51,51],\"db_retry_counts\":[[],[]],\"admission_plan\":[{\"id\":1,\"select_type\":\"SIMPLE\",\"table\":\"cloud_cost_work\",\"type\":\"ref\",\"possible_keys\":\"ix_cloud_cost_admission\",\"key\":\"ix_cloud_cost_admission\",\"key_len\":\"2\",\"ref\":\"const\",\"rows\":\"1\",\"Extra\":\"Using where\"}]}"
+      ],
+      "stability": [
+        "10 iterations; 0 failed (failures are not retried away)",
+        "30 iterations; 0 failed (failures are not retried away)",
+        "20 iterations; 0 failed (failures are not retried away)"
+      ],
+      "job_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40172108437/job/121104940912",
+      "raw_logs_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121104940912/logs"
+    },
+    {
+      "job": 121104926180,
+      "suites": 49,
+      "tests": 383,
+      "failures": 0,
+      "checkout": "131859cbb5c02e5e6d2f63b8af928c63edc78782",
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "309 PHP files checked; 0 violations",
+        "321 source/config/test files scanned; 0 findings"
+      ],
+      "newRegressions": [
+        "PASS F4-F native authentication protects HTML and API; wrong HTTP methods create nothing",
+        "PASS F4-F real login cookie MFA and fresh step-up chain opens customer/admin panels",
+        "PASS F4-F client projection separates physical VM financial service and 30 day sale without secrets",
+        "PASS F4-F cross customer service ID and customer override cannot read or mutate",
+        "PASS F4-F staff needs exact tenant service grant; customer cannot read cost projection",
+        "PASS F4-F CSRF explicit acceptance and strict purchased spec reject before any provider call",
+        "PASS F4-F pure preparation changes no service operation ledger outbox; payload tampering rejected",
+        "PASS F4-F stale service version and stale confirmation cannot enqueue",
+        "PASS F4-F duplicate submit and cached replay retain one durable operation and one provider POST",
+        "PASS F4-F two independent HTTP servers same confirmation serialize one accepted action",
+        "PASS F4-F two independent HTTP requests same idempotency key return identical operation",
+        "PASS F4-F stale native step-up blocks preparation and replay",
+        "PASS F4-F refunded source blocks normal action while scoped native staff containment remains safe",
+        "PASS F4-F UNKNOWN inspect queues without HTTP provider IO then independent cron resolves no second POST",
+        "PASS F4-F latest session revocation rejects cached HTTP result and HTML",
+        "PASS F4-F domain HTTP nameserver expiry registration and UNKNOWN differ without contact PII",
+        "PASS F4-F finance HTTP distinguishes missing cost invoice difference and separate approval publication",
+        "PASS F4-F client correct reinstall then power operations remain task verified",
+        "PASS F4-F native terminate wait and two HTTP requests preserve one termination",
+        "PASS F4-F concurrent financial change after prepare invalidates HTTP confirmation",
+        "PASS F4-F identity version change blocks prepared action before native enqueue",
+        "PASS F4-F permission revocation invalidates cached response authorization",
+        "PASS F4-F HTML and JSON use no-store CSP and safe dynamic text encoding",
+        "PASS F4-F accepted CREATE task is not exposed as active VM or completed service",
+        "PASS F4-F impersonation cannot read provider panels or authorize critical operation",
+        "PASS F4-F stale staff authorization before inspection cron preserves UNKNOWN without provider retry",
+        "PASS F4-F invoice match remains MOCK and does not settle payable or publish catalog price",
+        "PASS F4-F second distinct confirmation is stale after first HTTP operation wins"
+      ],
+      "suiteCounts": [
+        {
+          "file": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "file": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-costs.php",
+          "tests": 25,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/provider-panel-http.php",
+          "tests": 28,
+          "failures": 0
+        }
+      ],
+      "measurements": [
+        "MEASUREMENT {\"environment\":\"local test\\/mock; no deployment capacity guarantee\",\"php\":\"8.3.36\",\"mariadb\":\"10.11.19-MariaDB-ubu2204\",\"sample\":16,\"direct_worker\":{\"elapsed_ns\":440982145,\"operations_per_second\":36.2826481330667},\"actual_cli\":{\"elapsed_ns\":524054032,\"operations_per_second\":30.531202935196575,\"invocations\":1},\"peak_memory_bytes\":4194304}",
+        "MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":84866,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":183291,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":332127,\"physical_create\":1,\"applied_effect\":1}]",
+        "MEASURE_COST [{\"processes\":1,\"sample_count\":1,\"work_wall_us\":63956,\"submit_wall_us\":56682,\"p50_worker_us\":11807,\"p95_worker_us\":11807,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"15.63575\"},{\"processes\":4,\"sample_count\":4,\"work_wall_us\":156443,\"submit_wall_us\":137455,\"p50_worker_us\":1511,\"p95_worker_us\":29013,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"6.392104\"},{\"processes\":8,\"sample_count\":8,\"work_wall_us\":278482,\"submit_wall_us\":278896,\"p50_worker_us\":7557,\"p95_worker_us\":46147,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"3.590896\"}]",
+        "MEASURE_COST_FAIR {\"blocked\":101,\"healthy_costs\":1,\"overlap_crons\":2,\"wall_us\":319994,\"checked\":[51,51],\"db_retry_counts\":[[],[]],\"admission_plan\":[{\"id\":1,\"select_type\":\"SIMPLE\",\"table\":\"cloud_cost_work\",\"type\":\"ref\",\"possible_keys\":\"ix_cloud_cost_admission\",\"key\":\"ix_cloud_cost_admission\",\"key_len\":\"2\",\"ref\":\"const\",\"rows\":\"1\",\"Extra\":\"Using where\"}]}"
+      ],
+      "stability": [
+        "10 iterations; 0 failed (failures are not retried away)",
+        "30 iterations; 0 failed (failures are not retried away)",
+        "20 iterations; 0 failed (failures are not retried away)"
+      ],
+      "job_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40172103606/job/121104926180",
+      "raw_logs_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121104926180/logs"
+    },
+    {
+      "job": 121104926430,
+      "suites": 49,
+      "tests": 383,
+      "failures": 0,
+      "checkout": "131859cbb5c02e5e6d2f63b8af928c63edc78782",
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "309 PHP files checked; 0 violations",
+        "321 source/config/test files scanned; 0 findings"
+      ],
+      "newRegressions": [
+        "PASS F4-F native authentication protects HTML and API; wrong HTTP methods create nothing",
+        "PASS F4-F real login cookie MFA and fresh step-up chain opens customer/admin panels",
+        "PASS F4-F client projection separates physical VM financial service and 30 day sale without secrets",
+        "PASS F4-F cross customer service ID and customer override cannot read or mutate",
+        "PASS F4-F staff needs exact tenant service grant; customer cannot read cost projection",
+        "PASS F4-F CSRF explicit acceptance and strict purchased spec reject before any provider call",
+        "PASS F4-F pure preparation changes no service operation ledger outbox; payload tampering rejected",
+        "PASS F4-F stale service version and stale confirmation cannot enqueue",
+        "PASS F4-F duplicate submit and cached replay retain one durable operation and one provider POST",
+        "PASS F4-F two independent HTTP servers same confirmation serialize one accepted action",
+        "PASS F4-F two independent HTTP requests same idempotency key return identical operation",
+        "PASS F4-F stale native step-up blocks preparation and replay",
+        "PASS F4-F refunded source blocks normal action while scoped native staff containment remains safe",
+        "PASS F4-F UNKNOWN inspect queues without HTTP provider IO then independent cron resolves no second POST",
+        "PASS F4-F latest session revocation rejects cached HTTP result and HTML",
+        "PASS F4-F domain HTTP nameserver expiry registration and UNKNOWN differ without contact PII",
+        "PASS F4-F finance HTTP distinguishes missing cost invoice difference and separate approval publication",
+        "PASS F4-F client correct reinstall then power operations remain task verified",
+        "PASS F4-F native terminate wait and two HTTP requests preserve one termination",
+        "PASS F4-F concurrent financial change after prepare invalidates HTTP confirmation",
+        "PASS F4-F identity version change blocks prepared action before native enqueue",
+        "PASS F4-F permission revocation invalidates cached response authorization",
+        "PASS F4-F HTML and JSON use no-store CSP and safe dynamic text encoding",
+        "PASS F4-F accepted CREATE task is not exposed as active VM or completed service",
+        "PASS F4-F impersonation cannot read provider panels or authorize critical operation",
+        "PASS F4-F stale staff authorization before inspection cron preserves UNKNOWN without provider retry",
+        "PASS F4-F invoice match remains MOCK and does not settle payable or publish catalog price",
+        "PASS F4-F second distinct confirmation is stale after first HTTP operation wins"
+      ],
+      "suiteCounts": [
+        {
+          "file": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "file": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "file": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "file": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "file": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "file": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "file": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-costs.php",
+          "tests": 25,
+          "failures": 0
+        },
+        {
+          "file": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "file": "tests/provider-panel-http.php",
+          "tests": 28,
+          "failures": 0
+        }
+      ],
+      "stability": [
+        "10 iterations; 0 failed (failures are not retried away)",
+        "30 iterations; 0 failed (failures are not retried away)",
+        "20 iterations; 0 failed (failures are not retried away)"
+      ],
+      "measurements": [
+        "MEASUREMENT {\"environment\":\"local test\\/mock; no deployment capacity guarantee\",\"php\":\"8.4.27\",\"mariadb\":\"10.11.19-MariaDB-ubu2204\",\"sample\":16,\"direct_worker\":{\"elapsed_ns\":206701120,\"operations_per_second\":77.4064504343276},\"actual_cli\":{\"elapsed_ns\":260392615,\"operations_per_second\":61.44567502423216,\"invocations\":1},\"peak_memory_bytes\":4194304}",
+        "MEASURE [{\"workers\":1,\"instances\":1,\"wall_us\":50951,\"physical_create\":1,\"applied_effect\":1},{\"workers\":4,\"instances\":1,\"wall_us\":118028,\"physical_create\":1,\"applied_effect\":1},{\"workers\":8,\"instances\":1,\"wall_us\":204840,\"physical_create\":1,\"applied_effect\":1}]",
+        "MEASURE_COST [{\"processes\":1,\"sample_count\":1,\"work_wall_us\":42781,\"submit_wall_us\":40174,\"p50_worker_us\":6502,\"p95_worker_us\":6502,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"23.374863\"},{\"processes\":4,\"sample_count\":4,\"work_wall_us\":116017,\"submit_wall_us\":92879,\"p50_worker_us\":1195,\"p95_worker_us\":12886,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"8.619426\"},{\"processes\":8,\"sample_count\":8,\"work_wall_us\":193618,\"submit_wall_us\":189779,\"p50_worker_us\":2531,\"p95_worker_us\":25005,\"costs\":1,\"journals\":1,\"outbox_facts\":1,\"costs_per_second\":\"5.164809\"}]",
+        "MEASURE_COST_FAIR {\"blocked\":101,\"healthy_costs\":1,\"overlap_crons\":2,\"wall_us\":176046,\"checked\":[51,51],\"db_retry_counts\":[[],[]],\"admission_plan\":[{\"id\":1,\"select_type\":\"SIMPLE\",\"table\":\"cloud_cost_work\",\"type\":\"ref\",\"possible_keys\":\"ix_cloud_cost_admission\",\"key\":\"ix_cloud_cost_admission\",\"key_len\":\"2\",\"ref\":\"const\",\"rows\":\"4\",\"Extra\":\"Using where\"}]}"
+      ],
+      "job_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40172103606/job/121104926430",
+      "raw_logs_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121104926430/logs"
+    }
+  ]
+}

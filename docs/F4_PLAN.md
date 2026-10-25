@@ -1,8 +1,9 @@
 # F4 Domain + Voyar Cloud — geliştirme ve izlenebilirlik planı
 
 > Güncel F4-F: Kullanıcı F4-C/D/E mock tabanlarını kabul etti. 355 test ve 001–047
-> migration tabanı üzerinde yalnız [F4_F_PLAN](F4_F_PLAN.md) kapsamındaki panel/HTTP işleri
-> yürütülür. Canlı F4 çıkış kabulü verilmedi; DOMAIN-002 PARTIAL, PROV-005 NOT PROVEN.
+> migration tabanı korunarak [F4_F_PLAN](F4_F_PLAN.md) panel/HTTP kapsamı PHP8.3/8.4 383/383
+> ile teslim edildi; [F4_F_DELIVERY_REPORT](F4_F_DELIVERY_REPORT.md). Bağımsız F4-F kabulü
+> bekler. Canlı F4 çıkış kabulü verilmedi; DOMAIN-002 PARTIAL, PROV-005 NOT PROVEN.
 
 > Güncel F4-E: F4-D test/mock bağımsız kabulü ve 325 testlik dc70fa5 tabanı üzerinde [F4_E_PLAN](F4_E_PLAN.md) geçerlidir. Aşağıdaki eski faz sayıları tarihseldir; PROV-005 gerçek maliyet kabulü açık, DOMAIN-002 PARTIAL/MANUAL_REVIEW kalır.
 
