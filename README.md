@@ -1,5 +1,12 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4 bütünleşik mock kabul paketi:** C/D/E/F teknik mock kabulleri ve 49 suite / 394 test
+> [F4_REPORT](docs/F4_REPORT.md) altında birleştirildi. Sınırlı mock kapsam bağımsız denetime
+> sunulur; bütünleşik çıkış henüz kabul edilmedi. F4 DONE/production-ready değildir.
+> Mapping/import CRUD NOT ACCEPTED; DOMAIN-002 PARTIAL; bütün canlı GATE'ler OPEN.
+> Aşağıdaki faz teslim notları tarihsel kayıttır; güncel kabul sınırı F4_REPORT'tadır.
+
+
 > **F4-F son denetim düzeltmesi:** Native doğrulanmış kanıt özeti ve Domain no-effect FAILURE
 > onayı [F4_F_POST_AUDIT_REVIEW](docs/F4_F_POST_AUDIT_REVIEW.md) ile teslim edildi.
 > PHP8.3/8.4 **394/394**; 001–048 korunur, yeni migration yoktur. Bağımsız yeniden kabul bekler.

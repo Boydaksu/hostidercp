@@ -1,61 +1,108 @@
-# F4 ilerleme raporu — tamamlanmamış test/mock kapsamı
+# F4 bütünleşik mock çıkış kabul paketi
 
-24 Ekim 2026. Dal `codex/f4-domain-cloud`, kabul edilen taban `c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731`. **F4 mock teslimi tamamlanmadı; teknik kabul veya DONE önerilmez.** F5 başlamadı. Main push/merge, production veya gerçek finans/sağlayıcı işlemi yapılmadı. Ara denetim sonrası A/B kaynağı GitHub'a yayımlandı; [taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2) yalnız onaylı F3 dalını hedefler. Yerel/uzak Git tree eşitliği [yayın eşlemesinde](evidence/f4/github-publication.json) doğrulandı; sunucu commit metadata'sı nedeniyle commit SHA'ları değişti, dosya blob/tree SHA'ları değişmedi.
+25 Ekim 2026. Dal: `codex/f4-domain-cloud`. Bu paket mevcut uygulamayı denetime sunar; yeni faz başlatmaz.
 
-## Uygulanan kapsam
+**Karar: sınırları belirtilmiş mevcut mock uygulamanın bağımsız bütünleşik denetime sunulması için GO; koşulsuz bütün F4 mock çıkışı için NO-GO. F4 DONE veya production-ready değildir.** C/D/E/F modül teknik kabulleri, bütünleşik çıkış kabulü yerine geçmez. Mapping/import CRUD için yalnız erteleme onayı vardır; uygulama/kabul yoktur. F5/F6, merge, staging ve production için yetki verilmez.
 
-İlk tasarım/izlenebilirlik teslimi [F4_PLAN](F4_PLAN.md), özgün SDK incelemesi [F4_VOYAR_SDK_REVIEW](F4_VOYAR_SDK_REVIEW.md) içindedir. Ayrı Account Handoff/Developer Package dosyaları bu adlarla depoda bulunamadı; içerikleri doğrulanmış varsayılmadı.
+## 1. Kaynak ve gerçek CI kimliği
 
-F4-A veri modeli temeli: `Domains/DomainName`, `TldPolicy`, `Registry`; explicit TLD/provider mapping, müşteri ve service bağlantısı, context-bound AEAD/HMAC contact snapshot, canonical IDNA unique name, nameserver snapshot ve immutable history. Registry yalnız test ortamında trusted in-process servistir; public endpoint değildir. Service materyalizasyonu mevcut Services repository üzerinden yapılır; finans/Identity tablolarına doğrudan yazılmaz. Aynı transaction'da history, kontrollü audit ve outbox vardır. Replay sırasında farklı contact/nameserver/name/rule reddedilir. Domain status PENDING kalır; attach başarıyla kayıt yapıldığı anlamına gelmez.
+Kabul edilen uygulama: [`6e25a8b98de6e0c9da5e84df6b78e46cd47854f2`](https://github.com/Boydaksu/hostidercp/commit/6e25a8b98de6e0c9da5e84df6b78e46cd47854f2).
+Paket öncesi GitHub HEAD: [`8156208ad90afcb8b563864e3fe065d8bea05f35`](https://github.com/Boydaksu/hostidercp/commit/8156208ad90afcb8b563864e3fe065d8bea05f35).
+Bu belgeyi içeren paket commit'inin SHA ve otomatik CI bağlantıları [taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2) açıklamasında ayrıca kaydedilir; kendi commit SHA'sını içermeyen belge uygulama SHA'sı gibi sunulmaz.
 
-F4-B kalıcı mock temeli: `DomainManagement` optional contract ve `DurableRegistrar`, hem ResellerClub hem DomainNameAPI yapay account kimliğiyle çalışır. Availability/register/renew/transfer-initiation/status/nameserver/lock/privacy yöntemleri vardır; eylem ayrıca TLD policy'den geçer. DNS ve EPP güvenli teslim/model tamamlanmadığından UNSUPPORTED döner ve global mock capability listesinde bulunmaz. Transfer-initiation yalnız TRANSFER_PENDING yaratır; transfer completion veya gerçek EPP süreci tamamlanmış değildir. Yıl sayısı mock sentetik term sayacıdır; gerçek registrar expiration/grace hesaplama kanıtı değildir.
-
-Mock dış dünya kendi commit edilmiş transaction'ında domain ve call saklar; açık uygulama transaction'ında çağrı reddedilir. Operation UUID+account+action+resource+configuration keyed fingerprint ile bağlanır. Contact plaintext veya raw response call tablosuna yazılmaz. Aynı register/renew UUID'si dört bağımsız PHP worker'da bir fiziksel etki oluşturur. Availability rezervasyon değildir. TIMEOUT_AFTER_EFFECT dış domaini saklar ama UNKNOWN sonucunda resource ID döndürmez; ayrı inspect mevcut kaynağı bulur. TIMEOUT_BEFORE_EFFECT sonucu no-effect kanıtı sayılmaz. DEFINITIVE_FAILURE no-effect yalnız sentetik fixture kanıtıdır.
-
-## Gereksinim ve kabul ayrımı
-
-| Kimlik | Bu değişiklikte doğrulanan | Henüz tamamlanmayan |
+| HEAD 8156208 doğrulaması | PHP 8.3 | PHP 8.4 |
 |---|---|---|
-| FR-DOMAIN / R1-05 | IDNA, TLD/contact capability, encrypted model, mock register/renew/status/transfer-initiation | Üretim contact sözleşmeleri, tam domain operation/renewal/transfer/grace-redemption, DNS/EPP ve paneller |
-| DOMAIN-003 | In-process policy ve provider mock unsupported retleri | Gerçek API/UI capability davranışı; tam kabul PASS değil |
-| DOMAIN-001 / DOMAIN-002 / R7-07 | Mock belirsiz/no-effect fixture'ları hazır | Uygulama operation/lease/fence, alternatif registrar revalidation ve manuel reconciliation henüz yok; PASS değil |
-| SEC-004 | Domain/contact başka müşteri retleri, scope/freshness ve client projection | Domain HTTP session commit fence, confirmation/replay/revocation ve browser testi henüz yok |
-| OPS-005 | Mock UUID replay için dört bağımsız PHP process; tek create ve tek renew etkisi | Domain uygulama job claim/fencing ve 1/4/8 worker performans/cron testi henüz yok |
-| OPS-001 | Model ve durable mock test-only sınırı; eski live effect policy regresyonları korunur | F4 public dispatch henüz eklenmedi; canlı transport yok |
-| PROV-001/002/006 | Önceki F3 hosting regresyonları geçiyor | Cloud VM/task/UNKNOWN/extend henüz uygulanmadı; hosting kanıtı Cloud kabulü değildir |
-| FIN-010 | Önceki finans testleri korunur, yeni provider mock para hareketi yazmaz | Cloud cost ledger dedupe ve fiyat önerisi/onay pipeline henüz yok |
-| PROV-005 | SDK kaynak incelemesi | Kalıcı Cloud mock, iki saat mock cost ve gerçek ondemand/termination kanıtı yok; canlı PASS değil |
+| PR CI 40177941530 | [job 121122590833](https://github.com/Boydaksu/hostidercp/actions/runs/40177941530/job/121122590833) | [job 121122590630](https://github.com/Boydaksu/hostidercp/actions/runs/40177941530/job/121122590630) |
+| Branch CI 40177937532 | [job 121122578804](https://github.com/Boydaksu/hostidercp/actions/runs/40177937532/job/121122578804) | [job 121122579019](https://github.com/Boydaksu/hostidercp/actions/runs/40177937532/job/121122579019) |
+| Tam sonuç | 49 suite / 394 test / 0 hata | 49 suite / 394 test / 0 hata |
 
-## Cloud ve canlı kanıt sınırı
+PR işlerinin ham logları yeniden alındı: [8.3 API](https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121122590833/logs), [8.4 API](https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121122590630/logs). Erişim GitHub oturumu gerektirebilir. [CI özeti](evidence/f4-mock-exit/baseline-ci.json) her işin suite, PASS, runtime, kalite ve ölçüm kayıtlarını içerir.
 
-F4-D/E/F Cloud veri modeli, kalıcı Voyar mock, VM action/task polling, exact hourly usage/cost, FX/cost ledger, fiyat önerisi onayı ve müşteri/yönetici panelleri uygulanmadı. F0 `Mock/Voyar` yeni F4 entegrasyonu sayılmaz. SDK'da görülen yöntemlerin ayrıntılı kanıtı ayrı rapordadır. Özellikle credentials ile AuthenticationException sonrası POST tekrarının method filtresi olmadığı görüldü; canlı mutation için bu davranış güvenli kabul edilmedi.
+[319 dosyalık koruma manifesti](evidence/f4-mock-exit/preservation.json), uygulama/test/contract/SDK referansı/workflow/analiz ve kilit dosyalarının kabul edilen uygulama, HEAD ve çalışma kopyasında aynı olduğunu doğrular. Bu paket runtime, test veya migration değiştirmez. [Plan](F4_MOCK_EXIT_PLAN.md) kapsam/dosya/migration/test/geri dönüş sınırlarını belirtir. Önceki raporun C–F uygulanmadı ifadeleri tarihsel A/B durumuydu; güncel kabul durumunu bu belge temsil eder.
 
-G-V01–04, G-R01, G-D01, G-C01, G-O01–04, G-P01–02, G-X01–02, G-T01 **OPEN**. G-V01 kapanmadan Cloud otomatik satışı, G-V02/V03 kapanmadan canlı dispatch, G-R01/G-D01 kapanmadan registrar mutation açılmaz. Gerçek PROV-005 maliyet/termination kanıtı yoktur. G-C01/G-O01 dahil önceki fazların gerçek WHM/hosting cron/runtime kabulü kapanmaz. Main koruma ayarları bu değişiklikte değiştirilmedi; gerekli kurallar plan ve kullanıcıya verilen bildirimde belirtildi.
+## 2. Modül kabul matrisi
 
-## Migration, test ve kanıt
+| Modül | Mevcut kanıt | Kabul ve sınır |
+|---|---|---|
+| F4-A Domain model | domains, domains-boundaries; canonical ad, account/service, immutable contact/config | Model mock doğrulandı; bütün ürün/live kabulü değildir |
+| F4-B registrar sözleşmeleri | domains-provider, domain SDK contract testleri | Kalıcı mock, replay fence, bağımsız inspect; canlı registrar PASS değil |
+| F4-C Domain operasyonları | [C denetimi](F4_C_POST_AUDIT_REVIEW.md); domains-operations/audit | Kullanıcı teknik mock kabulü; DOMAIN-002 PARTIAL/MANUAL_REVIEW |
+| F4-D Cloud operasyonları | [D denetimi](F4_D_POST_AUDIT_REVIEW.md), [son finans düzeltmesi](F4_D_FINAL_AUDIT_FIX.md); cloud/audit/races/final-audit | Kullanıcı teknik mock kabulü; fiziksel kanıt ve güncel finans ayrılır |
+| F4-E maliyet/finans | [E teslimi](F4_E_DELIVERY_REPORT.md); cloud-costs/cost-races | Kullanıcı teknik mock kabulü; gerçek saatlik Voyar maliyeti kanıtlanmadı |
+| F4-F HTTP/kanıt | [F denetimi](F4_F_POST_AUDIT_REVIEW.md); provider-panel-http/evidence-cases | Kullanıcı teknik mock kabulü; mapping/import CRUD uygulanmadı/kabul edilmedi |
 
-039: domain account/TLD/rule/domain/contact/nameserver/history + immutable trigger'lar. 040: ayrı mock registrar domain/call dünyası + immutable calls. Migration 001–038 ve eski test dosyaları için 97 dosyalık Git blob karşılaştırmasında sıfır değişiklik: [preservation.json](evidence/f4/preservation.json).
+Gereksinim izleri: FR-DOMAIN/VOYAR, DOMAIN-001/002/003, PROV-001/002/004/005/006, FIN-010, SEC-001–004, OPS-001/005 ve F4_PLAN'daki ilgili R1/R5/R7 maddeleri. Tamamı PASS sayılmaz; aşağıdaki istisnalar ve canlı GATE'ler geçerlidir.
 
-Yerel PHP **8.4.24**, gerçek MariaDB **10.11.18**: önceki **238** + yeni **10**, toplam **248/248**, sıfır hata: [tam çıktı](evidence/f4/local-final-tests.txt). Yeni testler: 3 IDNA/policy unit, 3 model/izolasyon/rollback, 4 durable contract/timeout/no-effect/bağımsız-process replay. 039/040 boş şemada uygulanır ve suite'ler boyunca migrate/replay edilir. Yeni domain DB testleri ayrı `hostider_f0_test_domain_*` geçici şema oluşturup shutdown'da kaldırır.
+## 3. Modüller arası akış ve invariant kanıtı
 
-İlk model koşusunda canonical JSON anahtar sırası assertion'ı ve provider fixture config değişkeni düzeltildi. İlk tam koşuda önceki domain fixture verisinin ortak test şemasında kalması Identity cleanup FK hatasına yol açtı: [ilk çıktı](evidence/f4/local-tests.txt). Test izolasyonu düzeltildi, sonraki koşu temiz ayrı şemada 248/248 geçti. DB constraint kaldırılarak test gevşetilmedi; önceki testler değiştirilmedi.
+[153 F4 testinin kaynak satırı ve iki PHP PASS eşlemesi](evidence/f4-mock-exit/test-index.json) denetim indeksidir. Bunlar mevcut 394 testin alt kümesidir; yeni 153 test eklenmedi. Kaynak yolları repository köküne göredir. Ayrı testler aynı canonical servis/finans/provider sözleşmelerini sınar; tek bir dev uçtan uca senaryonun bütün canlı koşulları kanıtladığı ileri sürülmez.
 
-[İlk statik kontrol](evidence/f4/checks.txt): 246 PHP dosyası/0 ihlal, PHPStan level 5/0 hata, 256 source/config/test dosyası güvenlik örüntü taraması/0 bulgu. Bu örüntü taraması tam güvenlik denetimi değildir. Workflow'a intl ve yeni üç suite eklendi. İlk A/B uzak kaynak **141346eaa58ee74874ebc60a42a53d3916253061**: [GitHub Actions 40071016379](https://github.com/Boydaksu/hostidercp/actions/runs/40071016379), PHP 8.3 ve 8.4 için **248/248**, iki job success. Doğrudan job loglarından sayım, suite/step ve runtime kanıtı [ci-initial.json](evidence/f4/ci-initial.json) içindedir. Önceki F3 CI bu yeni kaynağın kanıtı olarak kullanılmadı. Composer locked audit, PHPStan, lint/mimari, 10 hizmet HTTP / 30 Commerce HTTP / 20 session-concurrency tekrarı ve JS kontrolleri de başarılıdır. Yeni Composer bağımlılığı yoktur; özgün SDK uygulama runtime'ına yüklenmez.
+| Akış / invariant | Kaynak ve test kanıtı | Doğrulanan sonuç |
+|---|---|---|
+| Ödenmiş sipariş → Domain kayıt/yenileme → kanıt → hizmet dönemi | src/Domains; tests/domains-operations.php:302,333; tests/domains-audit.php:98,106,133 | Doğru canonical sipariş/kalem, immutable renewal bağı; timeout sonrası exact dönem yalnız bir kez artar; başka ödenmiş DOMAIN siparişi kullanılamaz |
+| Domain UNKNOWN → bağımsız inspect → SUCCESS/FAILURE | tests/domains-operations.php:155; tests/provider-panel-evidence-cases.php | Kanıt operation/attempt/account/resource/generation ile bağlanır; forged/stale/outcome değişimi reddedilir; yalnız kaynak yokluğu finans no-effect değildir |
+| Ücretli Cloud entitlement → tek CREATE → task/resource | src/Cloud/Engine.php; tests/cloud-audit.php:16,22,28,38,46; tests/cloud-races.php:13 | Katalog capability satın alma yetkisi değildir; canonical customer/order/item/unit/immutable price ve fixed spec doğrulanır; yüksek PID/custom kaynak veya başka ürün reddedilir |
+| Bir hizmetten iki fiziksel kaynak oluşturamama | tests/domains-provider.php:38; tests/domains-audit.php; tests/cloud-races.php:13 | Kalıcı operation, lease/fencing ve provider replay bağı; 1/4/8 bağımsız PHP worker tek etki ve tek completion |
+| Crash/timeout/expired lease ikinci POST üretmez | tests/domains-audit.php:42; tests/cloud-races.php; tests/cloud.php; Voyar SDK/fence testleri | UNKNOWN fiziksel belirsizliktir; kayıp response veya auth exception sonrası mutation kör tekrarlanmaz; imported VM yeniden CREATE edilemez |
+| Task ACCEPTED / receipt SUCCEEDED fiziksel başarı değildir | tests/cloud.php; tests/cloud-audit.php; tests/cloud-final-audit.php:59,62,65 | Task/resource doğrulanmadan ACTIVE/TERMINATED yok; sağlıklı WAITING_TASK gereksiz UNKNOWN alarmı değildir; event teslimi operation completion değildir |
+| Provider mutation HTTP transaction dışında | kalıcı Domain/Cloud dispatch ve provider-panel inspection queue; tests/provider-panel-http.php:44,51 | HTTP hazırlama mutation/ledger yaratmaz; inspect ayrı cron'da; registrar mock açık uygulama transaction'ında çağrıyı reddeder |
+| Power state / service finance / provider maliyeti ayrımı | tests/cloud-audit.php; tests/cloud-final-audit.php:29,32,35,53; tests/cloud-costs.php:48 | STOPPED finans yetkisi veya maliyet sıfırı değildir; TERMINATED payable kapatmaz; refund/cancel sonrası tarihsel ACTIVE geri yüklenmez |
+| Refund sonrası güvenli personel containment | tests/cloud-audit.php:50,53; tests/provider-panel-http.php:50 | Normal CREATE/UPGRADE/REINSTALL ret; fresh native session, scope, step-up, state-bound confirmation, waiting ve irreversible terminate kontrolü; finans geçmişine yazılmaz |
+| Güncel finans / bağımsız suspension | tests/domains-operations.php:205; tests/cloud-final-audit.php | Reconciliation güncel canonical finansı değerlendirir; eski financial_context audit snapshot'ı yetkilendirme değildir; UNKNOWN kanıtsızken korunur, ikinci mutation yok |
+| Usage → exact cost → tek Ledger accrual | src/Cloud maliyet akışı; tests/cloud-costs.php:9,17,94; tests/cloud-cost-races.php | Integer/exact decimal; duplicate/overlap/currency/coverage kontrolleri, atomic Ledger+outbox, rollback ve concurrent claim tek accrual |
+| Invoice reconciliation | tests/cloud-costs.php:48,52,56,71; tests/provider-panel-http.php:74 | Tekil invoice/evidence binding; provisional final değildir; MATCHED ödeme değildir; eksik maliyet veya fark manuel inceleme |
+| FIN-010 ayrı öneri/onay/publication | tests/cloud-costs.php:83; tests/cloud-cost-races.php:29; tests/provider-panel-http.php:61 | Maliyet artışı kendiliğinden müşteri fiyatı yapmaz; ayrı mevcut Commerce onayı ve state-bound publication; receipt tüketimi publication completion değildir |
+| Native HTTP izolasyon ve çift confirmation | tests/provider-panel-http.php; tests/provider-panel-evidence-cases.php:52 | Gerçek cookie/session ve iki HTTP server; customer/service izolasyonu, services.manage + services.reconcile, MFA/fresh scope, CSRF, idempotency, stale/replay/tamper ret; paralel confirmation tek reconciliation |
+| Güvenli projection | provider-panel HTTP/evidence tests; src/ProviderPanel | Allowlist kanıt özeti; raw provider/contact PII/EPP/VNC/root/credential/encryption context HTTP müşteri projection'ına açılmaz; yetkisiz staff/customer kanıt okuyamaz |
 
-Demo komutları: `php tests/domains-unit.php`, `php tests/domains-model.php`, `php tests/domains-provider.php`. DB testleri yalnız `APP_ENV=test` ve `TEST_DB_DSN` içinde `hostider_f0_test*` izole şema kabul eder. CLI process çıktıları synthetic status/resource ile sınırlıdır. Kullanıcıya açık yeni ekran henüz yoktur.
+Maliyet tahakkuku mevcut Ledger'da provider_cost borç / provider_payable alacak olarak dengelenir; kasa hareketi, müşteri tahsilatı veya gerçek provider fatura ödemesi değildir. Finans ve hizmet/sağlayıcı state makineleri ayrıdır. Fiyat/maliyet doğrulanmamış ücretli plan/custom değişiklikleri kapalıdır. Domain kesin FAILURE için fiziksel ve finansal no-effect kanıtı alt katmanda yeniden doğrulanır; UI butonu tek başına yetki değildir.
 
-F4 1/4/8 worker benchmark, domain lookup/panel p50/p95, backlog, lock-wait/deadlock ve operation throughput ölçümleri yapılmadı. Tam suite'in F3 benchmark satırı yalnız eski hosting mock ölçümüdür; Domain/Cloud performansı veya production kapasite iddiasına çevrilmez.
+## 4. Kalite, migration ve bütünleşik worker/HTTP kanıtı
 
-Geri dönüş: additive DDL için otomatik destructive down yoktur. Worker durdurma ve tutarlı kod+DB+APP_KEY+korumalı dosya backup; doğrulanmış snapshot restore veya forward-fix gerekir. Domain history/call/contact kayıtları uygulamadan silinmez. Production backup/restore provası bu testlerde yapılmış sayılmaz.
+Her iki PR işinde PHPStan hatasız, Composer audit 0 güvenlik bildirimi, 311 PHP lint dosyası 0 ihlal ve 323 dosyalık pattern scan 0 bulgu doğrulandı. Tam 394 PASS korunur; bu teslimde yeni test eklenmedi veya eski test gevşetilmedi. PHPUnit dışındaki proje test runner suite sayısı CI özetinde ayrı tutulur.
 
-## Sonraki bağımlılıklar
+[Migration replay ham özeti ve 48 SHA256](evidence/f4-mock-exit/migration-replay.json), yalnız izole gerçek MariaDB 10.11.18 / PHP 8.4.24 üzerinde bu paket için yeniden üretildi; canlı provider IO yoktur.
 
-F4-A/B hâlâ kısmi; domain lifecycle state binding, provider response evidence, operation/lease/fencing, finans hizmetleriyle domain order/renewal bağlantısı ve DOMAIN-001/002 failover ilk sıradadır. Mevcut service ownership transferine domain owner/contact bağlamı henüz eklenmedi; bu nedenle Domain ürünlerine müşteri transferi veya lifecycle HTTP erişimi açılmaz. Sonra Cloud D/E ve ortak HTTP/panel F tamamlanmalı, tüm concurrency/performance/CI/demolar doğrulanmalıdır. **Tam F4 mock teslimi ve gerçek roadmap çıkış şartları karşılanmadı; kabul bekleyen bitmiş F4 teslimi olarak sunulmaz.**
+| Yol | Sonuç |
+|---|---|
+| Boş şema 001–048 | 48 APPLIED; assertReady PASS |
+| Aynı şemada replay | 0 yeni migration |
+| 001–047 taban → güncel | Yalnız 048_provider_panel.php uygulandı |
+| Upgrade sonrası replay | 0 yeni migration; assertReady PASS |
+| Her iki şema checksum | 48/48 APPLIED SHA256 eşleşti; izole şemalar temizlendi |
 
-## Ara denetim sonrası SDK regresyonu
+001–048 değiştirilmedi; yeni migration yoktur. CI ayrıca Domain 042→güncel, Cloud 044→güncel ve maliyet 045→güncel upgrade kontrollerini çalıştırır. Bazı tarihsel stdout etiketleri ilk eklenen migration adını taşır; gerçek expected migration dizileri ve mevcut 048 kapsamı kaynak/manifest ile değerlendirilmelidir. Bu replay production restore veya production upgrade provası değildir.
 
-Son sahiplik/ödeme sınırı düzeltmesi, kaynak SHA ve gerçek **254/254 PHP 8.3/8.4 CI** kanıtı [F4_OWNERSHIP_PROGRESS](F4_OWNERSHIP_PROGRESS.md) içindedir. DOMAIN/CLOUD genel transfer yolu kapatıldı ve Domain attach canonical kaynak uygunluğunu transaction içinde tekrar doğrular. Bu ara düzeltme atomik Domain devri veya tam F4 motoru değildir. Yeni migration yok; 001–040 korunur. Aşağıdaki SDK kabulü kendi tarihsel kaynak SHA'sına aittir.
+Native HTTP/session stabilite döngüleri her PHP işinde Services HTTP 10, Commerce HTTP 30, session concurrency 20 kez 0 hata; üç JavaScript kontrolü başarılıdır. Provider panel suite gerçek cookie/session, farklı müşteriler/personel ve paralel HTTP confirmation kullanır; salt method unit testi değildir.
 
-[Devam planı](F4_CONTINUATION_PLAN.md) ve [güncellenmiş SDK kaynak incelemesi](F4_VOYAR_SDK_REVIEW.md) eklendi. `VoyarMutationFence` ile özgün ZIP üzerinde üç yeni sentetik transport testi yerel PHP 8.4'te **3/3** geçti: [çıktı](evidence/f4/voyar-sdk-local.txt). On işlem türünde auth sonrası gizli ikinci POST yeniden üretildi; fence bunu transport gönderiminden önce engeller. Network timeout ve body loss ayrı senaryolardır. Bu test yalnız SDK kaynak davranışı ve tek dispatch transport korumasıdır; kalıcı Cloud operation/task/UNKNOWN reconciliation tamamlanmış sayılmaz. Yeni migration yoktur. Workflow zip extension ve SDK suite içerir.
+Domain/Cloud ve maliyet yarış suite'leri gerçek MariaDB ile bağımsız PHP process kullanır: 1/4/8 worker, duplicate claim/completion, expired lease, UNKNOWN, immutable billing ve tek etki. Cloud/cost cron testleri 101 bloklu kaydı aşarak sağlıklı işe ilerler; overlapping bounded cron'lar tek maliyet oluşturur. `cloud-final-audit.php:59,62,65` event receipt başarılı olduktan sonra Cloud WAITING_TASK, Cloud PENDING ve Domain PENDING işlerini bağımsız cron CLI üzerinden tamamlar. `cloud-cost-races.php:29` tüketilmiş cost receipt sonrası proposal işini bağımsız cron ile kurtarır. Receipt teslimi, operasyon ilerlemesi ve provider sonucu ayrı kavramlardır.
 
-Yeni kaynak **0ecf1911d0a9f13a68b21ba32cfa65a1e111f4a1** (yerel kaynak commit'i 2993ba6, doğrulanmış aynı Git tree `1959fa4df751536e0887649b873582680516e8f2`): [PR CI 40071562182](https://github.com/Boydaksu/hostidercp/actions/runs/40071562182). PHP **8.3.36** ve **8.4.27** için ayrı ayrı **251/251**, sıfır hata ve iki job success. Önceki 238 + ilk 10 + SDK 3 test korunur. Doğrudan job loglarından çıkarılan sayım ve tüm step sonuçları [ci-sdk.json](evidence/f4/ci-sdk.json) içindedir. PHPStan, lint/mimari, Composer locked audit, güvenlik taraması, HTTP/session kararlılık tekrarları ve JS kontrolleri başarılıdır. İlk 248-test CI yeni SDK testlerinin kanıtı olarak kullanılmadı. Sonraki dokümantasyon commit'i yalnız rapor/README/kanıt ekler; bu kaynak SHA'sının test sonuçlarıyla ayrımı korunur.
+CI ölçümleri küçük mock test yükleridir; gerçek Domain lookup/panel production p50/p95, kapasite/SLO veya iki saatlik Voyar kullanım kanıtı değildir. Bu ölçümler doğrulanmadı; G-O01/PROV-005 OPEN kalır.
+
+## 5. Açık istisnalar, ticari kararlar ve production engelleri
+
+| Konu | Durum / kabul sınırı |
+|---|---|
+| DOMAIN-002 otomatik ikinci registrar/failover | **PARTIAL / MANUAL_REVIEW**; güncel fiyat/bakiye/ücret farkı onayı kanıtı yok; otomatik ikinci POST açılmaz |
+| Mapping/import CRUD | **DEFERRED / NOT IMPLEMENTED / NOT ACCEPTED**; sahibinin açık erteleme onayı var. [Ayrı kapsam/yetki/test planı](F4_F_MAPPING_IMPORT_SCOPE.md); mock imported bind/CREATE guard testi CRUD kabulü değildir |
+| PROV-005 gerçek iki saatlik Voyar maliyet/termination | **OPEN**; fixture/exact hesap gerçek tarife kanıtı değildir |
+| Gerçek credential retrieval, canlı mapping, müşteri operasyonu | **NOT IMPLEMENTED / NOT VERIFIED**; secret/VNC/root teslimi kabulü yok |
+| Domain transfer completion, DNS/EPP | **NOT IMPLEMENTED / NOT VERIFIED**; mock transfer initiation tamamlanmış transfer değildir |
+| Ücretli custom/plan değişimi, gerçek provider EXTEND/renewal | **CLOSED / NOT VERIFIED**; SDK yöntemi tek başına entitlement/finans/operasyon kabulü değildir |
+| Provider account ve gerçek response/provenance eşlemesi | Mock sözleşme kanıtı; canlı kabul yok |
+
+[Canlı doğrulamalar](14_OPEN_VALIDATIONS.md) ve F4_PLAN esas alınır: **G-V01–04, G-R01, G-D01, G-C01, G-P01/02, G-X01/02, G-O01–04 ve G-T01 OPEN**. Bu rapor hiçbir GATE kapatmaz. Gerçek Voyar/registrar/PayTR/WHM/SMTP veya production çağrısı yapılmadı.
+
+Voyar minimum quantum/yuvarlama, vergi/ek ücret, IP/lokasyon, STOP/TERMINATE fatura etkisi, FX ve ticari marj politikaları canlı kanıt ve ayrı ticari karar gerektirir. Mock fatura eşleşmesi provider borcunu ödemez; öneri onayı müşteri fiyatını kendiliğinden yayınlamaz. UNKNOWN, eksik maliyet/fatura, stale veya mismatch kanıt manuel inceleme gerektirir.
+
+## 6. Başarısızlıklar, geri dönüş ve kabul kararı
+
+Bu paket incelemesinde yeni runtime kusuru veya 394-test başarısızlığı görülmedi; kabul edilen modülleri yeniden yazmak gerekmemiştir. Önceki denetimlerde düzeltilen entitlement, finansal containment, eski ACTIVE snapshot ve kanıt/FAILURE kusurlarının kayıtları ilgili C/D/E/F raporlarında korunur. Bu belge eksik canlı kanıtı başarılı saymaz. Test/mock dışında güvenlik, ticari veya operasyonel bütünlük kabulü verilmez.
+
+Paket yalnız belge/kanıt değiştirir; geri dönüş belge commit'inin geri alınmasıdır. Runtime geri dönüşü için tutarlı kod/DB/APP_KEY yedeği ve forward-fix/restore planı gerekir; immutable finans/evidence silinmez, migration downgrade veya UNKNOWN POST replay yapılmaz.
+
+**GO:** Mevcut 394 testle sınırlı, istisnaları açık mock uygulamanın bağımsız bütünleşik F4 çıkış denetimine sunulması.
+
+**NO-GO:** Bütün F4_PLAN kapsamının koşulsuz tamamlandığı iddiası; mapping/import CRUD kabulü; gerçek sağlayıcı/finans/operasyon kabulü; production-ready/F4 DONE; F5/F6, merge, staging veya production'a otomatik geçiş.
+
+Sınırlandırılmış mock çıkışının açık istisnalarla kabul edilip edilmeyeceği bağımsız denetim ve proje sahibinin kararıdır. Bu paket bunu peşinen kabul etmez. Sonraki adım bağımsız bütünleşik F4 mock çıkış denetimidir; geliştirme burada durur.

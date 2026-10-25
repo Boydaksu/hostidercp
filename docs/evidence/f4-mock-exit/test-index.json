@@ -1,0 +1,1077 @@
+{
+  "source": "6e25a8b98de6e0c9da5e84df6b78e46cd47854f2",
+  "tests": [
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 16,
+      "name": "P0-1 catalog capability never grants a higher PID or another product offer",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 22,
+      "name": "P0-1 exact purchased custom CPU RAM disk and IPv4 cannot be expanded",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 28,
+      "name": "P0-1 entitlement binds canonical customer order item unit and exact immutable price",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 38,
+      "name": "P0-1 refund cancellation and changed service price refuse CREATE before dispatch",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 46,
+      "name": "P0-1 fixed offers and historical price snapshots are immutable and cannot be forged",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 50,
+      "name": "P0-2 refunded VM rejects normal CREATE UPGRADE and REINSTALL",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 53,
+      "name": "P0-2 real fresh scoped Identity session can terminate refunded VM without finance writes",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 58,
+      "name": "P0-2 customer unscoped staff stale step-up and unsupported kinds are denied",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 63,
+      "name": "P0-2 stale confirmation and parallel termination produce one operation and one POST",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 69,
+      "name": "P0-2 terminate timeout-after-effect reconciles existing task without a second POST",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 73,
+      "name": "P0-2 other account or changed external resource cannot authorize containment",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 77,
+      "name": "P0-2 mismatched task resource cannot produce TERMINATED",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 82,
+      "name": "P0-2 STOP preserves suspended financial service and makes no cost-stopped claim",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 85,
+      "name": "P1 pending task has successful queue delivery and remains WAITING_TASK",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-audit.php",
+      "line": 88,
+      "name": "P0-2 revoked staff session after enqueue cannot dispatch an emergency mutation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-cost-races.php",
+      "line": 6,
+      "name": "F4-E one four eight independent PHP processes dedupe submit cost journal and outbox",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-cost-races.php",
+      "line": 13,
+      "name": "F4-E parallel overlapping usage refs serialize on the resource and cannot double accrue",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-cost-races.php",
+      "line": 17,
+      "name": "F4-E SKIP LOCKED admission never waits or creates a partial journal",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-cost-races.php",
+      "line": 22,
+      "name": "F4-E overlapping bounded crons rotate 101 blocked works and reach healthy metering",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-cost-races.php",
+      "line": 29,
+      "name": "F4-E consumed cost receipt is not proposal completion and independent proposal cron recovers",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 9,
+      "name": "F4-E duplicate usage creates one balanced existing Ledger accrual and atomic outbox",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 13,
+      "name": "F4-E partial hours quantum minimum and explicit money rounding use exact arithmetic",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 17,
+      "name": "F4-E adjacent intervals and provider invoice reconcile without a second accrual",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 20,
+      "name": "F4-E overlapping or zero reversed future and stale intervals fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 24,
+      "name": "F4-E sequence gap waits for evidence while older sequence cannot create cost",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 30,
+      "name": "F4-E account VM task and spec tariff references cannot be mixed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 33,
+      "name": "F4-E missing metering or unapproved tariff remains UNVERIFIED not zero verified cost",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 37,
+      "name": "F4-E effect observation clock never becomes usage duration or billing boundary",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 40,
+      "name": "F4-E UNKNOWN create cannot infer cost until independent task resource evidence is resolved",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 44,
+      "name": "F4-E STOPPED VM still incurs independently evidenced provider cost",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 48,
+      "name": "F4-E terminated VM accepts delayed final invoice but termination alone closes no payable",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 52,
+      "name": "F4-E invoice mismatch wrong currency stale and noncontiguous coverage require review",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 56,
+      "name": "F4-E invoice before cost evidence is append-only UNVERIFIED then matches once",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 59,
+      "name": "F4-E FX currency exponents and amounts above JavaScript precision remain exact",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 63,
+      "name": "F4-E addon and provider tax are explicit while unpermitted quantities cannot accrue",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 67,
+      "name": "F4-E fixed extra fees stay separate from recurring forecast and unapproved fees fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 71,
+      "name": "F4-E provisional invoice match does not block later independent final invoice proof",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 74,
+      "name": "F4-E tariffs require real fresh staff and neither live nor secret input is accepted",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 79,
+      "name": "F4-E immutable tariff metering cost journal proposal and history cannot be overwritten",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 83,
+      "name": "F4-E cost rise creates existing catalog proposal and separate approval then confirmed mock publication",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 87,
+      "name": "F4-E proposal currency review and changed catalog confirmation fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 91,
+      "name": "F4-E customer prepaid cycle is exactly 30 days and cannot be silently changed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 94,
+      "name": "F4-E failed cost insert rolls back ledger outbox and work before retry",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 98,
+      "name": "F4-E known rolled-back deadlock retries local accrual once without duplicate money",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-costs.php",
+      "line": 103,
+      "name": "F4-E prepaid provider VM never produces ondemand hourly cost despite approved tariff",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 29,
+      "name": "Final P0 already refunded VM STOP preserves SUSPENDED and immutable finance",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 32,
+      "name": "Final P0 paid ACTIVE STOP UNKNOWN then FULL refund reconciles STOPPED SUSPENDED once",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 35,
+      "name": "Final P0 cancellation after STOP UNKNOWN cannot restore historical ACTIVE",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 38,
+      "name": "Final P0 pending unverified task remains UNKNOWN without another STOP",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 41,
+      "name": "Final P0 currently funded service with no suspension preserves ACTIVE independently of STOPPED",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 44,
+      "name": "Final P0 independent suspension before transport loss is never erased",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 47,
+      "name": "Final P0 independent suspension after transport loss is never reactivated",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 50,
+      "name": "Final P0 legacy UNKNOWN never uses historical ACTIVE audit as authorization",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 53,
+      "name": "Final P0 repeated reconciliation cannot duplicate financial or provider effect",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 59,
+      "name": "Final P1 Cloud WAITING_TASK after successful receipt resumes through independent cron",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 62,
+      "name": "Final P1 Cloud PENDING after receipt resumes through independent cron with one CREATE",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-final-audit.php",
+      "line": 65,
+      "name": "Final P1 Domain PENDING after receipt resumes through independent cron without duplicate register",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 13,
+      "name": "F4-D 1 4 8 PHP workers create one VM and apply one task completion",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 20,
+      "name": "F4-D durable send permission remains consumed in eight new PHP processes",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 25,
+      "name": "F4-D SKIP LOCKED and rollback keep operation and hold records consistent",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 33,
+      "name": "F4-D polling crash expired lease fences late task completion then reconciles once",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 38,
+      "name": "F4-D confirmation payload version actor freshness and observation fences reject reuse",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 43,
+      "name": "F4-D bounded cron progresses past 101 blocked canonical units without replay",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-races.php",
+      "line": 54,
+      "name": "F4-D real CLI and bounded outbox queue execute once without leaking payloads",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud-sdk.php",
+      "line": 22,
+      "name": "F4-D original SDK auth POST replay is blocked by committed Cloud operation dispatch admission",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 8,
+      "name": "F4-D canonical paid CLOUD source scope unit and immutable specification",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 19,
+      "name": "F4-D catalog OS location custom bounds and secret fields fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 28,
+      "name": "F4-D create acceptance is not ACTIVE until independent task and resource evidence",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 35,
+      "name": "F4-D power reinstall upgrade and terminate use confirmation and verified tasks",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 43,
+      "name": "F4-D before after body-loss and auth-loss never trigger a second create",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 46,
+      "name": "F4-D UNKNOWN absent call or pending task cannot become successful",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 49,
+      "name": "F4-D timeout after effect reconciles one existing task with explicit scoped operator decision",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 54,
+      "name": "F4-D crash after effect expires lease; stale response and durable send replay are fenced",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 58,
+      "name": "F4-D alien task status resource account and fingerprint never mean success",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 68,
+      "name": "F4-D refund after dispatch preserves resource evidence and suspends funded service",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 71,
+      "name": "F4-D imported VM binds verified external resource and cannot CREATE",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/cloud.php",
+      "line": 78,
+      "name": "F4-D projections immutable usage provenance and non-test environments exclude secrets",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 31,
+      "name": "F4-C missing resource and UNKNOWN call never prove no effect; replay stays held",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 42,
+      "name": "F4-C crash before call cannot be confirmed failed; expiry fences old worker",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 51,
+      "name": "F4-C independently recorded definitive no effect permits explicit failure only",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 57,
+      "name": "F4-C mismatched call fingerprint status account and resource fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 69,
+      "name": "F4-C stale inspection generation domain version and newer inspection fence resolution",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 76,
+      "name": "F4-C hold timestamp and reason commit together and roll back together",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 85,
+      "name": "F4-C SKIP LOCKED bypasses contended first operation without losing its state",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 90,
+      "name": "F4-C 1 4 and 8 independent PHP runners produce one physical registration per domain",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 98,
+      "name": "F4-C renewal finance rechecked at claim and result; refund never dispatches or extends again",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 106,
+      "name": "F4-C manual approval and immutable renewal binding cannot be bypassed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 119,
+      "name": "F4-C crash after effect and duplicate queue job cannot replay a registration",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-audit.php",
+      "line": 133,
+      "name": "F4-C parallel canonical renewal requests converge and eight runners extend only once",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-boundaries.php",
+      "line": 6,
+      "name": "F4 ownership generic transfer application lock rejects DOMAIN and CLOUD before policy or ownership mutation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-boundaries.php",
+      "line": 18,
+      "name": "F4 attach rechecks unpaid partial refunded and cancelled canonical sources before any domain write",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-boundaries.php",
+      "line": 28,
+      "name": "F4 attach rejects changed customer and manual pending service without weakening old model",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-model.php",
+      "line": 6,
+      "name": "F4-A paid canonical domain binds once with encrypted immutable contact history and outbox",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-model.php",
+      "line": 18,
+      "name": "SEC-004 domain contact and client projection deny cross customer expired and unscoped access",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-model.php",
+      "line": 27,
+      "name": "F4-A rollback removes model history contact and event atomically; non-test model unavailable",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 16,
+      "name": "domain operation enqueue requires canonical paid order, item and queued service",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 47,
+      "name": "domain operation claim locks funding source, assigns lease token and fences race",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 78,
+      "name": "domain operation register success: verified proof creates domain_evidence and transitions domain to REGISTERED",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 121,
+      "name": "DOMAIN-001: registrar timeout produces UNKNOWN, forbids retry and alternative dispatch",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 155,
+      "name": "DOMAIN-001 reconciliation: independent inspect verifies external registrar; rejects forged proof",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 205,
+      "name": "DOMAIN-001 reconciliation with funding revoked decouples physical domain from active service",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 239,
+      "name": "DOMAIN-002: verified definitive failure holds failover without current commercial evidence",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 276,
+      "name": "DOMAIN-002: unsupported capability does not trigger failover and rejects operation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 302,
+      "name": "Domain renewal blocks concurrent in-flight renewals and rejects another paid DOMAIN order",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 333,
+      "name": "Domain renewal increment remains exact through second timeout-after-effect reconciliation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 361,
+      "name": "Queue starvation avoidance: healthy domain operation progresses behind 101 blocked operations",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-operations.php",
+      "line": 401,
+      "name": "CLI and outbox integration executes domain operations idempotently",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-provider.php",
+      "line": 12,
+      "name": "F4-B both durable registrar contracts replay UUID and reject altered payload or transaction nesting",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-provider.php",
+      "line": 23,
+      "name": "F4-B ambiguous mock persists effect independently without disclosing resource; explicit inspect finds one resource",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-provider.php",
+      "line": 31,
+      "name": "F4-B definitive no effect proof and unsupported capability do not create external domain",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-provider.php",
+      "line": 38,
+      "name": "OPS-005 registrar mock independent PHP workers replay create and renew with one physical effect",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-unit.php",
+      "line": 6,
+      "name": "F4-A canonical IDNA Unicode A-label case and root dot share one identity",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-unit.php",
+      "line": 14,
+      "name": "F4-A malformed IDNA labels URLs IPs whitespace and length fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/domains-unit.php",
+      "line": 17,
+      "name": "DOMAIN-003 internal TLD capability and required contact validation are fail closed",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 22,
+      "name": "F4-F audit Domain success summary is allowlisted scoped and bound to explicit SUCCESS",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 25,
+      "name": "F4-F audit definitive no effect enables FAILURE only and never registrar failover",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 28,
+      "name": "F4-F audit resource absent with uncertain money effect cannot offer definitive failure",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 31,
+      "name": "F4-F audit wrong customer operation and forged summary are rejected",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 34,
+      "name": "F4-F audit changed active attempt invalidates previously valid inspection",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 37,
+      "name": "F4-F audit generation or version drift rejects summary and old confirmation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 40,
+      "name": "F4-F audit changed outcome and stale evidence cannot reuse explicit confirmation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 43,
+      "name": "F4-F audit Cloud pending task has no success or failure outcome",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 46,
+      "name": "F4-F audit evidence requires both exact staff permissions and rejects customer",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 49,
+      "name": "F4-F audit foreign Cloud task and later instance generation cannot produce success",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-evidence-cases.php",
+      "line": 52,
+      "name": "F4-F audit parallel HTTP confirmation applies exactly one reconciliation and replay no effect",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 36,
+      "name": "F4-F native authentication protects HTML and API; wrong HTTP methods create nothing",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 37,
+      "name": "F4-F real login cookie MFA and fresh step-up chain opens customer/admin panels",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 40,
+      "name": "F4-F client projection separates physical VM financial service and 30 day sale without secrets",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 41,
+      "name": "F4-F cross customer service ID and customer override cannot read or mutate",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 42,
+      "name": "F4-F staff needs exact tenant service grant; customer cannot read cost projection",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 43,
+      "name": "F4-F CSRF explicit acceptance and strict purchased spec reject before any provider call",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 44,
+      "name": "F4-F pure preparation changes no service operation ledger outbox; payload tampering rejected",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 45,
+      "name": "F4-F stale service version and stale confirmation cannot enqueue",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 46,
+      "name": "F4-F duplicate submit and cached replay retain one durable operation and one provider POST",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 47,
+      "name": "F4-F two independent HTTP servers same confirmation serialize one accepted action",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 48,
+      "name": "F4-F two independent HTTP requests same idempotency key return identical operation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 49,
+      "name": "F4-F stale native step-up blocks preparation and replay",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 50,
+      "name": "F4-F refunded source blocks normal action while scoped native staff containment remains safe",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 51,
+      "name": "F4-F UNKNOWN inspect queues without HTTP provider IO then independent cron resolves no second POST",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 52,
+      "name": "F4-F latest session revocation rejects cached HTTP result and HTML",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 53,
+      "name": "F4-F domain HTTP nameserver expiry registration and UNKNOWN differ without contact PII",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 61,
+      "name": "F4-F finance HTTP distinguishes missing cost invoice difference and separate approval publication",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 65,
+      "name": "F4-F client correct reinstall then power operations remain task verified",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 66,
+      "name": "F4-F native terminate wait and two HTTP requests preserve one termination",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 67,
+      "name": "F4-F concurrent financial change after prepare invalidates HTTP confirmation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 68,
+      "name": "F4-F identity version change blocks prepared action before native enqueue",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 69,
+      "name": "F4-F permission revocation invalidates cached response authorization",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 70,
+      "name": "F4-F HTML and JSON use no-store CSP and safe dynamic text encoding",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 71,
+      "name": "F4-F accepted CREATE task is not exposed as active VM or completed service",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 72,
+      "name": "F4-F impersonation cannot read provider panels or authorize critical operation",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 73,
+      "name": "F4-F stale staff authorization before inspection cron preserves UNKNOWN without provider retry",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 74,
+      "name": "F4-F invoice match remains MOCK and does not settle payable or publish catalog price",
+      "php83_pass": true,
+      "php84_pass": true
+    },
+    {
+      "file": "tests/provider-panel-http.php",
+      "line": 75,
+      "name": "F4-F second distinct confirmation is stale after first HTTP operation wins",
+      "php83_pass": true,
+      "php84_pass": true
+    }
+  ],
+  "note": "Each listed name matched an actual PASS line in both accepted HEAD job logs; helpers are not counted as independent suites."
+}
