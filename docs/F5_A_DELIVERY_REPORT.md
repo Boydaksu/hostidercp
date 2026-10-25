@@ -1,5 +1,8 @@
 # F5-A — Destek çekirdeği test/mock teslim raporu
 
+> Bu rapor tarihsel ilk teslimdir. P1 event receipt ve q sözleşmesi için güncel
+> [hedefli denetim düzeltmesi](F5_A_POST_AUDIT_REVIEW.md) ve ADR-017 esas alınır.
+
 25 Ekim 2026. **Bağımsız kabul bekler; DONE veya production-ready değildir.**
 Başlangıç `5d944dcb9abbf5e0f447272d8273346349aab3c8`; dal `codex/f5-support-center`.
 Yalnız F5-A uygulandı. [Uygulama SHA a38e8da89bef9fa0476210a8ad021d250606c81a](https://github.com/Boydaksu/hostidercp/commit/a38e8da89bef9fa0476210a8ad021d250606c81a).

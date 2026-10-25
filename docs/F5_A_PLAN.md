@@ -1,5 +1,8 @@
 # F5-A — Uygulama sözleşmesi ve doğrulama planı
 
+> P1-1/P1-2 sonrası event UUID ve unsupported q sözleşmesi için
+> [hedefli plan](F5_A_POST_AUDIT_PLAN.md), ADR-017 ve [rapor](F5_A_POST_AUDIT_REVIEW.md).
+
 Kapsam: FR-SUPPORT, FR-ID, SEC-001/002/004, OPS-001/003; SUP-003/004 çekirdek,
 SUP-007. Yalnız APP_ENV=test. Native Identity değiştirilmeden kullanılır.
 Karar izi: R1-09, R2-01, R2-05/06 temel politika, R3-09, R4-01/02/04/07.

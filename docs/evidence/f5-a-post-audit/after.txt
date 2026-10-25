@@ -1,0 +1,6 @@
+PASS P1-1 distinct STATE events consume only their own dispatched receipt
+PASS P1-1 event ticket message private note and extra fields cannot forge receipt
+PASS P1-1 unpublished legacy or mismatched native queue payload stays unreceived
+PASS P1-2 search beyond first 50 is explicitly unsupported for client and department staff
+PASS P1-2 unfiltered pagination covers authorized 51 once with matching client staff pages
+5 tests, 0 failures

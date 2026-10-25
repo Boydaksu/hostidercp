@@ -1,5 +1,9 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-A hedefli denetim düzeltmesi:** Event receipt UUID bağlaması ve açık unsupported
+> şifreli arama sözleşmesi [F5_A_POST_AUDIT_REVIEW](docs/F5_A_POST_AUDIT_REVIEW.md)
+> altında izlenir. Bağımsız yeniden kabul bekler; F5-B/C/D/E veya canlı geçiş yetkisi yoktur.
+
 > **F5-A test/mock geliştirmesi:** Ticket, departman, immutable mesaj/dahili not,
 > native Identity kapsamı ve minimal HTTP çekirdeği ayrı `codex/f5-support-center`
 > dalındadır. [Plan](docs/F5_PLAN.md), [A sözleşmesi](docs/F5_A_PLAN.md),

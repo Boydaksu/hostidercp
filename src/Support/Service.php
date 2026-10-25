@@ -122,22 +122,23 @@ final readonly class Service
     private function event(array $u,array $s,array $row,string $kind,string $trace,bool $public,?array $old=null,?string $message=null): void
     {
         $id=Id::uuid();$this->c->db->execute("INSERT INTO support_events(id,ticket_id,customer_id,subject_id,kind,actor_id,session_id,identity_version,ticket_version,from_state,to_state,from_department,to_department,trace_id,provenance) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,'TEST_PANEL')",[$id,$row['id'],$row['customer_id'],$message??$row['id'],$kind,$u['id'],$s['id'],$u['identity_version'],$row['version'],$old['status']??null,$row['status'],$old['department_id']??null,$row['department_id'],$trace]);(new Audit($this->c->db))->record($this->access->actor($u,$s),AuditEvent::SupportChanged,$row['id'],$trace);
-        if($public){(new Outbox($this->c->db,new Queue($this->c->db)))->append($id,'support.changed',$row['id'],['ticket_id'=>$row['id'],'message_id'=>$message],$trace);}
+        if($public){(new Outbox($this->c->db,new Queue($this->c->db)))->append($id,'support.changed',$row['id'],['event_uuid'=>$id,'ticket_id'=>$row['id'],'message_id'=>$message],$trace);}
     }
     public function view(string $reference,string $context,string $view,array $p): array
     {
         $this->gate();Validation::fields($p,$view==='detail'?['id']:($view==='list'?['offset','q']:[]),$view==='detail'?['id']:[]);
         return $this->c->identity->locked($reference,$context,function(array $u,array $s)use($view,$p): array{
             $a=$this->access->actor($u,$s);
+            if($view==='list'&&array_key_exists('q',$p)){throw new HttpError(422,'SUPPORT_SEARCH_UNSUPPORTED');}
             if($view==='departments'){
                 if($a->staff){$this->access->management($u,$s);return $this->c->db->execute('SELECT id,name,enabled,allow_reopen,allow_hold,version FROM support_departments ORDER BY id')->fetchAll();}
                 if($a->customerId===null){throw new HttpError(403,'CUSTOMER_REQUIRED');}$this->c->identity->authorize($u,$s,'support.view',$a->customerId);return $this->c->db->execute('SELECT id,name FROM support_departments WHERE enabled=TRUE ORDER BY id')->fetchAll();
             }
             if($view==='detail'){return $this->detail($u,$s,$this->access->ticket($u,$s,Access::id($p['id'])));}
-            $offset=$p['offset']??'0';if(!is_string($offset)||!ctype_digit($offset)||(int)$offset>1000000){throw new HttpError(422,'INVALID_OFFSET');}$q=isset($p['q'])?Validation::text($p['q'],191):null;
+            $offset=$p['offset']??'0';if(!is_string($offset)||!ctype_digit($offset)||(int)$offset>1000000){throw new HttpError(422,'INVALID_OFFSET');}
             if(!$a->staff&&$a->customerId===null){throw new HttpError(403,'CUSTOMER_REQUIRED');}
             [$where,$params]=$this->access->listing($a);$rows=$this->c->db->execute('SELECT t.id FROM support_tickets t WHERE '.$where.' ORDER BY t.id LIMIT 50 OFFSET '.(int)$offset,$params)->fetchAll();$out=[];
-            foreach($rows as $row){try{$t=$this->access->ticket($u,$s,$row['id']);$v=$this->summary($t);if($q===null||mb_stripos($v['subject'],$q)!==false||str_contains($v['number'],$q)){$out[]=$v;}}catch(HttpError $e){if($e->status!==404){throw $e;}}}return $out;
+            foreach($rows as $row){try{$t=$this->access->ticket($u,$s,$row['id']);$out[]=$this->summary($t);}catch(HttpError $e){if($e->status!==404){throw $e;}}}return $out;
         });
     }
     private function summary(array $row): array
