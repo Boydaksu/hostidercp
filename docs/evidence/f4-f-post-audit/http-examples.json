@@ -1,0 +1,432 @@
+{
+    "environment": "test",
+    "synthetic": true,
+    "examples": {
+        "client-cloud": {
+            "id": "c9780b3a-c12d-4139-9b6c-88db5efd7237",
+            "name": "Synthetic Cloud",
+            "kind": "CLOUD",
+            "service_state": "ACTIVE",
+            "version": "4",
+            "cancel_at": null,
+            "provenance": "MOCK",
+            "transfer_supported": false,
+            "credential_retrieval_supported": false,
+            "period": {
+                "starts_at": null,
+                "ends_at": null,
+                "status": "PENDING_PROVIDER"
+            },
+            "sale_price": {
+                "currency": "USD",
+                "total_minor": "1080"
+            },
+            "sale_period_label": "30 DAYS prepaid customer sale",
+            "vm": {
+                "state": "ACTIVE",
+                "imported": false,
+                "version": "4"
+            },
+            "actions": [
+                "START",
+                "STOP",
+                "RESTART",
+                "REINSTALL",
+                "TERMINATE"
+            ],
+            "purchased_configuration": {
+                "locationid": 1,
+                "osid": 1,
+                "pid": 1,
+                "type": "ondemand"
+            },
+            "operations": [
+                {
+                    "id": "939a1435-c7d5-4ab3-ac89-2a7edc44417c",
+                    "kind": "CREATE",
+                    "status": "SUCCEEDED",
+                    "created_at": "2026-10-25 08:38:41.487696"
+                }
+            ],
+            "cost_state": "NOT_PROVEN",
+            "stop_ends_provider_cost": false,
+            "unsupported": [
+                "paid plan\/custom change",
+                "credential retrieval",
+                "transfer"
+            ],
+            "renewals": []
+        },
+        "admin-containment": {
+            "id": "f72e2c18-9ece-4b85-90e7-75cccd75f260",
+            "name": "Synthetic Cloud",
+            "kind": "CLOUD",
+            "service_state": "SUSPENDED",
+            "version": "6",
+            "cancel_at": null,
+            "provenance": "MOCK",
+            "transfer_supported": false,
+            "credential_retrieval_supported": false,
+            "period": {
+                "starts_at": null,
+                "ends_at": null,
+                "status": "PENDING_PROVIDER"
+            },
+            "sale_price": {
+                "currency": "USD",
+                "total_minor": "1080"
+            },
+            "sale_period_label": "30 DAYS prepaid customer sale",
+            "vm": {
+                "state": "STOPPED",
+                "imported": false,
+                "version": "6"
+            },
+            "actions": [],
+            "purchased_configuration": {
+                "locationid": 1,
+                "osid": 1,
+                "pid": 1,
+                "type": "ondemand"
+            },
+            "operations": [
+                {
+                    "id": "e570d8cb-173e-4bad-bc20-77d65b268272",
+                    "kind": "STOP",
+                    "status": "SUCCEEDED",
+                    "created_at": "2026-10-25 08:38:49.097384",
+                    "task_id": "2198014e-9df2-4358-bfa9-397abf552c67",
+                    "resource_id": "cc125738-5d36-4803-8560-50d43eab77af",
+                    "generation": 2,
+                    "lease_until": null,
+                    "runner_checked_at": "2026-10-25 08:38:49.292141",
+                    "safe_code": "TASK_RESOURCE_VERIFIED",
+                    "financial_exception": 1
+                },
+                {
+                    "id": "ed824209-5657-410e-9764-d75f2e475f58",
+                    "kind": "CREATE",
+                    "status": "SUCCEEDED",
+                    "created_at": "2026-10-25 08:38:48.612220",
+                    "task_id": "ddc75248-8d24-42b1-9f84-fcbc14aeea87",
+                    "resource_id": "cc125738-5d36-4803-8560-50d43eab77af",
+                    "generation": 1,
+                    "lease_until": null,
+                    "runner_checked_at": "2026-10-25 08:38:48.644081",
+                    "safe_code": "TASK_RESOURCE_VERIFIED",
+                    "financial_exception": 0
+                }
+            ],
+            "resource": {
+                "account_id": "0b0656ad-6e56-4160-be4d-166a9c976c98",
+                "resource_id": "cc125738-5d36-4803-8560-50d43eab77af",
+                "provider_reference": "MOCK-VM-cc125738-5d36-4803-8560-50d43eab77af"
+            },
+            "financial_source_valid": false,
+            "observations": [
+                {
+                    "id": "afbeaa0f-ee93-43ca-ab1e-f202688b07ee",
+                    "operation_id": "e570d8cb-173e-4bad-bc20-77d65b268272",
+                    "created_at": "2026-10-25 08:38:49.299721"
+                },
+                {
+                    "id": "461d7e10-3544-4ed1-83fe-ecdfe6529dcd",
+                    "operation_id": "ed824209-5657-410e-9764-d75f2e475f58",
+                    "created_at": "2026-10-25 08:38:48.654623"
+                }
+            ],
+            "cost_state": "NOT_PROVEN",
+            "stop_ends_provider_cost": false,
+            "unsupported": [
+                "paid plan\/custom change",
+                "credential retrieval",
+                "transfer"
+            ],
+            "renewals": [],
+            "inspection_jobs": []
+        },
+        "admin-domain-unknown": {
+            "id": "9bad3a5a-748a-4725-bc41-78b4565bf847",
+            "name": "Synthetic domain",
+            "kind": "DOMAIN",
+            "service_state": "UNKNOWN",
+            "version": "3",
+            "cancel_at": null,
+            "provenance": "MOCK",
+            "transfer_supported": false,
+            "credential_retrieval_supported": false,
+            "period": {
+                "starts_at": null,
+                "ends_at": null,
+                "status": "PENDING_PROVIDER"
+            },
+            "sale_price": {
+                "currency": "USD",
+                "total_minor": "600"
+            },
+            "sale_period_label": "Purchased domain term",
+            "domain": {
+                "name": "dcaa271783d7443118337f64867c8c76d.example",
+                "state": "UNKNOWN",
+                "expires_at": null,
+                "nameservers": [
+                    "ns1.example",
+                    "ns2.example"
+                ],
+                "locked": false
+            },
+            "operations": [
+                {
+                    "id": "6e201055-2159-450b-9363-4afd8bb7c45e",
+                    "kind": "REGISTER",
+                    "status": "UNKNOWN",
+                    "created_at": "2026-10-25 08:38:52.368805",
+                    "updated_at": "2026-10-25 08:38:52.683395",
+                    "runner_checked_at": "2026-10-25 08:38:52.667786",
+                    "runner_hold_code": null,
+                    "lease_until": "2026-10-25 08:39:52.667786",
+                    "active_attempt_id": "516abbe9-3a14-4ff2-a7e8-d5512f509950"
+                }
+            ],
+            "attempts": [
+                {
+                    "id": "516abbe9-3a14-4ff2-a7e8-d5512f509950",
+                    "operation_id": "6e201055-2159-450b-9363-4afd8bb7c45e",
+                    "account_id": "b85275c2-aaf8-4670-baf1-f296732f5279",
+                    "status": "UNKNOWN",
+                    "safe_code": "PROVIDER_OUTCOME_UNKNOWN",
+                    "finished_at": "2026-10-25 08:38:52.683854"
+                }
+            ],
+            "inspections": [],
+            "actions": [],
+            "unsupported": [
+                "transfer",
+                "EPP",
+                "contact export",
+                "DNS mutation"
+            ],
+            "renewals": [],
+            "inspection_jobs": []
+        },
+        "client-domain": {
+            "id": "9bad3a5a-748a-4725-bc41-78b4565bf847",
+            "name": "Synthetic domain",
+            "kind": "DOMAIN",
+            "service_state": "ACTIVE",
+            "version": "4",
+            "cancel_at": null,
+            "provenance": "MOCK",
+            "transfer_supported": false,
+            "credential_retrieval_supported": false,
+            "period": {
+                "starts_at": "2026-10-25 08:38:53.849336",
+                "ends_at": "2027-10-25 08:38:53.849336",
+                "status": "VERIFIED"
+            },
+            "sale_price": {
+                "currency": "USD",
+                "total_minor": "600"
+            },
+            "sale_period_label": "Purchased domain term",
+            "domain": {
+                "name": "dcaa271783d7443118337f64867c8c76d.example",
+                "state": "REGISTERED",
+                "expires_at": "2027-10-25 08:38:53.849336",
+                "nameservers": [
+                    "ns1.example",
+                    "ns2.example"
+                ],
+                "locked": false
+            },
+            "operations": [
+                {
+                    "id": "6e201055-2159-450b-9363-4afd8bb7c45e",
+                    "kind": "REGISTER",
+                    "status": "SUCCEEDED",
+                    "created_at": "2026-10-25 08:38:52.368805",
+                    "updated_at": "2026-10-25 08:38:53.850996"
+                }
+            ],
+            "actions": [],
+            "unsupported": [
+                "transfer",
+                "EPP",
+                "contact export",
+                "DNS mutation"
+            ],
+            "renewals": []
+        },
+        "admin-costs": {
+            "provenance": "MOCK",
+            "provider_invoice_is_paid": false,
+            "stop_ends_provider_cost": false,
+            "work": [
+                {
+                    "id": "c797cb98-cdec-4b72-8933-7fbca2ebd284",
+                    "status": "COSTED_MOCK",
+                    "safe_code": "MOCK_METER_TARIFF_VERIFIED",
+                    "created_at": "2026-10-25 08:38:54.228517"
+                },
+                {
+                    "id": "4231c2e1-443d-4416-8911-86675e5ca15c",
+                    "status": "UNVERIFIED",
+                    "safe_code": "METERING_REQUIRED",
+                    "created_at": "2026-10-25 08:38:54.215932"
+                }
+            ],
+            "costs": [
+                {
+                    "id": "c797cb98-cdec-4b72-8933-7fbca2ebd284",
+                    "currency": "USD",
+                    "total_minor": "20",
+                    "starts_at": "2026-10-25 06:38:54",
+                    "ends_at": "2026-10-25 07:38:54",
+                    "net_minor": "20",
+                    "tax_minor": "0",
+                    "reporting": {
+                        "currency": "USD",
+                        "exponent": 2,
+                        "minor": "20"
+                    },
+                    "fx": null,
+                    "provenance": "MOCK"
+                }
+            ],
+            "reconciliations": [
+                {
+                    "id": "b93f61ee-c1a1-4d34-ad8c-1025b2ce8ebe",
+                    "status": "REVIEW",
+                    "reason": "INVOICE_AMOUNT_DIFFERENCE",
+                    "difference_minor": "1",
+                    "cost_total_minor": "20",
+                    "invoice": {
+                        "currency": "USD",
+                        "ends_at": "2026-10-25 07:38:54",
+                        "final": true,
+                        "observed_at": "2026-10-25 08:38:54",
+                        "provenance": "MOCK",
+                        "starts_at": "2026-10-25 06:38:54",
+                        "total_minor": "21"
+                    }
+                }
+            ],
+            "proposals": [
+                {
+                    "id": "fb67e1d5-217b-41d8-b92d-db2e498bec8e",
+                    "cost_id": "c797cb98-cdec-4b72-8933-7fbca2ebd284",
+                    "margin": "0.2",
+                    "forecast_days": 30,
+                    "forecast_cost": "144",
+                    "forecast_currency": "USD",
+                    "proposed_price": {
+                        "amount": "180",
+                        "currency": "USD",
+                        "cycle_id": "cb399fe1-7b1c-4aeb-a3c9-a5492d1d23a0",
+                        "item_id": "327e2666-47c1-4c9b-8fbd-6b5c9a32b0f4"
+                    },
+                    "review_reason": "MOCK_COST_MANUAL_REVIEW",
+                    "auto_publish_allowed": false,
+                    "approved": false,
+                    "published": false
+                }
+            ]
+        },
+        "client-html": "<!doctype html><html lang=\"tr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"panel-context\" content=\"client\"><meta name=\"panel-screen\" content=\"cloud\"><title>Hostider · Cloud sunucuları<\/title><link rel=\"stylesheet\" href=\"\/assets\/identity.css\"><link rel=\"stylesheet\" href=\"\/assets\/commerce.css\"><link rel=\"stylesheet\" href=\"\/assets\/provider-panel.css\"><script src=\"\/assets\/provider-panel.js\" defer><\/script><\/head><body><aside id=\"sidebar\"><a class=\"brand\" href=\"\/client\">hostider<span>automation<\/span><\/a><nav aria-label=\"Hizmet panelleri\"><a href=\"\/client\/domains\">Alan adları<\/a><a href=\"\/client\/cloud\">Cloud sunucuları<\/a><a href=\"\/client\/services\">Hizmet ve yenileme işlemleri<\/a><a href=\"\/client\/commerce\">Satış ve ödemeler<\/a><a href=\"\/client\">Hesap ve güvenlik<\/a><\/nav><\/aside><div class=\"shell\"><header><h1>Cloud sunucuları<\/h1><span class=\"badge\">TEST \/ MOCK<\/span><\/header><main id=\"main\"><p class=\"warning\">Sentetik sağlayıcı verileri. Gerçek sağlayıcı işlemleri ve gerçek maliyet doğrulaması kapalıdır.<\/p><form id=\"scope\"><label>Müşteri kapsamı <input name=\"customer\" autocomplete=\"off\" placeholder=\"Müşteri kimliği\" disabled><\/label><button>Listeyi yükle<\/button><\/form><details><summary>Kritik işlemler için oturumu doğrula<\/summary><form id=\"step-up\"><label>Parola <input type=\"password\" name=\"password\" autocomplete=\"current-password\" required><\/label><label>MFA kodu <input name=\"code\" autocomplete=\"one-time-code\"><\/label><button>Doğrula<\/button><\/form><\/details><section id=\"items\" aria-label=\"Hizmet listesi\"><\/section><section id=\"detail\" aria-live=\"polite\"><\/section><div id=\"notice\" role=\"status\" aria-live=\"polite\"><\/div><\/main><footer>UNKNOWN yeniden gönderilmez · STOP maliyetin durduğu anlamına gelmez · Transfer ve credential teslimi desteklenmiyor.<\/footer><\/div><dialog id=\"review\" aria-labelledby=\"review-title\"><\/dialog><\/body><\/html>",
+        "audit-domain-success": {
+            "evidence_id": "16b96c1f-131f-4877-b12c-6466a06f983d",
+            "operation_id": "0636dc8f-66c3-4957-b036-2b2f3ab1aafa",
+            "attempt_id": "b1d2f3e5-fbab-4c59-aa02-82980a3248b1",
+            "generation": "1",
+            "operation_state": "MANUAL_REVIEW",
+            "classification": "verified_success",
+            "bindings": {
+                "inspection_operation": true,
+                "active_attempt": true,
+                "generation_version": true,
+                "account": true,
+                "resource": true,
+                "resource_absent": false,
+                "financial_no_effect": false
+            },
+            "observed_at": "2026-10-25 08:39:05.276554",
+            "expires_at": "2026-10-25 08:44:05.276554",
+            "fresh": true,
+            "provenance": "MOCK",
+            "allowed_outcomes": [
+                "CONFIRMED_SUCCESS"
+            ],
+            "failure_requires_resource_and_financial_no_effect": true
+        },
+        "audit-domain-no-effect": {
+            "evidence_id": "94c01f71-f9a1-40b7-9f3d-58dea65326be",
+            "operation_id": "338686b5-89d6-4fd9-bdec-93b081865415",
+            "attempt_id": "78ae8289-2218-42ae-a85c-f6bcdf5541f4",
+            "generation": "1",
+            "operation_state": "MANUAL_REVIEW",
+            "classification": "definitive_no_effect",
+            "bindings": {
+                "inspection_operation": true,
+                "active_attempt": true,
+                "generation_version": true,
+                "account": true,
+                "resource": false,
+                "resource_absent": true,
+                "financial_no_effect": true
+            },
+            "observed_at": "2026-10-25 08:39:06.698157",
+            "expires_at": "2026-10-25 08:44:06.698157",
+            "fresh": true,
+            "provenance": "MOCK",
+            "allowed_outcomes": [
+                "CONFIRMED_FAILURE"
+            ],
+            "failure_requires_resource_and_financial_no_effect": true
+        },
+        "audit-domain-insufficient": {
+            "evidence_id": "239f6568-780b-4f7b-868e-5a230e93d57f",
+            "operation_id": "d2bab4ba-3f8a-4699-89cd-55dfe3df572e",
+            "attempt_id": "d1fecd28-9c7b-458a-8dd8-e91211dbc0e5",
+            "generation": "1",
+            "operation_state": "MANUAL_REVIEW",
+            "classification": "insufficient_evidence",
+            "bindings": {
+                "inspection_operation": true,
+                "active_attempt": true,
+                "generation_version": true,
+                "account": true,
+                "resource": false,
+                "resource_absent": false,
+                "financial_no_effect": false
+            },
+            "observed_at": "2026-10-25 08:39:08.168857",
+            "expires_at": "2026-10-25 08:44:08.168857",
+            "fresh": true,
+            "provenance": "MOCK",
+            "allowed_outcomes": [],
+            "failure_requires_resource_and_financial_no_effect": true
+        },
+        "audit-cloud-pending": {
+            "evidence_id": "94645c55-91f9-4cf0-88ad-6e9112e20bce",
+            "operation_id": "d909ef0b-493c-4e55-a80a-22e35785afdb",
+            "task_id": "144ae74e-f49b-4d8a-98ae-3ecb696dfcb0",
+            "generation": "2",
+            "operation_state": "UNKNOWN",
+            "classification": "pending",
+            "bindings": {
+                "inspection_operation": true,
+                "generation_version": true,
+                "task_account_resource": true,
+                "account_match": true,
+                "resource_match": true,
+                "verified_target": false
+            },
+            "observed_at": "2026-10-25 08:39:16.945705",
+            "expires_at": "2026-10-25 08:44:16.945705",
+            "fresh": true,
+            "provenance": "MOCK",
+            "allowed_outcomes": [],
+            "failure_supported": false
+        }
+    }
+}

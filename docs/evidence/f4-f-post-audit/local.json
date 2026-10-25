@@ -1,0 +1,31 @@
+{
+  "application_sha": "6e25a8b98de6e0c9da5e84df6b78e46cd47854f2",
+  "php": "8.4.24",
+  "mariadb": "10.11.18",
+  "suites": 49,
+  "tests": 394,
+  "failures": 0,
+  "preserved_tests": 383,
+  "new_http_regressions": [
+    "PASS F4-F audit Domain success summary is allowlisted scoped and bound to explicit SUCCESS",
+    "PASS F4-F audit definitive no effect enables FAILURE only and never registrar failover",
+    "PASS F4-F audit resource absent with uncertain money effect cannot offer definitive failure",
+    "PASS F4-F audit wrong customer operation and forged summary are rejected",
+    "PASS F4-F audit changed active attempt invalidates previously valid inspection",
+    "PASS F4-F audit generation or version drift rejects summary and old confirmation",
+    "PASS F4-F audit changed outcome and stale evidence cannot reuse explicit confirmation",
+    "PASS F4-F audit Cloud pending task has no success or failure outcome",
+    "PASS F4-F audit evidence requires both exact staff permissions and rejects customer",
+    "PASS F4-F audit foreign Cloud task and later instance generation cannot produce success",
+    "PASS F4-F audit parallel HTTP confirmation applies exactly one reconciliation and replay no effect"
+  ],
+  "http_total": 39,
+  "quality": {
+    "phpstan": "PASS",
+    "composer_audit": "0 advisories",
+    "lint": "311 files; 0 violations",
+    "scan": "323 files; 0 findings",
+    "javascript": "PASS"
+  },
+  "raw_output_sha256": "b06e222f037a7ec0885aabbf6bba029e35ffcc22fa461f6ad88118d0ead751ee"
+}

@@ -1,0 +1,12 @@
+PASS F4-F audit Domain success summary is allowlisted scoped and bound to explicit SUCCESS
+PASS F4-F audit definitive no effect enables FAILURE only and never registrar failover
+PASS F4-F audit resource absent with uncertain money effect cannot offer definitive failure
+PASS F4-F audit wrong customer operation and forged summary are rejected
+PASS F4-F audit changed active attempt invalidates previously valid inspection
+PASS F4-F audit generation or version drift rejects summary and old confirmation
+PASS F4-F audit changed outcome and stale evidence cannot reuse explicit confirmation
+PASS F4-F audit Cloud pending task has no success or failure outcome
+PASS F4-F audit evidence requires both exact staff permissions and rejects customer
+PASS F4-F audit foreign Cloud task and later instance generation cannot produce success
+PASS F4-F audit parallel HTTP confirmation applies exactly one reconciliation and replay no effect
+11 new regressions; HTTP total 39 tests, 0 failures

@@ -1,5 +1,11 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4-F son denetim düzeltmesi:** Native doğrulanmış kanıt özeti ve Domain no-effect FAILURE
+> onayı [F4_F_POST_AUDIT_REVIEW](docs/F4_F_POST_AUDIT_REVIEW.md) ile teslim edildi.
+> PHP8.3/8.4 **394/394**; 001–048 korunur, yeni migration yoktur. Bağımsız yeniden kabul bekler.
+> Mapping/import CRUD proje sahibinin açık onayıyla ayrı işe ertelendi; uygulanmış/DONE değildir.
+> DOMAIN-002 PARTIAL ve canlı GATE'ler OPEN; F5/F6, merge veya production başlatılmaz.
+
 > **F4-F test/mock teslimi; bağımsız kabul bekliyor:** Domain/Cloud müşteri ve personel panelleri,
 > native Identity HTTP güvenliği ve FIN-010 ekranları uygulandı. PHP8.3/8.4 **383/383**;
 > [teslim raporu](docs/F4_F_DELIVERY_REPORT.md), [plan](docs/F4_F_PLAN.md).
