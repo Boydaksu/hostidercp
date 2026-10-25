@@ -1,0 +1,11 @@
+{
+  "baseline": "c9eb0fcc87038ea3b3c58d9a2b5415af8be5d731",
+  "verified_files": 97,
+  "changed_baseline_files": [],
+  "php": "8.4.24",
+  "mariadb": "10.11.18",
+  "tests": 248,
+  "failures": 0,
+  "ci": "NOT_RUN",
+  "f4_complete": false
+}

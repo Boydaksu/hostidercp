@@ -4,6 +4,7 @@ namespace Hostider\Core\Security;
 enum AuditEvent: string
 {
     case ServiceChanged = 'service.changed';
+    case DomainChanged = 'domain.changed';
     case FinancialPosted = 'finance.posted';
     case CatalogChanged = 'catalog.changed';
     case OrderChanged = 'orders.changed';

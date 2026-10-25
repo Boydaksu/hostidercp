@@ -1,0 +1,170 @@
+{
+  "base": "7135e7c37dea1d7889686cf06333736706a81a27",
+  "application_sha": "131859cbb5c02e5e6d2f63b8af928c63edc78782",
+  "local_metadata_sha": "9c6cfc47f52186689447062f1746c551cc17c938",
+  "tree": "4f876496d6ea86269ed87820badca5abda8b00d2",
+  "files": [
+    {
+      "path": ".github/workflows/f0.yml",
+      "sha256": "331aa4934584fe55b2cd1358af375cfd6690f2e898e0195ebcbe54ff116f45a5",
+      "git_blob": "91b8d82c42e958e1e3b5433134e9a75fdfeaadb8"
+    },
+    {
+      "path": "README.md",
+      "sha256": "df0794ab36006fa5013f917a4d9d63b1617c75f0ea119c2bdb3f6d8ae4ea36eb",
+      "git_blob": "0cab93ea6a60e47b806c5ecd6e799d4e3288dca2"
+    },
+    {
+      "path": "bin/console.php",
+      "sha256": "1a89857974128359dd72c4f9d5bf2dc30d1ccd1c9a89e3ae02849ec996f08f2c",
+      "git_blob": "75157d46539d46bf194598614396e363d4b3175b"
+    },
+    {
+      "path": "bootstrap/app.php",
+      "sha256": "9240e2853581a0721369c0f8f77617243543e316665da578ecacd3e9bf5406bc",
+      "git_blob": "f4dbf235e8ad422973e5be90feb2b262d5e7f99c"
+    },
+    {
+      "path": "docs/09_API_AND_SCREENS.md",
+      "sha256": "8585a9fe2a3053b51431c4e6dbebf5c2e10a9f5c9e0955100b1a2afdc7660322",
+      "git_blob": "af111df7c5007d08f96abf11f6614eed747433c9"
+    },
+    {
+      "path": "docs/F4_F_PLAN.md",
+      "sha256": "416a8a5f44bbc3a26bfc628562bb8f703e8464471e24b0cb6ae94e97c5f19640",
+      "git_blob": "400a8fd01708697d34461e8ae8c8e114723e4222"
+    },
+    {
+      "path": "docs/F4_PLAN.md",
+      "sha256": "e7b0281797a054087a46abc282578994f69ff0ff08c8a90cdb511dd4906b0dc9",
+      "git_blob": "5fcd286c466d195314694759461cc0ba0416e5ed"
+    },
+    {
+      "path": "docs/adr/ADR-015-provider-panel-http-boundaries.md",
+      "sha256": "c1e1a72236a46ee90ee56e55b940fb5dd72e881b5f61e998b777151080690485",
+      "git_blob": "d68af6c105ac48259b6008ca71991687fe945f7e"
+    },
+    {
+      "path": "docs/evidence/f4-f/http-examples.json",
+      "sha256": "ebdd906938344d6bcfb84db6ef59f4fff2ddf853103820ab3f68523fc0717347",
+      "git_blob": "41896ef6e11c10be49122590c00c8a1f478f6251"
+    },
+    {
+      "path": "docs/evidence/f4-f/local-http.txt",
+      "sha256": "c8bef5db28791d591d0124a8ec9a81ed50ca576a141c9983a035f3adf543d525",
+      "git_blob": "2b1ffffce87317c2e23bab4a9d99bfbd5d5246fe"
+    },
+    {
+      "path": "docs/evidence/f4-f/local.json",
+      "sha256": "fbd9ebd70f3a39d1f6a8cd5d4eeebdc839e69e690734ce0f492a47933316cfb8",
+      "git_blob": "e3ebfef85f2536bf4e5178bee47cdde8129f15ad"
+    },
+    {
+      "path": "docs/evidence/f4-f/migrations.json",
+      "sha256": "272d84e66b5ccf1806d84c32e2fbc48acdf81f7c212523399159624382da49f3",
+      "git_blob": "182df44541aa7c7e3fecb3f430f253590f6b1035"
+    },
+    {
+      "path": "migrations/048_provider_panel.php",
+      "sha256": "d183c79d2f859b860385d9a9e3898a5b53821cc33df7683e07dcdb0c37827bbe",
+      "git_blob": "c728fa7c52970756f55b5da672007b6a1b55df89"
+    },
+    {
+      "path": "public/assets/provider-panel.css",
+      "sha256": "1a8cd52cf5df19f72c1f6f01c55c0dde30cea2b64889228570329ddd0a5e7c60",
+      "git_blob": "1bc81621cf7c9aaf64e4eae3b25e0b63e7e6487d"
+    },
+    {
+      "path": "public/assets/provider-panel.js",
+      "sha256": "b3835d3eb692e14a14488d71025e69b3c70831bd42ac16422113af73de082eef",
+      "git_blob": "2c84119c5c3b32554b1e77f1c9edcacea9b5c543"
+    },
+    {
+      "path": "public/index.php",
+      "sha256": "8a6eda7642e6dfbeef81b96d06e6280b5dc7fd2b62e9ab7481f33f4de640315a",
+      "git_blob": "d1140b8fab725f316ec2f693010316c27731b167"
+    },
+    {
+      "path": "src/Cloud/Engine.php",
+      "sha256": "32b7568f6f76ae699572cbed5257070cf5027e59f888f614f2911d1ba4f5cbeb",
+      "git_blob": "faf01cf10115f66264584c2d0534e4a0ab992fc1"
+    },
+    {
+      "path": "src/Domains/DomainReconciliation.php",
+      "sha256": "6fc0bdcb8eb9d24752b0a0e47275a6a379d6775e63bc45f79bbf4bbbbabd25e4",
+      "git_blob": "3a09e961d77a1f19c41fc8c75da54c52507bc043"
+    },
+    {
+      "path": "src/Identity/Panel.php",
+      "sha256": "8fd6fbd4126e23a67707279a6ac7e8b3f7d12c7bed8ed0ed682fe118ba557009",
+      "git_blob": "2af71c7a18463f469ffcacf86567c43064a3b55f"
+    },
+    {
+      "path": "src/ProviderPanel/Access.php",
+      "sha256": "4aeb67daccf7fd2650fb69bc4809d9f4976632a6e97b868bf1f0205ae959f04f",
+      "git_blob": "1759a366a344db2991c731facc205fe4896ad4e7"
+    },
+    {
+      "path": "src/ProviderPanel/Commands.php",
+      "sha256": "45278038d2abf87a3ecdec69ef3d2257dc12e573cb806c5d8965fee5a7c358da",
+      "git_blob": "a494c06513639bec530dee6d1602b523f944a6d5"
+    },
+    {
+      "path": "src/ProviderPanel/Confirmations.php",
+      "sha256": "2b667706080834a50d3af483ad748b8f20d44d88fa16338012c567477dfaef8c",
+      "git_blob": "caaa7b32f18ac5a57473215fe90b690d690a8b9e"
+    },
+    {
+      "path": "src/ProviderPanel/Controller.php",
+      "sha256": "9af5b3d3cbb2455b74e6a9037468e0257d7408b80401d62d3dcb146cb6ab974d",
+      "git_blob": "c616f84a0d2f97243a51a2c32d243e859315706f"
+    },
+    {
+      "path": "src/ProviderPanel/Inspections.php",
+      "sha256": "2256cab3005708fea8191783d1f23180776d91a41af231a6610aa28bae87f47f",
+      "git_blob": "ff666c53142341b6632316ac82385400909ed09d"
+    },
+    {
+      "path": "src/ProviderPanel/Panel.php",
+      "sha256": "ee8e8b92417db042a1fa558da3b5afba559cb712cbd6ddba7ec203937e7780b9",
+      "git_blob": "6c2a0e3f528a1f44b50f2797a03cfafebfe6ac16"
+    },
+    {
+      "path": "src/ProviderPanel/Views.php",
+      "sha256": "13a23ff3909dd01482fb7753f4c9e7a8dfa9af11834fdd7d8d73674683d088db",
+      "git_blob": "6b58cc52a36f9eef27d4e8c3d34cc393b2654592"
+    },
+    {
+      "path": "tests/cloud-costs.php",
+      "sha256": "d477fdc6a90be0e56d075b6d70f60374a059b41b8eb92460d34f595c0373ec49",
+      "git_blob": "1a6069a8c9a6e6821d881212e96deea3c32924ae"
+    },
+    {
+      "path": "tests/cloud.php",
+      "sha256": "4a5d6434bb923e5c25866b90f8c1427b5cca0b30ba6e289df9ee511730f4f967",
+      "git_blob": "a03f99878a3167908ba07780bcbb215de295e8ee"
+    },
+    {
+      "path": "tests/domains-audit.php",
+      "sha256": "e69afc8271c73298093a69f02695c5e9e3fadf310bb19465d7813dc9f09db0f4",
+      "git_blob": "be42030112d82b19620e066dbfdda6eefad453b4"
+    },
+    {
+      "path": "tests/domains-fixture.php",
+      "sha256": "b5d2e2efa3cdacf1994a71cd95ea1cd76300260b4e1505fdd721705510727db4",
+      "git_blob": "d36cc70fe3fdd44e50b4e8b99d023b5d94901d47"
+    },
+    {
+      "path": "tests/provider-panel-http-child.php",
+      "sha256": "839933009a1a00c583cf184ce9d365eb9f692a1d75e963060581e2af18016e58",
+      "git_blob": "c68b71051bf9758f08bf9ba62fa5397033a114ac"
+    },
+    {
+      "path": "tests/provider-panel-http.php",
+      "sha256": "30816ce28824d8afe321c794f04cebf37bc90fdc07b9f573562032171dd7c867",
+      "git_blob": "e7d8f399a7af65128e54f69562178ac3214b9e3e"
+    }
+  ],
+  "migration_manifest": "migrations.json",
+  "network_provider_mutations": false
+}

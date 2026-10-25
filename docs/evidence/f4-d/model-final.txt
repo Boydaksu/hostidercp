@@ -1,0 +1,14 @@
+MIGRATION 001-043 preserved; 043 to 044 additive upgrade; replay no-op PASS
+PASS F4-D canonical paid CLOUD source scope unit and immutable specification
+PASS F4-D catalog OS location custom bounds and secret fields fail closed
+PASS F4-D create acceptance is not ACTIVE until independent task and resource evidence
+PASS F4-D power reinstall upgrade and terminate use confirmation and verified tasks
+PASS F4-D before after body-loss and auth-loss never trigger a second create
+PASS F4-D UNKNOWN absent call or pending task cannot become successful
+PASS F4-D timeout after effect reconciles one existing task with explicit scoped operator decision
+PASS F4-D crash after effect expires lease; stale response and durable send replay are fenced
+PASS F4-D alien task status resource account and fingerprint never mean success
+PASS F4-D refund after dispatch preserves resource evidence and suspends funded service
+PASS F4-D imported VM binds verified external resource and cannot CREATE
+PASS F4-D projections immutable usage provenance and non-test environments exclude secrets
+12 tests, 0 failures

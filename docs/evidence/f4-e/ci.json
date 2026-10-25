@@ -1,0 +1,757 @@
+{
+  "pr_run": 40119825512,
+  "pr_checkout": "f8c18dd87030cf8bb2923d2b39a90a64b07aee3f",
+  "pr_tree_equals_source": true,
+  "run_id": 40119824445,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40119824445",
+  "source": "f0af03a816a523a4e822cdf86c96261efb80194b",
+  "tree": "cefc14af198947a38b50ef780f4125275bd1fe55",
+  "jobs": [
+    {
+      "id": 120948736264,
+      "name": "PHP 8.3",
+      "conclusion": "success",
+      "php": [
+        "Updated to PHP 8.3.36"
+      ],
+      "mariadb": [
+        "Version: '10.11.19-MariaDB-ubu2204'"
+      ],
+      "checkout": "f0af03a816a523a4e822cdf86c96261efb80194b",
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-costs.php",
+          "tests": 24,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        }
+      ],
+      "tests": 354,
+      "failures": 0,
+      "workers": [
+        [
+          {
+            "processes": 1,
+            "sample_count": 1,
+            "work_wall_us": 52243,
+            "submit_wall_us": 45339,
+            "p50_worker_us": 8136,
+            "p95_worker_us": 8136,
+            "costs": 1,
+            "journals": 1,
+            "outbox_facts": 1,
+            "costs_per_second": "19.14132"
+          },
+          {
+            "processes": 4,
+            "sample_count": 4,
+            "work_wall_us": 121571,
+            "submit_wall_us": 110601,
+            "p50_worker_us": 1016,
+            "p95_worker_us": 19914,
+            "costs": 1,
+            "journals": 1,
+            "outbox_facts": 1,
+            "costs_per_second": "8.225646"
+          },
+          {
+            "processes": 8,
+            "sample_count": 8,
+            "work_wall_us": 216465,
+            "submit_wall_us": 214403,
+            "p50_worker_us": 6170,
+            "p95_worker_us": 44682,
+            "costs": 1,
+            "journals": 1,
+            "outbox_facts": 1,
+            "costs_per_second": "4.619684"
+          }
+        ]
+      ],
+      "fairness": [
+        {
+          "blocked": 101,
+          "healthy_costs": 1,
+          "overlap_crons": 2,
+          "wall_us": 243900,
+          "checked": [
+            51,
+            51
+          ],
+          "db_retry_counts": [
+            [],
+            []
+          ],
+          "admission_plan": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "cloud_cost_work",
+              "type": "ref",
+              "possible_keys": "ix_cloud_cost_admission",
+              "key": "ix_cloud_cost_admission",
+              "key_len": "2",
+              "ref": "const",
+              "rows": "4",
+              "Extra": "Using where"
+            }
+          ]
+        }
+      ],
+      "passes": [
+        "MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS",
+        "MIGRATION 001-044 preserved; 044 to 045 additive upgrade; replay no-op PASS",
+        "MIGRATION 001-045 preserved; 045 to 046+047 additive upgrade; replay no-op PASS",
+        "PASS F4-E duplicate usage creates one balanced existing Ledger accrual and atomic outbox",
+        "PASS F4-E partial hours quantum minimum and explicit money rounding use exact arithmetic",
+        "PASS F4-E adjacent intervals and provider invoice reconcile without a second accrual",
+        "PASS F4-E overlapping or zero reversed future and stale intervals fail closed",
+        "PASS F4-E sequence gap waits for evidence while older sequence cannot create cost",
+        "PASS F4-E account VM task and spec tariff references cannot be mixed",
+        "PASS F4-E missing metering or unapproved tariff remains UNVERIFIED not zero verified cost",
+        "PASS F4-E effect observation clock never becomes usage duration or billing boundary",
+        "PASS F4-E UNKNOWN create cannot infer cost until independent task resource evidence is resolved",
+        "PASS F4-E STOPPED VM still incurs independently evidenced provider cost",
+        "PASS F4-E terminated VM accepts delayed final invoice but termination alone closes no payable",
+        "PASS F4-E invoice mismatch wrong currency stale and noncontiguous coverage require review",
+        "PASS F4-E invoice before cost evidence is append-only UNVERIFIED then matches once",
+        "PASS F4-E FX currency exponents and amounts above JavaScript precision remain exact",
+        "PASS F4-E addon and provider tax are explicit while unpermitted quantities cannot accrue",
+        "PASS F4-E fixed extra fees stay separate from recurring forecast and unapproved fees fail closed",
+        "PASS F4-E provisional invoice match does not block later independent final invoice proof",
+        "PASS F4-E tariffs require real fresh staff and neither live nor secret input is accepted",
+        "PASS F4-E immutable tariff metering cost journal proposal and history cannot be overwritten",
+        "PASS F4-E cost rise creates existing catalog proposal and separate approval then confirmed mock publication",
+        "PASS F4-E proposal currency review and changed catalog confirmation fail closed",
+        "PASS F4-E customer prepaid cycle is exactly 30 days and cannot be silently changed",
+        "PASS F4-E failed cost insert rolls back ledger outbox and work before retry",
+        "PASS F4-E known rolled-back deadlock retries local accrual once without duplicate money",
+        "PASS F4-E one four eight independent PHP processes dedupe submit cost journal and outbox",
+        "PASS F4-E parallel overlapping usage refs serialize on the resource and cannot double accrue",
+        "PASS F4-E SKIP LOCKED admission never waits or creates a partial journal",
+        "PASS F4-E overlapping bounded crons rotate 101 blocked works and reach healthy metering",
+        "PASS F4-E consumed cost receipt is not proposal completion and independent proposal cron recovers"
+      ],
+      "stability": [
+        "10 iterations; 0 failed (failures are not retried away)",
+        "30 iterations; 0 failed (failures are not retried away)",
+        "20 iterations; 0 failed (failures are not retried away)"
+      ],
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "299 PHP files checked; 0 violations",
+        "309 source/config/test files scanned; 0 findings"
+      ],
+      "log_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40119824445/job/120948736264",
+      "raw_log_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/120948736264/logs"
+    },
+    {
+      "id": 120948736453,
+      "name": "PHP 8.4",
+      "conclusion": "success",
+      "php": [
+        "Installed PHP 8.4.27"
+      ],
+      "mariadb": [
+        "Version: '10.11.19-MariaDB-ubu2204'"
+      ],
+      "checkout": "f0af03a816a523a4e822cdf86c96261efb80194b",
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-costs.php",
+          "tests": 24,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        }
+      ],
+      "tests": 354,
+      "failures": 0,
+      "workers": [
+        [
+          {
+            "processes": 1,
+            "sample_count": 1,
+            "work_wall_us": 61067,
+            "submit_wall_us": 52297,
+            "p50_worker_us": 11434,
+            "p95_worker_us": 11434,
+            "costs": 1,
+            "journals": 1,
+            "outbox_facts": 1,
+            "costs_per_second": "16.375456"
+          },
+          {
+            "processes": 4,
+            "sample_count": 4,
+            "work_wall_us": 141609,
+            "submit_wall_us": 146327,
+            "p50_worker_us": 3884,
+            "p95_worker_us": 18847,
+            "costs": 1,
+            "journals": 1,
+            "outbox_facts": 1,
+            "costs_per_second": "7.061698"
+          },
+          {
+            "processes": 8,
+            "sample_count": 8,
+            "work_wall_us": 332357,
+            "submit_wall_us": 273822,
+            "p50_worker_us": 3782,
+            "p95_worker_us": 67999,
+            "costs": 1,
+            "journals": 1,
+            "outbox_facts": 1,
+            "costs_per_second": "3.008813"
+          }
+        ]
+      ],
+      "fairness": [
+        {
+          "blocked": 101,
+          "healthy_costs": 1,
+          "overlap_crons": 2,
+          "wall_us": 292546,
+          "checked": [
+            51,
+            51
+          ],
+          "db_retry_counts": [
+            [],
+            []
+          ],
+          "admission_plan": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "cloud_cost_work",
+              "type": "ref",
+              "possible_keys": "ix_cloud_cost_admission",
+              "key": "ix_cloud_cost_admission",
+              "key_len": "2",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        }
+      ],
+      "passes": [
+        "MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS",
+        "MIGRATION 001-044 preserved; 044 to 045 additive upgrade; replay no-op PASS",
+        "MIGRATION 001-045 preserved; 045 to 046+047 additive upgrade; replay no-op PASS",
+        "PASS F4-E duplicate usage creates one balanced existing Ledger accrual and atomic outbox",
+        "PASS F4-E partial hours quantum minimum and explicit money rounding use exact arithmetic",
+        "PASS F4-E adjacent intervals and provider invoice reconcile without a second accrual",
+        "PASS F4-E overlapping or zero reversed future and stale intervals fail closed",
+        "PASS F4-E sequence gap waits for evidence while older sequence cannot create cost",
+        "PASS F4-E account VM task and spec tariff references cannot be mixed",
+        "PASS F4-E missing metering or unapproved tariff remains UNVERIFIED not zero verified cost",
+        "PASS F4-E effect observation clock never becomes usage duration or billing boundary",
+        "PASS F4-E UNKNOWN create cannot infer cost until independent task resource evidence is resolved",
+        "PASS F4-E STOPPED VM still incurs independently evidenced provider cost",
+        "PASS F4-E terminated VM accepts delayed final invoice but termination alone closes no payable",
+        "PASS F4-E invoice mismatch wrong currency stale and noncontiguous coverage require review",
+        "PASS F4-E invoice before cost evidence is append-only UNVERIFIED then matches once",
+        "PASS F4-E FX currency exponents and amounts above JavaScript precision remain exact",
+        "PASS F4-E addon and provider tax are explicit while unpermitted quantities cannot accrue",
+        "PASS F4-E fixed extra fees stay separate from recurring forecast and unapproved fees fail closed",
+        "PASS F4-E provisional invoice match does not block later independent final invoice proof",
+        "PASS F4-E tariffs require real fresh staff and neither live nor secret input is accepted",
+        "PASS F4-E immutable tariff metering cost journal proposal and history cannot be overwritten",
+        "PASS F4-E cost rise creates existing catalog proposal and separate approval then confirmed mock publication",
+        "PASS F4-E proposal currency review and changed catalog confirmation fail closed",
+        "PASS F4-E customer prepaid cycle is exactly 30 days and cannot be silently changed",
+        "PASS F4-E failed cost insert rolls back ledger outbox and work before retry",
+        "PASS F4-E known rolled-back deadlock retries local accrual once without duplicate money",
+        "PASS F4-E one four eight independent PHP processes dedupe submit cost journal and outbox",
+        "PASS F4-E parallel overlapping usage refs serialize on the resource and cannot double accrue",
+        "PASS F4-E SKIP LOCKED admission never waits or creates a partial journal",
+        "PASS F4-E overlapping bounded crons rotate 101 blocked works and reach healthy metering",
+        "PASS F4-E consumed cost receipt is not proposal completion and independent proposal cron recovers"
+      ],
+      "stability": [
+        "10 iterations; 0 failed (failures are not retried away)",
+        "30 iterations; 0 failed (failures are not retried away)",
+        "20 iterations; 0 failed (failures are not retried away)"
+      ],
+      "quality": [
+        "No security vulnerability advisories found.",
+        " [OK] No errors                                                                 ",
+        "299 PHP files checked; 0 violations",
+        "309 source/config/test files scanned; 0 findings"
+      ],
+      "log_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40119824445/job/120948736453",
+      "raw_log_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/120948736453/logs"
+    }
+  ]
+}

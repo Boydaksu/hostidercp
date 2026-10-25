@@ -1,0 +1,31 @@
+PASS F4-E duplicate usage creates one balanced existing Ledger accrual and atomic outbox
+PASS F4-E partial hours quantum minimum and explicit money rounding use exact arithmetic
+PASS F4-E adjacent intervals and provider invoice reconcile without a second accrual
+PASS F4-E overlapping or zero reversed future and stale intervals fail closed
+PASS F4-E sequence gap waits for evidence while older sequence cannot create cost
+PASS F4-E account VM task and spec tariff references cannot be mixed
+PASS F4-E missing metering or unapproved tariff remains UNVERIFIED not zero verified cost
+PASS F4-E effect observation clock never becomes usage duration or billing boundary
+PASS F4-E UNKNOWN create cannot infer cost until independent task resource evidence is resolved
+PASS F4-E STOPPED VM still incurs independently evidenced provider cost
+PASS F4-E terminated VM accepts delayed final invoice but termination alone closes no payable
+PASS F4-E invoice mismatch wrong currency stale and noncontiguous coverage require review
+PASS F4-E invoice before cost evidence is append-only UNVERIFIED then matches once
+PASS F4-E FX currency exponents and amounts above JavaScript precision remain exact
+PASS F4-E addon and provider tax are explicit while unpermitted quantities cannot accrue
+PASS F4-E fixed extra fees stay separate from recurring forecast and unapproved fees fail closed
+PASS F4-E provisional invoice match does not block later independent final invoice proof
+PASS F4-E tariffs require real fresh staff and neither live nor secret input is accepted
+PASS F4-E immutable tariff metering cost journal proposal and history cannot be overwritten
+PASS F4-E cost rise creates existing catalog proposal and separate approval then confirmed mock publication
+PASS F4-E proposal currency review and changed catalog confirmation fail closed
+PASS F4-E customer prepaid cycle is exactly 30 days and cannot be silently changed
+PASS F4-E failed cost insert rolls back ledger outbox and work before retry
+PASS F4-E known rolled-back deadlock retries local accrual once without duplicate money
+MEASURE_COST [{"processes":1,"sample_count":1,"work_wall_us":346635,"submit_wall_us":326121,"p50_worker_us":11292,"p95_worker_us":11292,"costs":1,"journals":1,"outbox_facts":1,"costs_per_second":"2.884879"},{"processes":4,"sample_count":4,"work_wall_us":422245,"submit_wall_us":440764,"p50_worker_us":750,"p95_worker_us":11478,"costs":1,"journals":1,"outbox_facts":1,"costs_per_second":"2.368293"},{"processes":8,"sample_count":8,"work_wall_us":559959,"submit_wall_us":576116,"p50_worker_us":740,"p95_worker_us":15297,"costs":1,"journals":1,"outbox_facts":1,"costs_per_second":"1.785845"}]
+PASS F4-E one four eight independent PHP processes dedupe submit cost journal and outbox
+PASS F4-E parallel overlapping usage refs serialize on the resource and cannot double accrue
+PASS F4-E SKIP LOCKED admission never waits or creates a partial journal
+MEASURE_COST_FAIR {"blocked":101,"healthy_costs":1,"overlap_crons":2,"wall_us":581009,"checked":[53,53],"db_retry_counts":[[],[]],"admission_plan":[{"id":1,"select_type":"SIMPLE","table":"cloud_cost_work","type":"ref","possible_keys":"ix_cloud_cost_admission","key":"ix_cloud_cost_admission","key_len":"2","ref":"const","rows":"3","Extra":"Using where"}]}
+PASS F4-E overlapping bounded crons rotate 101 blocked works and reach healthy metering
+PASS F4-E consumed cost receipt is not proposal completion and independent proposal cron recovers

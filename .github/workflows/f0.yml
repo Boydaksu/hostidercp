@@ -31,7 +31,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ matrix.php }}'
-          extensions: pdo_mysql, sodium, mbstring, fileinfo
+          extensions: pdo_mysql, sodium, mbstring, fileinfo, intl, zip
           coverage: none
       - run: composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts
       - run: composer audit --working-dir=tools/analysis --locked
@@ -72,6 +72,21 @@ jobs:
       - run: php tests/services-package.php
       - run: php tests/services-http.php
       - run: php tests/services-runner.php
+      - run: php tests/domains-unit.php
+      - run: php tests/domains-model.php
+      - run: php tests/domains-provider.php
+      - run: php tests/voyar-sdk.php
+      - run: php tests/domains-boundaries.php
+      - run: php tests/domains-operations.php
+      - run: php tests/domains-audit.php
+      - run: php tests/cloud.php
+      - run: php tests/cloud-races.php
+      - run: php tests/cloud-sdk.php
+      - run: php tests/cloud-audit.php
+      - run: php tests/cloud-final-audit.php
+      - run: php tests/cloud-costs.php
+      - run: php tests/cloud-cost-races.php
+      - run: php tests/provider-panel-http.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability
@@ -97,6 +112,7 @@ jobs:
         run: php tools/repeat-suite.php session-concurrency 20
       - run: node --check public/assets/commerce.js
       - run: node --check public/assets/services.js
+      - run: node --check public/assets/provider-panel.js
       - name: Upload allowlisted test process diagnostics
         if: always()
         uses: actions/upload-artifact@v4

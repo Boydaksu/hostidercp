@@ -1,0 +1,1603 @@
+{
+  "accepted_application": "6e25a8b98de6e0c9da5e84df6b78e46cd47854f2",
+  "baseline_head": "8156208ad90afcb8b563864e3fe065d8bea05f35",
+  "unchanged_application_files": 319,
+  "migration_count": 48,
+  "rows": [
+    {
+      "path": ".github/workflows/f0.yml",
+      "git_blob": "91b8d82c42e958e1e3b5433134e9a75fdfeaadb8",
+      "sha256": "331aa4934584fe55b2cd1358af375cfd6690f2e898e0195ebcbe54ff116f45a5"
+    },
+    {
+      "path": ".github/workflows/f2-http-investigation.yml",
+      "git_blob": "4c21d9ae89a0b5dbc60bfde057671f794d65ccda",
+      "sha256": "5778c5d18c1ed785c18e34790b66fbfdbbd0746e3b1ce555b4f1d84aa1ebf5b2"
+    },
+    {
+      "path": "bin/console.php",
+      "git_blob": "75157d46539d46bf194598614396e363d4b3175b",
+      "sha256": "1a89857974128359dd72c4f9d5bf2dc30d1ccd1c9a89e3ae02849ec996f08f2c"
+    },
+    {
+      "path": "bin/identity-demo.php",
+      "git_blob": "e9bdbba8329d97ab27bd9104184c9ec6cd637c4a",
+      "sha256": "c56688a562c0c77f2aff1cb08dd082ae712b5cf0ad21c07cb7a3a8aa95054192"
+    },
+    {
+      "path": "bin/identity.php",
+      "git_blob": "03a72e62365025a837991d0c3cbdc6ca3e7e53a4",
+      "sha256": "24d5b6bd77e2cb62be550cc0ef252a8b3b5ee23aa64b505722a251b013b0919a"
+    },
+    {
+      "path": "bootstrap/app.php",
+      "git_blob": "f4dbf235e8ad422973e5be90feb2b262d5e7f99c",
+      "sha256": "9240e2853581a0721369c0f8f77617243543e316665da578ecacd3e9bf5406bc"
+    },
+    {
+      "path": "bootstrap/autoload.php",
+      "git_blob": "8eb9111bdbe674db4fcdb383e67262a38e5afcf7",
+      "sha256": "544ddc1a80d2b0ef9e237b8b754c3e06344bc28cbbf663510998eecc32cc6236"
+    },
+    {
+      "path": "contracts/capabilities.example.json",
+      "git_blob": "f3dec241f6049e23875f03f24d2309bbfe7161f9",
+      "sha256": "fa3e2144c0e0d038113f5c2a519c19d17527c8e0c1b4a2d3f1b3b3b1f949baaf"
+    },
+    {
+      "path": "contracts/provider_result.schema.json",
+      "git_blob": "d1b26429af757572d9e769460e7c57be0c33a480",
+      "sha256": "01adf6f273fd61c089e031ea9af2f15422a04e0ed4877d35e1fe605a3a33eb8c"
+    },
+    {
+      "path": "migrations/001_f0_infrastructure.php",
+      "git_blob": "e632bffe6337aacf1418e582f399f6c651a3b16d",
+      "sha256": "b3eb10070a1c21180d3fbe0611d388d6b5bb435d521daa001a26e6c068bb8965"
+    },
+    {
+      "path": "migrations/002_f0_1_retention.php",
+      "git_blob": "6b459bd9af671953c837286a1d07b9ad78eede37",
+      "sha256": "921b6f9e2edc3766e0244fddae14c8c4cb17881152a8dd518f715a044c92ae15"
+    },
+    {
+      "path": "migrations/003_f1_identity.php",
+      "git_blob": "ae6a33cf8030e02644e7f9f07b53ab402deb0558",
+      "sha256": "33cea76f09cd1b8c98fe81801b2bc0612191afb909a935953b22554ea36a042b"
+    },
+    {
+      "path": "migrations/004_f1_1_confirmations.php",
+      "git_blob": "5d65ea0162af95b6226d165cd187c16aa6cf49db",
+      "sha256": "5f8cf9a4c6b954b8fd9b2eb3f0f6309bf35a289d4b3dad3e7571fc2f903930a9"
+    },
+    {
+      "path": "migrations/005_f1_1_reset_step_up.php",
+      "git_blob": "15ca3aa29aa480ddcba80000bbde7cf5577f4909",
+      "sha256": "4dc9c03e57a962fa4ffa691e9d5b550c5bef1e4ea59fc6bd269b69b208086b7e"
+    },
+    {
+      "path": "migrations/006_f2_finance.php",
+      "git_blob": "96a48c92ac3e34bcbb5b08daa648836907ce6e47",
+      "sha256": "97e2a3507deb26ee2e1b9c8c6c4d1d886f30a40df04ed5a7db5d4b839754655f"
+    },
+    {
+      "path": "migrations/007_f2_wallet_credits.php",
+      "git_blob": "71bd38472863140337834c208a81dafc384b7272",
+      "sha256": "9cd6d260745ee58d7be371ebdd41c9292e3f1b1f6b41c6562f774aef6d6e058e"
+    },
+    {
+      "path": "migrations/008_f2_catalog.php",
+      "git_blob": "70cb67fd1f80a680a2ab958d29c54eeebafef88d",
+      "sha256": "7feb55ed7ac53a2f2bc95e5811123fe6e82efb1fe1f47e07298db34f0e6ae7bf"
+    },
+    {
+      "path": "migrations/009_f2_pricing.php",
+      "git_blob": "d2daafa7e24dda7948e962e4f37ed6859190d12a",
+      "sha256": "dc5f34fa318e0ac77f2370a6b644ca26a8d3b747019062ed650f7bf017b5cbef"
+    },
+    {
+      "path": "migrations/010_f2_orders_billing.php",
+      "git_blob": "a82c15682cae0577b675aaa02dca8f8d145769d5",
+      "sha256": "51ccfdfadf8d293a48b4efd21dd4b2db702b1334715606a14aedbf41dd0099e5"
+    },
+    {
+      "path": "migrations/011_f2_payment_workflows.php",
+      "git_blob": "d2c6f4e834c5b49047953cf388316c4dbf3c8a10",
+      "sha256": "b1e9f9adb4c265e6604ab66834b16a151535a9b2f14a00c455d924f271659d63"
+    },
+    {
+      "path": "migrations/012_f2_documents_cash.php",
+      "git_blob": "e069ae5eeeae22e4020995d9357a6baf7aa97528",
+      "sha256": "7633bcbb49fdc13ac021d103488468d174814b6d9f3508321aaa3a96ceb496a4"
+    },
+    {
+      "path": "migrations/013_f2_commerce_confirmations.php",
+      "git_blob": "71e058fbd2310a64bb520e8bfeff661296f26a78",
+      "sha256": "cc847c3045bbc668214050048b8d4998e45273f3e03e5338ef915777da593166"
+    },
+    {
+      "path": "migrations/014_f2_paid_refunds.php",
+      "git_blob": "6b5d0f31d640dacc43897ed8f36319843b91c40c",
+      "sha256": "046ed51e9fdec380758633b519d0b2a290f100b0d3d65a657590ae2a17f06798"
+    },
+    {
+      "path": "migrations/015_f2_standalone_addons.php",
+      "git_blob": "7ffa87745a5c46023fced330716c54e9d220d765",
+      "sha256": "a6a355224d0bcdbbfb02415d583cdf7492c74de4844c6c0563810c2547498a6b"
+    },
+    {
+      "path": "migrations/016_f2_source_evidence.php",
+      "git_blob": "dc3930bb741d5af6f1b6c9118aa53b0b2e9235d1",
+      "sha256": "d3f5ccb378f1f576d697c28d23b372a4fb6c00ed3c7b7188de022075113061be"
+    },
+    {
+      "path": "migrations/017_f2_wallet_currency.php",
+      "git_blob": "08fba6bd3b3fe46a17bc60680763f554d76e0f33",
+      "sha256": "8623261999d5fc4af0d2944112c8ff3ee6411fd3d75e087847dc674d32df9651"
+    },
+    {
+      "path": "migrations/018_f2_wallet_refund_fx.php",
+      "git_blob": "2eace08d3875ae3a1bf603e1a2d39e65b66a367f",
+      "sha256": "c0fd259c0d3d7796794d713df4b3bd9df35d3405e0541ed1ee598a1a7821537f"
+    },
+    {
+      "path": "migrations/019_f2_held_facts.php",
+      "git_blob": "9d460fb0404356961a5defaa9c4b2384defe40db",
+      "sha256": "f2b2c7849508be7a57eb7ebc8647a2667838ec0fc75dbd41ee21e220b56e4bfa"
+    },
+    {
+      "path": "migrations/020_f2_reconciliation_resolution.php",
+      "git_blob": "4ef8434dcd764e660d3f2a37ebdb17cbeb06d94e",
+      "sha256": "dcad3cdb3a90793a35f56f49da8445139fe9dfbe832cf87a0dab4a906acf5a40"
+    },
+    {
+      "path": "migrations/021_f2_order_provenance.php",
+      "git_blob": "a2772c8814118f36ae5e09afc1a5608202fa398e",
+      "sha256": "e317363a343b59b0fa474af931f610d575747fd50c31fb50fe0ee249e765cc83"
+    },
+    {
+      "path": "migrations/022_f2_confirmation_versions.php",
+      "git_blob": "c14fa376f101d960c08780dbe50e1760225c9c1a",
+      "sha256": "127ca8c342844298a5871567c7d39c06429d9c29b2f1e1760ed01ffb391c0840"
+    },
+    {
+      "path": "migrations/023_f3_service_model.php",
+      "git_blob": "58659226c607a78df584ee5f51168d483f18b177",
+      "sha256": "e24894460b0cdcf7ab7bf88b45e81efab8fa74caf494152e6fac4a77ed5f8e2f"
+    },
+    {
+      "path": "migrations/024_f3_resources.php",
+      "git_blob": "6f275908d13cb90b172c145d00ff080221ef77cf",
+      "sha256": "edae51ba5c7de0170964c8dda6043a04ed928822619acb27aed34662d4b88f87"
+    },
+    {
+      "path": "migrations/025_f3_operations.php",
+      "git_blob": "e9c21bbd461586f009ac5eed88a953907d9c83b5",
+      "sha256": "02cd485070124e6aefa002d2303c1ecd87d57257f10512cd7703a5394a188b1e"
+    },
+    {
+      "path": "migrations/026_f3_mock_hosting.php",
+      "git_blob": "ba3d86bbc800ae9a979309fafef0763e10b1f8ea",
+      "sha256": "8b86ab9c4e0420091cf0670424ff709242f5150601b5319e0217eb5b35d1a775"
+    },
+    {
+      "path": "migrations/027_f3_mapping_integrity.php",
+      "git_blob": "559ce00a1acaa5ba1f23993ffa1e9c1bb08d0f73",
+      "sha256": "40a82ee6133785afa750b0a0782064ba5b8c26e47c2fde6a4173f0fd85c60033"
+    },
+    {
+      "path": "migrations/028_f3_reconciliation.php",
+      "git_blob": "ef0cb7a7152537a07935f31454c90a48b68ab2e9",
+      "sha256": "8d4b5884d7d5bb20347cc32db9eb43ab7b497022a6c574f02222ea966a20af94"
+    },
+    {
+      "path": "migrations/029_f3_lifecycle_policy.php",
+      "git_blob": "20fb0a795b45534abf404959c8bd0e2e05d13097",
+      "sha256": "ea2c81044f4167f141b7a4e29f53a699b7b3d041f1260fc1e1e25006b4bd5251"
+    },
+    {
+      "path": "migrations/030_f3_renewals.php",
+      "git_blob": "0222221304a46a449041c1e6abac973360b1edd0",
+      "sha256": "4789d3393bb64c740a20755777b69995b2b68cb6888119f4217e3283fa30b247"
+    },
+    {
+      "path": "migrations/031_f3_cancellations.php",
+      "git_blob": "e11a95432409fcb8ad2df45f18cfc9386afe8da3",
+      "sha256": "85b4cf29dd39c77519fe85677a7f23f0484262ac620d12fce7ee7bc2c4c0b142"
+    },
+    {
+      "path": "migrations/032_f3_action_evidence.php",
+      "git_blob": "432424d56fd7ea814c238c4e96ebcd4bbaffea55",
+      "sha256": "97664416a465123d72bee94020906658b85d02430bd45e48da9455fc67659fe8"
+    },
+    {
+      "path": "migrations/033_f3_transfer.php",
+      "git_blob": "ea9ba084870be34c41e39bb1e8ba3a51c84be119",
+      "sha256": "92396c6b1ab777838dc0b27511670cc2fbad4da15d541d435c63f32e715d384c"
+    },
+    {
+      "path": "migrations/034_f3_package_changes.php",
+      "git_blob": "02049973441e40d6148a7edcec6ee8b0140c37c3",
+      "sha256": "f555a64dd9924be65416bb02543268ab509495f26cb54cf4ed15aed31d4a8d96"
+    },
+    {
+      "path": "migrations/035_f3_http_confirmations.php",
+      "git_blob": "1e2099a42387f3a556fe37f221c3f40c5cb3fe6f",
+      "sha256": "ffd9aeefa7b2a07ea514e23e7039b45cbc20f56f85b53503cf75b16c91966ab8"
+    },
+    {
+      "path": "migrations/036_f3_scope_and_query_guards.php",
+      "git_blob": "4ad32d5e7d76be99f1550000098c60475ab2d102",
+      "sha256": "ca02859608f5b437134ab6c4f59a7405dbc3c852a8b76831bfa4d496587c3caa"
+    },
+    {
+      "path": "migrations/037_f3_scheduler_fairness.php",
+      "git_blob": "a13b2cbea23f6cf6be7a3a640dd50b6c8712949e",
+      "sha256": "e67f0a93a4194d217af3ec6ff969aa483c411e46e0e83266b7a3d19cb07227e7"
+    },
+    {
+      "path": "migrations/038_service_runner_fairness.php",
+      "git_blob": "68a39bdf162e07554430ec83815529514fc49b06",
+      "sha256": "95c745e3feb8dd7806ed7b3c49a85a4c3c0f077cb67b54245851c9670a63af35"
+    },
+    {
+      "path": "migrations/039_f4_domain_model.php",
+      "git_blob": "8f83645f53087bb668ac87540324954dcce2b303",
+      "sha256": "144f0eed70100d92788aab0b8d4450c702d6fba6970e38d71a9411aa447817bb"
+    },
+    {
+      "path": "migrations/040_f4_mock_registrar.php",
+      "git_blob": "ca34cbb4996fd6b1eaa5ef5f4362decc16c5c724",
+      "sha256": "f8490c5ca09ed2a21dba294840641401515c54e92b1b389d3cee714a1267b453"
+    },
+    {
+      "path": "migrations/041_f4_domain_operations.php",
+      "git_blob": "d3aaddd38ed7b1e95e03ab9939344dc33896549d",
+      "sha256": "456db8c758f758bdab4f4f2a68829dcef4d568dfb476776a42fc8720398e145f"
+    },
+    {
+      "path": "migrations/042_f4_domain_runner_fairness.php",
+      "git_blob": "1c3249e9efd53c16791e337a98671df35c342e49",
+      "sha256": "72c9c6bec7919d5efb56f448d5059fc604eda0d9ff6b6766fda874135f9b2968"
+    },
+    {
+      "path": "migrations/043_f4_domain_audit_safety.php",
+      "git_blob": "e1a5b5cd3795ecd173107d97454747a0dd511e02",
+      "sha256": "d9a786fcaa6cfb6531f5130b6934f5b0be8aa9da8a9bc85209258140f1ae9351"
+    },
+    {
+      "path": "migrations/044_f4_cloud_operations.php",
+      "git_blob": "2589d547c2fcc2fbd495c2e9bd756fc24a4c4701",
+      "sha256": "ed160643313f28c918173d1e5c11f5b334c9f1f79c7a613ce9ea14dc5a53478f"
+    },
+    {
+      "path": "migrations/045_cloud_purchase_containment.php",
+      "git_blob": "8db428671f88f829898e22adc0cb7f376f377684",
+      "sha256": "6b9d1a8324a99ee24db6d59e2abc9f2acdde2a15031325d1516962db21c826db"
+    },
+    {
+      "path": "migrations/046_cloud_metering_costs.php",
+      "git_blob": "4b02fa4ce527823684817dd08a1a970ed1e0d276",
+      "sha256": "db8e72c41e22e843f6c9193172b54ff5cea5ac6727d621c98d52deb0c38318c5"
+    },
+    {
+      "path": "migrations/047_cloud_cost_admission.php",
+      "git_blob": "3da480a877c7819f1211c20fd002c788bf326c4d",
+      "sha256": "be4e9a1220693d4146093f7c912aadc0cc63621e13330c22602e73dc1d883888"
+    },
+    {
+      "path": "migrations/048_provider_panel.php",
+      "git_blob": "c728fa7c52970756f55b5da672007b6a1b55df89",
+      "sha256": "d183c79d2f859b860385d9a9e3898a5b53821cc33df7683e07dcdb0c37827bbe"
+    },
+    {
+      "path": "public/.htaccess",
+      "git_blob": "90f591fd13dc8ec32c94030b909e63babac277ee",
+      "sha256": "57aa0eccdd893b385866e328f25f7b3d8d1cffcfe4e4baf2531cee4116e3ecab"
+    },
+    {
+      "path": "public/assets/commerce.css",
+      "git_blob": "147714c6975350036b7dec2da9dc9065cd35352f",
+      "sha256": "8dd0943f4ebde46c9c625be51f128036eb271a3deb59e9989a63e615211c818e"
+    },
+    {
+      "path": "public/assets/commerce.js",
+      "git_blob": "90df2525f2ad10a85762deb06a4c36eb16c0f0a3",
+      "sha256": "4c6f412ece53666ea4ac2f07e7b4b69720f776676a298ef60854dc1adc1a02b1"
+    },
+    {
+      "path": "public/assets/identity.css",
+      "git_blob": "a7995a3d31c1f14a19215123bb33b06d38ef8a6c",
+      "sha256": "1cfc34160c5dab586a09d604dc08183274dbdcd62805b6f13ddbc1c415515a83"
+    },
+    {
+      "path": "public/assets/identity.js",
+      "git_blob": "6d41b04e636beedc891a72d563ad44cfff069ad7",
+      "sha256": "236780654f3c7c6a9606d08538af36d093f49bb364c45d8ebbb0e56c1a20758f"
+    },
+    {
+      "path": "public/assets/provider-panel.css",
+      "git_blob": "1bc81621cf7c9aaf64e4eae3b25e0b63e7e6487d",
+      "sha256": "1a8cd52cf5df19f72c1f6f01c55c0dde30cea2b64889228570329ddd0a5e7c60"
+    },
+    {
+      "path": "public/assets/provider-panel.js",
+      "git_blob": "4c75b7a4cf1f32876978233cdd70144dbf2601de",
+      "sha256": "6b04dff4447b7c944917435a417b215135b5263a192e27a7018912c9b0d4750e"
+    },
+    {
+      "path": "public/assets/services.js",
+      "git_blob": "94ac786bfd6df86dbf5747dbd557609a47b5ff97",
+      "sha256": "edeb8d0ebe91543f8451aa850a517eba2d7242f38c073198421895d02e40f8e8"
+    },
+    {
+      "path": "public/index.php",
+      "git_blob": "d1140b8fab725f316ec2f693010316c27731b167",
+      "sha256": "8a6eda7642e6dfbeef81b96d06e6280b5dc7fd2b62e9ab7481f33f4de640315a"
+    },
+    {
+      "path": "references/README.md",
+      "git_blob": "ce31d282e64cff2f834ae6b7bf7314ad892c3481",
+      "sha256": "7e637f34872fa34327a774f38278cad6eef8a160e0b3e1004dac60d94e0c2754"
+    },
+    {
+      "path": "references/voyar-api-client-user-provided.zip",
+      "git_blob": "01c1960b2b308c0c022581dc38d467de9ef00b5b",
+      "sha256": "6f76355c1fb32b9c86889e74c68f5caafec03c3670e140e61b53543432c3eb7c"
+    },
+    {
+      "path": "src/Billing/BillingService.php",
+      "git_blob": "bc1667d09ba7c21025958cb8abf2285cf4bb400a",
+      "sha256": "45b8d6d62660a582a3dd6dc9c97c7c8aa87bc64b8048cab7b962969d6434a965"
+    },
+    {
+      "path": "src/Billing/Credits.php",
+      "git_blob": "42c59602032f27bf43839e5146d6464b992c14bb",
+      "sha256": "5c66494bd4d2f5ea195bf99d49d5b0d250961afb1e9a2f1463bd37fe9a33f18b"
+    },
+    {
+      "path": "src/Billing/DocumentService.php",
+      "git_blob": "60253cab01783ca5595f0f0fc82ac57c7be6ae04",
+      "sha256": "076a795a7b079032d78925c1073578610ed6d2d2a3ae01461215e52f22119b1a"
+    },
+    {
+      "path": "src/Billing/DocumentStore.php",
+      "git_blob": "c3328aaf6fc50739370910d529e419baba81d630",
+      "sha256": "c041a61e44b597a8463d865833f84ab641efba7ed9b1d37102a83c4090ef4e10"
+    },
+    {
+      "path": "src/Billing/Repository.php",
+      "git_blob": "744d6af7224344ca903f3583354107592b753529",
+      "sha256": "96f8a07573cc7caae327d4fffd27fedb5995d58f2a6037210913074f9754d2b4"
+    },
+    {
+      "path": "src/Catalog/BillingCycle.php",
+      "git_blob": "c9c9bacc3e31dca1906112aa5fcab0529fc9ff69",
+      "sha256": "7c5df9265c92c2f23f533a67813ca62e991fa9663ea63e30a33b356f951d7c7a"
+    },
+    {
+      "path": "src/Catalog/CatalogService.php",
+      "git_blob": "069b587ecb58f5efebe89cc8c7faf42a87a3065f",
+      "sha256": "bb50a494886b8454128b31e68065635d67f8efdb1d53079b7d451a10d74e62d9"
+    },
+    {
+      "path": "src/Catalog/CloudCostProposals.php",
+      "git_blob": "b53689fa16c548e871e1ed09cc2426a36f45719a",
+      "sha256": "e96e172722d75f7cd18dcfe84f8a05eb14056c6a37e0b0658540ddbc545219ff"
+    },
+    {
+      "path": "src/Catalog/CloudOffers.php",
+      "git_blob": "304e09ec0c6a0bcd91f7f2f17ecf43ae5a079897",
+      "sha256": "1efcba08bb21ac1f0dad1721bd16a2aaf81295c38801a6b251285b77896ff9a9"
+    },
+    {
+      "path": "src/Catalog/Promotions.php",
+      "git_blob": "5c2fd0183ba494b9d63a8f523edb546b286d9629",
+      "sha256": "e31af05135368f421f9341101a5d78336deff7072882e1174b633c4cfe680010"
+    },
+    {
+      "path": "src/Catalog/Repository.php",
+      "git_blob": "db20e56a63420e4f87e06be1d93bf7ee1b3bbf10",
+      "sha256": "5b8b798a233f5ee101df69896dda018e3e0eddd6eeb0602c24dbead096d85882"
+    },
+    {
+      "path": "src/Cloud/Catalog.php",
+      "git_blob": "2b45e767a1bc89a763adb480f9107fea67e7824c",
+      "sha256": "db6410bfdd599c3dd350cfe128dd37c99d57fa97016cf6c70deeb45d998e1481"
+    },
+    {
+      "path": "src/Cloud/Containment.php",
+      "git_blob": "6c0ce6d251c437283e28a51db7268f0bc62d5825",
+      "sha256": "5dc22b3077d0af33de83bb37e1260c984b293e226df7e5469a99a0ddf24130e1"
+    },
+    {
+      "path": "src/Cloud/Engine.php",
+      "git_blob": "cfba125e77305992996ee551178ad6b3eed11a17",
+      "sha256": "f3e885d780ce43399ec52d8baa0116ea149ff1042913e1b404e6323b7a588208"
+    },
+    {
+      "path": "src/Cloud/Entitlements.php",
+      "git_blob": "4222e5535817f5127af5d43f62029f43f6a53a01",
+      "sha256": "0706988496d4d85fbf256b8aa1b9cd57b775b0f8f7d059f0abb70e7679b478a1"
+    },
+    {
+      "path": "src/Cloud/EventSink.php",
+      "git_blob": "8491b037d40df65f845a92f745ffe1f351a4b5f4",
+      "sha256": "666d7803c4d720a025721b4d710e52b1d3f8ec7148c84001898895083f9cddeb"
+    },
+    {
+      "path": "src/Cloud/Store.php",
+      "git_blob": "8d24df6bd5d7c6f65a9957d7f0ab2f6ef42ec10d",
+      "sha256": "1350c2dc053b35ad3b18ad8e8b13cc19a6f4cf80515314737e57c449c4571eb2"
+    },
+    {
+      "path": "src/Cloud/Worker.php",
+      "git_blob": "ad677ad1fefb2b9cb714466f177b75ef784caf96",
+      "sha256": "9c27bcb7aed10f8b7a886bd2d57ff13fdc35f47865d815949ae5d82445f9eb3e"
+    },
+    {
+      "path": "src/CloudCosts/Calculator.php",
+      "git_blob": "c1d2c4ba7c0c2657d1cb3c37b6a542297ff9f6e4",
+      "sha256": "a8bad6b9a7c1b657c83a1b787fff40e547ce09c3d203197ce90c439c2d39e99b"
+    },
+    {
+      "path": "src/CloudCosts/Engine.php",
+      "git_blob": "93868aff94478d4ce1c20692ab8026adbceed799",
+      "sha256": "8af41b37f41328c4f4f92ebca9a19222143e552cd47d94866814bc1edef55614"
+    },
+    {
+      "path": "src/CloudCosts/EventSink.php",
+      "git_blob": "08ae3d4880434f87df321972f7a6710aa9a8068a",
+      "sha256": "618bf057e5bc4749bdcde5942250bfaaf7cecbb5e85cee2d41d877db5bed5b62"
+    },
+    {
+      "path": "src/CloudCosts/LocalTransactions.php",
+      "git_blob": "3219a6e66dd70d32eece336198264cd9cc22ac09",
+      "sha256": "496b2ee72ef6aaf0dfcb375114785aedccfb6d0f813dbefafeb939bcdd8cd4ca"
+    },
+    {
+      "path": "src/CloudCosts/Store.php",
+      "git_blob": "c1c429b37e139078644202e99693216bebfdf94c",
+      "sha256": "d767e956f3597c5238f52d069096a962d1a0c473f1980ea047a6a41d59e99bf2"
+    },
+    {
+      "path": "src/CloudCosts/Tariffs.php",
+      "git_blob": "591a367165db0fab329119f950fbae1bf13318e4",
+      "sha256": "c30b21487e37f270e36629e7fcc9d1822f2478dcc4590905a7d75a086bc5978c"
+    },
+    {
+      "path": "src/Commerce/Commands.php",
+      "git_blob": "09f0300151fdc2bb6ee6dbc0a5164edbdfa77d05",
+      "sha256": "710e47391e02839044cb11243f932adb15748f23f0fc8c6a7201011fc06cd319"
+    },
+    {
+      "path": "src/Commerce/Confirmations.php",
+      "git_blob": "c725f40b2cbc51c0da23f301c1262db719af40ef",
+      "sha256": "bbab1ea9a7000a97a4bf27bfd5f629435a56b020c0edd83c52409c8f31f1dfbc"
+    },
+    {
+      "path": "src/Commerce/Controller.php",
+      "git_blob": "ba2e8930eede3bbce07f7b65e925dbe00b06840e",
+      "sha256": "4597a4e7350454c5142634e42556a87ad132958174a71729a3663b561773cd40"
+    },
+    {
+      "path": "src/Commerce/CurrencyChanges.php",
+      "git_blob": "4c28f7629ec6e198113cc2de35750c3b25a26ecf",
+      "sha256": "89f63abfc3197e136ff37a5735fc7e6ca340ad67def1b5f5ce7451548c7fd6be"
+    },
+    {
+      "path": "src/Commerce/EventSink.php",
+      "git_blob": "170ebfe9cc783f508c1123a1443e771e548b19c5",
+      "sha256": "a291214016ced5d09f57cc2b334b926239dd69983e033993b55d9f2bf30ad315"
+    },
+    {
+      "path": "src/Commerce/HandoffPolicy.php",
+      "git_blob": "0d4202b9cc4e536e7026d447d3ceaf7f3b29e17c",
+      "sha256": "1aaef9b0b946a91ed7e37ecfb020acc3d1fc280964fa849bd443b4ba658feced"
+    },
+    {
+      "path": "src/Commerce/Panel.php",
+      "git_blob": "db38ae127ea645f1b2b97caaa698f849a27f5d20",
+      "sha256": "68f52619ef6eb87ca7955d8ca01ae1b79bb3e3fba70e54d6f39088ad4879c0e9"
+    },
+    {
+      "path": "src/Commerce/Services.php",
+      "git_blob": "028c6ee7527d097d85b8687b20915bb9a6882a04",
+      "sha256": "db6bafb59b1870d8b29397dea9b9dd9d061da2a25d84a8187cc3ffbdda89695f"
+    },
+    {
+      "path": "src/Commerce/State.php",
+      "git_blob": "6212341059540aa9f7c12df9b6a730d293fbd01e",
+      "sha256": "aa874e17baf763a2ccca9e333a6c99bc28dad35e425711061ce142d5c716d819"
+    },
+    {
+      "path": "src/Core/CanonicalJson.php",
+      "git_blob": "c8d6de77dd76d19fe3fc40d076691491cb617dae",
+      "sha256": "b2da502d8131b829feefeff8107b23f8ac091586a3213bed98d07e80397fb8fc"
+    },
+    {
+      "path": "src/Core/Config.php",
+      "git_blob": "59162ca591c94f04220954365bbfa2b177a6e209",
+      "sha256": "663d2580a632557a22bbbcda0573edac65aeae7a9ba7dbe60bf3ea5374684537"
+    },
+    {
+      "path": "src/Core/Container.php",
+      "git_blob": "65f7dd6b15bc1aecbb7d1e08908bf4e93adbc991",
+      "sha256": "dae76ee4837f72ac490bccfdd1d95e89e8b25c27b23cc91fe3392504ee0b6524"
+    },
+    {
+      "path": "src/Core/Database/Database.php",
+      "git_blob": "8d428c196c4be701e202174cec36166c21021502",
+      "sha256": "c5be3f3896c6311b75011628fd8269f2bbf93ff8437a7acea65e68cf1eebacf5"
+    },
+    {
+      "path": "src/Core/Database/Migrator.php",
+      "git_blob": "ec52f9dc79446f6304f369cfcc973b0c872627f5",
+      "sha256": "e1c90dbae62fc33466847271fc90d83242e3226a27d51d81f0134e420c604a5d"
+    },
+    {
+      "path": "src/Core/Database/VersionFence.php",
+      "git_blob": "936823d04e9524dc4fc917739a830010cf4b25b5",
+      "sha256": "9e8588c6a2adcb096b2483cdd03f4bc2ec1dc8d5f869c5427ebf4f51610685bc"
+    },
+    {
+      "path": "src/Core/Http/HttpError.php",
+      "git_blob": "54541f9b6b88acc56548ed163c18cace347f5053",
+      "sha256": "050095f5247d1ce0756110d69cdede85fac3b953db668f73ebbb4ccdb2e67c2e"
+    },
+    {
+      "path": "src/Core/Http/Kernel.php",
+      "git_blob": "e73f042c6aed0130e18221fa5fa99e9214bc811f",
+      "sha256": "7b4f4d892f77c4a9771e2840b6e5ca8975a5180d5bd213a9e240df4f4ec0f7e0"
+    },
+    {
+      "path": "src/Core/Http/Request.php",
+      "git_blob": "699b1b0ea8f3467933029361092a7fdf27ed8957",
+      "sha256": "120a3430bff74188d10f95dfe0f4fe05b7c12feca9618104e8b16f0d06f71b50"
+    },
+    {
+      "path": "src/Core/Http/Response.php",
+      "git_blob": "861ccc7082e41fcdaa83e37ecd98b8fee96aebbd",
+      "sha256": "69ed71910db160a268b73b771f36b199880a3edd0103e4f923eb5345dc3a4e22"
+    },
+    {
+      "path": "src/Core/Http/Router.php",
+      "git_blob": "13fe400f2ea5d7e86e813f15ac7994989c33b778",
+      "sha256": "cdcbe3a255dc6d1233f07c2077547a6764804f303753bf647b1512d65235b2f4"
+    },
+    {
+      "path": "src/Core/Id.php",
+      "git_blob": "8eeaf94cfdcd2412d1aa60c283891a4e47d2f0be",
+      "sha256": "3d2ef5fa8e3c53e48e34b3f55baf367f434adb331e67d0044522ef189b2329b6"
+    },
+    {
+      "path": "src/Core/Idempotency.php",
+      "git_blob": "eb81f99be0475e0a71380fd21b59932cb2b3553a",
+      "sha256": "45cfac060a57da6a5d908f44b7ac37850eb7fcf30374bc373b80620e7d86926b"
+    },
+    {
+      "path": "src/Core/Queue/Outbox.php",
+      "git_blob": "41fffd646221e22fdaa5106e7c509e91efd17f16",
+      "sha256": "5be009a1f94b63b44e4a74eafb3f0ddef912d178e77fc6b9f485573a2d353a8e"
+    },
+    {
+      "path": "src/Core/Queue/Queue.php",
+      "git_blob": "3e39001cb1dc1a1741b23760f8a0dfea12f9b384",
+      "sha256": "c1a268e73f6de3f50e265219135e01a23e244ef6a8e5e04781565df6c0277218"
+    },
+    {
+      "path": "src/Core/Queue/Retention.php",
+      "git_blob": "e770ed2f199c561f25dd0c068318dbd9a916784b",
+      "sha256": "00efd52826a4b74b269334a33f067316156393b0c530121e02e8c0620a822781"
+    },
+    {
+      "path": "src/Core/Queue/Worker.php",
+      "git_blob": "7ff42e7d6e108199b2a5406e94536d49d7d83dcc",
+      "sha256": "7a1575f98e3642d64c342494b335dcbfd3f15baf99bc5ae0f8ecdf9c4a633854"
+    },
+    {
+      "path": "src/Core/SafeLogger.php",
+      "git_blob": "958a87005816119474a70991d0d76c1386145747",
+      "sha256": "204a7b594a66d41a591b5580ae6ac97310a2b5644bc7563508ee6f93578128f3"
+    },
+    {
+      "path": "src/Core/Security/AccessGrant.php",
+      "git_blob": "103d364fb55d074623fa68eba31509951495499b",
+      "sha256": "1cc24789b7a8ca387b82d62cf973f4afb832e987247c86cc56664b2e443954cb"
+    },
+    {
+      "path": "src/Core/Security/Audit.php",
+      "git_blob": "396cb0603cf6f81771d89f2d32cee061e02ae404",
+      "sha256": "1c49b89151e824019f9b682053255b1c9f39f9ae4e3130de3bd20cdf757be710"
+    },
+    {
+      "path": "src/Core/Security/AuditEvent.php",
+      "git_blob": "c528743a98a7d61bc6de1495b7d3f3e124300b90",
+      "sha256": "deaaf25a490109a0800e5cf30546b51b8b77ef612bd91313506f56dac6407926"
+    },
+    {
+      "path": "src/Core/Security/Authenticator.php",
+      "git_blob": "f5a0455b2ee14c6b6201acd3e71b8423d34cea36",
+      "sha256": "a28aea4dc9016fc2f319470c64487a75c3c08ea77fd4f33ffab5e0089edab9df"
+    },
+    {
+      "path": "src/Core/Security/Authorization.php",
+      "git_blob": "7e222e8b36a25a5ade7a07a4993c8b84fe5acc76",
+      "sha256": "a35fd6c5b601c360edc7d8d13308880cfd1f76cf16ce8be3f938a23c3a79c9d4"
+    },
+    {
+      "path": "src/Core/Security/Crypto.php",
+      "git_blob": "4bdbd83d652566e1a430049b4592837c016bc90f",
+      "sha256": "bb03f7de7be5d78cb495f3e0224d759856e6f460235110006780bb5f426edb3e"
+    },
+    {
+      "path": "src/Core/Security/Csrf.php",
+      "git_blob": "129fa360d61f4049a3244b96914306f3f3bb5659",
+      "sha256": "79d3da533ff173fe578f66447b20d32964b503cafde70832493256aed32b40cb"
+    },
+    {
+      "path": "src/Core/Security/EffectPolicy.php",
+      "git_blob": "0e0d3b50e8222c1e7bbdf03941c7c552690602b1",
+      "sha256": "79df1a567e8bb2383d3b342f0bd9c638bf4c5f0d2813f660e1dc0f3679e4ae7f"
+    },
+    {
+      "path": "src/Core/Security/Principal.php",
+      "git_blob": "b001a9d1b0f322b6e0ea75d009d9b4d8c204b7d5",
+      "sha256": "d61c6008f0e2b0f1941b4091a50d750d2d8ed6cfd0950455754255cae95909b7"
+    },
+    {
+      "path": "src/Core/Security/RateLimiter.php",
+      "git_blob": "5479a99b6c27a9173d11d5da1e2f2d0493043b63",
+      "sha256": "2ac8e34e7597874a79afcf6c048ef5244c210e91c2909a839a6d91205656a850"
+    },
+    {
+      "path": "src/Core/Security/Session.php",
+      "git_blob": "6da033ccffae30bee087b22a840a0165458c5ed9",
+      "sha256": "287309a4dcd4e4da1466ad98db4b4fbe6e7ddac168b15111c24b610873f770b2"
+    },
+    {
+      "path": "src/Core/Security/SessionGuard.php",
+      "git_blob": "a650816d3861dda7f45236fb65c783e51ca418a0",
+      "sha256": "ffcee1050212b9c7b27773ee15a83f73e94c8b207f01796ac59a5de35913198c"
+    },
+    {
+      "path": "src/Core/Security/SessionSnapshot.php",
+      "git_blob": "f476dc2c152f0f7218e48c79e7734473599e62d8",
+      "sha256": "fa4d1776d5cfe43d369135f89267294bdd15bfbf0a5ea3b0552d1844e9f46c70"
+    },
+    {
+      "path": "src/Core/Validation.php",
+      "git_blob": "3ab24a4ff373d40876caacb3777e8d624d9fcc53",
+      "sha256": "42212e789923da37e7e2bed48d6bdecf427be4333abfdc97ffcba85b56fb0306"
+    },
+    {
+      "path": "src/Domains/AttemptEvidence.php",
+      "git_blob": "9374e4c05698a00954510afe8efe7975d9e50e04",
+      "sha256": "6e0acd530fde1c4fbfade157afc99f3a349ff03c452d6d64a7fdbe57bab9fdb8"
+    },
+    {
+      "path": "src/Domains/DomainEngine.php",
+      "git_blob": "67b4d5ca2a7023768f99a6742164060cd46d8e1a",
+      "sha256": "9c50201534dac86534d3e16f0a12b1802aaf4ac4ace3b3c855bd1e9312818d0f"
+    },
+    {
+      "path": "src/Domains/DomainName.php",
+      "git_blob": "b31ff7a3dbe3f0416d6b2c1170662d0142bc94a1",
+      "sha256": "2adc0bc91078454f35369a3557cdc7b29c9b0e7cc91297150fbd2f4913785861"
+    },
+    {
+      "path": "src/Domains/DomainReconciliation.php",
+      "git_blob": "4941a8841234c814ed7771c1a124cbb402363c36",
+      "sha256": "20adeef934ffd94236671e340dc7320ec20ae53d83be45ca4c3a7352d7ae0894"
+    },
+    {
+      "path": "src/Domains/DomainRunner.php",
+      "git_blob": "e67648a36339ed808a75542980d0a2c1eac4364d",
+      "sha256": "471be6e82e6d293fba35635829c001db4db27df30f7cafcc238867e615e836f7"
+    },
+    {
+      "path": "src/Domains/DomainWorker.php",
+      "git_blob": "9a9dfa328938caa4a18c3c8fa9a7c92a56e9b1be",
+      "sha256": "284335fbfa594a3287a13a04de5538e00d6652ce1639ce8a102a407e5503076d"
+    },
+    {
+      "path": "src/Domains/EventSink.php",
+      "git_blob": "e8d1eb3909081a3e984b79d982c451a8e74213bf",
+      "sha256": "c57535fe8f84888d32999351f2e12e859c94234e44c47bb65cc2c6cae7b88990"
+    },
+    {
+      "path": "src/Domains/Registry.php",
+      "git_blob": "5aaeb65d60a750b249704d6838704a28d0b58c44",
+      "sha256": "d82b16f8dac01de6c35b4ea431aa45c53a54a5a70f63fe0cfcfaf992b09716ef"
+    },
+    {
+      "path": "src/Domains/TldPolicy.php",
+      "git_blob": "ca190213d080cec12231375b31432bdb59af65d0",
+      "sha256": "be0df8246a0a3ee8e0cf2b2d4b54d426a2ff280534a295d4618ab5014ea69eed"
+    },
+    {
+      "path": "src/Finance/CashService.php",
+      "git_blob": "033b935a747d5e928baeee21445366e9d4084f6e",
+      "sha256": "5683c3ba54191010b6855c498c195e07b8db427afc4eda553c6ecf80700637fd"
+    },
+    {
+      "path": "src/Finance/Currency.php",
+      "git_blob": "c5d842e4b10a5944acd7d5db4817564069128de8",
+      "sha256": "ef2ef1d9c017aec6df914a5fa519103681554284c5592dcd1cddc80a5da0c5e2"
+    },
+    {
+      "path": "src/Finance/Decimal.php",
+      "git_blob": "16d133220b0caacabdb8a36b6ada16631ab9a8cf",
+      "sha256": "61e171e41c326c9285267631549054201f89695466d50f001ccc2ea03921730c"
+    },
+    {
+      "path": "src/Finance/FinanceService.php",
+      "git_blob": "61049246d6691324ce2b52ad1d20edd5c1c7c437",
+      "sha256": "e2649240fcbc08fe2c86a4818e0e4e2eb90c5fe2a2665ce8b6ca4e2b1d2bc5c8"
+    },
+    {
+      "path": "src/Finance/FxSnapshot.php",
+      "git_blob": "2504416de0108cebc9f3955476b9a53426f8c313",
+      "sha256": "7ab0dfcc6f9ca2d61a7ad1a3d30679ed9eebc4ec8f2a6f20355baaa1dced7c3e"
+    },
+    {
+      "path": "src/Finance/Ledger.php",
+      "git_blob": "ed1aa4be0c5f4ef505f0be25e96e1951841e5b7f",
+      "sha256": "937423ac9a2785e63f26f3e1c94c6ab9a740cf8eb87a668625dfd126a534ce4a"
+    },
+    {
+      "path": "src/Finance/Money.php",
+      "git_blob": "52fc3ff743b5245e345ef2bca86b6216e67b0a4b",
+      "sha256": "81f025ecd87dc7283b9945add15c1475eb0877662ae69179df2a416a3b9c1ac2"
+    },
+    {
+      "path": "src/Finance/ProviderCosts.php",
+      "git_blob": "a75fa620b775f569a10346a1a44d26749e5502eb",
+      "sha256": "756ea197ea9cce91e2912a07336f0688734fa40df2354bce90e1728bca29f8e6"
+    },
+    {
+      "path": "src/Finance/Reconciliation.php",
+      "git_blob": "f904d2aa2d06c08c587608d5df11926318a10d59",
+      "sha256": "05c834311a86dfce7d846bc32636c2dcf08056bb62d154b345a87b72d2724840"
+    },
+    {
+      "path": "src/Finance/Repository.php",
+      "git_blob": "c2db3cc3816a262cff70446510d9a00de69daee0",
+      "sha256": "0b3b653d4cfb917adabf7f1c0b794011616dcfa658d58c994c19b01d51037899"
+    },
+    {
+      "path": "src/Finance/Rounding.php",
+      "git_blob": "03157532c67fae658edf9d79cf61ec77f9e343b2",
+      "sha256": "c1042590a747cae844e519fe83d10f508d8352b9014c989910738080af83f3d5"
+    },
+    {
+      "path": "src/Finance/Unsigned.php",
+      "git_blob": "816623be232fdd5e1693d9ed076fb0403818e74a",
+      "sha256": "7ab49339752d2108b2acfb25620110327df9161ee667bfb6ad0396fc5865d361"
+    },
+    {
+      "path": "src/Hosting/Pools.php",
+      "git_blob": "706e2d64f3425d7257be06c75d014eec93a4e261",
+      "sha256": "4f926512f4f0bfb02b9df8d544c7244f14db46b9d8eadc5fb3ed42db98665a6e"
+    },
+    {
+      "path": "src/Identity/Controller.php",
+      "git_blob": "816abfae411ac6f408039bd6894ef7a6068660e9",
+      "sha256": "cf47a09983f6c583cfa9f20f32251e67d5a88d4dcaec40ef26c2bafd5d616019"
+    },
+    {
+      "path": "src/Identity/CriticalActions.php",
+      "git_blob": "079fe67d5cb0642f907c29c7ad33fbae72d9d616",
+      "sha256": "850181ed63287f7712b1f7566f4310332d5bd813b124165677d01fef73e6e827"
+    },
+    {
+      "path": "src/Identity/IdentityService.php",
+      "git_blob": "de59e66e1a3cd4cc4cfde1f17849f83ee3cca024",
+      "sha256": "d21574de41e3c1b42969974e8bbcc7bf027c5a9d5071e32d8409b8549291a6a1"
+    },
+    {
+      "path": "src/Identity/Panel.php",
+      "git_blob": "2af71c7a18463f469ffcacf86567c43064a3b55f",
+      "sha256": "8fd6fbd4126e23a67707279a6ac7e8b3f7d12c7bed8ed0ed682fe118ba557009"
+    },
+    {
+      "path": "src/Identity/Passwords.php",
+      "git_blob": "efc0fc26e4867550a03d6f1b9a5b352c6cc7c43c",
+      "sha256": "ba7b126adb58a06eba0def4d8a8824f18dedbf697d5661a346104f64544fadd3"
+    },
+    {
+      "path": "src/Identity/PersistentSessionGuard.php",
+      "git_blob": "d45e4ca3cf4dbee97e3dda91a2ea21e47fcad86f",
+      "sha256": "a877065b468c3fdc0e9dbf1f1862fb2d6cc9606d02609aa83154c2addb9933b6"
+    },
+    {
+      "path": "src/Identity/Repository.php",
+      "git_blob": "029726e74ead17e4cd9280e171de6d5774c04fd8",
+      "sha256": "c56cd880a11e8a42a79a82e46cf9d8066d565e08ac4f581c5ed4000b410a668c"
+    },
+    {
+      "path": "src/Identity/Totp.php",
+      "git_blob": "55046d43f522df2f2ed60c0e2f5b1397301aa2cd",
+      "sha256": "e244693202bb80e7058b798bcc6b94e90d245aed0d08b10ddcb2efff948bc707"
+    },
+    {
+      "path": "src/Orders/OrderService.php",
+      "git_blob": "5a52f7247466694cab842998e0009d343ed1388a",
+      "sha256": "d2b7f0db620f7895b5001cb123e941ab26ab10235f749de6aeb20c21c4dce43d"
+    },
+    {
+      "path": "src/Orders/Repository.php",
+      "git_blob": "b5265080d93a10a296dc2a2f9bf2160bb4edd0b7",
+      "sha256": "936c26d32c03e5e5a3643fb28d106c2722b5b2830e01b60ad1defa5c06e3c8bd"
+    },
+    {
+      "path": "src/Payments/PaymentService.php",
+      "git_blob": "a53a6e05589f9f66c475849a15f7e2e34f21388d",
+      "sha256": "6e6134da32f7975269f2eb22f1a2bb46c2e5fdc7fd21e10040a09b21aa6d6376"
+    },
+    {
+      "path": "src/Payments/PaytrBoundary.php",
+      "git_blob": "a0774cd678d0ec91edc2c715bb16d79a1c83c8db",
+      "sha256": "4473979227afe535b0772f0032b50f4c71691a6b463df10c75343bb0a4ee9f27"
+    },
+    {
+      "path": "src/Payments/Repository.php",
+      "git_blob": "ed6d95a36dc8b29a3f314987f726ece13f410e5d",
+      "sha256": "d9ca80d8af97e2002185aeb30194c7696c4c1ee5aba8652088849776c9be7a7d"
+    },
+    {
+      "path": "src/Pricing/ExchangeRatePolicy.php",
+      "git_blob": "1a52c3baaf4ee6d81a81659d17edee4c20a116c8",
+      "sha256": "fb3c46a344a83f857fdde12d5c2e1eae82c2dd0703fa39d3985c6e5bae6b6106"
+    },
+    {
+      "path": "src/Pricing/FxRateRepository.php",
+      "git_blob": "c7e326084f6bc5c1855b9c792e7d3c860ecc5c37",
+      "sha256": "9ebef96d43c7ad82d39d07205435483e080258d808e25b9a60d124d6c3371cda"
+    },
+    {
+      "path": "src/Pricing/PriceResolver.php",
+      "git_blob": "8e368c03c46c17dda2c447edd996d5d5c9014063",
+      "sha256": "63fa176c2dd77ec4e65f874b54c3773c33b985adaf2ff5bea96c31eb1dee370d"
+    },
+    {
+      "path": "src/Pricing/PriceSnapshot.php",
+      "git_blob": "87a7a50ae078060bf1222c154b4a99f9497f9629",
+      "sha256": "dcb365e422da277990d238eb7206e2ba979a446222a87fcd34c28c03c9e15ff2"
+    },
+    {
+      "path": "src/Pricing/PromotionEngine.php",
+      "git_blob": "65392c2dbaeb1bff2c67428db9e6f202faa9e660",
+      "sha256": "ca06b84a0cea53353d29ac80e67b7a39b9c9cd83d7e7ad777a284fae36982103"
+    },
+    {
+      "path": "src/Pricing/QuoteService.php",
+      "git_blob": "c2aa5be6796fbc7aea99530ef1f031bacf606651",
+      "sha256": "d774930021970e383efd81ea5b17df86db06beacb355768f05e649bda6ac6a0b"
+    },
+    {
+      "path": "src/Pricing/RenewalPricePolicy.php",
+      "git_blob": "64ed77305d148c5d6451b5bc09084e30a9257934",
+      "sha256": "811d74155beb0274c7af30b115075e68a56d5304714393b78127dcf9aa469841"
+    },
+    {
+      "path": "src/Pricing/TaxCalculator.php",
+      "git_blob": "9de8dfe9f23a1ad62010bd6e425bc2bfec732514",
+      "sha256": "026a44cebea270cc530f95b124b8e5ab826f15aa90365985158834136a012a24"
+    },
+    {
+      "path": "src/ProviderPanel/Access.php",
+      "git_blob": "1759a366a344db2991c731facc205fe4896ad4e7",
+      "sha256": "4aeb67daccf7fd2650fb69bc4809d9f4976632a6e97b868bf1f0205ae959f04f"
+    },
+    {
+      "path": "src/ProviderPanel/Commands.php",
+      "git_blob": "e40641877b5659d8a69079b3ffb7aa03b77c8da3",
+      "sha256": "c985f12bd981774780bfd723e9a0c553676b07af9cb6638c33a573be55877dc3"
+    },
+    {
+      "path": "src/ProviderPanel/Confirmations.php",
+      "git_blob": "b80fac809e9f165ff80331e230a0a39ee9a1817c",
+      "sha256": "1e35e195ebc957a62b54de46d8b6a2edf87206e178cf089a83aa92ef96f2ed0c"
+    },
+    {
+      "path": "src/ProviderPanel/Controller.php",
+      "git_blob": "cb534d6ac930e1b301f39ee3ed1e10801fe9148e",
+      "sha256": "0cf122e1a442c1562cb32f0cab5fa99ac7f2b938e24dd2d12ee38e2151381e4b"
+    },
+    {
+      "path": "src/ProviderPanel/Evidence.php",
+      "git_blob": "b142d61fe9ddc5429af7cc99a6f39123fa86df7e",
+      "sha256": "63aca32ce10f6b37ac0ef72cad11ee5e680603cbfd7a1f72df8f4cad2435efb1"
+    },
+    {
+      "path": "src/ProviderPanel/Inspections.php",
+      "git_blob": "ff666c53142341b6632316ac82385400909ed09d",
+      "sha256": "2256cab3005708fea8191783d1f23180776d91a41af231a6610aa28bae87f47f"
+    },
+    {
+      "path": "src/ProviderPanel/Panel.php",
+      "git_blob": "6c2a0e3f528a1f44b50f2797a03cfafebfe6ac16",
+      "sha256": "ee8e8b92417db042a1fa558da3b5afba559cb712cbd6ddba7ec203937e7780b9"
+    },
+    {
+      "path": "src/ProviderPanel/Views.php",
+      "git_blob": "6b58cc52a36f9eef27d4e8c3d34cc393b2654592",
+      "sha256": "13a23ff3909dd01482fb7753f4c9e7a8dfa9af11834fdd7d8d73674683d088db"
+    },
+    {
+      "path": "src/Providers/Contract/AsyncComputeProvider.php",
+      "git_blob": "ed389ae2ae2699ee0a0edaf5b11a4d0c7e497800",
+      "sha256": "0650f8eca1563e20868833344ae37500a93588a1a0df79bc5c66dce60af5102a"
+    },
+    {
+      "path": "src/Providers/Contract/ComputeProvider.php",
+      "git_blob": "9d90da72b4d0c445e6d07f38268d926ac0fae07f",
+      "sha256": "943084d41bad27a8b1f85458327a80bb893c8d68a555505ca275790c8f62f165"
+    },
+    {
+      "path": "src/Providers/Contract/DomainManagement.php",
+      "git_blob": "061244fecb5869cb6c6a87628fe9ba36298ad59e",
+      "sha256": "ba3d5258ac2e654edd96c949eae82dd02c8dd0f31c3e7598bdc4d7e2306c90a6"
+    },
+    {
+      "path": "src/Providers/Contract/DomainRegistrar.php",
+      "git_blob": "ea08d46acf7ac5d92b2dad392af59d4c81c372ef",
+      "sha256": "edbe3a967bd001ba8435ad4697518b1ab00dc9a6f854ad4aebf30011dfccc9f3"
+    },
+    {
+      "path": "src/Providers/Contract/HostingProvider.php",
+      "git_blob": "51b1df7de0d1751c0752c639c11d350e6a8ec146",
+      "sha256": "297ef893cc0262a68d8bd8e2817f25d519ae1f8b92815384d34a643cec1a24ba"
+    },
+    {
+      "path": "src/Providers/Contract/HostingRenewal.php",
+      "git_blob": "81ee9fd71bfdd7bd4609e51e7463b488724b239e",
+      "sha256": "5bf0697110af8ab4f8767dcbf66c26127136d147821e1bc039b149d30e6a9cbc"
+    },
+    {
+      "path": "src/Providers/Contract/Operation.php",
+      "git_blob": "01312d7ac541dcd48f18558cc7a0b75915c3f91d",
+      "sha256": "3f143c0d1d805860347db0e7bd3e8991ddca7587107fa714ffed36c9445fab69"
+    },
+    {
+      "path": "src/Providers/Contract/PaymentGateway.php",
+      "git_blob": "4707b6c54799d7516cd6650ff19956a8cef67dda",
+      "sha256": "fa1c5e3806a487ccc15ad12e1e02905a4139353019d0abbd650b5c63c0c6e697"
+    },
+    {
+      "path": "src/Providers/Contract/Provider.php",
+      "git_blob": "133c83024d60d8a7334a6950a714b3b30d9aa604",
+      "sha256": "70a600c1d0005be4ba002f00e2bfbba153fd8e462a2cc23edb7bee751def9ed3"
+    },
+    {
+      "path": "src/Providers/Contract/ProviderResult.php",
+      "git_blob": "0540aa8bb321f7b68ef147e3f8c0ff9a1d091dd2",
+      "sha256": "0dc94dcb0d76cbf6c71dc11081a1ec847fc8da709f49e1339ce9cf42d0fc5ff3"
+    },
+    {
+      "path": "src/Providers/Contract/ResultAcceptance.php",
+      "git_blob": "f83beb1940bb23ee70f808d269fb0851564d284c",
+      "sha256": "8a8dd3bf3a5fefd23b40597581a1e6c11ffe48fcc397e5ee29a30e99047d9d43"
+    },
+    {
+      "path": "src/Providers/Mock/CloudMetering.php",
+      "git_blob": "1686b277355c4c981281efc405ba870f48130138",
+      "sha256": "51e6c370231363e21eed9649a554569c6164fe6ba9738726941d0d35662ffed7"
+    },
+    {
+      "path": "src/Providers/Mock/Cpanel.php",
+      "git_blob": "a9726ca812b34c19ad85a7fba6be0f36c75e113c",
+      "sha256": "e7460897bb63670fc0aa377285b363f560c1b5014f38ebaa7dfec1ec196faacc"
+    },
+    {
+      "path": "src/Providers/Mock/DomainNameApi.php",
+      "git_blob": "27d00943180681255141dc8d8f0e736dc71e283d",
+      "sha256": "c4025c2ca58c5f2040c94d58f88236c0148705fd53b322833c32f1138f1721db"
+    },
+    {
+      "path": "src/Providers/Mock/DurableCpanel.php",
+      "git_blob": "ec573d455de0ac2e509d258b99acd03b6ca36e83",
+      "sha256": "0c1269cf1a8433b5d4c1324efb17815c8ce2b2f31595df4ff2f5d8cb83c91890"
+    },
+    {
+      "path": "src/Providers/Mock/DurableRegistrar.php",
+      "git_blob": "c9b9aa20b1e4827e7850f2b0e1505f927ee89b72",
+      "sha256": "5e7f93a23bfc26a5b3e70754a78bd7292d22c1e8d5df460e9c2798a0f16fefc9"
+    },
+    {
+      "path": "src/Providers/Mock/DurableVoyar.php",
+      "git_blob": "2e71b3f057e0d6acf70f4aa4b34503b2fe4bb78f",
+      "sha256": "4af05f88eed7e8eb35331d3b622a3f26b95a86190798ae49912f3c1c439e583a"
+    },
+    {
+      "path": "src/Providers/Mock/MockAdapter.php",
+      "git_blob": "d25ad1fb09039667cbd395d241aa36f5ab525309",
+      "sha256": "0f9ee5635251830f4d4400ddeea3b763a300087e358af3bff72ff4d28d11bf31"
+    },
+    {
+      "path": "src/Providers/Mock/Paytr.php",
+      "git_blob": "84a44f03801d0438f091806d6201f863b18dc89b",
+      "sha256": "5b94aae69d370c1d8883703d20c28a85bcf17a91df2b78bc4f7d5acadad79a89"
+    },
+    {
+      "path": "src/Providers/Mock/Registrar.php",
+      "git_blob": "ccb2f8238b28cce8469cf4bf439f144221abc400",
+      "sha256": "afd1d66f337629154310cc15943e06c93743f92732cacbc3f6f8649f8f922154"
+    },
+    {
+      "path": "src/Providers/Mock/ResellerClub.php",
+      "git_blob": "cadafb4c7afc0ae465a9267b47e5c29cff4b64f3",
+      "sha256": "3cb9396784ef978faf7547e9cfcfbeec776c37f6afb2d32e702d5875b4260556"
+    },
+    {
+      "path": "src/Providers/Mock/Voyar.php",
+      "git_blob": "4ed13c3456741dd08f8c913c7d40394bb36e0417",
+      "sha256": "74d21ea2a7cdb34e204dbdda3468bce018444bc4f08ee5986469d2d8b212e893"
+    },
+    {
+      "path": "src/Providers/VoyarMutationFence.php",
+      "git_blob": "af32774188055a798dce44e786f440a9fb1900b1",
+      "sha256": "11d3d034393386dbfcadb6b76288229d929f3204ee18f87fef1060bc4f6a5316"
+    },
+    {
+      "path": "src/Providers/WhmBoundary.php",
+      "git_blob": "9d99e701ba0be89a578036bff2dad88a30232a25",
+      "sha256": "65e330107edf87bd3a00e26bbf706ac01b2bea0f819fb925ea8563fda8aaca96"
+    },
+    {
+      "path": "src/Services/ActionWorker.php",
+      "git_blob": "ea5d2c31a6068d97a4b934452f99927ff7c41907",
+      "sha256": "a0312c1b23ed6348f546e0253184775c64838dda850166dffbe646dcb8181660"
+    },
+    {
+      "path": "src/Services/Actions.php",
+      "git_blob": "adb7fd8e4883918b729b04ea44f1196e2c8e7d79",
+      "sha256": "8d742314dbed77c1be850f8892f1c77525fb1e87063ac48bf9a41fdf63426dcc"
+    },
+    {
+      "path": "src/Services/CloudServices.php",
+      "git_blob": "4427d36c51762d9ac798a831173e22419285fb0f",
+      "sha256": "389e41105b0f06e36368710fc67131774dd03753ce77890b28b0ef7425059d30"
+    },
+    {
+      "path": "src/Services/Commands.php",
+      "git_blob": "3100178b95d98834a18ee8d76dc21a3b0b589f6e",
+      "sha256": "3ad5720d81a62c302bf00c9ecd6b262ffe44d1a6724bad30106bf8bc37721771"
+    },
+    {
+      "path": "src/Services/Confirmations.php",
+      "git_blob": "9730da79ca0263fd0bf350363439d3f84c64ea7a",
+      "sha256": "02f60bc8f8087a2494f2d455f8012cb29c42b833484422ce8e1719192bbc288a"
+    },
+    {
+      "path": "src/Services/Controller.php",
+      "git_blob": "173a9db31d383fb06d847aea8f5018263ed2e526",
+      "sha256": "a72bd09e4f761bdaea030b36e67f6d2d53728d709fedb4931563d986b9e13b31"
+    },
+    {
+      "path": "src/Services/DomainPeriods.php",
+      "git_blob": "f32ef2e21d605f052715e571509ad99abe0ae8dc",
+      "sha256": "d29c5abe5ff660a016c792fef685dbbbd0814f614859f32476c37ff64d734e1d"
+    },
+    {
+      "path": "src/Services/Engine.php",
+      "git_blob": "17ed7649cb85dbb96137058be7183a972daf5bf2",
+      "sha256": "cb73d4a10b8090d6e2c14b6b601ca21e14e9dd1547abf3f9c67ff042afd5047f"
+    },
+    {
+      "path": "src/Services/EventSink.php",
+      "git_blob": "e6ce7cdf3459ca12b672b34a4084703451d944c5",
+      "sha256": "e5aeb8e15cc67e382cd2ceef6c1aea0b5087b64b5ccc0670e64453af95650525"
+    },
+    {
+      "path": "src/Services/Inspector.php",
+      "git_blob": "cd8b740e4bc3f7f4fbcaf5fd1d6e8f268ff215d3",
+      "sha256": "8459ab3addd6d6a4976f86bd866d262a0accdb2494e5b66f246b5688e1387267"
+    },
+    {
+      "path": "src/Services/OperationReconciliation.php",
+      "git_blob": "ca3e25f3f705a8925fe27430044110d8081138ac",
+      "sha256": "0c734d35bcf7c14c01026212b6e7754e4d873655475bf11b2197bf17285ae56d"
+    },
+    {
+      "path": "src/Services/PackageChanges.php",
+      "git_blob": "80c6cdc4e0b6f5b6a6fb3bdd9d7596841296e5e5",
+      "sha256": "53ef42e4db2e5eec466b05e7a2536e0a26983cdea9d767ad87a2145b469f9267"
+    },
+    {
+      "path": "src/Services/Panel.php",
+      "git_blob": "d4dc8955b13786b407611fbfa78c0f74ca9baf0b",
+      "sha256": "7d503ea1c911b8a60e52b91538708b7ed8c2bba2c75eebd1cfb83e4e0e412a26"
+    },
+    {
+      "path": "src/Services/Policies.php",
+      "git_blob": "9f7f7f3ab820467332acd4f5068eb56399e62b3b",
+      "sha256": "cda5265f4f5741b8319e77542c54879746e6fbfd2365d261383af62a8b8dc8d2"
+    },
+    {
+      "path": "src/Services/Reconciliation.php",
+      "git_blob": "2cd9fa201e55f53b753285e11cd5859e0b488cfc",
+      "sha256": "0b895f06d87acb37da84b7b913fe4b0149f338de81c973b17f71c9ef88149c87"
+    },
+    {
+      "path": "src/Services/RegistrationEligibility.php",
+      "git_blob": "c9b58638950f985796e751df98bc1e90182189a8",
+      "sha256": "e10fa37f8d3e733c22e0996d753fec3b37b158c9c57347639449293fe1767665"
+    },
+    {
+      "path": "src/Services/RenewalWorker.php",
+      "git_blob": "ce0dd1340de410687227af7979ff1353246ed071",
+      "sha256": "257d87132e460626f31b294c975100be7d35638064a39cf478fdceb9b65accb2"
+    },
+    {
+      "path": "src/Services/Renewals.php",
+      "git_blob": "5f6fcf8c0b066a9268b5a0f9c9a7ac3dc40807d8",
+      "sha256": "7081e04c409a66dc1bce3676e9550a7937463a0652c01a755e9f9adf7e922933"
+    },
+    {
+      "path": "src/Services/Repository.php",
+      "git_blob": "af6bbcc21e2bda48d5103cc7005ca475a2734307",
+      "sha256": "7c4e471cd028cfb17a587f47f30da05d20c628d172e32675313be1872cce4de9"
+    },
+    {
+      "path": "src/Services/Runner.php",
+      "git_blob": "a87db5741906f65983a31a42ace702a64b61c951",
+      "sha256": "5de86dbde81b2561d321402049d5d2f344fefbd3d7c841c73f64df734c9be5e7"
+    },
+    {
+      "path": "src/Services/Scheduler.php",
+      "git_blob": "3747084cfc435a7df01d8c884fa56c59b744a270",
+      "sha256": "9ec6c8207d1135f3047e2aeab3880741a6e0ad1c3e80d26d04d920d6989e3cd8"
+    },
+    {
+      "path": "src/Services/State.php",
+      "git_blob": "5b8fcdf7c451478b3ac43fe9eb0d41f244fa6890",
+      "sha256": "21bd87d86d2d135df0d915f644bb7ee620ecb21e0a96a283583858299d855f42"
+    },
+    {
+      "path": "src/Services/Transfers.php",
+      "git_blob": "8804d375343d6570f2d89df13a21c8ea2f6207e9",
+      "sha256": "8ebbc75a5b285994b1497431be18cbd24ca395a9147ebd48adb5275c65b1edb8"
+    },
+    {
+      "path": "src/Services/Views.php",
+      "git_blob": "7674ba782ac7ee6945c4bfb023b0afbb645eb70e",
+      "sha256": "2c15d8849e6e6543ff41173da26fd1c16a04db602f4eecc74b9679eca688c5b6"
+    },
+    {
+      "path": "src/Services/Worker.php",
+      "git_blob": "871054c27a9245ae12c5c911c645300e7bf3efb1",
+      "sha256": "59c804a98fc5da5c0946f832f10e5e4a8856cc7e1a7229e0d7005920b8ab2fb8"
+    },
+    {
+      "path": "tests/addons.php",
+      "git_blob": "9b4e7fd3c29e12a947c863c93110f0f557f30e8e",
+      "sha256": "6fa66eac1d7c3967194a44bfa0047f43004a263df3c1c81467442a3fcea9b81b"
+    },
+    {
+      "path": "tests/billing-cash.php",
+      "git_blob": "ccbbec6ec6912efe2f99664fc959a33ec13e2274",
+      "sha256": "da5dd0e30d12d40dc55afd1716798abbc2938cbd700d4a6fe7dac999f6ec3fc4"
+    },
+    {
+      "path": "tests/catalog-fixture.php",
+      "git_blob": "0b1173a6f1134f43e2f1a83dd3b3a8b00d1ca434",
+      "sha256": "3a70aa1685a9fb4069c714f7fe7036e627d187946c6aabcdddb39d3604f8b66a"
+    },
+    {
+      "path": "tests/catalog.php",
+      "git_blob": "eecf8cd20b67ceab709291d015fac5d05abc41bf",
+      "sha256": "2077539ae4f6d5a26c673016932a166ff156ea1028489c634b42546f441e7931"
+    },
+    {
+      "path": "tests/child.php",
+      "git_blob": "b1230ccc708471d0552237c5cbd5e15b0dacf6e1",
+      "sha256": "efbf39c95ec8ade9f6f0c5d19b88cb224cfa8a1d7ea16348b3508731810c4eaf"
+    },
+    {
+      "path": "tests/cloud-audit.php",
+      "git_blob": "1f6de7cb4adda8827133c2d1492dd7974a9902dd",
+      "sha256": "c10321b55514d143e8eddec2a78309b8a894721802eda65b035ddac7b30f7b35"
+    },
+    {
+      "path": "tests/cloud-child.php",
+      "git_blob": "775cec1655862b3fb44b8762a2d2b1d24f15a09b",
+      "sha256": "d26b953c25cdf048d4ad0d1b7f1be3c2ee825a2c1a734bc5521a84c9bf057fda"
+    },
+    {
+      "path": "tests/cloud-cost-child.php",
+      "git_blob": "ac6ed1f711cb9ef839fb933cb4b42491f1472b27",
+      "sha256": "78f2c44cdfffebb876fc5a5a731decd1a349809c7605ea0f717bcbb5f118578e"
+    },
+    {
+      "path": "tests/cloud-cost-fixture.php",
+      "git_blob": "edd02e1e35f825ee840e3c77a940bbf904d5b59d",
+      "sha256": "a3fd3ef219f4dd989fec5fb92a886ac6a6fb25878b1f623ea793a161ccb0b9dd"
+    },
+    {
+      "path": "tests/cloud-cost-races.php",
+      "git_blob": "3a87443de6a9429600d25789c51e029fc5377fb9",
+      "sha256": "54de7902f488d259c0c762cd34b1e11d87fe9d54e4c51738022a5a5187344d61"
+    },
+    {
+      "path": "tests/cloud-costs.php",
+      "git_blob": "1a6069a8c9a6e6821d881212e96deea3c32924ae",
+      "sha256": "d477fdc6a90be0e56d075b6d70f60374a059b41b8eb92460d34f595c0373ec49"
+    },
+    {
+      "path": "tests/cloud-final-audit.php",
+      "git_blob": "1e59761730b5dbc98941dacb27e94b9aee22dbc1",
+      "sha256": "9ef42494d63d6c535b4601cc03e8c0e18ab03d2009820c6e65c31718c5e35f24"
+    },
+    {
+      "path": "tests/cloud-fixture.php",
+      "git_blob": "27549add7c73f496dc98e778664ab2059282f5ce",
+      "sha256": "b2d7468bd0a57c080b4dd2bd07d3c6167974f16c20d74df012a9d87ed57195a0"
+    },
+    {
+      "path": "tests/cloud-races.php",
+      "git_blob": "93a7075956b50756abb6810246767220537defe1",
+      "sha256": "4707985663cc907a9a34ad93e628c645acccb8a8d06d71a16035156716ee2f58"
+    },
+    {
+      "path": "tests/cloud-safety-child.php",
+      "git_blob": "2c5036b51215d98944d298240a6268ab82e62fef",
+      "sha256": "edd1134420ec569361cfff84772b7970713b9da582351af8511194883e462bf8"
+    },
+    {
+      "path": "tests/cloud-sdk.php",
+      "git_blob": "67d33d7d2aad9c0c6e6fe5d2c5de8e918be59c32",
+      "sha256": "8f4d677473b5b346f6870b216011dcb8bcaa51ec0ad9f5d0d930840c3f23f34b"
+    },
+    {
+      "path": "tests/cloud.php",
+      "git_blob": "a03f99878a3167908ba07780bcbb215de295e8ee",
+      "sha256": "4a5d6434bb923e5c25866b90f8c1427b5cca0b30ba6e289df9ee511730f4f967"
+    },
+    {
+      "path": "tests/commerce-events.php",
+      "git_blob": "812b38350068e9219f06c920705fa830272d4d07",
+      "sha256": "144bf1915642b842ee78102027abb982405968e9f06eb6f08de33e31aca2177e"
+    },
+    {
+      "path": "tests/commerce-fixture.php",
+      "git_blob": "6673dddc206b59fb3b32c442450a1a8e16859bdc",
+      "sha256": "6acb8d7543a4310bb5671eb9361d1e19810531b881f43e35b92a732bd4582fed"
+    },
+    {
+      "path": "tests/commerce-http.php",
+      "git_blob": "c4d048a1864355959e6be93874f39185716f363e",
+      "sha256": "99ba68d9d5b3fe66b7d41984539f3f656dfb8b4190c9ecaa02bff32c6028dbb7"
+    },
+    {
+      "path": "tests/commerce-router.php",
+      "git_blob": "c817e449d89fbbfec08e7e6430b0051de5c93246",
+      "sha256": "eb9c75025909e8a72228ea470e7c96a078f3cca5652a96712f26043192769b65"
+    },
+    {
+      "path": "tests/commerce.php",
+      "git_blob": "3c2a8cf5637d7003fdf4b5e04259cf0364bab5ce",
+      "sha256": "e0d9edc2058e3c938d00dc55cda2c4b9b797054cd406c89b3628ecf07f4caab6"
+    },
+    {
+      "path": "tests/confirmation-child.php",
+      "git_blob": "242931a592004e0aabbbc92565d220d5b7c184eb",
+      "sha256": "d0a795308a12a5ff891609a5922f0b6bb5fbec7581ed5139e31f9db9799a2072"
+    },
+    {
+      "path": "tests/currency-change.php",
+      "git_blob": "a1f61281781425e7ca096deb9de5e13d57929f81",
+      "sha256": "6c6dbb4eec71916dbbbeff7b47098cf1ad19252a4c95d18a6d2a39e130764c94"
+    },
+    {
+      "path": "tests/database.php",
+      "git_blob": "8c90f4a50c151379acc12ba4c916ce4a84ae50db",
+      "sha256": "c4f3b099492f1111b0af4f713588d426f183fb48a355b9898ee8e3a400d4a91e"
+    },
+    {
+      "path": "tests/domains-audit.php",
+      "git_blob": "be42030112d82b19620e066dbfdda6eefad453b4",
+      "sha256": "e69afc8271c73298093a69f02695c5e9e3fadf310bb19465d7813dc9f09db0f4"
+    },
+    {
+      "path": "tests/domains-boundaries.php",
+      "git_blob": "9e5209e66df77d7a81966c005c5c4e0b916e5a53",
+      "sha256": "1bd64e10c8ffccd78cbe6b8bdbd8b6744a8bd04e9dc66f06fb670620793912a8"
+    },
+    {
+      "path": "tests/domains-child.php",
+      "git_blob": "795bd709076cd19a98977d2eb917107d0e8dd19c",
+      "sha256": "c7e5562dbf06d69a91b174f413208b4f9e7ea8dcecb798c4c6ae735ba34f8b0f"
+    },
+    {
+      "path": "tests/domains-concurrency-child.php",
+      "git_blob": "fcd876609d57c02c227d04e708de6ae6a9ee1a9a",
+      "sha256": "55b12bf5fb4cb6d466e532efbfd89ceeb83d9b86c14f19ade0f02b56173e7639"
+    },
+    {
+      "path": "tests/domains-fixture.php",
+      "git_blob": "d36cc70fe3fdd44e50b4e8b99d023b5d94901d47",
+      "sha256": "b5d2e2efa3cdacf1994a71cd95ea1cd76300260b4e1505fdd721705510727db4"
+    },
+    {
+      "path": "tests/domains-model.php",
+      "git_blob": "0d51c328c02bde4d41ccfe24dec76902d1351593",
+      "sha256": "b78305baccf34eb54f916062171456c768779ed7b548d885489a1fa549903ea2"
+    },
+    {
+      "path": "tests/domains-operations.php",
+      "git_blob": "fdd336b71b2d0bfa4d06253d176799a42a701b7d",
+      "sha256": "3abf99b1c6d385f481db0d38afbb6ff7c68c472319e7d69eb728e3dd3a31a02a"
+    },
+    {
+      "path": "tests/domains-provider.php",
+      "git_blob": "76379cc0318d69a797725f219554d24fe3d8a298",
+      "sha256": "f3b0340463b8da75df3f9ed3eb24518ff3b67099443aa01b4692da71eac51656"
+    },
+    {
+      "path": "tests/domains-unit.php",
+      "git_blob": "e507eb805e684c9e89e3bd01a21b3a1a761c62cd",
+      "sha256": "4eb1e5470d04a58465bc6a1c091e96b2f178a81f032a8fd47f8a38e78beb6a99"
+    },
+    {
+      "path": "tests/fence-child.php",
+      "git_blob": "c1233f87c2eb81da76fc3167492cf0346383b9f0",
+      "sha256": "b9832e939c8d629ef5e304978568b7fcba649b08dd5d0ed43237d97f24489e37"
+    },
+    {
+      "path": "tests/finance-child.php",
+      "git_blob": "02775a2114db8242eebfd1e0168ce6fd663a3a5c",
+      "sha256": "66f19ff67fb67b34010a8a8bd382095463f0742bc357b3b45c6153ddaff9bf62"
+    },
+    {
+      "path": "tests/finance-unit.php",
+      "git_blob": "e94b98b37b1e94c590c97a4fc0a7af6795ab2ebe",
+      "sha256": "d56c5edb1252461afdc0d158289750f9d6d3511a7d813968971a592fea43ee45"
+    },
+    {
+      "path": "tests/finance.php",
+      "git_blob": "6ae463faa2aa33dc6b8e3358de3e192ad84fdcc8",
+      "sha256": "bc0655fd0f04dcf3395941715c21261a81bd5ec6ce16bd0dd4565d4f5c50472b"
+    },
+    {
+      "path": "tests/hardening-unit.php",
+      "git_blob": "67f9b5c6de643a81bdc5103063cf286ec26eb571",
+      "sha256": "5193c5f7cb8d9a4a871f905921abc6e0d4ae1d785906ac57bef9c4007e440075"
+    },
+    {
+      "path": "tests/harness.php",
+      "git_blob": "91c01444723daf213c063db9b4b0cea8e1e1b68a",
+      "sha256": "0228ef686f36ca43657089c95351fbb276a008ffb05f0998005a464dc46355d8"
+    },
+    {
+      "path": "tests/http-harness.php",
+      "git_blob": "6f36b9482aaa507c5533a7d6fc614e91401c458d",
+      "sha256": "5f3eaed0065df434d34722fbf2ae6a3af0490194dfd24015af437393a2e5b5ae"
+    },
+    {
+      "path": "tests/http.php",
+      "git_blob": "4341bf35a8acc404ae7a922d2c4f75eb322dba2c",
+      "sha256": "51746888f6c344ccc25ee974ad18a2298a59034ea12b52ad82844fad47ac9fda"
+    },
+    {
+      "path": "tests/identity-child.php",
+      "git_blob": "7a45574d44af1423f38a169823251f0f129cdb93",
+      "sha256": "7c86a327158ca757effd738471529003277b9c26c65b94442418acece11b4948"
+    },
+    {
+      "path": "tests/identity-http.php",
+      "git_blob": "eb8b9a57136a379e9260c8c0920500514b61b936",
+      "sha256": "f1ca65a18178f32f828fbcd7750c3cb5b6c18ec41af10e1016f0de26348788ad"
+    },
+    {
+      "path": "tests/identity-router.php",
+      "git_blob": "f639d6dca9d1e4926004e0eccd93b20d181f8401",
+      "sha256": "2a73e1eb6dbf3faf53ee3c6ea6e7c3ac2250af91bb5a88f88f647ee9007bf15a"
+    },
+    {
+      "path": "tests/identity-security.php",
+      "git_blob": "9979b8d1dacd1a628df65025367bf551d09e9211",
+      "sha256": "d9ff533c36f9afa838238d6d2e44d97be98734df5fc44328f9e008b7f76419d0"
+    },
+    {
+      "path": "tests/identity.php",
+      "git_blob": "2c31932457b41d2ff0105a89865d4e6281eeb171",
+      "sha256": "19e28d0f4bbbe306552e8475572221dbf3aa5c94678ff894fb1db764600781a2"
+    },
+    {
+      "path": "tests/integration.php",
+      "git_blob": "a0fe8b2e026aa118025b1b9fd9602ebe3eb966c2",
+      "sha256": "c58905d74d548efe97aa365d1669c0b1c391b4c38ae4c47b21fb7a47b610347f"
+    },
+    {
+      "path": "tests/order-child.php",
+      "git_blob": "c2b59fc0f24ec5c23a451ae9855be3a27558ee9c",
+      "sha256": "b56b1131a20392d82e9a25efb91ab9a23ed30e4550a0efddb132e8098ce3e5d0"
+    },
+    {
+      "path": "tests/orders-fixture.php",
+      "git_blob": "1967cab79bbe84dec3922211cc38dedd5eb09b3f",
+      "sha256": "c4bf04a0b8c11a60c0c44d8766a6a3bf05218493fd87b3c7fa60a9edd17ae861"
+    },
+    {
+      "path": "tests/orders.php",
+      "git_blob": "7a5fbfb7e4a38f3e7e12aa3401ab55b6d4d13fea",
+      "sha256": "7c0eadf25cec6085e4c9e2598faf89f8d5f0179dab0fd4126be7dc262b5987ea"
+    },
+    {
+      "path": "tests/paid-refunds.php",
+      "git_blob": "9b7e53de78e8acea9aa1fdc4377de510db0dc7f1",
+      "sha256": "422cacbbc21c629634cb7a18ad2a0798a86c98252222668d0c65bd999ea56fa4"
+    },
+    {
+      "path": "tests/payments.php",
+      "git_blob": "660b72832e929b42c31fe15dddd1f88fe7c81146",
+      "sha256": "c7fc60e4072689a93359fbe3a08e61764c24040896479ca07cb3e48c1bf6bb2d"
+    },
+    {
+      "path": "tests/post-delivery.php",
+      "git_blob": "547410243a29ce43a088e47769812bdcd37fc7a2",
+      "sha256": "53715004d5880b4b3e67efcdf48db6e6c0ec2229c02745885a9bb659140f07fd"
+    },
+    {
+      "path": "tests/pricing-fixture.php",
+      "git_blob": "bee5ba8a51d02429b70ec822af7acaca900c926c",
+      "sha256": "e0e6a5a20de0fa177f73db90ffbfa1f9e164f4acaa09242525976c73f4c8d0dc"
+    },
+    {
+      "path": "tests/pricing.php",
+      "git_blob": "9c49688ed2f1ddda18d4fc82be948029313d97d8",
+      "sha256": "19e34230b39df5237f7069cb40073bada013f56a0ee6db0194b2714f755d2c9b"
+    },
+    {
+      "path": "tests/promotion-child.php",
+      "git_blob": "7ed239414afa2ccdd60aaa9aa569ae30df5dbd28",
+      "sha256": "dbf5132b44c15f70a94f3e45c0733dd010ee19df54ac6ba5863a803c17f405bd"
+    },
+    {
+      "path": "tests/provider-panel-evidence-cases.php",
+      "git_blob": "1b6026e86e1ee5e8d4b4359054832a9556668fa6",
+      "sha256": "7300c78cc5e5e662033f0fea0f525a0fe5d751531bec3d6f19d1c8461bb6e39e"
+    },
+    {
+      "path": "tests/provider-panel-http-child.php",
+      "git_blob": "c68b71051bf9758f08bf9ba62fa5397033a114ac",
+      "sha256": "839933009a1a00c583cf184ce9d365eb9f692a1d75e963060581e2af18016e58"
+    },
+    {
+      "path": "tests/provider-panel-http.php",
+      "git_blob": "ebf596cd560882f1665d817bceebd1b51c343931",
+      "sha256": "21aebe1313806fbe7da7094bda3e3176050c35dfc3728ca4c7600e2fa5a2a74c"
+    },
+    {
+      "path": "tests/refund-child.php",
+      "git_blob": "012013e9f65b520205e14c1e52ec55648b60da8e",
+      "sha256": "63a2272d8319f3ed1865f57d5d2c9ae6a1bf423a31592d5eeb87ce6eb1463712"
+    },
+    {
+      "path": "tests/review-child.php",
+      "git_blob": "f1135deb161313d09ec681713f9d04d42c1c5a7e",
+      "sha256": "1858659540cada03a714e6cba40634a65a9f2ceee97b2675832db715d2d86bb0"
+    },
+    {
+      "path": "tests/run.php",
+      "git_blob": "d17589d0f5632b1ec2860486ff9084822cb480b2",
+      "sha256": "e8a8b88e7491af7ec47569a576a7c78b7c207a7a054f12aef2c585db94a96513"
+    },
+    {
+      "path": "tests/services-action-race-child.php",
+      "git_blob": "708e862cd93aec2e890e912d41fdcb1cc635d396",
+      "sha256": "d674cff6483b061fec5214f009edd77615cbf94b46db8e265bcc9287b190921a"
+    },
+    {
+      "path": "tests/services-benchmark-child.php",
+      "git_blob": "470b190b90a8c0eb633c26cdef8e6b2bed9fb7de",
+      "sha256": "6d8f75c6812ec0c9cb9b62ff3729be0fa2eac856d07539063fab319d3531d324"
+    },
+    {
+      "path": "tests/services-child.php",
+      "git_blob": "c041dc797dbc2230ff2d2deaa1290df81c5291aa",
+      "sha256": "67e323246ccbd89d48b64c7d40db5c30f1b510fe1c0a5e77b347c1688ae002e1"
+    },
+    {
+      "path": "tests/services-engine.php",
+      "git_blob": "d6e2097a6aac44cf87cc9b81191c3d8de2373c5c",
+      "sha256": "fd37b411a227337aca9d3f24c4a508fc8b1defcb83be6e8954793ccf5538ee72"
+    },
+    {
+      "path": "tests/services-fixture.php",
+      "git_blob": "d0cac4162ab8f7fc16d856d8633dc2c395bddacb",
+      "sha256": "e8664fd8ce0125f324b3c8329fc270f90c38b1c32a03ce5fe2078f1fa99b37f7"
+    },
+    {
+      "path": "tests/services-hosting.php",
+      "git_blob": "424c1dac8179a5b9d87050a52740960650d72b37",
+      "sha256": "88b3e3d27a02709bcf1f84d79145371125406a158e63e9121c2f6cc12d00ea95"
+    },
+    {
+      "path": "tests/services-http.php",
+      "git_blob": "fa71af9053ae7f729fb49fc6c90e362b35585da8",
+      "sha256": "2b8d79d2571b76fef6f39637d1b91ae0d7d34cf4e6665f494bf159c6f2c9b11c"
+    },
+    {
+      "path": "tests/services-lifecycle.php",
+      "git_blob": "480e4ae9ee1c368fc598662da0c2c0dc8ac33c02",
+      "sha256": "af72258a3f19987cd6da8642aa53d9965a0a88d386dfdb0ea0d62a4db1ae5cdd"
+    },
+    {
+      "path": "tests/services-model.php",
+      "git_blob": "aa7891881f6a5f411525ea8ee6899f895b708cd3",
+      "sha256": "d3671f756ad3dba44e1c74af585a9eeef2007ecbf7daf808e4a86ba347f509d8"
+    },
+    {
+      "path": "tests/services-package.php",
+      "git_blob": "2211133319672176616391a0c30251ff681b1a84",
+      "sha256": "7e6b734db4bb6e891f51a176b042c1ebe3427391fe6d6e18929aacaad9f36be5"
+    },
+    {
+      "path": "tests/services-reconciliation.php",
+      "git_blob": "bdf801334073320393aa0b2c560fe9da5db82a9c",
+      "sha256": "c2114c3c6156ffaecf6e237d964da941c0e82720649ed502ad9ccc1ffc5cb253"
+    },
+    {
+      "path": "tests/services-runner.php",
+      "git_blob": "fa2f169f188ecfc6dcc452283c7b880b03455abe",
+      "sha256": "2199b43e9f4b7b2cdd3dc5944c3b4f8cb1eac6138125afea5276b7de3eda0f10"
+    },
+    {
+      "path": "tests/services-transfer.php",
+      "git_blob": "0eaa33faf2054e16733acf42857a9552a81d11d4",
+      "sha256": "08ba9ed6d1e62d73d4d35c96dc8aa795cef3e21d0578ff4fa060c685bf16f106"
+    },
+    {
+      "path": "tests/session-child.php",
+      "git_blob": "7f1ee978ef2cd0e3939e9e562bffb2735a448f3f",
+      "sha256": "298475820ce11899a767eaca10c90aab16048441001008eaed1119b4183e5f75"
+    },
+    {
+      "path": "tests/session-concurrency.php",
+      "git_blob": "2ccf9d0158b2b4adc41c4dbd6d3f16ada5b49a05",
+      "sha256": "fa122420a57c8a20b860f107587de87c8cda87617a13cea76f36e9509ac03881"
+    },
+    {
+      "path": "tests/session-http-router.php",
+      "git_blob": "74a21fdbd6be826d6da26760eabc034c73ac6eee",
+      "sha256": "e080e1618c0004525cc0b7d54c998bf8b906eb82a3a92003efe9f45030079603"
+    },
+    {
+      "path": "tests/session-http.php",
+      "git_blob": "de442586e34a18acf16647c71f726e0c106d9f01",
+      "sha256": "7cacc1ff9135c06ec8bf7a2053d6cbc6d535b21b794ff5f11e94bb05c2af95f0"
+    },
+    {
+      "path": "tests/session.php",
+      "git_blob": "f3367fca8a1f6c9dc1edb8d1b4be9ebe7fe0b2e1",
+      "sha256": "188e56dd2e328b06c9c53e9830e4226a54a23de25abf893c583e0f8ec70145e6"
+    },
+    {
+      "path": "tests/support/FixtureDirectory.php",
+      "git_blob": "58a9fd93422105cbb4c56ebf129d06d092b303aa",
+      "sha256": "ab22d128e28e9c666aca32d0df243950940b2d9d0fa6cc2df8dbcc0df142a019"
+    },
+    {
+      "path": "tests/support/HttpTestServer.php",
+      "git_blob": "95bf4c0fc804650c603f26cf2052bcaf1946dd92",
+      "sha256": "b1e1e2c63968cc749b0dc0d2a4ecaaf86e57e4309d7ef9853c5883e6de0e507f"
+    },
+    {
+      "path": "tests/voyar-sdk.php",
+      "git_blob": "e4b2c936e0c53aa366c159d530de9c34ba87dd31",
+      "sha256": "ca5d4e7d2806dbe52a0188581e3d0c9242390456efd44f730b7edf918351552b"
+    },
+    {
+      "path": "tools/analysis/composer.json",
+      "git_blob": "a7dd6dac6a233b983d9da1ce76bd84472727867f",
+      "sha256": "441417dc8a0f59904c801e5fcabeea49d00532a41b79ec775d797fc35772440a"
+    },
+    {
+      "path": "tools/analysis/composer.lock",
+      "git_blob": "e5c8eafa009ae5f228fa7bf448eeed7639118dd3",
+      "sha256": "1eaac8989bed22902a473cd97d3bcb803eca478ce5cc1c1cf76a59f3955cbdaa"
+    }
+  ]
+}

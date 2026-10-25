@@ -1,0 +1,391 @@
+F4-D: PHP 8.4.24 / MariaDB 10.11.18 / Windows / APP_ENV=test / interpreter
+SUITE tests/run.php
+PASS config rejects absent environment/key and staging live flags
+PASS effect policy denies every live effect in all environments
+PASS production flags cannot bypass open F0 provider gate
+PASS DI shares services and detects circular/missing/duplicate bindings
+PASS router middleware wraps handler in declaration order
+PASS kernel error envelope and logger never leak message/body/headers
+PASS JSON media type/object/depth/size and validation are bounded
+PASS CSRF denies missing/wrong tokens and allows safe reads
+PASS authorization denies anonymous/expired/missing permission/customer scope
+PASS staff requires MFA, department membership and fresh step-up
+PASS AEAD roundtrip randomized nonce, tamper/context/key binding
+PASS canonical fingerprint ignores map ordering and preserves lists/types
+PASS provider contract Hostider\Providers\Mock\Paytr
+PASS provider contract Hostider\Providers\Mock\Cpanel
+PASS provider contract Hostider\Providers\Mock\ResellerClub
+PASS provider contract Hostider\Providers\Mock\DomainNameApi
+PASS provider contract Hostider\Providers\Mock\Voyar
+PASS mock PayTR never accepts live callback as verified payment
+PASS provider normalized results reject unrecognized status/provider/PII error
+19 tests, 0 failures
+SUITE tests/hardening-unit.php
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures
+SUITE tests/session.php
+PASS session HTTPS/cookie separation, rotation and expiry reset
+1 tests, 0 failures
+SUITE tests/session-concurrency.php
+PASS F01-SESSION slow request releases lock before concurrent request finishes
+PASS F01-SESSION parallel mutations serialize without losing increments
+PASS F01-SESSION stale concurrent replacement gets 409
+PASS F01-SESSION in-flight old request cannot resurrect after rotation
+PASS F01-SESSION in-flight old request cannot resurrect after logout
+PASS F01-SESSION failed mutation aborts and revocation hook denies subsequent write
+PASS F01-SESSION client SID is rejected in admin context
+7 tests, 0 failures
+SUITE tests/session-http.php
+PASS F01-SESSION HTTP reads and rejected stale SIDs never overwrite browser cookie
+1 tests, 0 failures
+SUITE tests/integration.php
+PASS MariaDB migrations apply/replay and expected table/JSON/status constraints
+PASS migration checksum/missing file/incomplete DDL stop execution
+PASS migration advisory lock excludes concurrent deployer
+PASS actual partial DDL remains APPLYING and blocks runner/readiness
+PASS migration out-of-order insertion and pending readiness fail closed
+PASS business write and outbox rollback/commit together
+PASS idempotency replay, actor/scope isolation, conflict and rollback
+PASS two independent PHP processes cannot execute same idempotency work twice
+PASS two independent worker processes claim exactly one lease
+PASS expired unsafe lease becomes UNKNOWN and stale worker is fenced
+PASS expired safe lease retries with different fencing token
+PASS safe bounded retry/backoff ends in dead letter
+PASS unsafe handler exception is UNKNOWN with no second execution
+PASS unregistered handler fails closed and worker refuses open transaction
+PASS inbox dedupe and consumer failure rolls back receipt
+PASS queue dedupe rejects different payload without modifying original
+PASS rate limiter stores hashed bucket and enforces bound
+PASS audit keeps original actor/effective customer and refuses free text
+PASS F01-QUEUE reordered nested payload reuses one job including legacy JSON
+PASS F01-QUEUE scalar list object and operation differences remain conflicts
+PASS F01-AUDIT security vocabulary persists typed opaque references only
+PASS F01-AUDIT business mutation and audit commit or roll back atomically
+PASS F01-RETENTION rate cleanup preserves active and legacy windows and is bounded
+PASS F01-RETENTION refreshed rate bucket cannot be pruned as expired
+PASS F01-RETENTION succeeded payload redaction keeps dedupe trace attempts and conflicts
+PASS F01-RETENTION never redacts failed unknown pending or running evidence
+26 tests, 0 failures
+SUITE tests/identity.php
+PASS F1-A request preserves nested object/list types through canonical fingerprint
+PASS F1-A identity schema relationships and initial roles exist without default users
+PASS F1-A ownership is read from authoritative database relation
+PASS F1-B Argon2id policy and verification use native safe hashes
+PASS F1-C TOTP known RFC counter vector and replay fence
+PASS F1-B registration verify and reset tokens are encrypted single-use and mail remains held
+PASS F1-B bootstrap is one-use has no seeded password and login throttles account attempts
+PASS F1-C staff enrollment MFA recovery replay and trusted-device bypass denial
+PASS F1-B persistent guard logout-all and password change invalidate sessions
+PASS F1-D explicit staff customer grant and impersonation actor constraints
+PASS F1-D invitation creates membership without staff permission escalation
+PASS F1-E API keys are shown once scoped hashed revocable and use current owner permissions
+PASS F1-D role revocation fences sessions and identity mutation audit rolls back atomically
+PASS F1-D revocation race serializes at transaction boundary and blocks later mutation
+PASS F1-C enabling customer MFA revokes pre-enrollment sessions and keeps only enrolling session
+PASS F1-D a narrow resource grant cannot authorize a broad customer operation
+16 tests, 0 failures
+SUITE tests/identity-security.php
+PASS F11 MFA active challenge cannot refresh critical verification and explicit password factor is required
+PASS F11 pending recovery login activates without step-up and trusted staff device cannot bypass MFA
+PASS F11 role grants cannot cross assigned customer or delegate beyond actor resources
+PASS F11 confirmation binds actor session payload version expiry and rolls back validation writes
+PASS F11 confirmation consumption business writes and audit are atomic and replay is single use
+PASS F11 two concurrent confirmation consumers commit only one critical mutation
+PASS F11 trusted customer login and renewal do not grant critical freshness
+PASS F11 stale customer policy staff target and membership approvals are rejected
+8 tests, 0 failures
+SUITE tests/identity-http.php
+PASS F1-F real admin HTTP MFA enrollment login idempotency and protected views
+PASS F11 HTTP active MFA renewal cannot replace password step-up and explicit confirmation is mandatory
+PASS F11 every high-impact HTTP action refuses a direct call without confirmation
+PASS F1-F API bearer key output once and revocation and cookie-context isolation
+PASS F1-F panel HTML and protected rendering policies are real separate entry points
+PASS F1-F client signup verification account optimistic update and password logout over HTTP
+6 tests, 0 failures
+SUITE tests/http.php
+PASS HTTP entry point health/error envelopes, headers and rate limiting
+PASS HTTP invalid bootstrap config returns safe 503
+PASS HTTP incomplete schema refuses to serve health as ready
+3 tests, 0 failures
+SUITE tests/finance-unit.php
+PASS F2-A exact arithmetic exceeds JavaScript and machine integer precision
+PASS F2-A explicit symmetric rounding and ties to even
+PASS F2-A money minor strings survive JSON and currency precision
+PASS F2-A malformed or lossy input and overflow fail closed
+4 tests, 0 failures
+SUITE tests/finance.php
+PASS F2-A immutable journals balance and rollback also removes audit and outbox
+PASS F2-A DB PHP JSON roundtrip preserves amounts above Number safe integer
+PASS F2-A duplicate collection and payload conflicts cannot create a second payment
+PASS F2-A independent processes cannot overdraw the same wallet
+PASS F2-A mixed allocation and wallet liability never double-count cash
+PASS F2-A concurrent refunds reserve at most original unallocated collection
+PASS F2-A impersonation and production test collections fail closed
+PASS F2-A persistent idempotency commits collection audit and outbox once
+PASS F2-A foreign collection preserves immutable source amount and FX receipt
+PASS F2-A wallet compensation appends linked reversal and respects original spend limit
+10 tests, 0 failures
+SUITE tests/catalog.php
+PASS F2-B catalog models separate variants options addons and billing cycles
+PASS F2-B immutable price publications are independent of cost proposals
+PASS F2-B provider mappings stay commercial and do not create resources
+PASS F2-B tax inheritance sale status and stale versions are explicit
+PASS F2-B promotion policies and quotas persist without assuming redemption
+PASS F2-B rejected and interrupted catalog writes leave no partial entities
+PASS F2-B product and category edits preserve published history and reject stale versions
+7 tests, 0 failures
+SUITE tests/pricing.php
+PASS F2-C USD source converts to TRY with spread and tax without floating point
+PASS F2-C independent TRY price has configured priority over source FX
+PASS F2-C quote expires at exactly fifteen minutes and historical quote does not reprice
+PASS F2-C tax included excluded and minor rounding conserve the total
+PASS F2-C FX missing stale untrusted future and live synthetic sources fail closed
+PASS F2-C required options and cross-product selections are enforced server side
+PASS F2-C financial planning has no database side effects
+PASS F2-C promotion conflicts and parallel redemption enforce the single-use quota
+PASS F2-C renewal protection and notice explicitly gate next-period pricing
+9 tests, 0 failures
+SUITE tests/addons.php
+PASS F2-B/C standalone addon has its own explicit tax pricing and sale policy
+PASS F2-B/C one-time linked addon is charged initially and excluded from renewal
+PASS F2-B/C variant-only product exposes independently priced cycles without a base price
+3 tests, 0 failures
+SUITE tests/orders.php
+PASS F2-D quote produces one immutable request and separate order state
+PASS F2-D wallet and external partial allocations close once with one readiness fact
+PASS F2-D failed transaction leaves no partial funding or ready event
+PASS F2-D overpayment stays unallocated and cancellation preserves historical request
+PASS F2-D wrong customer and impersonated funding cannot access order or bill
+PASS F2-D independent duplicate funding processes emit readiness once
+6 tests, 0 failures
+SUITE tests/payments.php
+PASS F2-E pending topup and bank notification cannot credit unverified money
+PASS F2-E verified duplicate fixture records one collection and one readiness event
+PASS F2-E bad signature amount currency wrong customer and fabricated success never collect
+PASS F2-E failed payment leaves order awaiting funds and does not topup wallet
+PASS F2-E late payment after cancellation remains unallocated for reconciliation
+PASS F2-E test fixture acceptance is forbidden in staging and production and PayTR stays shut
+6 tests, 0 failures
+SUITE tests/billing-cash.php
+PASS F2-F official PDF is stored outside webroot with owner scope checksum and encrypted metadata
+PASS F2-F upload traversal non-PDF active document and interrupted file offset fail closed
+PASS F2-F cash reports separate collection sales wallet liability and costs
+PASS F2-F recurring payable is not paid cash expense and calendar anchor survives February
+4 tests, 0 failures
+SUITE tests/paid-refunds.php
+PASS F2-F paid mixed refund distributes to original sources and preserves the original bill
+PASS F2-F interrupted paid refund rolls back credit note wallet credit and external reserve
+PASS F2-F parallel paid refund requests never exceed the original mixed payment
+3 tests, 0 failures
+SUITE tests/commerce.php
+PASS F2-G prepare is side effect free for business records and consumes one bound confirmation
+PASS F2-G changed payload expired actor session and stale catalog reject without writes
+PASS F2-G customer quote and order are real and wallet state changes invalidate confirmation
+PASS F2-G customer scope and impersonation cannot prepare monetary changes
+PASS F2-G customer-targeted promotion requires that permission customer grant
+5 tests, 0 failures
+SUITE tests/commerce-http.php
+PASS F2-G HTTP requires login fresh step-up CSRF and scoped customer ownership
+PASS F2-G HTTP quote and order work and approved command replay is atomic
+PASS F2-G HTTP topup bank approval mixed funding and ready fact use actual services
+PASS F2-G HTTP official PDF download is attachment and another customer cannot fetch it
+PASS F2-G HTTP real PayTR callback and unsupported privileged commands remain closed
+PASS F2-G HTTP panel JavaScript and stylesheet are actually served by the local router
+PASS F2-G company ledger is staff-only and exposes exact minor strings
+PASS Review HTTP reconciliation lists open cases and exposes scoped evidence after atomic resolution
+PASS Review HTTP idempotent replay still requires fresh step-up
+PASS F2-G production commerce mutation gate rejects before opening business database
+10 tests, 0 failures
+SUITE tests/currency-change.php
+PASS FIN-009 approved currency conversion keeps one wallet and historical paid bill unchanged
+PASS FIN-009 conversion rejects open attempts and rolls back both Identity and Finance on interruption
+2 tests, 0 failures
+SUITE tests/commerce-events.php
+PASS F2 local outbox facts are delivered once and readiness never provisions a service
+PASS F2 invented job and mismatched payload cannot create a trusted ready receipt
+PASS F2 local mail fact remains held and does not claim delivery
+3 tests, 0 failures
+SUITE tests/post-delivery.php
+PASS Review reconciliation uses pure bound confirmation and immutable encrypted evidence
+PASS Review reconciliation rejects IDOR missing scope impersonation stale MFA evidence and policy gates
+PASS Review interrupted resolution rolls back and refund is reserved without external send
+PASS Review no-funds decision requires zero unallocated balance and never posts money
+PASS Review parallel case resolution produces one wallet credit and one immutable decision
+PASS Review unrelated catalog change leaves customer finance confirmation valid
+PASS Review handoff eligibility is fail closed for test legacy manual refund and open gates
+PASS Review order environment provenance cannot be promoted by update
+PASS Review shared catalog and FX version fences block unseen writes and rollback lock timeout
+9 tests, 0 failures
+SUITE tests/http-harness.php
+PASS HTTP harness ephemeral listeners prove ownership and cleanly stop independently
+PASS HTTP harness unexpected termination reports first process error without credentials
+PASS HTTP harness occupied explicit port fails readiness and does not kill its owner
+PASS Fixture cleanup refuses paths outside its dedicated generated test directories
+PASS Windows delete pending handle reproduces invisible nonempty directory then bounded cleanup succeeds
+5 tests, 0 failures
+SUITE tests/services-model.php
+PASS F3-A service state rejects activation without provisioning and terminated resurrection
+PASS F3-A multi-unit canonical paid order freezes configs prices periods and ownership once
+PASS F3-A unpaid cancelled refunded forged and legacy sources fail closed
+PASS F3-A manual service and transaction rollback preserve history and customer isolation
+PASS F3-A imported resources never enter create and test provenance cannot be promoted
+PASS F3-A one paid multi-product multi-unit order creates exactly five independently verified resources
+6 tests, 0 failures
+SUITE tests/services-engine.php
+PASS F3-B independent overlapping discovery creates one service and one operation per unit
+PASS F3-B queue loss does not lose canonical work and four workers obtain a single fence
+PASS F3-B expired lease becomes UNKNOWN and rejects stale completion without retry
+PASS F3-B manual payment and source changes fail closed before dispatch
+PASS F3-B bounded discovery continues a large paid order without losing units
+5 tests, 0 failures
+SUITE tests/services-hosting.php
+PASS F3-C durable mock six-method contract persists resources and rejects changed replay
+PASS F3-C worker activates only with bound independent inspect and immutable period evidence
+PASS F3-C timeout after physical create holds UNKNOWN and capacity without second account
+PASS F3-C capacity stale health and missing capabilities fail before any dispatch
+PASS F3-C definite failure releases capacity and live WHM remains closed even with flags
+PASS F3-C canonical outbox dispatch is idempotent and rejects fabricated local events
+PASS F3-C four independent workers commit exactly one mock create and one verified resource
+7 tests, 0 failures
+SUITE tests/services-reconciliation.php
+PASS F3-D found UNKNOWN attaches existing mock resource without second create or ledger write
+PASS F3-D not-found remains manual review and never retries or releases unknown capacity
+PASS F3-D scope step-up and actor-bound evidence deny unauthorized reconciliation
+PASS F3-D source refund blocks attach and injected audit failure rolls back all financial-neutral activation
+4 tests, 0 failures
+SUITE tests/services-lifecycle.php
+PASS F3-E explicit policy inheritance keeps missing decisions closed and optimistic updates scoped
+PASS F3-E paid manual service remains held until scoped approval then provisions once
+PASS F3-E renewal creates independent fixed bill and pending period but never a new service
+PASS F3-E payment alone never advances period; independent provider renewal verifies next period once
+PASS F3-E suspend unsuspend and cancellation reversal require independent provider state
+PASS F3-E termination waits for immutable cancellation deadline and never resurrects resource
+PASS F3-E grace scheduler holds one notice and queues one suspend only after explicit grace
+PASS F3-E independent cron process exits on an existing scheduler lease
+PASS F3-E UNKNOWN suspension resolves observed state without repeating provider mutation
+PASS F3-E UNKNOWN paid renewal advances only after operator verifies existing extension evidence
+PASS F3-E unsuspend rechecks payment after enqueue before provider mutation
+PASS F3-E independent renew and terminate requests cannot enqueue conflicting provider actions
+PASS F3-E protected renewal never perpetuates an initial-only promotion without an explicit price policy
+13 tests, 0 failures
+SUITE tests/services-transfer.php
+PASS F3-E two real Identity owners transfer service without rewriting financial history
+PASS F3-E explicit customer debt policy rejects unrelated open debt without guessing G-T01
+PASS F3-E expired approval and revoked sender session cannot complete ownership change
+3 tests, 0 failures
+SUITE tests/services-package.php
+PASS F3-E exact-second upgrade proration uses integer half-up without financial float
+PASS F3-E package upgrade requires paid fixed request and capability before verified same-resource change
+PASS F3-E missing package capability blocks dispatch and downgrade does not invent a credit policy
+PASS F3-E UNKNOWN paid package change resolves observed package without a second mutation
+4 tests, 0 failures
+SUITE tests/services-http.php
+PASS F3-F HTTP client allowlist never returns provider resources credentials or old financial IDs
+PASS F3-F pure HTTP renewal preparation writes no quote order ledger job outbox or service change
+PASS F3-F confirmation is actor payload state bound and requires explicit accepted flag
+PASS F3-F HTTP one-use confirmation and cached replay still require current permission and step-up
+PASS F3-F cached success cannot bypass expired client step-up
+PASS F3-F client and admin panels serve service controls and JavaScript
+PASS F3-F HTTP CSRF and another customer cannot read or mutate service
+PASS F3-F scoped staff approval only queues then independent worker verifies activation
+PASS F3-F HTTP UNKNOWN inspect is durable outside request TX then fresh staff resolves existing resource
+PASS F3-F inspect worker rejects stale staff freshness before provider read
+10 tests, 0 failures
+SUITE tests/services-runner.php
+PASS F3 review repeated cron reaches healthy work behind 101 blocked operations
+PASS F3 review changed payment stays visible and UNKNOWN is never redispatched by cron
+PASS F3 review two overlapping bounded CLI workers fence creates and next cron continues
+PASS F3 review expired admission budget makes no claim and invalid batch bounds fail closed
+PASS F3 review direct CREATE worker also rotates 101 mapped but unhealthy candidates
+MEASUREMENT {"environment":"local test\/mock; no deployment capacity guarantee","php":"8.4.24","mariadb":"10.11.18-MariaDB","sample":16,"direct_worker":{"elapsed_ns":343034400,"operations_per_second":46.642552467041206},"actual_cli":{"elapsed_ns":713723500,"operations_per_second":22.41764492832308,"invocations":1},"peak_memory_bytes":4194304}
+PASS F3 review direct worker and actual services work CLI throughput are measured separately
+6 tests, 0 failures
+SUITE tests/domains-unit.php
+PASS F4-A canonical IDNA Unicode A-label case and root dot share one identity
+PASS F4-A malformed IDNA labels URLs IPs whitespace and length fail closed
+PASS DOMAIN-003 internal TLD capability and required contact validation are fail closed
+3 tests, 0 failures
+SUITE tests/domains-model.php
+PASS F4-A paid canonical domain binds once with encrypted immutable contact history and outbox
+PASS SEC-004 domain contact and client projection deny cross customer expired and unscoped access
+PASS F4-A rollback removes model history contact and event atomically; non-test model unavailable
+3 tests, 0 failures
+SUITE tests/domains-provider.php
+PASS F4-B both durable registrar contracts replay UUID and reject altered payload or transaction nesting
+PASS F4-B ambiguous mock persists effect independently without disclosing resource; explicit inspect finds one resource
+PASS F4-B definitive no effect proof and unsupported capability do not create external domain
+PASS OPS-005 registrar mock independent PHP workers replay create and renew with one physical effect
+4 tests, 0 failures
+SUITE tests/voyar-sdk.php
+PASS G-V02 source SDK invisibly repeats all sampled financial destructive and credential POSTs after auth refresh
+PASS G-V03 mutation transport fence blocks the second SDK POST even after successful auth refresh
+PASS G-V03 network timeout and missing response body are distinct and neither resets dispatch fence
+3 tests, 0 failures
+SUITE tests/domains-boundaries.php
+PASS F4 ownership generic transfer application lock rejects DOMAIN and CLOUD before policy or ownership mutation
+PASS F4 attach rechecks unpaid partial refunded and cancelled canonical sources before any domain write
+PASS F4 attach rejects changed customer and manual pending service without weakening old model
+3 tests, 0 failures
+SUITE tests/domains-operations.php
+PASS domain operation enqueue requires canonical paid order, item and queued service
+PASS domain operation claim locks funding source, assigns lease token and fences race
+PASS domain operation register success: verified proof creates domain_evidence and transitions domain to REGISTERED
+PASS DOMAIN-001: registrar timeout produces UNKNOWN, forbids retry and alternative dispatch
+PASS DOMAIN-001 reconciliation: independent inspect verifies external registrar; rejects forged proof
+PASS DOMAIN-001 reconciliation with funding revoked decouples physical domain from active service
+PASS DOMAIN-002: verified definitive failure holds failover without current commercial evidence
+PASS DOMAIN-002: unsupported capability does not trigger failover and rejects operation
+PASS Domain renewal blocks concurrent in-flight renewals and rejects another paid DOMAIN order
+PASS Domain renewal increment remains exact through second timeout-after-effect reconciliation
+PASS Queue starvation avoidance: healthy domain operation progresses behind 101 blocked operations
+PASS CLI and outbox integration executes domain operations idempotently
+12 tests, 0 failures
+SUITE tests/domains-audit.php
+MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS
+PASS F4-C missing resource and UNKNOWN call never prove no effect; replay stays held
+PASS F4-C crash before call cannot be confirmed failed; expiry fences old worker
+PASS F4-C independently recorded definitive no effect permits explicit failure only
+PASS F4-C mismatched call fingerprint status account and resource fail closed
+PASS F4-C stale inspection generation domain version and newer inspection fence resolution
+PASS F4-C hold timestamp and reason commit together and roll back together
+PASS F4-C SKIP LOCKED bypasses contended first operation without losing its state
+PASS F4-C 1 4 and 8 independent PHP runners produce one physical registration per domain
+PASS F4-C renewal finance rechecked at claim and result; refund never dispatches or extends again
+PASS F4-C manual approval and immutable renewal binding cannot be bypassed
+PASS F4-C crash after effect and duplicate queue job cannot replay a registration
+PASS F4-C parallel canonical renewal requests converge and eight runners extend only once
+12 tests, 0 failures
+SUITE tests/cloud.php
+MIGRATION 001-043 preserved; 043 to 044 additive upgrade; replay no-op PASS
+PASS F4-D canonical paid CLOUD source scope unit and immutable specification
+PASS F4-D catalog OS location custom bounds and secret fields fail closed
+PASS F4-D create acceptance is not ACTIVE until independent task and resource evidence
+PASS F4-D power reinstall upgrade and terminate use confirmation and verified tasks
+PASS F4-D before after body-loss and auth-loss never trigger a second create
+PASS F4-D UNKNOWN absent call or pending task cannot become successful
+PASS F4-D timeout after effect reconciles one existing task with explicit scoped operator decision
+PASS F4-D crash after effect expires lease; stale response and durable send replay are fenced
+PASS F4-D alien task status resource account and fingerprint never mean success
+PASS F4-D refund after dispatch preserves resource evidence and suspends funded service
+PASS F4-D imported VM binds verified external resource and cannot CREATE
+PASS F4-D projections immutable usage provenance and non-test environments exclude secrets
+12 tests, 0 failures
+SUITE tests/cloud-races.php
+MEASURE [{"workers":1,"instances":1,"wall_us":364685,"physical_create":1,"applied_effect":1},{"workers":4,"instances":1,"wall_us":455423,"physical_create":1,"applied_effect":1},{"workers":8,"instances":1,"wall_us":605581,"physical_create":1,"applied_effect":1}]
+PASS F4-D 1 4 8 PHP workers create one VM and apply one task completion
+PASS F4-D durable send permission remains consumed in eight new PHP processes
+PASS F4-D SKIP LOCKED and rollback keep operation and hold records consistent
+PASS F4-D polling crash expired lease fences late task completion then reconciles once
+PASS F4-D confirmation payload version actor freshness and observation fences reject reuse
+PASS F4-D bounded cron progresses past 101 blocked canonical units without replay
+PASS F4-D real CLI and bounded outbox queue execute once without leaking payloads
+7 tests, 0 failures
+SUITE tests/cloud-sdk.php
+PASS F4-D original SDK auth POST replay is blocked by committed Cloud operation dispatch admission
+1 tests, 0 failures

@@ -1,0 +1,189 @@
+{
+  "local_source_commit": "6ed1dc72112c4fbfe14b9c78c409e927aef26a77",
+  "remote_source_commit": "a7489b938292530cba73e4dd22c625e66328f112",
+  "local_and_remote_tree": "19f8869781751ce3ae6a8363490cb39d323c9148",
+  "metadata_diff_only": true,
+  "files": [
+    {
+      "path": ".github/workflows/f0.yml",
+      "local_blob": "6f7d5632f77150742d2d9231a4edd3b50088b860",
+      "remote_blob": "6f7d5632f77150742d2d9231a4edd3b50088b860",
+      "sha256": "ab1b5b83951a16d93a96fcb912d79c056cd60748317b245bc87f45e036d63e69",
+      "equal": true
+    },
+    {
+      "path": "README.md",
+      "local_blob": "83ab960becd04a43ee682cffbc0662002f96d561",
+      "remote_blob": "83ab960becd04a43ee682cffbc0662002f96d561",
+      "sha256": "e000113eff7acbea2aeccde358fffcd8762002af2b496c78dbf6fe401a5e30e1",
+      "equal": true
+    },
+    {
+      "path": "bin/console.php",
+      "local_blob": "5de3b733ef813a68c387b0cd449ddef08c27e6d1",
+      "remote_blob": "5de3b733ef813a68c387b0cd449ddef08c27e6d1",
+      "sha256": "96956403a01f7bfe57d464c5a67bd4b963edd9fe0ebab1f05e6015f0c119e8f0",
+      "equal": true
+    },
+    {
+      "path": "docs/F4_C_POST_AUDIT_REVIEW.md",
+      "local_blob": "e549fcd36610daff412a9c573b5877e560f8ae42",
+      "remote_blob": "e549fcd36610daff412a9c573b5877e560f8ae42",
+      "sha256": "252364903849dae1f104fcdfd9452af16b0472e81c5090a24c5493b9bc1f1a93",
+      "equal": true
+    },
+    {
+      "path": "docs/F4_D_PLAN.md",
+      "local_blob": "e5418555ff0213531f1a7177c790d1118dd2afa3",
+      "remote_blob": "e5418555ff0213531f1a7177c790d1118dd2afa3",
+      "sha256": "7d0bff879c0af2b98660d81631d2ec662e578fafa6651ab7e66cea967f16fae4",
+      "equal": true
+    },
+    {
+      "path": "docs/F4_PLAN.md",
+      "local_blob": "3f6b76f1f332900f667bcdbb11d3fce8a08abb33",
+      "remote_blob": "3f6b76f1f332900f667bcdbb11d3fce8a08abb33",
+      "sha256": "32f3246fce5527f44338bbbd52a3910d46d092a51297bc5f1f4ab0379de4ed46",
+      "equal": true
+    },
+    {
+      "path": "docs/F4_VOYAR_SDK_REVIEW.md",
+      "local_blob": "5a00c562ed55980eccaea7ccc95d2bb33090681d",
+      "remote_blob": "5a00c562ed55980eccaea7ccc95d2bb33090681d",
+      "sha256": "57e2a0f93700ac038a5e4e0cecdf1426c6bb6950745efdf6d5b4527ee10e10a7",
+      "equal": true
+    },
+    {
+      "path": "docs/adr/ADR-011-cloud-mock-task-fencing.md",
+      "local_blob": "301b5c669bb97ab381212bbead2078c362d13e8e",
+      "remote_blob": "301b5c669bb97ab381212bbead2078c362d13e8e",
+      "sha256": "8f6983eab5f1117b494c5f96f2f081ee74016f007f45533ce568424808110b89",
+      "equal": true
+    },
+    {
+      "path": "migrations/044_f4_cloud_operations.php",
+      "local_blob": "2589d547c2fcc2fbd495c2e9bd756fc24a4c4701",
+      "remote_blob": "2589d547c2fcc2fbd495c2e9bd756fc24a4c4701",
+      "sha256": "ed160643313f28c918173d1e5c11f5b334c9f1f79c7a613ce9ea14dc5a53478f",
+      "equal": true
+    },
+    {
+      "path": "src/Cloud/Catalog.php",
+      "local_blob": "2b45e767a1bc89a763adb480f9107fea67e7824c",
+      "remote_blob": "2b45e767a1bc89a763adb480f9107fea67e7824c",
+      "sha256": "db6410bfdd599c3dd350cfe128dd37c99d57fa97016cf6c70deeb45d998e1481",
+      "equal": true
+    },
+    {
+      "path": "src/Cloud/Engine.php",
+      "local_blob": "ec86bf997761ec4f42e25c134ee906fc0272279f",
+      "remote_blob": "ec86bf997761ec4f42e25c134ee906fc0272279f",
+      "sha256": "836d19d84c242d26dfc736026d6012cdf921612cd3939a83b6fa27fe4e819e29",
+      "equal": true
+    },
+    {
+      "path": "src/Cloud/EventSink.php",
+      "local_blob": "13ca7d93c075e79d861203faccf57854174c58bc",
+      "remote_blob": "13ca7d93c075e79d861203faccf57854174c58bc",
+      "sha256": "26c5b3d22017928cd7f159a30f9f15f881324409ceee8130bd90795e6ddc063f",
+      "equal": true
+    },
+    {
+      "path": "src/Cloud/Store.php",
+      "local_blob": "43de73f3933da4167e6f71be08ecec7802251e94",
+      "remote_blob": "43de73f3933da4167e6f71be08ecec7802251e94",
+      "sha256": "1a6d401402d0d524e8196b1de00f883c6f80eb95948675d2ed0622ac2cf23966",
+      "equal": true
+    },
+    {
+      "path": "src/Cloud/Worker.php",
+      "local_blob": "ad677ad1fefb2b9cb714466f177b75ef784caf96",
+      "remote_blob": "ad677ad1fefb2b9cb714466f177b75ef784caf96",
+      "sha256": "9c27bcb7aed10f8b7a886bd2d57ff13fdc35f47865d815949ae5d82445f9eb3e",
+      "equal": true
+    },
+    {
+      "path": "src/Providers/Contract/AsyncComputeProvider.php",
+      "local_blob": "ed389ae2ae2699ee0a0edaf5b11a4d0c7e497800",
+      "remote_blob": "ed389ae2ae2699ee0a0edaf5b11a4d0c7e497800",
+      "sha256": "0650f8eca1563e20868833344ae37500a93588a1a0df79bc5c66dce60af5102a",
+      "equal": true
+    },
+    {
+      "path": "src/Providers/Mock/DurableVoyar.php",
+      "local_blob": "c70869ca61c0c9e3fc9a977d09e98c2c3fc9161b",
+      "remote_blob": "c70869ca61c0c9e3fc9a977d09e98c2c3fc9161b",
+      "sha256": "943e7a856001296aa239003691221789e1e6b0cfe508f814ace255847810514f",
+      "equal": true
+    },
+    {
+      "path": "src/Providers/VoyarMutationFence.php",
+      "local_blob": "af32774188055a798dce44e786f440a9fb1900b1",
+      "remote_blob": "af32774188055a798dce44e786f440a9fb1900b1",
+      "sha256": "11d3d034393386dbfcadb6b76288229d929f3204ee18f87fef1060bc4f6a5316",
+      "equal": true
+    },
+    {
+      "path": "src/Services/CloudServices.php",
+      "local_blob": "daabb4f56b995b6341c94bc12a399ea3ba37e987",
+      "remote_blob": "daabb4f56b995b6341c94bc12a399ea3ba37e987",
+      "sha256": "31417b5e0f9a05d33a85256b3132c6b1ad38be5cf01cd07cf6ee128196b6a380",
+      "equal": true
+    },
+    {
+      "path": "tests/cloud-child.php",
+      "local_blob": "775cec1655862b3fb44b8762a2d2b1d24f15a09b",
+      "remote_blob": "775cec1655862b3fb44b8762a2d2b1d24f15a09b",
+      "sha256": "d26b953c25cdf048d4ad0d1b7f1be3c2ee825a2c1a734bc5521a84c9bf057fda",
+      "equal": true
+    },
+    {
+      "path": "tests/cloud-fixture.php",
+      "local_blob": "25a45b189f65ec538b2d56f7479f864c30c67be2",
+      "remote_blob": "25a45b189f65ec538b2d56f7479f864c30c67be2",
+      "sha256": "308e904d612dd3b03d32781476842ac56f10e4a725a173aeab7d87b3b4df4651",
+      "equal": true
+    },
+    {
+      "path": "tests/cloud-races.php",
+      "local_blob": "93a7075956b50756abb6810246767220537defe1",
+      "remote_blob": "93a7075956b50756abb6810246767220537defe1",
+      "sha256": "4707985663cc907a9a34ad93e628c645acccb8a8d06d71a16035156716ee2f58",
+      "equal": true
+    },
+    {
+      "path": "tests/cloud-sdk.php",
+      "local_blob": "696f17c7c1c5950c1e78f3b0f86ceb1c8ac7e933",
+      "remote_blob": "696f17c7c1c5950c1e78f3b0f86ceb1c8ac7e933",
+      "sha256": "dd00b7123a79fcdb06355ba27ff46fd1df4929136ed96f4feecc7612308b2383",
+      "equal": true
+    },
+    {
+      "path": "tests/cloud.php",
+      "local_blob": "87ba6945d5c78bfa350fdbcf4a568c8f813f7311",
+      "remote_blob": "87ba6945d5c78bfa350fdbcf4a568c8f813f7311",
+      "sha256": "e0caf0b0f78f62b69d182b009beba5de7dcdd8d708f66e9368b62d9454060949",
+      "equal": true
+    },
+    {
+      "path": "tests/domains-audit.php",
+      "local_blob": "c8a2110f466683f61d6d47d2250969f10b0157a7",
+      "remote_blob": "c8a2110f466683f61d6d47d2250969f10b0157a7",
+      "sha256": "aee7b9bb5c7ea5a028ab09cf15c2c7a7571005a0c2518e6a70eb94cd38cd32d5",
+      "equal": true
+    }
+  ],
+  "ci_run": 40093933860,
+  "ci_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40093933860",
+  "ci_status": "SUCCESS_BOTH_PHP_JOBS",
+  "local_tests": {
+    "suites": 44,
+    "tests": 298,
+    "failures": 0
+  },
+  "initial_source_commit": "42832b1550a9eb542143099db8b2607e3d1059c2",
+  "integrity_fix": "Provider recomputes payload HMAC before any effect; altered payload negative test passed.",
+  "ci_checkout_sha": "bb4a8db65a9e1b8ac66823d7dfa9d923bf246e33",
+  "ci_checkout_tree": "19f8869781751ce3ae6a8363490cb39d323c9148",
+  "ci_checkout_equals_source_tree": true
+}

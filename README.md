@@ -1,5 +1,33 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4 bütünleşik mock kabul paketi:** C/D/E/F teknik mock kabulleri ve 49 suite / 394 test
+> [F4_REPORT](docs/F4_REPORT.md) altında birleştirildi. Bağımsız karar: **SINIRLANDIRILMIŞ MOCK
+> TEKNİK GO**. Sabit uygulama: `6e25a8b98de6e0c9da5e84df6b78e46cd47854f2`.
+> Tam kapsam/live exit kabul edilmedi; F4 DONE/production-ready değildir.
+> Mapping/import CRUD NOT ACCEPTED; DOMAIN-002 PARTIAL; bütün canlı GATE'ler OPEN.
+> Aşağıdaki faz teslim notları tarihsel kayıttır; güncel kabul sınırı F4_REPORT'tadır.
+
+
+> **F4-F son denetim düzeltmesi:** Native doğrulanmış kanıt özeti ve Domain no-effect FAILURE
+> onayı [F4_F_POST_AUDIT_REVIEW](docs/F4_F_POST_AUDIT_REVIEW.md) ile teslim edildi.
+> PHP8.3/8.4 **394/394**; 001–048 korunur, yeni migration yoktur. Bağımsız yeniden kabul bekler.
+> Mapping/import CRUD proje sahibinin açık onayıyla ayrı işe ertelendi; uygulanmış/DONE değildir.
+> DOMAIN-002 PARTIAL ve canlı GATE'ler OPEN; F5/F6, merge veya production başlatılmaz.
+
+> **F4-F test/mock teslimi; bağımsız kabul bekliyor:** Domain/Cloud müşteri ve personel panelleri,
+> native Identity HTTP güvenliği ve FIN-010 ekranları uygulandı. PHP8.3/8.4 **383/383**;
+> [teslim raporu](docs/F4_F_DELIVERY_REPORT.md), [plan](docs/F4_F_PLAN.md).
+> F4-C/D/E kabul edilen 355 testlik taban ve 001–047 migration geçmişi korunur;
+> additive 048; gerçek sağlayıcı GATE'leri açık, DOMAIN-002 PARTIAL kalır.
+> F4-F sonrası bağımsız kabul olmadan F5/F6, merge veya staging/production başlatılmaz.
+
+> **F4-E test/mock teslimi; bağımsız kabul bekleniyor:** F4-D güvenlik tabanı bağımsız kabul edildi (325 test, HEAD dc70fa5). Kullanım/sağlayıcı maliyeti, mevcut Ledger ve manual fiyat önerisi kapsamı [F4_E_PLAN](docs/F4_E_PLAN.md) ve [F4_E_DELIVERY_REPORT](docs/F4_E_DELIVERY_REPORT.md) ile belgelenir (355 test). 30 günlük peşin müşteri satışı ayrı kalır; PROV-005 gerçek kabulü ve tüm canlı GATE’ler açıktır. F4-F/F5, merge ve production başlatılmaz.
+
+
+> **F4-D geliştirme:** F4-C’nin 278 testlik güvenlik tabanı bağımsız kabul edildi; DOMAIN-002 otomatik registrar failover PARTIAL kalır. Kalıcı Voyar Cloud operation/task/mock kapsamı [F4_D_PLAN](docs/F4_D_PLAN.md) ile yürütülür. Canlı GATE’ler açık; F4-E/F, F5 ve production başlatılmaz.
+
+> **F4 geliştirme başladı; tamamlanmadı:** kabul edilen F3 tabanı üzerinde [F4 planı](docs/F4_PLAN.md), [Voyar SDK incelemesi](docs/F4_VOYAR_SDK_REVIEW.md), Domain model/kalıcı registrar mock temeli ve SDK POST replay transport koruması eklendi. [Taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2), PHP 8.3/8.4 için [251/251 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40071562182). [F4 ilerleme raporu](docs/F4_REPORT.md) eksik Domain lifecycle/failover, Cloud ve panel kapsamını açıkça ayırır. Bütün canlı GATE'ler OPEN; F5 başlamadı. Aşağıdaki önceki faz notları tarihseldir.
+
 > **F2 CI kararlılık kapanışı:** PHP 8.3 built-in server JIT SIGSEGV yeniden üretildi; test server interpreter moduna alındı, lifecycle/transport tanıları ve bounded Windows fixture cleanup eklendi. Önceki 175 + 5 yeni regression ve tekrarlı CI kanıtı: [F2_CI_STABILITY_REPORT](docs/F2_CI_STABILITY_REPORT.md). F3 ve canlı işlemler başlatılmadı.
 
 > **F2 teslim sonrası denetim:** kanıtlı mutabakat kapanışı, daraltılmış onay kilitleri, idempotency replay yetki kontrolü ve güvenli F3 devir sözleşmesi: [F2_POST_DELIVERY_REVIEW](docs/F2_POST_DELIVERY_REVIEW.md). Production ve F3 başlatılmadı; önceki F2 raporu tarihsel teslim kaydıdır.

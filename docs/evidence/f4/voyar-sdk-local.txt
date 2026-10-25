@@ -1,0 +1,4 @@
+PASS G-V02 source SDK invisibly repeats all sampled financial destructive and credential POSTs after auth refresh
+PASS G-V03 mutation transport fence blocks the second SDK POST even after successful auth refresh
+PASS G-V03 network timeout and missing response body are distinct and neither resets dispatch fence
+3 tests, 0 failures

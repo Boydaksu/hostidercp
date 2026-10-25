@@ -16,8 +16,8 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule'], true)) {
-        fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>' . PHP_EOL);
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire','cloud-costs:work','cloud-costs:propose','panel:inspect'], true)) {
+        fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>, domains:work, domains:expire' . PHP_EOL);
         exit(2);
     }
     $config=Config::fromEnvironment();
@@ -30,6 +30,9 @@ try {
         echo json_encode(['applied' => (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate()], JSON_THROW_ON_ERROR) . PHP_EOL;
     } elseif ($command==='services:schedule') {
         echo json_encode((new \Hostider\Services\Scheduler($db,$config))->run(),JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command==='panel:inspect') {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');
+        echo json_encode((new \Hostider\ProviderPanel\Inspections(new \Hostider\Commerce\Services($db,$config)))->run(),JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command==='services:work') {
         // A contended admission transaction must not consume an entire cron interval.
         $db->execute('SET SESSION innodb_lock_wait_timeout=2');
@@ -60,7 +63,45 @@ try {
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
         (new \Hostider\Commerce\EventSink($db))->register($worker);
         (new \Hostider\Services\EventSink($db,$config))->register($worker);
+        (new \Hostider\Domains\EventSink($db,$config))->register($worker);
+        (new \Hostider\Cloud\EventSink($db,$config))->register($worker);(new \Hostider\CloudCosts\EventSink($db,$config))->register($worker);(new \Hostider\ProviderPanel\Inspections(new \Hostider\Commerce\Services($db,$config)))->register($worker);
         echo json_encode(['worked' => $worker->once()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif (in_array($command,['cloud-costs:work','cloud-costs:propose'],true)) {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');$options=[];$margin=null;
+        foreach(array_slice($argv,2) as $option){if($command==='cloud-costs:propose'&&preg_match('/^--margin-rate=([0-9]+(?:\.[0-9]+)?)$/D',$option,$v)){if($margin!==null){throw new InvalidArgumentException('Duplicate margin');}$margin=$v[1];continue;}if(!preg_match('/^--(max-operations|max-seconds)=([1-9][0-9]*)$/D',$option,$m)||isset($options[$m[1]])){throw new InvalidArgumentException('Invalid cost worker option');}$options[$m[1]]=(int)$m[2];}
+        $runner=$command==='cloud-costs:work'?new \Hostider\CloudCosts\Engine($db,$config):new \Hostider\Catalog\CloudCostProposals($db,$config);
+        $result=$command==='cloud-costs:work'?$runner->run($options['max-operations']??100,$options['max-seconds']??20):$runner->run($options['max-operations']??100,$options['max-seconds']??20,$margin);
+        echo json_encode($result,JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command === 'cloud:work') {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');
+        $worker=new \Hostider\Cloud\Worker($db,$config);
+        if(array_slice($argv,2)===['--once']){$result=['worked'=>$worker->once()];}
+        else{$options=[];foreach(array_slice($argv,2) as $option){if(!preg_match('/^--(max-operations|max-seconds)=([1-9][0-9]*)$/D',$option,$match)||isset($options[$match[1]])){throw new InvalidArgumentException('Invalid Cloud worker option');}$options[$match[1]]=(int)$match[2];}$result=$worker->run($options['max-operations']??100,$options['max-seconds']??20);}
+        echo json_encode($result,JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command === 'cloud:expire') {
+        echo json_encode(['processed'=>(new \Hostider\Cloud\Engine($db,$config))->expire()],JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command === 'domains:work') {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');
+        $runner = new \Hostider\Domains\DomainRunner($db, $config);
+        $actor = new \Hostider\Core\Security\Principal('domain-worker', []);
+        if (array_slice($argv, 2) === ['--once']) {
+            $result = ['worked' => $runner->once($actor)];
+        } else {
+            $options = [];
+            foreach (array_slice($argv, 2) as $option) {
+                if (!preg_match('/^--(max-operations|max-seconds)=([1-9][0-9]*)$/D', $option, $match) || isset($options[$match[1]])) {
+                    throw new InvalidArgumentException('Invalid domain worker option');
+                }
+                $options[$match[1]] = (int)$match[2];
+            }
+            $result = $runner->run($actor, $options['max-operations'] ?? 100, $options['max-seconds'] ?? 20);
+        }
+        echo json_encode($result, JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command === 'domains:expire') {
+        $engine = new \Hostider\Domains\DomainEngine($db, $config);
+        $actor = new \Hostider\Core\Security\Principal('domain-cron', []);
+        $trace = Id::uuid();
+        echo json_encode(['processed' => $engine->expire($actor, $trace)], JSON_THROW_ON_ERROR) . PHP_EOL;
     } elseif ($command === 'queue:attention') {
         echo json_encode(['jobs' => $db->execute("SELECT id,status,attempts,correlation_id,last_error_safe,updated_at FROM jobs WHERE status IN ('FAILED','UNKNOWN') ORDER BY updated_at,id LIMIT 100")->fetchAll()], JSON_THROW_ON_ERROR) . PHP_EOL;
     } elseif ($command === 'retention:rates') {

@@ -17,7 +17,7 @@ final readonly class Ledger
         if ($actor->impersonating) { throw new HttpError(403,'FINANCIAL_IMPERSONATION_FORBIDDEN'); }
         if (!preg_match('/^[A-Za-z0-9:_-]{1,160}$/D',$reference) || count($lines)<2 || count($lines)>100) { throw new \InvalidArgumentException('Invalid journal'); }
         $totals=['DEBIT'=>new Decimal('0'),'CREDIT'=>new Decimal('0')];
-        $accounts=['cash','unallocated','wallet_liability','receivable','revenue','tax_payable','refund_payable','expense','provider_cost','credit_liability','fx_clearing'];
+        $accounts=['cash','unallocated','wallet_liability','receivable','revenue','tax_payable','refund_payable','expense','provider_cost','provider_payable','credit_liability','fx_clearing'];
         foreach ($lines as $line) {
             if (!in_array($line['account'],$accounts,true) || !isset($totals[$line['side']])) { throw new \InvalidArgumentException('Invalid ledger account'); }
             $money=new Money($line['minor'],$currency);

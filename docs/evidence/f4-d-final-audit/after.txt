@@ -1,0 +1,13 @@
+PASS Final P0 already refunded VM STOP preserves SUSPENDED and immutable finance
+PASS Final P0 paid ACTIVE STOP UNKNOWN then FULL refund reconciles STOPPED SUSPENDED once
+PASS Final P0 cancellation after STOP UNKNOWN cannot restore historical ACTIVE
+PASS Final P0 pending unverified task remains UNKNOWN without another STOP
+PASS Final P0 currently funded service with no suspension preserves ACTIVE independently of STOPPED
+PASS Final P0 independent suspension before transport loss is never erased
+PASS Final P0 independent suspension after transport loss is never reactivated
+PASS Final P0 legacy UNKNOWN never uses historical ACTIVE audit as authorization
+PASS Final P0 repeated reconciliation cannot duplicate financial or provider effect
+PASS Final P1 Cloud WAITING_TASK after successful receipt resumes through independent cron
+PASS Final P1 Cloud PENDING after receipt resumes through independent cron with one CREATE
+PASS Final P1 Domain PENDING after receipt resumes through independent cron without duplicate register
+12 tests, 0 failures
