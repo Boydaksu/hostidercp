@@ -1,5 +1,12 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-A test/mock geliştirmesi:** Ticket, departman, immutable mesaj/dahili not,
+> native Identity kapsamı ve minimal HTTP çekirdeği ayrı `codex/f5-support-center`
+> dalındadır. [Plan](docs/F5_PLAN.md), [A sözleşmesi](docs/F5_A_PLAN.md),
+> [teslim ve doğrulama durumu](docs/F5_A_DELIVERY_REPORT.md),
+> [taslak PR #3](https://github.com/Boydaksu/hostidercp/pull/3).
+> Bağımsız kabul bekler; yalnız F5-A yetkilidir. F5-B/C/D/E, F6 ve canlı işlemler kapalıdır.
+
 > **F4 bütünleşik mock kabul paketi:** C/D/E/F teknik mock kabulleri ve 49 suite / 394 test
 > [F4_REPORT](docs/F4_REPORT.md) altında birleştirildi. Bağımsız karar: **SINIRLANDIRILMIŞ MOCK
 > TEKNİK GO**. Sabit uygulama: `6e25a8b98de6e0c9da5e84df6b78e46cd47854f2`.

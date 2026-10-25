@@ -139,9 +139,12 @@ Bu teslim production restore provası değildir.
 
 ## Doğrulama ve başarısızlık kaydı
 
-Hedef 51 suite / 428 test: önceki 49/394 + yeni HTTP30/migration4.
-Son temiz yerel regresyon ve PHP8.3/8.4 CI sonuçları henüz bu belgeye bağlanmadı;
-tam PASS iddiası ancak evidence/f5-a içindeki gerçek sonuçlarla geçerlidir.
+Yerel toplam **51 suite / 428 PASS**: önceki 49/394 + yeni HTTP30/migration4.
+Eski 49 suite ve migration suite temiz batch'te; HTTP suite aşağıdaki EventSink
+düzeltmesi ardından yeniden çalıştırıldı. [Yerel özet](evidence/f5-a/local.json),
+[PASS satırları](evidence/f5-a/local-tests.txt), [migration kanıtı](evidence/f5-a/migrations.json),
+[001–048 / eski test koruması](evidence/f5-a/preservation.json).
+PHP8.3/8.4 son CI sonucu henüz bu belgeye bağlanmadı; yerel PASS çift sürüm CI yerine geçmez.
 Yerel runtime PHP8.4.24 / MariaDB10.11.18; yerel PHP8.3 mevcut değildir.
 
 İlk ara regresyon sırasında 049 şeması geliştirilirken değiştirilmesi Domain CLI
@@ -149,6 +152,11 @@ testinde başarısızlık oluşturdu; checksum güvenliği aşılmadı. Kaynak s
 sonra temiz şemada tekrar yapılır. Ayrı HTTP suite'i aynı MariaDB server'daki global
 migration lock ile çakışınca startup reddedildi; test atlanmadı, bağımsız suite'ler
 aynı server'da eşzamanlı migration çalıştırılmıyor. Assertion gevşetme/skip yoktur.
+
+Yeni native Queue testi EventSink'in alan sırasına bağımlılığını yakaladı: Queue
+canonical JSON anahtarlarını sıraladığı için public receipt FAILED oluyordu.
+Field allowlist artık sıralanmış alan kümesini doğrular; ek alanlar hâlâ reddedilir.
+Son HTTP30 testi bu düzeltmeyle PASS; önceki başarısız koşu PASS diye sayılmadı.
 
 ## Açık kapsam, risk ve durma noktası
 

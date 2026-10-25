@@ -1,0 +1,57 @@
+{
+    "environment": "test",
+    "synthetic": true,
+    "provider_io": false,
+    "examples": {
+        "client-detail": {
+            "id": "303020fb-80c0-4917-a94b-78b378401211",
+            "number": "HD-C2381E42C7DC4E843A697371",
+            "customer_id": "687d5813-e034-4a67-acd0-435dab6cd48d",
+            "department_id": "11679365-286a-48a8-92c2-b692342ad858",
+            "requested_priority": "NORMAL",
+            "effective_priority": "NORMAL",
+            "channel": "PANEL",
+            "status": "NEW",
+            "created_at": "2026-10-25 15:33:48.501766",
+            "updated_at": "2026-10-25 15:33:48.501766",
+            "version": 1,
+            "subject": "Synthetic ticket",
+            "messages": [
+                {
+                    "id": "6085e7d5-8dee-4062-ad5f-38a309d322b4",
+                    "type": "customer_reply",
+                    "customer_visible": true,
+                    "author_id": "519ba5f9-5fdc-4e02-af2f-720ff2a6a1ce",
+                    "created_at": "2026-10-25 15:33:48.512648",
+                    "body": "Public initial message"
+                }
+            ],
+            "service_ids": []
+        },
+        "private-note-filtered": {
+            "id": "c6293ba7-564f-4b80-a975-5ee4d526603e",
+            "number": "HD-98320FC27F3E219BD12DE1B2",
+            "customer_id": "687d5813-e034-4a67-acd0-435dab6cd48d",
+            "department_id": "11679365-286a-48a8-92c2-b692342ad858",
+            "requested_priority": "NORMAL",
+            "effective_priority": "NORMAL",
+            "channel": "PANEL",
+            "status": "NEW",
+            "created_at": "2026-10-25 15:33:49.806655",
+            "updated_at": "2026-10-25 15:33:49.924046",
+            "version": 2,
+            "subject": "Synthetic ticket",
+            "messages": [
+                {
+                    "id": "a0417d76-20c1-4e25-b653-cdc74cd1599b",
+                    "type": "customer_reply",
+                    "customer_visible": true,
+                    "author_id": "519ba5f9-5fdc-4e02-af2f-720ff2a6a1ce",
+                    "created_at": "2026-10-25 15:33:49.815840",
+                    "body": "Public initial message"
+                }
+            ],
+            "service_ids": []
+        }
+    }
+}

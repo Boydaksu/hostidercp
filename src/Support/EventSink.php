@@ -11,7 +11,8 @@ final readonly class EventSink
     public function register(Worker $worker): void{$worker->register('support.changed',fn(array $p): string=>$this->consume($p));}
     public function consume(array $p): string
     {
-        if($this->config->environment!=='test'||array_keys($p)!==['ticket_id','message_id']){return 'FAILED';}
+        $fields=array_keys($p);sort($fields,SORT_STRING);
+        if($this->config->environment!=='test'||$fields!==['message_id','ticket_id']){return 'FAILED';}
         if(!is_string($p['ticket_id'])||(!is_string($p['message_id'])&&$p['message_id']!==null)){return 'FAILED';}
         try{Access::id($p['ticket_id']);if($p['message_id']!==null){Access::id($p['message_id']);}}catch(\Hostider\Core\Http\HttpError){return 'FAILED';}
         $rows=$this->db->execute("SELECT o.event_uuid,o.payload FROM outbox_events o JOIN support_events e ON e.id=o.event_uuid AND e.ticket_id=o.aggregate_id WHERE o.event_type='support.changed' AND o.aggregate_id=? AND e.kind IN ('CREATED','CUSTOMER_REPLY','STAFF_REPLY','STATE','MOVE')",[$p['ticket_id']])->fetchAll();$matched=[];
