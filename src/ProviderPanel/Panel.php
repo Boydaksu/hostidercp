@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+namespace Hostider\ProviderPanel;
+use Hostider\Core\Http\Response;
+final class Panel
+{
+    public static function response(string $context,string $screen): Response
+    {
+        $title=match($screen){'domains'=>'Alan adları','cloud-costs'=>'Cloud maliyet ve fiyat incelemesi',default=>'Cloud sunucuları'};
+        return new Response(200,[],html:'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="panel-context" content="'.$context.'"><meta name="panel-screen" content="'.$screen.'"><title>Hostider · '.$title.'</title><link rel="stylesheet" href="/assets/identity.css"><link rel="stylesheet" href="/assets/commerce.css"><link rel="stylesheet" href="/assets/provider-panel.css"><script src="/assets/provider-panel.js" defer></script></head><body><aside id="sidebar"><a class="brand" href="/'.$context.'">hostider<span>automation</span></a><nav aria-label="Hizmet panelleri"><a href="/'.$context.'/domains">Alan adları</a><a href="/'.$context.'/cloud">Cloud sunucuları</a>'.($context==='admin'?'<a href="/admin/cloud-costs">Maliyet ve fiyat incelemesi</a>':'').'<a href="/'.$context.'/services">Hizmet ve yenileme işlemleri</a><a href="/'.$context.'/commerce">Satış ve ödemeler</a><a href="/'.$context.'">Hesap ve güvenlik</a></nav></aside><div class="shell"><header><h1>'.$title.'</h1><span class="badge">TEST / MOCK</span></header><main id="main"><p class="warning">Sentetik sağlayıcı verileri. Gerçek sağlayıcı işlemleri ve gerçek maliyet doğrulaması kapalıdır.</p><form id="scope"><label>Müşteri kapsamı <input name="customer" autocomplete="off" placeholder="Müşteri kimliği" '.($context==='client'?'disabled':'').'></label><button>Listeyi yükle</button></form><details><summary>Kritik işlemler için oturumu doğrula</summary><form id="step-up"><label>Parola <input type="password" name="password" autocomplete="current-password" required></label><label>MFA kodu <input name="code" autocomplete="one-time-code"></label><button>Doğrula</button></form></details><section id="items" aria-label="Hizmet listesi"></section><section id="detail" aria-live="polite"></section><div id="notice" role="status" aria-live="polite"></div></main><footer>UNKNOWN yeniden gönderilmez · STOP maliyetin durduğu anlamına gelmez · Transfer ve credential teslimi desteklenmiyor.</footer></div><dialog id="review" aria-labelledby="review-title"></dialog></body></html>');
+    }
+}

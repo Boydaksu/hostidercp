@@ -8,12 +8,12 @@ function isolatedDomainDb(): \Hostider\Core\Database\Database
     putenv('TEST_DB_DSN='.preg_replace('/dbname=[a-zA-Z0-9_]+/','dbname='.$schema,getenv('TEST_DB_DSN')));
     $db=integrationDb();register_shutdown_function(static function()use($db,$schema): void{$db->execute('DROP DATABASE '.$schema);});return $db;
 }
-function domainFixture(\Hostider\Core\Database\Database $db,int $years=1): array
+function domainFixture(\Hostider\Core\Database\Database $db,int $years=1,?\Hostider\Core\Config $sharedConfig=null): array
 {
     $f=serviceFixture($db);
     $hostingOrder=$f['order'];
     static $keys=[];$schema=$db->execute('SELECT DATABASE()')->fetchColumn();$keys[$schema]??=base64_encode(random_bytes(32));
-    $c=$f['config'];$f['config']=new \Hostider\Core\Config('test',$c->url,$keys[$schema],$c->dsn,$c->dbUser,$c->dbPassword);
+    $c=$f['config'];$f['config']=$sharedConfig??new \Hostider\Core\Config('test',$c->url,$keys[$schema],$c->dsn,$c->dbUser,$c->dbPassword);
     $f['repository']=new \Hostider\Services\Repository($db,$f['config']);
     $commerce=new \Hostider\Commerce\Services($db,$f['config']);
     foreach(['quotes','finance','billing','orders'] as $name){$f[$name]=$commerce->$name;}

@@ -77,13 +77,16 @@ final readonly class DomainReconciliation
         });
     }
 
+    /** Local resolution composes atomically with native HTTP confirmation; inspect remains outside TX. */
+    private function local(\Closure $work): mixed{return $this->db->pdo->inTransaction()?$work():$this->db->transaction($work);}
+
     public function resolve(string $opId, string $inspectionId, string $outcome, Principal $actor, string $trace): void
     {
         $this->guard($actor);
         if (!$actor->staff) { throw new HttpError(403, 'STAFF_REQUIRED'); }
         (new Authorization())->require($actor, 'services.manage', privileged: true);
         if (!in_array($outcome, ['CONFIRMED_SUCCESS','CONFIRMED_FAILURE'], true)) { throw new HttpError(422, 'INVALID_RECONCILIATION_OUTCOME'); }
-        $this->db->transaction(function () use ($opId, $inspectionId, $outcome, $actor, $trace): void {
+        $this->local(function () use ($opId, $inspectionId, $outcome, $actor, $trace): void {
             $op = $this->db->execute('SELECT * FROM domain_operations WHERE id=? FOR UPDATE', [$opId])->fetch();
             if (!$op || !in_array($op['status'], ['UNKNOWN','MANUAL_REVIEW'], true)) { throw new HttpError(409, 'DOMAIN_OPERATION_NOT_RESOLVABLE'); }
             $inspection = $this->db->execute('SELECT *,created_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 5 MINUTE) AS fresh FROM domain_inspections WHERE id=? AND operation_id=?', [$inspectionId,$opId])->fetch();

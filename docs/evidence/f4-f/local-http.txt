@@ -1,0 +1,29 @@
+PASS F4-F native authentication protects HTML and API; wrong HTTP methods create nothing
+PASS F4-F real login cookie MFA and fresh step-up chain opens customer/admin panels
+PASS F4-F client projection separates physical VM financial service and 30 day sale without secrets
+PASS F4-F cross customer service ID and customer override cannot read or mutate
+PASS F4-F staff needs exact tenant service grant; customer cannot read cost projection
+PASS F4-F CSRF explicit acceptance and strict purchased spec reject before any provider call
+PASS F4-F pure preparation changes no service operation ledger outbox; payload tampering rejected
+PASS F4-F stale service version and stale confirmation cannot enqueue
+PASS F4-F duplicate submit and cached replay retain one durable operation and one provider POST
+PASS F4-F two independent HTTP servers same confirmation serialize one accepted action
+PASS F4-F two independent HTTP requests same idempotency key return identical operation
+PASS F4-F stale native step-up blocks preparation and replay
+PASS F4-F refunded source blocks normal action while scoped native staff containment remains safe
+PASS F4-F UNKNOWN inspect queues without HTTP provider IO then independent cron resolves no second POST
+PASS F4-F latest session revocation rejects cached HTTP result and HTML
+PASS F4-F domain HTTP nameserver expiry registration and UNKNOWN differ without contact PII
+PASS F4-F finance HTTP distinguishes missing cost invoice difference and separate approval publication
+PASS F4-F client correct reinstall then power operations remain task verified
+PASS F4-F native terminate wait and two HTTP requests preserve one termination
+PASS F4-F concurrent financial change after prepare invalidates HTTP confirmation
+PASS F4-F identity version change blocks prepared action before native enqueue
+PASS F4-F permission revocation invalidates cached response authorization
+PASS F4-F HTML and JSON use no-store CSP and safe dynamic text encoding
+PASS F4-F accepted CREATE task is not exposed as active VM or completed service
+PASS F4-F impersonation cannot read provider panels or authorize critical operation
+PASS F4-F stale staff authorization before inspection cron preserves UNKNOWN without provider retry
+PASS F4-F invoice match remains MOCK and does not settle payable or publish catalog price
+PASS F4-F second distinct confirmation is stale after first HTTP operation wins
+28 tests, 0 failures

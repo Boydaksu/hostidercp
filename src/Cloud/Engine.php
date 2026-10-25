@@ -14,6 +14,14 @@ final readonly class Engine
 {
     public Store $store;private CloudServices $services;private Catalog $catalog;
     public function __construct(private Database $db,private Config $config){$this->store=new Store($db,$config);$this->services=new CloudServices($db,$config);$this->catalog=new Catalog($db,$config);}
+    /** Compose local commands with HTTP confirmation/idempotency; provider I/O never enters this boundary. */
+    private function local(\Closure $work): mixed{return $this->db->pdo->inTransaction()?$work():$this->db->transaction($work);}
+    private function authorizeAction(array $i,Principal $actor,string $kind): void
+    {
+        if($actor->staff){$this->store->authorize($i,$actor,true);return;}
+        if($actor->impersonating||!in_array($kind,['START','STOP','RESTART','REINSTALL','TERMINATE'],true)){throw new HttpError(403,'CLOUD_ACTOR_FORBIDDEN');}
+        (new \Hostider\Core\Security\Authorization())->require($actor,'cloud.power',$i['customer_id'],privileged:true,service:$i['service_id']);
+    }
     public function attach(string $service,string $customer,string $catalog,array $spec,Principal $actor): string
     {
         return $this->db->transaction(function()use($service,$customer,$catalog,$spec,$actor): string{
@@ -30,11 +38,11 @@ final readonly class Engine
     }
     public function prepare(string $instance,string $kind,array $payload,Principal $actor): string
     {
-        return $this->db->transaction(function()use($instance,$kind,$payload,$actor): string{
-            $i=$this->store->instance($instance);$this->store->authorize($i,$actor,true);$policy=$this->catalog->find($i['catalog_id'])['policy'];
+        return $this->local(function()use($instance,$kind,$payload,$actor): string{
+            $i=$this->store->instance($instance);$this->authorizeAction($i,$actor,$kind);$policy=$this->catalog->find($i['catalog_id'])['policy'];
             if($kind!=='RESOLVE'){$this->catalog->action($policy,$kind,$payload);}else{if(array_keys($payload)!==['observation_id']){throw new HttpError(422,'CLOUD_RESOLUTION_INVALID');}}
             $id=Id::uuid();$wait=$kind==='TERMINATE'?$policy['termination_wait_seconds']:0;
-            $this->db->execute('INSERT INTO cloud_confirmations(id,instance_id,instance_version,kind,payload_hash,actor_id,expires_at,not_before) VALUES (?,?,?,?,?,?,DATE_ADD(UTC_TIMESTAMP(6),INTERVAL 5 MINUTE),TIMESTAMPADD(SECOND,?,UTC_TIMESTAMP(6)))',[$id,$instance,$i['version'],$kind,$this->store->hash($payload),$actor->actorId,$wait]);return $id;
+            $this->db->execute('INSERT INTO cloud_confirmations(id,instance_id,instance_version,kind,payload_hash,actor_id,expires_at,not_before) VALUES (?,?,?,?,?,?,TIMESTAMPADD(SECOND,?,UTC_TIMESTAMP(6)),TIMESTAMPADD(SECOND,?,UTC_TIMESTAMP(6)))',[$id,$instance,$i['version'],$kind,$this->store->hash($payload),$actor->actorId,$wait+300,$wait]);return $id;
         });
     }
     public function bindImported(string $service,string $customer,string $catalog,string $resource,Principal $actor): string
@@ -59,8 +67,8 @@ final readonly class Engine
     }
     public function enqueue(string $instance,string $kind,array $payload,Principal $actor,?string $confirmation=null): string
     {
-        return $this->db->transaction(function()use($instance,$kind,$payload,$actor,$confirmation): string{
-            $i=$this->store->instance($instance);$this->store->authorize($i,$actor,$kind!=='CREATE');
+        return $this->local(function()use($instance,$kind,$payload,$actor,$confirmation): string{
+            $i=$this->store->instance($instance);if($kind==='CREATE'){$this->store->authorize($i,$actor);}else{$this->authorizeAction($i,$actor,$kind);}
             if(!$this->store->source($i)){throw new HttpError(409,'CLOUD_SOURCE_CHANGED');}
             if($i['current_operation_id']){$old=$this->store->operation($i['current_operation_id']);if($kind==='CREATE'&&$old['kind']==='CREATE'){if($i['imported']){throw new HttpError(409,'CLOUD_IMPORTED_CREATE_FORBIDDEN');}return $old['id'];}if(!in_array($old['status'],['SUCCEEDED','FAILED'],true)){throw new HttpError(409,'CLOUD_OPERATION_IN_FLIGHT');}}
             if($kind==='CREATE'){
@@ -153,7 +161,7 @@ final readonly class Engine
     }
     public function resolve(string $operation,string $observation,string $confirmation,Principal $actor): void
     {
-        $this->db->transaction(function()use($operation,$observation,$confirmation,$actor): void{$op=$this->store->operation($operation);$i=$this->store->instance($op['instance_id']);$this->store->authorize($i,$actor,true);if(!in_array($op['status'],['UNKNOWN','MANUAL_REVIEW'],true)){throw new HttpError(409,'CLOUD_NOT_UNKNOWN');}$this->confirmation($i,'RESOLVE',['observation_id'=>$observation],$actor,$confirmation);$this->apply($op,$i,$observation,true);});
+        $this->local(function()use($operation,$observation,$confirmation,$actor): void{$op=$this->store->operation($operation);$i=$this->store->instance($op['instance_id']);$this->store->authorize($i,$actor,true);if(!in_array($op['status'],['UNKNOWN','MANUAL_REVIEW'],true)){throw new HttpError(409,'CLOUD_NOT_UNKNOWN');}$this->confirmation($i,'RESOLVE',['observation_id'=>$observation],$actor,$confirmation);$this->apply($op,$i,$observation,true);});
     }
     private function apply(array $op,array $i,string $observation,bool $manual): void
     {

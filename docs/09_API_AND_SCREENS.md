@@ -1,5 +1,35 @@
 # 09 — API sözleşmesi ve sayfa haritası
 
+## F4-F uygulanmış test/mock sınırı
+
+HTML: `/client/domains`, `/client/cloud`, `/admin/domains`, `/admin/cloud`,
+`/admin/cloud-costs`. Sayfanın kendisi de native oturum/MFA doğrular; impersonation kapalıdır.
+JSON: `/api/v1/{client|admin}/provider-panel/{status,list,detail,costs}` GET.
+Liste `kind=DOMAIN|CLOUD`, `offset=0..1000000` ile en fazla 50 kayıt; staff açık `customer`
+kapsamı seçer; her kayıt ayrıca service grant ve native ownership kontrolünden geçer.
+`costs` yalnız staff + scoped finance.view'dur. Raw provider response veya credential yoktur.
+
+`prepare` ve `execute` POST, CSRF ve Idempotency-Key ister. JSON:
+`{action,payload,customer?,confirmation?:{id,accepted:true}}`. Desteklenen action'lar:
+`cloud-action` (`service_id,kind,data`), `inspect` (`service_id,operation_id`),
+`resolve` (`service_id,operation_id,evidence_id,outcome`),
+`proposal-approve` / `proposal-publish` (`service_id,proposal_id`). Her kritik aksiyon
+fresh native step-up, scope ve ayrı state/session/payload-bound confirmation ister.
+Cloud kind START/STOP/RESTART/REINSTALL/TERMINATE; REINSTALL yalnız satın alınan osid,
+diğer data boş object. CREATE/UPGRADE/custom/transfer/credential endpoint'i yoktur.
+Domain yenileme mevcut `/services/prepare|execute` üzerinden canonical Services.Renewals'a gider.
+
+Staff-only `containment-prepare` POST: `{service_id,customer,kind,reason}`;
+`containment-execute` POST: `{service_id,customer,confirmation,accepted:true}`.
+Native Cloud.Containment dış kaynak inspect/session/one-use/waiting mekanizmasını korur;
+idempotent cached response yerine duplicate execute 409'dur, ikinci mutation oluşturmaz.
+STOP maliyet durdurma iddiası taşımaz. Bu iki route genel idempotency transaction'ına alınmaz.
+
+Bağımsız `php bin/console.php panel:inspect` en çok 100 iş/20 saniye/64 MiB yeni iş kabulüyle
+mevcut queue/outbox'a bağlı read-only inspection'ları işler; provider mutation yapmaz.
+Queue teslimi, inspection kaydı ve fiziksel task completion ayrı durumlardır.
+Detaylar: [F4_F_PLAN](F4_F_PLAN.md), [ADR-015](adr/ADR-015-provider-panel-http-boundaries.md).
+
 ## API ilkeleri
 - `https://.../api/v1/...` JSON; `/admin` ve `/client` frontends farklı oturum ve yetki bağlamında.
 - DB internal ID dışarı verilmez; opaque `public_id` ve pagination cursor / whitelisted sort.

@@ -1,5 +1,11 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F4-F test/mock geliştirme:** F4-C/D/E tabanı kullanıcı tarafından bağımsız kabul edildi.
+> Domain/Cloud müşteri ve personel panelleri, native Identity HTTP güvenliği ve FIN-010
+> ekranları [F4_F_PLAN](docs/F4_F_PLAN.md) kapsamında geliştirilir. 355 testlik taban ve
+> 001–047 migration geçmişi korunur; gerçek sağlayıcı GATE'leri açık, DOMAIN-002 PARTIAL kalır.
+> F4-F sonrası bağımsız kabul olmadan F5/F6, merge veya staging/production başlatılmaz.
+
 > **F4-E test/mock teslimi; bağımsız kabul bekleniyor:** F4-D güvenlik tabanı bağımsız kabul edildi (325 test, HEAD dc70fa5). Kullanım/sağlayıcı maliyeti, mevcut Ledger ve manual fiyat önerisi kapsamı [F4_E_PLAN](docs/F4_E_PLAN.md) ve [F4_E_DELIVERY_REPORT](docs/F4_E_DELIVERY_REPORT.md) ile belgelenir (355 test). 30 günlük peşin müşteri satışı ayrı kalır; PROV-005 gerçek kabulü ve tüm canlı GATE’ler açıktır. F4-F/F5, merge ve production başlatılmaz.
 
 
