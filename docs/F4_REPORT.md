@@ -2,13 +2,42 @@
 
 25 Ekim 2026. Dal: `codex/f4-domain-cloud`. Bu paket mevcut uygulamayı denetime sunar; yeni faz başlatmaz.
 
-**Karar: sınırları belirtilmiş mevcut mock uygulamanın bağımsız bütünleşik denetime sunulması için GO; koşulsuz bütün F4 mock çıkışı için NO-GO. F4 DONE veya production-ready değildir.** C/D/E/F modül teknik kabulleri, bütünleşik çıkış kabulü yerine geçmez. Mapping/import CRUD için yalnız erteleme onayı vardır; uygulama/kabul yoktur. F5/F6, merge, staging ve production için yetki verilmez.
+**F4 LIMITED MOCK TECHNICAL BASELINE: ACCEPTED WITH EXPLICIT EXCEPTIONS**
+
+**F4 FULL SCOPE / LIVE EXIT: NOT ACCEPTED**
+
+Proje sahibinin ilettiği bağımsız kabul kararı: **SINIRLANDIRILMIŞ MOCK TEKNİK GO**.
+Sabit uygulama tabanı `6e25a8b98de6e0c9da5e84df6b78e46cd47854f2`, kabul paketi
+`0798dacccda49025c4f4cde28e57916b3e532e1a` olarak korunur. Bu kayıt kaynak tabanını
+ilerletmez; 49 suite / 394 testlik uygulamayı, migration veya contract'ları değiştirmez.
+C/D/E/F teknik kabulleri korunur. Bu karar tam F4 DONE, canlı sağlayıcı veya production kabulü değildir.
+
+DOMAIN-002 PARTIAL / MANUAL_REVIEW; mapping/import CRUD DEFERRED / NOT IMPLEMENTED /
+NOT ACCEPTED; PROV-005 ve bütün canlı GATE'ler OPEN kalır. Gerçek credential retrieval,
+canlı mapping ve gerçek müşteri operasyonları NOT IMPLEMENTED / NOT VERIFIED kalır.
+
+F5/F6, main veya target merge, staging ve production için ayrıca proje sahibi yetkilendirmesi gerekir.
+Bu kabul geçiş izni değildir. Taslak PR #2 açık ve merge edilmemiş kalır.
+**main dalı koruması etkinleştirilmeden ilk merge yapılmayacak.** Bu kayıt korumanın
+etkin olduğunu iddia etmez ve repository ayarlarını değiştirmez. Yeni geliştirme yapılmaz;
+sonraki faz talimatı beklenir.
+
+Kabul kaydı planı: kapsam yalnız bu kararın rapor ve README'ye işlenmesidir; runtime/test/migration
+kapsamı yoktur. Doğrulama: belge diff'i, kaynak checksum eşliği ve PR draft/open/unmerged durumu.
+Geri dönüş yalnız bu belge kaydının geri alınmasıdır; kabul edilmiş immutable kanıtlar değiştirilmez.
 
 ## 1. Kaynak ve gerçek CI kimliği
 
 Kabul edilen uygulama: [`6e25a8b98de6e0c9da5e84df6b78e46cd47854f2`](https://github.com/Boydaksu/hostidercp/commit/6e25a8b98de6e0c9da5e84df6b78e46cd47854f2).
 Paket öncesi GitHub HEAD: [`8156208ad90afcb8b563864e3fe065d8bea05f35`](https://github.com/Boydaksu/hostidercp/commit/8156208ad90afcb8b563864e3fe065d8bea05f35).
-Bu belgeyi içeren paket commit'inin SHA ve otomatik CI bağlantıları [taslak PR #2](https://github.com/Boydaksu/hostidercp/pull/2) açıklamasında ayrıca kaydedilir; kendi commit SHA'sını içermeyen belge uygulama SHA'sı gibi sunulmaz.
+Kabul paketi: [`0798dacccda49025c4f4cde28e57916b3e532e1a`](https://github.com/Boydaksu/hostidercp/commit/0798dacccda49025c4f4cde28e57916b3e532e1a).
+Bağımsız denetim dört paket CI işinde 49 suite / 394 test / 0 hatayı doğruladı:
+[PR PHP 8.3](https://github.com/Boydaksu/hostidercp/actions/runs/40195354901/job/121174901258),
+[PR PHP 8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40195354901/job/121174901423),
+[branch PHP 8.3](https://github.com/Boydaksu/hostidercp/actions/runs/40195351436/job/121174890597),
+[branch PHP 8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40195351436/job/121174890801).
+153 F4 testinin dosya/ad/satır eşliği, 319 dosyanın Git blob eşliği ve 001–048 koruma/replay kanıtı bağımsız denetimde doğrulandı.
+[PR #2](https://github.com/Boydaksu/hostidercp/pull/2) taslak ve merge edilmemiş olarak tutulur.
 
 | HEAD 8156208 doğrulaması | PHP 8.3 | PHP 8.4 |
 |---|---|---|
@@ -101,8 +130,8 @@ Bu paket incelemesinde yeni runtime kusuru veya 394-test başarısızlığı gö
 
 Paket yalnız belge/kanıt değiştirir; geri dönüş belge commit'inin geri alınmasıdır. Runtime geri dönüşü için tutarlı kod/DB/APP_KEY yedeği ve forward-fix/restore planı gerekir; immutable finans/evidence silinmez, migration downgrade veya UNKNOWN POST replay yapılmaz.
 
-**GO:** Mevcut 394 testle sınırlı, istisnaları açık mock uygulamanın bağımsız bütünleşik F4 çıkış denetimine sunulması.
+**GO:** Mevcut 394 testlik sabit uygulama tabanı, açık istisnalarla bağımsız bütünleşik sınırlı mock teknik kabul aldı.
 
 **NO-GO:** Bütün F4_PLAN kapsamının koşulsuz tamamlandığı iddiası; mapping/import CRUD kabulü; gerçek sağlayıcı/finans/operasyon kabulü; production-ready/F4 DONE; F5/F6, merge, staging veya production'a otomatik geçiş.
 
-Sınırlandırılmış mock çıkışının açık istisnalarla kabul edilip edilmeyeceği bağımsız denetim ve proje sahibinin kararıdır. Bu paket bunu peşinen kabul etmez. Sonraki adım bağımsız bütünleşik F4 mock çıkış denetimidir; geliştirme burada durur.
+Bağımsız karar yalnız sınırlandırılmış mock teknik tabanı kabul eder. Tam kapsam/live exit kabul edilmedi. Yeni geliştirme, mapping/import CRUD veya otomatik failover açılmaz. Çalışma durdurulur; sonraki faz talimatı ve gerekli ayrı yetkilendirme beklenir.
