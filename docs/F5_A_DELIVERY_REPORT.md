@@ -91,7 +91,7 @@ SUP-003'ün bütünü PASS sayılmaz. F5-C/E bu filtreleri korumak zorundadır.
 ## HTTP sözleşmesi ve yapay örnekler
 
 GET `/api/v1/{client|admin}/support/list?offset=0&q=...`, `detail?id=<uuid>`,
-`departments`. Liste en fazla 50 aday üzerinden yetkili projection; total/count/başkasına
+`departments`. Liste native grant/üyelik filtresi LIMIT/OFFSET öncesinde uygulanmış en fazla 50 yetkili projection; total/count/başkasına
 ait subject/customer metadata yoktur. Offset 0..1000000, q en çok 191 karakter.
 Admin departments yönetim izni ister; client yalnız enabled departman id/name görür.
 
@@ -165,8 +165,8 @@ SUP-001/002, SUP-005/006, SUP-008/009/010 **OPEN / bu teslimde PASS değil**.
 F5-B SLA/assignment, F5-C mail/ek, F5-D rule/incident/CSAT/report, F5-E UI ve
 bütünleşik kabul ayrı yetki ister; SUP-010 ayrıca F6 import'a bağlıdır.
 
-Liste candidate pagination yetkisiz boş sayfalar döndürebilir; yetkisiz metadata
-ve toplam vermez. Detail mesaj geçmişi henüz cursor pagination kullanmaz; büyük
+Liste native grant/üyelik SQL filtresini pagination öncesinde uygular ve her satırı
+yeniden yetkilendirir; yetkisiz kayıtlar sayfa boşluğu da oluşturmaz. Detail mesaj geçmişi henüz cursor pagination kullanmaz; büyük
 konuşmalarda kaynak bütçesi F5-E öncesinde ölçülmelidir. Departman row lock'ları
 başlangıç 2–5 personel ölçeğinde tutarlılığı önceler; production kapasite sözü değildir.
 Public event consumer yalnız HELD receipt'tir; mail/notification teslimi yoktur.

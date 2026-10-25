@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace Hostider\Support;
 use Hostider\Commerce\Services;
 use Hostider\Core\Http\HttpError;
-use Hostider\Core\Security\{Authorization,Principal};
+use Hostider\Core\Security\{AccessGrant,Authorization,Principal};
 final readonly class Access
 {
     public function __construct(public Services $c){}
@@ -36,11 +36,28 @@ final readonly class Access
     {
         $this->actor($u,$s);
         $candidate=$this->c->db->execute('SELECT department_id FROM support_tickets WHERE id=?',[$id])->fetchColumn();if(!$candidate){throw new HttpError(404,'SUPPORT_NOT_FOUND');}
-        $this->department($candidate);$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=? FOR UPDATE',[$id])->fetch();if(!$row||$row['department_id']!==$candidate){throw new HttpError(409,'SUPPORT_VERSION_CONFLICT');}
+        $this->department($candidate);$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=? FOR UPDATE',[$id])->fetch();if(!$row||$row['department_id']!==$candidate){throw new HttpError(404,'SUPPORT_NOT_FOUND');}
         $this->require($u,$s,$row['customer_id'],$row['department_id'],$permission);return $row;
     }
     public function management(array $u,array $s): Principal
     {
         $a=$this->actor($u,$s);(new Authorization())->require($a,'identity.staff.manage',privileged:true,administrative:true);return $a;
+    }
+    /** Apply the native principal's view grants BEFORE pagination, then recheck each row. */
+    public function listing(Principal $a): array
+    {
+        if(!$a->staff){(new Authorization())->require($a,'support.view',$a->customerId);return ['t.customer_id=?',[$a->customerId]];}
+        if(!in_array('support.ticket.view',$a->permissions,true)||!$a->mfa){return ['1=0',[]];}
+        $departments=array_values(array_filter($a->departments,static fn(string $id): bool=>$id!=='*'));
+        if($departments===[]){return ['1=0',[]];}
+        $params=[$a->actorId,...$departments];$clauses=[];
+        foreach($a->grants as $g){
+            if(!$g instanceof AccessGrant||$g->permission!=='support.ticket.view'||($g->services!==[]&&!in_array('*',$g->services,true))||$g->customers===[]||$g->departments===[]){continue;}
+            $parts=[];foreach(['customer_id'=>$g->customers,'department_id'=>$g->departments] as $column=>$ids){
+                if(in_array('*',$ids,true)){$parts[]='1=1';}else{$parts[]='t.'.$column.' IN ('.implode(',',array_fill(0,count($ids),'?')).')';array_push($params,...$ids);}
+            }$clauses[]='('.implode(' AND ',$parts).')';
+        }
+        if($clauses===[]){return ['1=0',[]];}
+        return ['EXISTS (SELECT 1 FROM support_department_members m WHERE m.user_id=? AND m.department_id=t.department_id) AND t.department_id IN ('.implode(',',array_fill(0,count($departments),'?')).') AND ('.implode(' OR ',$clauses).')',$params];
     }
 }

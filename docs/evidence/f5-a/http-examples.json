@@ -4,50 +4,50 @@
     "provider_io": false,
     "examples": {
         "client-detail": {
-            "id": "303020fb-80c0-4917-a94b-78b378401211",
-            "number": "HD-C2381E42C7DC4E843A697371",
-            "customer_id": "687d5813-e034-4a67-acd0-435dab6cd48d",
-            "department_id": "11679365-286a-48a8-92c2-b692342ad858",
+            "id": "cde2241d-a883-4a91-84f6-5beaaaa2d6d5",
+            "number": "HD-6A601CAC25AEF07E67B4EF10",
+            "customer_id": "ed7e2f4a-03a4-422c-ab6d-42942cb9751a",
+            "department_id": "45e72000-94f4-4a82-a75d-7a5d97859751",
             "requested_priority": "NORMAL",
             "effective_priority": "NORMAL",
             "channel": "PANEL",
             "status": "NEW",
-            "created_at": "2026-10-25 15:33:48.501766",
-            "updated_at": "2026-10-25 15:33:48.501766",
+            "created_at": "2026-10-25 15:41:07.100240",
+            "updated_at": "2026-10-25 15:41:07.100240",
             "version": 1,
             "subject": "Synthetic ticket",
             "messages": [
                 {
-                    "id": "6085e7d5-8dee-4062-ad5f-38a309d322b4",
+                    "id": "5873dcec-1549-4649-ac94-80ba1a3ef633",
                     "type": "customer_reply",
                     "customer_visible": true,
-                    "author_id": "519ba5f9-5fdc-4e02-af2f-720ff2a6a1ce",
-                    "created_at": "2026-10-25 15:33:48.512648",
+                    "author_id": "2d022763-b63d-40cd-a78b-b41901aa9dca",
+                    "created_at": "2026-10-25 15:41:07.111815",
                     "body": "Public initial message"
                 }
             ],
             "service_ids": []
         },
         "private-note-filtered": {
-            "id": "c6293ba7-564f-4b80-a975-5ee4d526603e",
-            "number": "HD-98320FC27F3E219BD12DE1B2",
-            "customer_id": "687d5813-e034-4a67-acd0-435dab6cd48d",
-            "department_id": "11679365-286a-48a8-92c2-b692342ad858",
+            "id": "00862915-eb13-4c7a-965c-cb5f34d01c70",
+            "number": "HD-C59591BCF727D4202C1ECA23",
+            "customer_id": "ed7e2f4a-03a4-422c-ab6d-42942cb9751a",
+            "department_id": "45e72000-94f4-4a82-a75d-7a5d97859751",
             "requested_priority": "NORMAL",
             "effective_priority": "NORMAL",
             "channel": "PANEL",
             "status": "NEW",
-            "created_at": "2026-10-25 15:33:49.806655",
-            "updated_at": "2026-10-25 15:33:49.924046",
+            "created_at": "2026-10-25 15:41:08.796728",
+            "updated_at": "2026-10-25 15:41:08.914770",
             "version": 2,
             "subject": "Synthetic ticket",
             "messages": [
                 {
-                    "id": "a0417d76-20c1-4e25-b653-cdc74cd1599b",
+                    "id": "aeaaf45a-ca9f-488b-8fb0-25d4b7a56d97",
                     "type": "customer_reply",
                     "customer_visible": true,
-                    "author_id": "519ba5f9-5fdc-4e02-af2f-720ff2a6a1ce",
-                    "created_at": "2026-10-25 15:33:49.815840",
+                    "author_id": "2d022763-b63d-40cd-a78b-b41901aa9dca",
+                    "created_at": "2026-10-25 15:41:08.805393",
                     "body": "Public initial message"
                 }
             ],

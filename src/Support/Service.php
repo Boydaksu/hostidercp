@@ -136,7 +136,7 @@ final readonly class Service
             if($view==='detail'){return $this->detail($u,$s,$this->access->ticket($u,$s,Access::id($p['id'])));}
             $offset=$p['offset']??'0';if(!is_string($offset)||!ctype_digit($offset)||(int)$offset>1000000){throw new HttpError(422,'INVALID_OFFSET');}$q=isset($p['q'])?Validation::text($p['q'],191):null;
             if(!$a->staff&&$a->customerId===null){throw new HttpError(403,'CUSTOMER_REQUIRED');}
-            $rows=$this->c->db->execute('SELECT id FROM support_tickets'.($a->staff?'':' WHERE customer_id=?').' ORDER BY id LIMIT 50 OFFSET '.(int)$offset,$a->staff?[]:[$a->customerId])->fetchAll();$out=[];
+            [$where,$params]=$this->access->listing($a);$rows=$this->c->db->execute('SELECT t.id FROM support_tickets t WHERE '.$where.' ORDER BY t.id LIMIT 50 OFFSET '.(int)$offset,$params)->fetchAll();$out=[];
             foreach($rows as $row){try{$t=$this->access->ticket($u,$s,$row['id']);$v=$this->summary($t);if($q===null||mb_stripos($v['subject'],$q)!==false||str_contains($v['number'],$q)){$out[]=$v;}}catch(HttpError $e){if($e->status!==404){throw $e;}}}return $out;
         });
     }
