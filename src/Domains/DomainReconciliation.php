@@ -80,16 +80,13 @@ final readonly class DomainReconciliation
     /** Local resolution composes atomically with native HTTP confirmation; inspect remains outside TX. */
     private function local(\Closure $work): mixed{return $this->db->pdo->inTransaction()?$work():$this->db->transaction($work);}
 
-    public function resolve(string $opId, string $inspectionId, string $outcome, Principal $actor, string $trace): void
+    /** Shared canonical validation: no provider I/O or state transition. */
+    private function checkedInspection(string $opId,string $inspectionId): array
     {
-        $this->guard($actor);
-        if (!$actor->staff) { throw new HttpError(403, 'STAFF_REQUIRED'); }
-        (new Authorization())->require($actor, 'services.manage', privileged: true);
-        if (!in_array($outcome, ['CONFIRMED_SUCCESS','CONFIRMED_FAILURE'], true)) { throw new HttpError(422, 'INVALID_RECONCILIATION_OUTCOME'); }
-        $this->local(function () use ($opId, $inspectionId, $outcome, $actor, $trace): void {
+        $this->db->requireTransaction();
             $op = $this->db->execute('SELECT * FROM domain_operations WHERE id=? FOR UPDATE', [$opId])->fetch();
             if (!$op || !in_array($op['status'], ['UNKNOWN','MANUAL_REVIEW'], true)) { throw new HttpError(409, 'DOMAIN_OPERATION_NOT_RESOLVABLE'); }
-            $inspection = $this->db->execute('SELECT *,created_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 5 MINUTE) AS fresh FROM domain_inspections WHERE id=? AND operation_id=?', [$inspectionId,$opId])->fetch();
+            $inspection = $this->db->execute('SELECT *,(created_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 5 MINUTE) AND created_at<=UTC_TIMESTAMP(6)) AS fresh FROM domain_inspections WHERE id=? AND operation_id=?', [$inspectionId,$opId])->fetch();
             if (!$inspection) { throw new HttpError(404, 'INSPECTION_NOT_FOUND'); }
             $json = $this->crypto->decrypt($inspection['evidence_encrypted'], 'domain-inspect:'.$inspectionId);
             if (!hash_equals($inspection['fingerprint'], hash_hmac('sha256', $json, $this->key))) { throw new HttpError(409, 'INSPECTION_INTEGRITY'); }
@@ -105,6 +102,32 @@ final readonly class DomainReconciliation
             $call = $validator->call($attempt);
             if (CanonicalJson::encode($call) !== CanonicalJson::encode($envelope['call'])) { throw new HttpError(409, 'STALE_DOMAIN_CALL_EVIDENCE'); }
             $proof = $envelope['proof'];
+        return [$op,$inspection,$envelope,$attempt,$domain,$service,$validator,$call,$proof];
+    }
+    public function summary(string $opId,string $inspectionId,Principal $actor): array
+    {
+        $this->guard($actor);if(!$actor->staff){throw new HttpError(403,'STAFF_REQUIRED');}
+        [$op,$inspection,$envelope,$attempt,$domain,$service,$validator,$call,$proof]=$this->checkedInspection($opId,$inspectionId);
+        (new Authorization())->require($actor,'services.manage',$domain['customer_id'],privileged:true,service:$op['service_id']);
+        (new Authorization())->require($actor,'services.reconcile',$domain['customer_id'],privileged:true,service:$op['service_id']);
+        $success=(bool)$inspection['found']&&$validator->success($op,$attempt,$domain,$proof,$call);
+        $noEffect=!(bool)$inspection['found']&&$proof===null&&$envelope['no_effect']&&$validator->noEffect($call);
+        $created=new \DateTimeImmutable($inspection['created_at'],new \DateTimeZone('UTC'));
+        return ['evidence_id'=>$inspectionId,'operation_id'=>$opId,'attempt_id'=>$attempt['id'],'generation'=>(string)$op['generation'],'operation_state'=>$op['status'],
+            'classification'=>$success?'verified_success':($noEffect?'definitive_no_effect':'insufficient_evidence'),
+            'bindings'=>['inspection_operation'=>true,'active_attempt'=>true,'generation_version'=>true,'account'=>$call!==null,'resource'=>$success,'resource_absent'=>$noEffect,'financial_no_effect'=>$noEffect],
+            'observed_at'=>$inspection['created_at'],'expires_at'=>$created->modify('+5 minutes')->format('Y-m-d H:i:s.u'),'fresh'=>true,'provenance'=>'MOCK',
+            'allowed_outcomes'=>$success?['CONFIRMED_SUCCESS']:($noEffect?['CONFIRMED_FAILURE']:[]),'failure_requires_resource_and_financial_no_effect'=>true];
+    }
+
+    public function resolve(string $opId, string $inspectionId, string $outcome, Principal $actor, string $trace): void
+    {
+        $this->guard($actor);
+        if (!$actor->staff) { throw new HttpError(403, 'STAFF_REQUIRED'); }
+        (new Authorization())->require($actor, 'services.manage', privileged: true);
+        if (!in_array($outcome, ['CONFIRMED_SUCCESS','CONFIRMED_FAILURE'], true)) { throw new HttpError(422, 'INVALID_RECONCILIATION_OUTCOME'); }
+        $this->local(function () use ($opId, $inspectionId, $outcome, $actor, $trace): void {
+            [$op,$inspection,$envelope,$attempt,$domain,$service,$validator,$call,$proof]=$this->checkedInspection($opId,$inspectionId);
             $funded = (new DomainEngine($this->db, $this->config))->fundingValid($op, $domain);
             if ($outcome === 'CONFIRMED_SUCCESS') {
                 if (!(bool)$inspection['found'] || !$validator->success($op, $attempt, $domain, $proof, $call)) { throw new HttpError(409, 'CANNOT_CONFIRM_SUCCESS_WITHOUT_EXTERNAL_PROOF'); }

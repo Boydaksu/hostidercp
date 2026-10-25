@@ -1,5 +1,11 @@
 # F4 Domain + Voyar Cloud — geliştirme ve izlenebilirlik planı
 
+> Son F4-F denetimi: kanıt özeti ve Domain FAILURE onayı hedefli düzeltme kapsamındadır.
+> Yönetici mapping/import CRUD uygulanmadı ve DONE değildir. Proje sahibi 25 Ekim 2026
+> görüşmesinde ayrı yetkilendirilecek işe ertelemeyi açıkça onayladı. Ayrı kapsam/izin/test
+> planı: [F4_F_MAPPING_IMPORT_SCOPE](F4_F_MAPPING_IMPORT_SCOPE.md). Bu erteleme F5/F6,
+> canlı mapping veya imported VM CREATE izni vermez.
+
 > Güncel F4-F: Kullanıcı F4-C/D/E mock tabanlarını kabul etti. 355 test ve 001–047
 > migration tabanı korunarak [F4_F_PLAN](F4_F_PLAN.md) panel/HTTP kapsamı PHP8.3/8.4 383/383
 > ile teslim edildi; [F4_F_DELIVERY_REPORT](F4_F_DELIVERY_REPORT.md). Bağımsız F4-F kabulü

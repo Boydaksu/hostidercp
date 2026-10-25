@@ -43,7 +43,7 @@ final readonly class Commands
         $sql=$kind==='CLOUD'?'SELECT o.* FROM cloud_operations o JOIN cloud_instances i ON i.id=o.instance_id WHERE o.id=? AND i.service_id=? AND i.customer_id=?':'SELECT o.* FROM domain_operations o JOIN domains d ON d.id=o.domain_id WHERE o.id=? AND o.service_id=? AND d.customer_id=?';
         $r=$this->c->db->execute($sql.' FOR UPDATE',[$operation,$service,$customer])->fetch();if(!$r){throw new HttpError(404,'OPERATION_NOT_FOUND');}return $r;
     }
-    public function state(array $p,string $customer): array
+    public function state(array $p,string $customer,?array $u=null,?array $s=null): array
     {
         $db=$this->c->db;$db->requireTransaction();$state=(new \Hostider\Services\Commands($this->c))->lockState('panel',$p,$customer);
         $i=$db->execute('SELECT * FROM cloud_instances WHERE service_id=? AND customer_id=? FOR UPDATE',[$p['service_id'],$customer])->fetch();$d=$db->execute('SELECT * FROM domains WHERE service_id=? AND customer_id=? FOR UPDATE',[$p['service_id'],$customer])->fetch();$state['instance']=$i;$state['domain']=$d;
@@ -51,6 +51,7 @@ final readonly class Commands
         $state['cloud_operation']=$i&&$i['current_operation_id']?$db->execute('SELECT * FROM cloud_operations WHERE id=? FOR UPDATE',[$i['current_operation_id']])->fetch():null;
         $state['domain_operations']=$d?$db->execute('SELECT * FROM domain_operations WHERE domain_id=? ORDER BY id FOR UPDATE',[$d['id']])->fetchAll():[];
         if(isset($p['proposal_id'])){$state['proposal']=$db->execute('SELECT * FROM catalog_cloud_cost_links WHERE proposal_id=? FOR UPDATE',[$p['proposal_id']])->fetch();$state['approval']=$db->execute('SELECT * FROM catalog_cloud_cost_approvals WHERE proposal_id=?',[$p['proposal_id']])->fetch();$state['publication']=$db->execute('SELECT * FROM catalog_cloud_cost_publications WHERE proposal_id=?',[$p['proposal_id']])->fetch();}
+        if(isset($p['evidence_id'])){if($u===null||$s===null){throw new \LogicException('Native evidence actor required');}$state['evidence']=(new Evidence($this->c))->read($u,$s,$customer,$p['service_id'],$p['operation_id'],$p['evidence_id']);}
         return $state;
     }
     public function nativePrepare(string $action,array $p,string $customer,Principal $a,string $reference): ?string

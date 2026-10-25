@@ -14,7 +14,7 @@ final class Controller
     public function routes(Router $router): void
     {
         foreach(['client','admin'] as $ctx){foreach(['domains','cloud','cloud-costs'] as $screen){if($ctx==='client'&&$screen==='cloud-costs'){continue;}$router->add('GET','/'.$ctx.'/'.$screen,fn(Request $r,string $t): Response=>$this->page($ctx,$screen));}
-            foreach(['status','list','detail','costs'] as $view){$router->add('GET','/api/v1/'.$ctx.'/provider-panel/'.$view,fn(Request $r,string $t): Response=>$this->view($r,$ctx,$view,$t));}
+            foreach(['status','list','detail','costs','evidence'] as $view){$router->add('GET','/api/v1/'.$ctx.'/provider-panel/'.$view,fn(Request $r,string $t): Response=>$this->view($r,$ctx,$view,$t));}
             foreach(['prepare','execute','containment-prepare','containment-execute'] as $action){$router->add('POST','/api/v1/'.$ctx.'/provider-panel/'.$action,fn(Request $r,string $t): Response=>$this->mutation($r,$ctx,$action,$t));}}
     }
     private function page(string $ctx,string $screen): Response
@@ -28,7 +28,7 @@ final class Controller
         $this->ensure();$n=Session::start($ctx,new PersistentSessionGuard($this->c->identity->repository,$ctx));return $this->c->identity->locked($n->reference,$ctx,function(array $u,array $s)use($r,$view,$trace): Response{
             $access=new Access($this->c);$a=$this->c->identity->principal($u,$s);if($a->impersonating){throw new HttpError(403,'PANEL_IMPERSONATION_FORBIDDEN');}$customer=$access->customer($u,$s,$r->query['customer']??null);
             if($view==='status'){if(!in_array('services.view',$a->permissions,true)){throw new HttpError(403,'ACCESS_DENIED');}return Response::data(['staff'=>$a->staff,'customer_id'=>$customer,'environment'=>'test','live_provider'=>false,'permissions'=>$a->permissions],$trace);}
-            if($customer===null){throw new HttpError(422,'CUSTOMER_REQUIRED');}$views=new Views($this->c);if($view==='list'){$offset=$r->query['offset']??'0';if(!is_string($offset)||!ctype_digit($offset)||(int)$offset>1000000){throw new HttpError(422,'INVALID_OFFSET');}$data=$views->list($u,$s,$customer,$r->query['kind']??'DOMAIN',(int)$offset);}else{$id=Access::id($r->query['id']??null);$data=$view==='costs'?$views->costs($u,$s,$customer,$id):$views->detail($u,$s,$customer,$id);}return Response::data($data,$trace);
+            if($customer===null){throw new HttpError(422,'CUSTOMER_REQUIRED');}if($view==='evidence'){return Response::data((new Evidence($this->c))->read($u,$s,$customer,Access::id($r->query['id']??null),Access::id($r->query['operation_id']??null),Access::id($r->query['evidence_id']??null)),$trace);}$views=new Views($this->c);if($view==='list'){$offset=$r->query['offset']??'0';if(!is_string($offset)||!ctype_digit($offset)||(int)$offset>1000000){throw new HttpError(422,'INVALID_OFFSET');}$data=$views->list($u,$s,$customer,$r->query['kind']??'DOMAIN',(int)$offset);}else{$id=Access::id($r->query['id']??null);$data=$view==='costs'?$views->costs($u,$s,$customer,$id):$views->detail($u,$s,$customer,$id);}return Response::data($data,$trace);
         });
     }
     private function mutation(Request $r,string $ctx,string $route,string $trace): Response

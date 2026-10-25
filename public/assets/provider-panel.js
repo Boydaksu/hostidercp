@@ -5,7 +5,7 @@
   const base = `/api/v1/${ctx}/provider-panel/`;
   const $ = id => document.getElementById(id);
   let csrf = '', customer = '', activeId = null, offset = 0;
-  const words = { REGISTER: 'Alan adı kaydı', RENEW: 'Alan adı yenilemesi', CREATE: 'VM oluşturma', START: 'Başlatma', STOP: 'Durdurma', RESTART: 'Yeniden başlatma', REINSTALL: 'Yeniden kurulum', TERMINATE: 'Kalıcı sonlandırma', PENDING: 'Sırada', WAITING_TASK: 'Sağlayıcı görevi bekleniyor', RUNNING: 'Çalışıyor', POLLING: 'Görev inceleniyor', UNKNOWN: 'Fiziksel sonuç belirsiz', MANUAL_REVIEW: 'Personel incelemesi gerekli', ACTIVE: 'Aktif', STOPPED: 'Durdurulmuş VM', SUSPENDED: 'Hizmet askıda', TERMINATED: 'Sonlandırma doğrulandı', REGISTERED: 'Kayıt doğrulandı', REGISTERING: 'Kayıt sürüyor', RENEWING: 'Yenileme sürüyor', SUCCEEDED: 'Kanıt doğrulandı', COSTED_MOCK: 'Mock maliyet kaydedildi', UNVERIFIED: 'Kanıt eksik; sıfır gider değildir', REVIEW: 'İnceleme gerekli', MATCHED_MOCK: 'Mock eşlik; ödeme değildir' };
+  const words = { verified_success: 'Başarı kanıtı doğrulandı', definitive_no_effect: 'Kaynak ve ücret etkisizliği doğrulandı', insufficient_evidence: 'Kesin sonuç için kanıt yetersiz', pending: 'Task henüz tamamlanmadı', mismatch: 'Kanıt bağları veya hedef sonuç uyuşmuyor', REGISTER: 'Alan adı kaydı', RENEW: 'Alan adı yenilemesi', CREATE: 'VM oluşturma', START: 'Başlatma', STOP: 'Durdurma', RESTART: 'Yeniden başlatma', REINSTALL: 'Yeniden kurulum', TERMINATE: 'Kalıcı sonlandırma', PENDING: 'Sırada', WAITING_TASK: 'Sağlayıcı görevi bekleniyor', RUNNING: 'Çalışıyor', POLLING: 'Görev inceleniyor', UNKNOWN: 'Fiziksel sonuç belirsiz', MANUAL_REVIEW: 'Personel incelemesi gerekli', ACTIVE: 'Aktif', STOPPED: 'Durdurulmuş VM', SUSPENDED: 'Hizmet askıda', TERMINATED: 'Sonlandırma doğrulandı', REGISTERED: 'Kayıt doğrulandı', REGISTERING: 'Kayıt sürüyor', RENEWING: 'Yenileme sürüyor', SUCCEEDED: 'Kanıt doğrulandı', COSTED_MOCK: 'Mock maliyet kaydedildi', UNVERIFIED: 'Kanıt eksik; sıfır gider değildir', REVIEW: 'İnceleme gerekli', MATCHED_MOCK: 'Mock eşlik; ödeme değildir' };
   const text = value => words[value] || String(value ?? '—');
   function el(tag, value, className) { const e = document.createElement(tag); if (value !== undefined) e.textContent = text(value); if (className) e.className = className; return e; }
   function notice(value) { $('notice').textContent = value; }
@@ -60,7 +60,13 @@
       for (const op of r.operations.filter(o => ['UNKNOWN', 'MANUAL_REVIEW'].includes(o.status))) {
         row.append(button(`${op.kind}: bağımsız inceleme iste`, () => review('inspect', { service_id: id, operation_id: op.id })));
         for (const j of r.inspection_jobs.filter(j => j.operation_id === op.id && j.status === 'SUCCEEDED')) {
-          row.append(button(`${op.kind}: kanıtla mutabakat`, () => review('resolve', { service_id: id, operation_id: op.id, evidence_id: j.result_id, outcome: 'CONFIRMED_SUCCESS' })));
+          try {
+            const summary = await api(`${base}evidence?${scopeQuery()}&id=${encodeURIComponent(id)}&operation_id=${encodeURIComponent(op.id)}&evidence_id=${encodeURIComponent(j.result_id)}`);
+            const box = section('Yeniden doğrulanmış reconciliation kanıt özeti', summary);
+            box.append(el('p', 'Kesin başarısızlık için domain ve sağlayıcı ücret etkisizliği birlikte kanıtlanmalıdır. Kaynak bulunamaması tek başına yeterli değildir.'));
+            for (const outcome of summary.allowed_outcomes) box.append(button(outcome === 'CONFIRMED_SUCCESS' ? 'Kanıtlı başarıyı incele ve onayla' : 'Kanıtlı etkisiz başarısızlığı incele ve onayla', () => review('resolve', { service_id: id, operation_id: op.id, evidence_id: j.result_id, outcome })));
+            if (!summary.allowed_outcomes.length) box.append(el('p', 'Kesin sonuç seçilemez. UNKNOWN / MANUAL_REVIEW korunur; yeni bağımsız inceleme gerekir.'));
+          } catch (err) { section('Kanıt yeniden incelenmeli', err.message); }
         }
       }
       if (r.vm && ['ACTIVE', 'STOPPED'].includes(r.vm.state)) for (const kind of ['STOP', 'TERMINATE']) row.append(button(`Personel finansal istisna ${kind}`, () => containment(id, kind)));

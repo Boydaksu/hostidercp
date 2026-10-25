@@ -163,25 +163,55 @@ final readonly class Engine
     {
         $this->local(function()use($operation,$observation,$confirmation,$actor): void{$op=$this->store->operation($operation);$i=$this->store->instance($op['instance_id']);$this->store->authorize($i,$actor,true);if(!in_array($op['status'],['UNKNOWN','MANUAL_REVIEW'],true)){throw new HttpError(409,'CLOUD_NOT_UNKNOWN');}$this->confirmation($i,'RESOLVE',['observation_id'=>$observation],$actor,$confirmation);$this->apply($op,$i,$observation,true);});
     }
-    private function apply(array $op,array $i,string $observation,bool $manual): void
+    private function readObservation(array $op,array $i,string $observation): array
     {
-        $o=$this->db->execute('SELECT *,created_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 5 MINUTE) AS fresh FROM cloud_observations WHERE id=? AND operation_id=?',[$observation,$op['id']])->fetch();
+        $o=$this->db->execute('SELECT *,(created_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 5 MINUTE) AND created_at<=UTC_TIMESTAMP(6)) AS fresh FROM cloud_observations WHERE id=? AND operation_id=?',[$observation,$op['id']])->fetch();
         if(!$o||!$o['fresh']||(int)$o['instance_version']!==(int)$i['version']){throw new HttpError(409,'STALE_CLOUD_OBSERVATION');}
         $envelope=$this->store->decrypt($o['evidence_encrypted'],$o['fingerprint'],'cloud-observation:'.$observation);$e=$envelope['evidence'];$call=$e['call'];$task=$e['task'];$resource=$e['resource'];
-        $valid=$envelope['generation']===$op['generation']&&hash_equals($envelope['fingerprint'],$op['fingerprint'])&&$envelope['lease_token']===$op['lease_token']
+        return [$o,$envelope];
+    }
+    private function boundObservation(array $op,array $i,array $envelope): bool
+    {
+        $e=$envelope['evidence'];$call=$e['call'];$task=$e['task'];$resource=$e['resource'];
+        return $envelope['operation_id']===$op['id']&&$i['current_operation_id']===$op['id']&&$envelope['generation']===$op['generation']&&hash_equals($envelope['fingerprint'],$op['fingerprint'])&&$envelope['lease_token']===$op['lease_token']
             &&$call&&$task&&$resource&&in_array($call['outcome'],['ACCEPTED','UNKNOWN'],true)&&$call['account_id']===$i['account_id']&&$task['account_id']===$i['account_id']&&$resource['account_id']===$i['account_id']
             &&$call['operation_id']===$op['id']&&$task['operation_id']===$op['id']&&$task['kind']===$op['kind']&&$call['kind']===$op['kind']
             &&hash_equals($call['fingerprint'],$op['fingerprint'])&&hash_equals($task['fingerprint'],$op['fingerprint'])&&$call['task_id']===$task['id']
             &&$task['resource_id']===$resource['id']&&$call['resource_id']===$resource['id']&&($op['task_id']===null||$op['task_id']===$task['id']);
-        if(!$valid){if($manual){throw new HttpError(409,'CLOUD_INSUFFICIENT_EVIDENCE');}$this->unknown($op,$i,'CLOUD_INSUFFICIENT_EVIDENCE');return;}
-        if($task['state']==='MOCK_PENDING'){if($manual){throw new HttpError(409,'CLOUD_TASK_NOT_COMPLETE');}$this->db->execute("UPDATE cloud_operations SET status='WAITING_TASK',lease_token=NULL,lease_until=NULL WHERE id=?",[$op['id']]);return;}
+    }
+    private function verifiedObservation(array $op,array $e): bool
+    {
+        $task=$e['task'];$resource=$e['resource'];
         $target=match($op['kind']){'STOP'=>'STOPPED','TERMINATE'=>'TERMINATED',default=>'RUNNING'};
         $request=$this->store->request($op);$spec=json_decode($resource['spec_json'],true,32,JSON_THROW_ON_ERROR);
-        $effect=$task['state']==='MOCK_SUCCEEDED'&&$resource['state']===$target&&$resource['last_operation_id']===$op['id']
+        return $task['state']==='MOCK_SUCCEEDED'&&$resource['state']===$target&&$resource['last_operation_id']===$op['id']
             &&($op['kind']==='CREATE'?$resource['create_operation_id']===$op['id']:$request['resource_id']===$resource['id'])
             &&($op['kind']==='CREATE'||$request['provider_resource_ref']===$resource['provider_ref'])
             &&($op['kind']!=='CREATE'||$this->store->hash($spec)===$this->store->hash($request['data']))
             &&($op['kind']!=='REINSTALL'||$spec['osid']===$request['data']['osid'])&&($op['kind']!=='UPGRADE'||$spec['pid']===$request['data']['pid']);
+    }
+    public function summary(string $operation,string $observation,Principal $actor): array
+    {
+        $op=$this->store->operation($operation);$i=$this->store->instance($op['instance_id']);$this->store->authorize($i,$actor,true);
+        (new \Hostider\Core\Security\Authorization())->require($actor,'services.reconcile',$i['customer_id'],privileged:true,service:$i['service_id']);
+        if(!in_array($op['status'],['UNKNOWN','MANUAL_REVIEW'],true)){throw new HttpError(409,'CLOUD_NOT_UNKNOWN');}
+        [$o,$envelope]=$this->readObservation($op,$i,$observation);$e=$envelope['evidence'];$bound=$this->boundObservation($op,$i,$envelope);
+        $pending=$bound&&$e['task']['state']==='MOCK_PENDING';$success=$bound&&!$pending&&$this->verifiedObservation($op,$e);
+        $created=new \DateTimeImmutable($o['created_at'],new \DateTimeZone('UTC'));
+        return ['evidence_id'=>$observation,'operation_id'=>$operation,'task_id'=>$bound?$e['task']['id']:null,'generation'=>(string)$op['generation'],'operation_state'=>$op['status'],
+            'classification'=>$success?'verified_success':($pending?'pending':'mismatch'),
+            'bindings'=>['inspection_operation'=>$envelope['operation_id']===$op['id'],'generation_version'=>$envelope['generation']===$op['generation']&&$i['current_operation_id']===$op['id'],'task_account_resource'=>$bound,'account_match'=>$bound,'resource_match'=>$bound,'verified_target'=>$success],
+            'observed_at'=>$o['created_at'],'expires_at'=>$created->modify('+5 minutes')->format('Y-m-d H:i:s.u'),'fresh'=>true,'provenance'=>'MOCK',
+            'allowed_outcomes'=>$success?['CONFIRMED_SUCCESS']:[],'failure_supported'=>false];
+    }
+    private function apply(array $op,array $i,string $observation,bool $manual): void
+    {
+        [$o,$envelope]=$this->readObservation($op,$i,$observation);$e=$envelope['evidence'];$task=$e['task'];$resource=$e['resource'];
+        $valid=$this->boundObservation($op,$i,$envelope);
+        if(!$valid){if($manual){throw new HttpError(409,'CLOUD_INSUFFICIENT_EVIDENCE');}$this->unknown($op,$i,'CLOUD_INSUFFICIENT_EVIDENCE');return;}
+        if($task['state']==='MOCK_PENDING'){if($manual){throw new HttpError(409,'CLOUD_TASK_NOT_COMPLETE');}$this->db->execute("UPDATE cloud_operations SET status='WAITING_TASK',lease_token=NULL,lease_until=NULL WHERE id=?",[$op['id']]);return;}
+        $target=match($op['kind']){'STOP'=>'STOPPED','TERMINATE'=>'TERMINATED',default=>'RUNNING'};
+        $effect=$this->verifiedObservation($op,$e);
         if(!$effect){if($manual){throw new HttpError(409,'CLOUD_TASK_RESULT_UNVERIFIED');}$this->unknown($op,$i,'CLOUD_TASK_RESULT_UNVERIFIED');return;}
         $funded=$this->store->source($i);$state=match($target){'RUNNING'=>'ACTIVE','STOPPED'=>'STOPPED','TERMINATED'=>'TERMINATED'};
         $this->db->execute("INSERT INTO cloud_effects(operation_id,instance_id,account_id,task_id,resource_id,resource_version,kind,state,provider_task_ref,provider_resource_ref,provenance) VALUES (?,?,?,?,?,?,?,?,?,?,'MOCK')",[$op['id'],$i['id'],$i['account_id'],$task['id'],$resource['id'],$resource['version'],$op['kind'],$state,$task['provider_ref'],$resource['provider_ref']]);

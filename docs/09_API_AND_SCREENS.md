@@ -2,6 +2,17 @@
 
 ## F4-F uygulanmış test/mock sınırı
 
+Son denetim eki: `GET /api/v1/admin/provider-panel/evidence?customer=…&id=<service>&operation_id=…&evidence_id=…`
+native fresh staff oturumu ve aynı customer/service üzerinde hem services.reconcile hem services.manage
+ister. Client route aynı yetkiyle fail-closed reddedilir. Cevap yalnız evidence/operation/attempt
+veya task ID, generation, operation_state, classification, binding boolean'ları, observed_at,
+expires_at, fresh, MOCK provenance ve allowed_outcomes içerir. Ham provider DTO/context/PII yoktur.
+Domain verified_success yalnız CONFIRMED_SUCCESS; definitive_no_effect yalnız CONFIRMED_FAILURE;
+insufficient_evidence hiçbir sonuç açmaz. Cloud pending/mismatch sonuç açmaz; failure desteklenmez.
+Stale inspection 409 ve yeni inceleme gerektirir. Resolve planı outcome ve yeniden üretilen
+güvenli evidence özetini gösterir; özet mevcut confirmation state HMAC'ına bağlanır ve execute'da
+yeniden doğrulanır. İstemciden özet kabul edilmez. Native resolve de aynı proof gate'lerini tekrar uygular.
+
 HTML: `/client/domains`, `/client/cloud`, `/admin/domains`, `/admin/cloud`,
 `/admin/cloud-costs`. Sayfanın kendisi de native oturum/MFA doğrular; impersonation kapalıdır.
 JSON: `/api/v1/{client|admin}/provider-panel/{status,list,detail,costs}` GET.
