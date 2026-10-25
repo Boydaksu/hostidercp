@@ -1,19 +1,27 @@
 # Hostider Automation — V1.0 Master Specification
 
-> **F5-A hedefli denetim düzeltmesi:** Event receipt UUID bağlaması ve açık unsupported
-> şifreli arama sözleşmesi [F5_A_POST_AUDIT_REVIEW](docs/F5_A_POST_AUDIT_REVIEW.md)
-> altında izlenir. Bağımsız yeniden kabul bekler; F5-B/C/D/E veya canlı geçiş yetkisi yoktur.
-> Kaynak `d3712ed`: [PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626)
-> her sürümde **51 suite / 433 test / 0 hata**. 001–049 ve CI workflow korunur; yeni migration yoktur.
+> **F5-A LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.** Proje sahibinin son bağımsız
+> kabul kararı yalnız F5-A test/mock çekirdeğini kapsar. Kabul edilen uygulama
+> [`d3712eda6b3d9156187727ced85fff04de7457c5`](https://github.com/Boydaksu/hostidercp/commit/d3712eda6b3d9156187727ced85fff04de7457c5);
+> [PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626)
+> her sürümde **51 suite / 433 test / 0 hata**. Eski 428 test korunur, yeni 5 regresyon PASS.
+> P1-1 tekil event UUID/outbox/job/receipt ve P1-2 açık 422 unsupported arama sözleşmesi
+> bağımsız denetimde kapatıldı. [Kabul kaydı](docs/F5_A_DELIVERY_REPORT.md),
+> [hedefli düzeltme kanıtı](docs/F5_A_POST_AUDIT_REVIEW.md).
+> Gerçek mail, SLA, assignment, attachment, rule engine, incident, CSAT ve gelişmiş UI
+> tamamlanmış sayılmaz. F4 mock kabulü, 001–049 ve bütün canlı GATE'ler korunur.
+> F5-B ayrı yetki bekler; yeni geliştirme, F5-C/D/E/F6, merge, staging veya production yoktur.
+> [PR #3](https://github.com/Boydaksu/hostidercp/pull/3) açık ve taslak kalır.
 
-> **F5-A test/mock geliştirmesi:** Ticket, departman, immutable mesaj/dahili not,
+> **F5-A ilk teslim (tarihsel):** Ticket, departman, immutable mesaj/dahili not,
 > native Identity kapsamı ve minimal HTTP çekirdeği ayrı `codex/f5-support-center`
 > dalındadır. [Plan](docs/F5_PLAN.md), [A sözleşmesi](docs/F5_A_PLAN.md),
 > [teslim ve doğrulama durumu](docs/F5_A_DELIVERY_REPORT.md),
 > [taslak PR #3](https://github.com/Boydaksu/hostidercp/pull/3).
 > Kaynak `a38e8da`: [PHP 8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40208255513)
 > her sürümde **51 suite / 428 test / 0 hata**; önceki 394 test korunur, 049 additive.
-> Bağımsız kabul bekler; yalnız F5-A yetkilidir. F5-B/C/D/E, F6 ve canlı işlemler kapalıdır.
+> Bu ilk teslim notları tarihseldir; güncel sınırlı kabul kararı üsttedir.
+> F5-B/C/D/E, F6 ve canlı işlemler için ayrı yetki gerekir.
 
 > **F4 bütünleşik mock kabul paketi:** C/D/E/F teknik mock kabulleri ve 49 suite / 394 test
 > [F4_REPORT](docs/F4_REPORT.md) altında birleştirildi. Bağımsız karar: **SINIRLANDIRILMIŞ MOCK

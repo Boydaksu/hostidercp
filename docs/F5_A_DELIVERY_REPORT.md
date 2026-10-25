@@ -1,9 +1,45 @@
 # F5-A — Destek çekirdeği test/mock teslim raporu
 
+## Son bağımsız kabul kararı — 25 Ekim 2026
+
+**F5-A LIMITED MOCK TECHNICAL BASELINE — ACCEPTED**
+
+Proje sahibinin son bağımsız kabul kararı yalnız F5-A test/mock çekirdeğini kabul eder.
+Kabul edilen uygulama:
+[`d3712eda6b3d9156187727ced85fff04de7457c5`](https://github.com/Boydaksu/hostidercp/commit/d3712eda6b3d9156187727ced85fff04de7457c5).
+Her iki gerçek CI işi **51 suite / 433 test / 0 hata**:
+[PHP8.3](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626/job/121225660648),
+[PHP8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40212210626/job/121225660244).
+Eski 428 test adı korunmuş, beş yeni regresyon başarıyla eklenmiştir.
+
+- **P1-1 kapalı / PASS:** support.changed event UUID, outbox/job bağları ve tekil receipt.
+- **P1-2 kapalı / PASS:** yanıltıcı subject araması kaldırılmıştır; açık HTTP 422
+  SUPPORT_SEARCH_UNSUPPORTED sözleşmesi kabul edilmiştir.
+
+Bu karar gerçek mail, SLA, assignment, attachment, rule engine, incident, CSAT veya
+gelişmiş UI kabulü değildir; bu özellikler tamamlanmış sayılmaz. F5-A genel V1 DONE
+veya production-ready ilan edilmez. Ayrıntılı düzeltme ve eski/yeni test kanıtları
+[F5_A_POST_AUDIT_REVIEW](F5_A_POST_AUDIT_REVIEW.md) içinde korunur; oradaki yeniden
+kabul bekleme ifadeleri bu son karardan önceki tarihsel teslim durumudur.
+
+F4'ün kabul edilmiş sınırlı mock tabanı değişmez. 001–049 migration geçmişi korunur;
+yeni migration yoktur. DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED, PROV-005
+ve bütün canlı GATE'ler OPEN kalır. F5-B için ayrı yetkilendirme beklenir; yeni
+geliştirme, F5-C/D/E/F6, gerçek SMTP/IMAP, merge, staging veya production başlatılmaz.
+[PR #3](https://github.com/Boydaksu/hostidercp/pull/3) açık, taslak ve merge edilmemiş kalır.
+
+Kabul kaydı kapsamı/planı: yalnız README ve bu rapora karar eklenir; kaynak/test/CI
+workflow/migration değişikliği yapılmaz. Doğrulama belge diff'i, kabul edilen kaynak
+ve migration eşliği, mevcut CI kanıtı ve PR'ın açık/taslak durumudur. Yeni bir test
+veya canlı kabul iddiası yoktur. Geri dönüş yalnız bu belge kaydı commit'inin geri
+alınmasıdır; uygulama verisi veya immutable geçmiş değiştirilmez. Çalışma durur.
+
+## Tarihsel ilk teslim
+
 > Bu rapor tarihsel ilk teslimdir. P1 event receipt ve q sözleşmesi için güncel
 > [hedefli denetim düzeltmesi](F5_A_POST_AUDIT_REVIEW.md) ve ADR-017 esas alınır.
 
-25 Ekim 2026. **Bağımsız kabul bekler; DONE veya production-ready değildir.**
+25 Ekim 2026. **İlk teslimin tarihsel durumu: bağımsız kabul bekliyordu; DONE veya production-ready değildi.**
 Başlangıç `5d944dcb9abbf5e0f447272d8273346349aab3c8`; dal `codex/f5-support-center`.
 Yalnız F5-A uygulandı. [Uygulama SHA a38e8da89bef9fa0476210a8ad021d250606c81a](https://github.com/Boydaksu/hostidercp/commit/a38e8da89bef9fa0476210a8ad021d250606c81a).
 Bu SHA sonrası teslim kanıtı güncellemesi yalnız README/docs dosyalarıdır; runtime,
