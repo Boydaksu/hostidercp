@@ -8,7 +8,7 @@ use Hostider\Support\Access;
 final readonly class Inbound
 {
     public function __construct(private Common $m,private Attachments $files){}
-    public function poll(InboundAdapter $adapter,int $max=25): array{$this->m->gate();if($max<1||$max>25){throw new HttpError(422,'MAIL_BATCH_LIMIT');}$out=[];for($n=0;$n<$max;++$n){$e=$adapter->receive();if($e===null){break;}$out[]=$this->ingest($e['department_id'],$e['raw'],$e['proof']??'');}return $out;}
+    public function poll(InboundAdapter $adapter,int $max=25): array{$this->m->gate();if($max<1||$max>25){throw new HttpError(422,'MAIL_BATCH_LIMIT');}$out=[];for($n=0;$n<$max;++$n){$e=$adapter->receive();if($e===null){break;}$out[]=$this->ingest($e['department_id'],$e['raw'],$e['proof']??'');$adapter->acknowledge();}return $out;}
     public function ingest(string $dep,string $raw,string $proof='',?\Closure $authorize=null): array
     {
         $this->m->gate();Access::id($dep);if(strlen($raw)>131072||$raw===''){throw new HttpError(413,'MAIL_RAW_LIMIT');}$parsed=null;$reason='NO_PROOF';try{$parsed=Mime::parse($raw);}catch(HttpError){$reason='MALFORMED_MIME';}$sha=hash('sha256',$raw);$key=$this->m->hmac($parsed['message_id']??'missing:'.$sha);$db=$this->m->c->db;
