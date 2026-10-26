@@ -1,5 +1,17 @@
 # F5 — Gelişmiş Destek Merkezi planı
 
+Güncel karar: **F5-D LIMITED MOCK TECHNICAL BASELINE — ACCEPTED**.
+Uygulama3404ddda79bc2017f05cb474b5546e23647910d8; PHP8.3/8.4:51 suite/555 test/0 hata.
+Eski514 eksiksiz, yeni41 PASS; SUP-008/009, CSAT ve sınırlı raporlama test/mock kabulü.
+001–052 korunur,053 additive. [Kabul kaydı](F5_D_DELIVERY_REPORT.md) ve ADR-021 esastır.
+Tam V1/canlı scheduler/incident operasyonu/production kabulü yoktur. F5-C dört istisnası,
+auto-close, merge/split, kurum geneli tarihsel SLA rapor doğrulaması, F5-E arayüzü,
+F6 aktarımı ve tüm canlı GATE'ler açık; DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED,
+PROV-005 OPEN. Önceki kabuller ve555 test tabanı korunur. Yeni geliştirme yoktur;
+PR3 OPEN/DRAFT. Merge/staging/production/gerçek SMTP/IMAP/provider yoktur.
+Kabul kaydından sonra durulur; F5-E için ayrı yetki beklenir. Aşağıdaki önceki
+teslim/yetki/denetim bekleme ifadeleri tarihsel olarak korunur.
+
 26 Ekim 2026 güncel teslim: yalnız **F5-D TEST/MOCK — bağımsız teknik denetim bekler**.
 Uygulama3404ddda79bc2017f05cb474b5546e23647910d8; PHP8.3/8.4 tam CI51 suite/555 test/0 hata.
 Eski514 ad korunur,41 yeni PASS.001–052 korunur,053 additive;111 dosya/10 modül tree eşliği.

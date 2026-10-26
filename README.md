@@ -1,5 +1,20 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-D LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.**
+> Kabul edilen uygulama[`3404ddda79bc2017f05cb474b5546e23647910d8`](https://github.com/Boydaksu/hostidercp/commit/3404ddda79bc2017f05cb474b5546e23647910d8).
+> PHP8.3/8.4: **51 suite /555 test /0 hata**; eski514 korundu, yeni41 PASS.
+> SUP-008/009, CSAT ve sınırlı raporlama yalnız test/mock kapsamında kabul edildi.
+> 001–052 ve kritik kaynaklar korundu;053 additive. [Kabul kaydı](docs/F5_D_DELIVERY_REPORT.md),
+> [ADR-021](docs/adr/ADR-021-support-automation-incident-csat-report.md).
+> Tam V1, canlı scheduler/incident operasyonu veya production kabulü değildir.
+> F5-C dört istisnası, auto-close, merge/split, kurum geneli tarihsel SLA rapor doğrulaması,
+> F5-E arayüzü, F6 aktarımı, DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED, PROV-005
+> ve bütün canlı GATE'ler açık kalır. F4/F5-A/B/C kabulleri ve555 test tabanı korunur.
+> PR #3 OPEN/DRAFT; gerçek SMTP/IMAP/provider işlemi, merge, staging veya production yoktur.
+> Kabul kaydından sonra durulur; F5-E için ayrı yetki beklenir. Aşağıdaki teslim ve
+> denetim bekleme ifadeleri tarihsel kayıtlardır.
+
+
 > **F5-D test/mock teslimi — bağımsız teknik denetim bekliyor.**
 > Rule AST/simulation/causation, incident public/private ayrımı, CSAT ve scoped raporlar:
 > [plan](docs/F5_D_PLAN.md), [ADR-021](docs/adr/ADR-021-support-automation-incident-csat-report.md),
