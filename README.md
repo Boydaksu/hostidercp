@@ -1,8 +1,12 @@
 # Hostider Automation — V1.0 Master Specification
 
-> **F5-E TEST/MOCK geliştirmesi — bağımsız teknik kabul henüz verilmedi.**
+> **F5-E TEST/MOCK teknik teslimi — bağımsız teknik kabul bekleniyor.**
 > Native `/admin/support` ve `/client/support`, SQL kapsamlı inbox, şifreli oturum
 > taslakları, sürüme bağlı gönderim ve A/B/C/D işlem panelleri eklendi.
+> Uygulama[`f226220847390ea3f5c69eef90ad968117d7edc7`](https://github.com/Boydaksu/hostidercp/commit/f226220847390ea3f5c69eef90ad968117d7edc7).
+> [PHP8.3/8.4 tam CI SUCCESS](https://github.com/Boydaksu/hostidercp/actions/runs/40334349439):
+> her sürüm52 suite /579 test /0 hata; eski555 korundu, yeni24 PASS.
+> Ek olarak gerçek Chromium9/0, state3/0 ve10/30/20 tekrarları0 hata.
 > [Plan](docs/F5_E_PLAN.md), [teslim/doğrulama kaydı](docs/F5_E_DELIVERY_REPORT.md),
 > [ADR-022](docs/adr/ADR-022-support-ui-session-drafts-polling.md).
 > Şifreli subject araması ve export açıkça unsupported. Yalnız additive054;

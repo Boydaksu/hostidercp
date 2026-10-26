@@ -19,7 +19,7 @@ D4/R2-01–09 ve ADR-016–021 sınırları korunur. Yeni Identity/Queue/Audit y
 | Presence | bounded staff-only heartbeat/count | current own session + ticket view;120s approximate, kesin online/typing iddiası yok |
 | Settings/editor | native Work policy/roster, D rule/incident/CSAT/report, C mail | current native management/fresh confirmation; AST builder allowlist, literal templates |
 
-Ana düzen mevcut identity.css/commerce.css değişkenleri ve native Response/CSP ile
+Ana düzen mevcut identity.css/support.css değişkenleri ve native Response/CSP ile
 üç sütun: inbox, conversation/composer, operation. Dar ekranda tek sütun; labels,
 focus, keyboard, textContent/createElement; dinamik innerHTML/eval yoktur.
 Mevcut /admin ve /client navigasyonuna link eklenir; ayrı authentication kurulmaz.

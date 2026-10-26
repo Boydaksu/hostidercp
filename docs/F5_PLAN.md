@@ -75,3 +75,8 @@ Her alt faz ayrı yetki ve bağımsız kabul ister. A sonunda durulur.
 Başlangıç eb7731d6b955ff2473f4322c7e0e3b8f29e4a0bb. Proje sahibi E için ayrı yetki verdi.
 F5_E_PLAN.md, ADR-022 ve F5_E_DELIVERY_REPORT.md güncel E kapsamını/kanıtını tanımlar.
 D kabulü ve tüm tarihsel kayıtlar korunur. E bağımsız kabul bekler; F6 ve canlı GATE'ler OPEN.
+
+F5-E test/mock teslim uygulaması:f226220847390ea3f5c69eef90ad968117d7edc7.
+PHP8.3/8.4 tam CI:52 suite/579 test/0 hata; eski555 korundu, yeni24.
+Gerçek Chromium9/0, state3/0;001–053 korundu,054 additive. Bağımsız F5-E kabulü beklenir.
+Teslim sonrası durulur; F6 veya canlı yetki verilmedi.

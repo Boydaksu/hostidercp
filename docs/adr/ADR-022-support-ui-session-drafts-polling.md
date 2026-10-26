@@ -5,6 +5,14 @@ Yeni auth/audit/queue yoktur; HTML ve JSON aynı native Identity/current ACL ile
 korunur. Mevcut panel CSS/Response/CSP kullanılır. Yeni sayfa sadece mock veriyle
 çalışan gerçek native UI'dır; görsel maket veya canlı kabul değildir.
 
+Roster expiry/leaves native `Time` sözleşmesine göre UTC
+`YYYY-MM-DD HH:MM:SS[.uuuuuu]` biçimindedir. Report range endpoint'inin ISO-Z
+biçimiyle karıştırılmaz; browser yayını gerçek native prepare/execute ile sınanır.
+Generation fence'in stopped kararı DOM adapter'ında da uygulanır: bütün ticket
+panelleri, encrypted draft'ın client kopyası, pending payload ve kapalı dialog
+içeriği temizlenir. Açık review promise iptal edilir; geç callback stopped durumu
+sonrasında pending private payload'ı tekrar oluşturamaz.
+
 054 additive server encrypted drafts: actor+session+customer+ticket+kind key, bounded
 TTL/version/base ticket version. LocalStorage/IndexedDB/cookie içinde hassas gövde
 yoktur. Send outer native Idempotency transaction'ı canonical Support compose seam
@@ -18,7 +26,7 @@ tarafından aynı immutable payload/key ile doğrulanır. Presence120s approxima
 staff-only/current ACL; gerçek online veya note typing bilgisi değildir.
 
 Encrypted subject q unsupported kalır. Filtreler tüm yetkili pool'da SQL tarafında,
-deterministik pagination'dan önce uygulanır. Client projection private note/actor/
+deterministik pagination'dan önce uygulanır. Client projection private note/private audit actor/
 mail/raw/root/roster içermez. Editor typed allowlist AST üretir; serbest SQL/PHP
 ve arbitrary expression input'u yoktur. Policy/roster ticari değer seed edilmez.
 F5-C dört istisna ve enterprise historical SLA/auto-close/merge/split/SUP-010/F6
