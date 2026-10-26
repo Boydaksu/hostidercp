@@ -1,5 +1,19 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-B LIMITED MOCK TECHNICAL BASELINE — ACCEPTED — 26 Ekim 2026.**
+> Proje sahibinin son bağımsız kabulü yalnız F5-B test/mock teknik çekirdeğini kapsar.
+> Kabul edilen uygulama[`5869483fd0d977ede646cbef02bdf4a9f2b12bc8`](https://github.com/Boydaksu/hostidercp/commit/5869483fd0d977ede646cbef02bdf4a9f2b12bc8);
+> [PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426):
+> **51 suite /472 test /0 hata**; önceki461 eksiksiz, yeni11 PASS.
+> P1-1 staff-reopen FIRST ve P1-2 SLA takvim reddi/ticket koruması **PASS — CLOSED**.
+> [Kabul kaydı](docs/F5_B_DELIVERY_REPORT.md), [denetim kaydı](docs/F5_B_POST_AUDIT_REVIEW.md).
+> 001–050 ve kritik altyapı korunur;051 additive. F4/F5-A sınırlı mock kabulleri değişmez.
+> Gerçek SLA taahhüdü, canlı personel vardiyası, SMTP/IMAP, attachment, notification,
+> F5-C/D/E ve production tamamlanmış sayılmaz. DOMAIN-002 PARTIAL, mapping/import CRUD
+> DEFERRED, PROV-005 ve bütün canlı GATE'ler OPEN. PR #3 açık/taslak; merge, staging
+> veya production yapılmaz. Yeni geliştirme için proje sahibinin sonraki talimatı beklenir.
+> Aşağıdaki kabul bekleme ifadeleri son karardan önceki tarihsel teslim kayıtlarıdır.
+
 > **F5-B P1 hedefli test/mock düzeltmesi — bağımsız yeniden kabul bekliyor.**
 > Kaynak[`5869483`](https://github.com/Boydaksu/hostidercp/commit/5869483fd0d977ede646cbef02bdf4a9f2b12bc8);
 > [gerçek PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426):

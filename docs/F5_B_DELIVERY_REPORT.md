@@ -1,5 +1,38 @@
 # F5-B — SLA takvimleri ve personel atama motoru
 
+## Son bağımsız kabul kararı — 26 Ekim 2026
+
+**F5-B LIMITED MOCK TECHNICAL BASELINE — ACCEPTED**
+
+Proje sahibinin son bağımsız kabulü yalnız F5-B test/mock teknik çekirdeğini kapsar.
+Kabul edilen uygulama:
+[`5869483fd0d977ede646cbef02bdf4a9f2b12bc8`](https://github.com/Boydaksu/hostidercp/commit/5869483fd0d977ede646cbef02bdf4a9f2b12bc8).
+[PHP8.3](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426/job/121294067148)
+ve [PHP8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426/job/121294067287):
+**51 suite /472 test /0 hata**. Önceki461 test eksiksiz korunmuş,11 yeni regresyon PASS.
+
+- **P1-1 PASS — CLOSED:** STAFF_REPLY ile yeniden açılan ticket'ın FIRST clock sonucu.
+- **P1-2 PASS — CLOSED:** yayın sırasında geçersiz SLA takviminin reddi ve sonradan
+  oluşan takvim hatasında ticket'ın korunması.
+
+001–050 migration ve kritik altyapı dosyaları korunmuştur;051 additive'dir. Native
+Identity, müşteri/departman izolasyonu, immutable SLA history, idempotency ve worker
+güvenliği korunur. F4/F5-A sınırlı mock kabulleri değişmez.
+
+Bu kabul gerçek SLA taahhüdü, canlı personel vardiyası, SMTP/IMAP, attachment,
+notification, F5-C/D/E veya production tamamlanması değildir. DOMAIN-002 PARTIAL,
+mapping/import CRUD DEFERRED, PROV-005 ve bütün canlı GATE'ler OPEN kalır.
+[PR #3](https://github.com/Boydaksu/hostidercp/pull/3) açık ve taslak kalır;
+merge, staging veya production yapılmaz. Yeni geliştirme için proje sahibinin
+sonraki talimatı beklenir. Genel V1 DONE veya production-ready ilan edilmez.
+
+Kabul kaydı planı/kapsamı: yalnız README, bu rapor ve F5_B_POST_AUDIT_REVIEW.md
+güncellenir; kaynak/test/workflow/migration değişmez. Doğrulama üç belge diff'i,
+kabul edilen uygulama ve mevcut CI bağlantıları, kaynak eşliği ve PR durumudur;
+yeni test veya canlı kabul iddiası yoktur. Geri dönüş yalnız belge commit'inin
+geri alınmasıdır; uygulama verisi/history değiştirilmez. Aşağıdaki kabul bekleme
+ifadeleri bu son karardan önceki tarihsel teslim durumudur.
+
 Son iki P1'in hedefli düzeltmesi,5869483 kaynak/472 test kanıtı ve bağımsız yeniden
 kabul sınırı [F5_B_POST_AUDIT_REVIEW](F5_B_POST_AUDIT_REVIEW.md) içindedir.
 Aşağıdaki461 testlik ilk teslim kaydı tarihsel olarak korunur; kabul kararı değildir.

@@ -1,5 +1,33 @@
 # F5-B — iki P1 için hedefli denetim düzeltmesi
 
+## Son bağımsız kabul kararı — 26 Ekim 2026
+
+**F5-B LIMITED MOCK TECHNICAL BASELINE — ACCEPTED**
+
+Proje sahibinin bağımsız denetimi kabul edilen uygulama
+[`5869483fd0d977ede646cbef02bdf4a9f2b12bc8`](https://github.com/Boydaksu/hostidercp/commit/5869483fd0d977ede646cbef02bdf4a9f2b12bc8)
+için iki P1'i kapatmıştır:
+
+- **P1-1 PASS — CLOSED:** STAFF_REPLY ile reopen sonrası FIRST clock sonucu.
+- **P1-2 PASS — CLOSED:** geçersiz SLA takviminin publication sırasında reddi;
+  sonraki takvim hatasında ticket'ın korunması.
+
+[PHP8.3](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426/job/121294067148)
+ve [PHP8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40234838426/job/121294067287):
+**51 suite /472 test /0 hata**; önceki461 test eksiksiz,11 yeni regresyon PASS.
+001–050 ve kritik altyapı korunmuş,051 additive uygulanmıştır. Native Identity,
+müşteri/departman izolasyonu, immutable SLA history, idempotency ve worker güvenliği
+korunur. Ayrıntılı eski/yeni kaynak kanıtları aşağıda tarihsel olarak saklanır;
+kabul bekleme ifadeleri bu son kararla yalnız sınırlı test/mock kapsamı için aşılmıştır.
+
+Gerçek SLA taahhüdü, canlı personel vardiyası, SMTP/IMAP, attachment, notification,
+F5-C/D/E ve production tamamlanmış sayılmaz. F4/F5-A sınırlı mock kabulleri değişmez.
+DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED, PROV-005 ve bütün canlı GATE'ler OPEN.
+[PR #3](https://github.com/Boydaksu/hostidercp/pull/3) açık/taslak kalır; merge,
+staging veya production yapılmaz. Bu kayıt yalnız README ve iki F5-B raporunu
+değiştirir; yeni geliştirme/test/migration başlatılmaz. Yeni çalışma için proje
+sahibinin sonraki talimatı beklenir.
+
 26 Ekim 2026. Durum: iki P1 hedefli test/mock düzeltmesi teslim edildi;
 **bağımsız yeniden kabul beklenir.** Taban uygulama
 4d58b81823deb2b44ce52ef89bae77dce468ef3b; belge HEAD
