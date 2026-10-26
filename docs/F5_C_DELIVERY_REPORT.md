@@ -1,14 +1,60 @@
 # F5-C — güvenli mail ve attachment test/mock teslimi
 
-26 Ekim2026. **Test/mock doğrulama sürüyor; bağımsız teknik denetim beklenir.**
+26 Ekim2026. **F5-C TEST/MOCK teslimi; bağımsız teknik denetim beklenir.**
 Taban794816113dc56eea3c4223c73c1d68f37aff0b08; kabul edilmiş F5-B5869483,
 51 suite472 test. F4/F5-A/F5-B limited mock kabulleri değişmez. SUP-001–004 bu
 raporda yalnız tanımlanmış test/mock subset için değerlendirilir; V1 DONE yoktur.
 
 Plan [F5_C_PLAN](F5_C_PLAN.md), karar [ADR-020](adr/ADR-020-support-mail-test-boundaries.md).
-Uygulama gerçek GitHub SHA/tree/diff ve çift sürüm CI kanıtı tamamlanınca kaydedilir.
-Henüz doğrulanmamış sonuç PASS sayılmaz. İlk37 bağımsız yeni regresyon yerelde PASS;
-son file-list/move/origin/CLI testleri dahil40 yeni test ve472 eski test tam tura girer.
+Gerçek GitHub uygulama kaynağı
+[`68fa3e51e315efd05fd8ddb34dffc9eabb7edd18`](https://github.com/Boydaksu/hostidercp/commit/68fa3e51e315efd05fd8ddb34dffc9eabb7edd18),
+tree `760d63aed58bef749994b6ae82db5ace99611621`.
+[Kaynak diff](https://github.com/Boydaksu/hostidercp/compare/794816113dc56eea3c4223c73c1d68f37aff0b08...68fa3e51e315efd05fd8ddb34dffc9eabb7edd18).
+Son belge/kanıt commit'i uygulama SHA'sından ayrıdır; bu kayıt kendi commit SHA'sını
+uygulama kanıtı olarak sunmaz. Tam CI ve yerel sonuçlar aşağıdaki kanıt bölümündedir.
+
+## Doğrulama kanıtı
+
+[Tam GitHub CI](https://github.com/Boydaksu/hostidercp/actions/runs/40283941945)
+iki sürümde de SUCCESS. Gerçek MariaDB, native HTTP ve bağımsız PHP süreçleriyle:
+
+| Runtime / job | Suite | Test | Hata | Eski / yeni |
+|---|---:|---:|---:|---|
+| [PHP8.3.36](https://github.com/Boydaksu/hostidercp/actions/runs/40283941945/job/121443132144) |51|514|0|472 korundu /42 yeni PASS|
+| [PHP8.4.27](https://github.com/Boydaksu/hostidercp/actions/runs/40283941945/job/121443131969) |51|514|0|472 korundu /42 yeni PASS|
+
+Her job'da PHPStan0 hata, Composer locked audit temiz,358 PHP dosyası lint0 ihlal,
+370 dosya pattern taraması0 bulgu. Service HTTP10, commerce HTTP30, session
+concurrency20 tekrarının tamamı0 hata. Yeni inbound/outbound1/4/8 bağımsız process
+yarışları dahil. Eski472 PASS adı kabul edilmiş F5-B job121294067148 ile karşılaştırıldı;
+eksik ad0. Workflow ve native worker değiştirilmedi; yeni testler mevcut support-http
+suite'ine dahil olduğundan suite sayısı51 kaldı.
+
+[Makine tarafından doğrulanan CI özeti](evidence/f5-c/ci.json),
+[kaynak farkı](evidence/f5-c/source-diff.txt),
+[95 dosya hash koruması](evidence/f5-c/preservation.json).
+PR checkout `0630afd34fc9d028ad4696a05d58ad7a200362e3` GitHub'ın sentetik test commit'idir;
+tree uygulama tree'siyle aynıdır, gerçek merge yapılmadı.
+Ham günlükler GitHub'da [PHP8.3 log API](https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121443132144/logs)
+ve [PHP8.4 log API](https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121443131969/logs)
+üzerinden repository erişimiyle alınabilir. CI test credential'ı içerdiği için tam
+ham log repository'ye kopyalanmadı; yalnız izinli test adları, sayılar ve kalite
+sonuçları çıkarıldı. Bu linkler gerçek job kanıtıdır; mock mail teslim iddiası değildir.
+
+Yerel PHP8.4.24/MariaDB10.11 tam turu **51 suite /512 test /0 hata**:
+[özet](evidence/f5-c/local.json), [test çıktısı](evidence/f5-c/local-tests.txt).
+Tur son ACK regresyonları eklenmeden başlamıştır:472 eski +40 yeni. Ardından final
+kaynakla [iki ACK regresyonu ayrıca2/0](evidence/f5-c/ack-targeted.txt) doğrulandı.
+Önceki [37 testlik hedefli tur](evidence/f5-c/targeted.txt) de hatasızdır. Yerel tam
+tur514 olarak yeniden adlandırılmaz; final514 tam kaynak kanıtı yukarıdaki iki CI
+job'ıdır. Tüm yerel veri sentetiktir; bu görev için açılan test DB ve özel MariaDB
+süreci testlerden sonra kapatıldı.
+
+Değişiklikler: `src/Support/Mail/*` pipeline/ACL/storage/retention ve HTTP controller;
+`src/Support/Service.php` canonical inbound seam, public reply hook ve origin projection;
+`bootstrap/app.php`/`bin/console.php` native kayıtlar; additive052; yeni
+support-c fixture/child/regresyon dosyaları. Eski migration test listeleri yalnız052
+ile genişletildi. Dosya bazında kaynak diff yukarıdadır.
 
 ## Giriş kanalı ve kimlik
 
@@ -34,6 +80,9 @@ Same bytes replay aynı sonuç; farklı bytes conflict review ve en çok4 varian
 Eksik ID raw digest ile bounded review, automatic attach yok. Conflict/malformed/
 missing-ID review onayı ile zorlanamaz; düzeltilmiş mail/new ID gerekir. Unknown
 sender hiçbir private ticket'a sessizce bağlanmaz. Loop/bounce/autoresponder BLOCKED.
+Adapter receive girdiyi yalnız okur; acknowledge ancak ingest transaction'ı commit
+edildikten sonra çağrılır. DB hatası girdiyi onaylamaz. Commit sonrası acknowledge
+kaybında aynı immutable Message-ID/raw replay'i yeni ticket/message oluşturmaz.
 
 ## Güvenlik matrisi
 
@@ -125,8 +174,8 @@ conflict;4 forged/expired/foreign/revoked reply token;5 forged ticket subject;
 Ek regresyonlar: native HTTP proof/ingest/CSRF; state-bound review replay/stale;
 quarantine prevents acceptance; manifest storage missing no receipt; retain/hold;
 file listing + current department move token; mail provenance/settings; native
-stdin CLI; empty/051→052/replay/old checksum.39+? yerine kesin test sayısı ve kanıt
-tam execution sonrasında kaydedilecektir; hedef yeni40 testtir.
+stdin CLI; empty/051→052/replay/old checksum ve commit öncesi/sonrası adapter
+acknowledgement kaybı. Toplam42 yeni regresyon; eski472 test adı korunur.
 
 Sentetik demo: tests/support-c.php native users/MFA/grants ve explicit config yaratır.
 Customer proof API → TestAdapter/CLI stdin ingest → canonical message/SLA; staff

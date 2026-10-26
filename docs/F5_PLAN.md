@@ -3,6 +3,8 @@
 26 Ekim2026 güncel yetki: F4/F5-A/F5-B LIMITED MOCK TECHNICAL BASELINE kabulünden
 sonra yalnız F5-C test/mock geliştirmesi. Taban7948161;472 test;001–051 korunur.
 [F5_C_PLAN](F5_C_PLAN.md), [ADR-020](adr/ADR-020-support-mail-test-boundaries.md).
+[F5_C_DELIVERY_REPORT](F5_C_DELIVERY_REPORT.md) test/mock kaynak ve doğrulama
+kanıtlarını kaydeder; F5-C bağımsız teknik denetim bekler, DONE değildir.
 Gerçek mail/SMTP/IMAP, F5-D/E/F6, merge ve ortam yayını yoktur. Aşağıdaki önceki
 yetki/kabul bekleme durumları tarihsel kayıtlardır.
 
