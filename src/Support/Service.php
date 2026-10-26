@@ -16,6 +16,12 @@ final readonly class Service
         $this->access=new Access($c);$this->crypto=new Crypto(base64_decode($c->config->key,true));
     }
     private function gate(): void{if($this->c->config->environment!=='test'){throw new HttpError(503,'F5_TEST_ONLY_GATE');}}
+    /** Canonical test-adapter seam; caller owns Message-ID dedupe and the outer DB transaction. */
+    public function inbound(string $reference,string $action,array $p,string $trace): array
+    {
+        $this->gate();$this->c->db->requireTransaction();if(!in_array($action,['create','reply'],true)){throw new HttpError(403,'MAIL_CANONICAL_ACTION');}$this->fields('client',$action,$p);
+        return $this->c->identity->locked($reference,'client',function($u,$s)use($action,$p,$trace){if($u['administrative']!==null||!$u['verified_at']){throw new HttpError(403,'MAIL_VERIFIED_CUSTOMER_REQUIRED');}$this->authorize($u,$s,$action,$p);return $action==='create'?$this->create($u,$s,$p,$trace):$this->reply($u,$s,$p,'reply',$trace);});
+    }
     public static function version(mixed $v): int
     {
         if(!is_int($v)||$v<1||$v>2147483647){throw new HttpError(422,'INVALID_SUPPORT_VERSION');}return $v;
@@ -128,6 +134,7 @@ final readonly class Service
         $id=Id::uuid();$this->c->db->execute("INSERT INTO support_events(id,ticket_id,customer_id,subject_id,kind,actor_id,session_id,identity_version,ticket_version,from_state,to_state,from_department,to_department,trace_id,provenance) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,'TEST_PANEL')",[$id,$row['id'],$row['customer_id'],$message??$row['id'],$kind,$u['id'],$s['id'],$u['identity_version'],$row['version'],$old['status']??null,$row['status'],$old['department_id']??null,$row['department_id'],$trace]);(new Audit($this->c->db))->record($this->access->actor($u,$s),AuditEvent::SupportChanged,$row['id'],$trace);
         if($public){(new Outbox($this->c->db,new Queue($this->c->db)))->append($id,'support.changed',$row['id'],['event_uuid'=>$id,'ticket_id'=>$row['id'],'message_id'=>$message],$trace);}
         (new \Hostider\Support\Work\Engine($this->c))->observe($row,$kind,$id);
+        if($public&&$kind==='STAFF_REPLY'){(new \Hostider\Support\Mail\Outbound(new \Hostider\Support\Mail\Common($this->c)))->stage($row,$message,$id,$trace);}
     }
     public function view(string $reference,string $context,string $view,array $p): array
     {
@@ -148,13 +155,13 @@ final readonly class Service
     }
     private function summary(array $row): array
     {
-        $out=array_intersect_key($row,array_flip(['id','number','customer_id','department_id','status','requested_priority','effective_priority','channel','created_at','updated_at']));$out['version']=(int)$row['version'];$out['subject']=$this->crypto->decrypt($row['subject_encrypted'],'support-subject:'.$row['id']);return $out;
+        $out=array_intersect_key($row,array_flip(['id','number','customer_id','department_id','status','requested_priority','effective_priority','channel','created_at','updated_at']));$out['version']=(int)$row['version'];$out['subject']=$this->crypto->decrypt($row['subject_encrypted'],'support-subject:'.$row['id']);$origin=$this->c->db->execute("SELECT s.origin FROM support_mail_sources s JOIN support_events e ON e.id=s.event_id WHERE s.ticket_id=? AND s.customer_id=? AND e.kind='CREATED'",[$row['id'],$row['customer_id']])->fetchColumn();if($origin){$out['mail_origin']=$origin;}return $out;
     }
     private function detail(array $u,array $s,array $row): array
     {
         $a=$this->access->actor($u,$s);$notes=false;if($a->staff){try{$this->access->require($u,$s,$row['customer_id'],$row['department_id'],'support.ticket.internal_note');$notes=true;}catch(HttpError $e){if($e->status!==404){throw $e;}}}
         $out=$this->summary($row);$messages=$this->c->db->execute('SELECT id,type,customer_visible,author_id,created_at,body_encrypted FROM support_messages WHERE ticket_id=? AND customer_id=?'.($notes?'':" AND type<>'internal_note' AND customer_visible=TRUE").' ORDER BY created_at,id',[$row['id'],$row['customer_id']])->fetchAll();
-        foreach($messages as &$m){$m['body']=$this->crypto->decrypt($m['body_encrypted'],'support-message:'.$m['id']);unset($m['body_encrypted']);$m['customer_visible']=(bool)$m['customer_visible'];}unset($m);$out['messages']=$messages;$out['service_ids']=[];
+        foreach($messages as &$m){$m['body']=$this->crypto->decrypt($m['body_encrypted'],'support-message:'.$m['id']);unset($m['body_encrypted']);$origin=$this->c->db->execute('SELECT origin FROM support_mail_sources WHERE message_id=? AND customer_id=?',[$m['id'],$row['customer_id']])->fetchColumn();if($origin){$m['mail_origin']=$origin;}$m['customer_visible']=(bool)$m['customer_visible'];}unset($m);$out['messages']=$messages;$out['service_ids']=[];
         foreach($this->c->db->execute('SELECT service_id FROM support_ticket_links WHERE ticket_id=? AND customer_id=?',[$row['id'],$row['customer_id']])->fetchAll() as $link){try{$out['service_ids'][]=(new SupportLinks($this->c))->owned($u,$s,$row['customer_id'],$link['service_id']);}catch(HttpError $e){if(!in_array($e->status,[403,404],true)){throw $e;}}}return $out;
     }
 }
