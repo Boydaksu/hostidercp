@@ -1,8 +1,11 @@
 # F5-E bağımsız denetim sonrası — client message metadata redaksiyonu
 
-Durum: hedefli P1 düzeltmesi ve doğrulaması sürüyor; bağımsız kabul verilmedi.
+Durum: hedefli P1 teknik düzeltme teslimi; bağımsız yeniden kabul bekleniyor.
 Denetlenen uygulama:f226220847390ea3f5c69eef90ad968117d7edc7.
 Başlangıç teslim HEAD:579788e66f448b5560e05c37b7a3ba9487923731.
+Düzeltme uygulama SHA:`e0d460d0aea05f496135d169ecbb64ce94659cc9`;
+tree:`412bb36ab783ede0c7076646b244f92b894fe562`.
+[Gerçek kaynak diff'i](https://github.com/Boydaksu/hostidercp/compare/579788e66f448b5560e05c37b7a3ba9487923731...e0d460d0aea05f496135d169ecbb64ce94659cc9).
 
 ## Kapsam / dosya / migration / test / geri dönüş planı
 
@@ -38,8 +41,8 @@ metadata açığını geri getirir; sıradan rollback bir güvenlik çözümü d
 F5-E teknik kabul bekler; DONE/FULL ACCEPTED/production-ready değildir. F4/F5-A/B/C/D
 sınırlı mock kabulleri, C'nin dört canlı istisnası ve tüm önceki açık GATE'ler korunur.
 PR3 OPEN/DRAFT; gerçek mail/AV/provider, F6, merge, staging veya production yoktur.
-Gerçek SHA/tree/diff, eski FAIL/yeni PASS ve iki API karşılaştırması doğrulama sonrası
-aşağıya eklenir; hedefli düzeltme tesliminden sonra bağımsız yeniden kabul istenir.
+Gerçek SHA/tree/diff, eski FAIL/yeni PASS ve iki API karşılaştırması aşağıdadır.
+Hedefli düzeltme tesliminden sonra bağımsız yeniden kabul istenir ve durulur.
 
 ## Neden, karşı-örnek ve iki API yüzeyi
 
@@ -80,4 +83,43 @@ olmadan kendi public mesajında upload kontrolünün göründüğünü, staff pu
 mesajında görünmediğini doğrular. Önceki dokuz kontrolün adları/assertions korunur.
 [Koruma manifesti](evidence/f5-e-post-audit/preservation.json): üç hedef runtime
 dosyası dışındaki277 uygulama/bootstrap/public/migration blob'u byte-eşit;
-001–054 değişmedi, yeni migration yok. Tam iki PHP CI doğrulaması ayrıca bekleniyor.
+001–054 değişmedi, yeni migration yok. İki PHP tam CI işi de SUCCESS tamamlandı.
+
+Kaynak karşılaştırma noktaları: `src/Support/UI/Views.php:24` current capability ve
+client unset; `src/Support/Service.php:173` current reply-grant hesabı,
+`:175` legacy client unset; `public/assets/support.js:26` strict boolean kullanımı.
+Değişmemiş otorite `src/Support/Mail/Attachments.php:26` strict input allowlist ve
+`:28` native ticket/version/actual-author denetimidir. Yeni HTTP testleri
+`tests/support-e-post-audit.php`; yeni DOM testleri `tests/support-e-browser.cjs`
+içinde eski dokuz testin yanında ayrı PASS adlarıyla kaydedilir.
+
+## Gerçek tam CI ve korunan taban
+
+[GitHub CI SUCCESS](https://github.com/Boydaksu/hostidercp/actions/runs/40367106726),
+[sanitized CI kanıtı](evidence/f5-e-post-audit/ci.json).
+
+| PHP/job | Suite / PHP test / hata | Eski579 kayıp | Chromium | State | Tekrar |
+|---|---|---|---|---|---|
+| [8.3.36](https://github.com/Boydaksu/hostidercp/actions/runs/40367106726/job/121727667707) |52 /582 /0|0|11 /0; eski9 korundu|3 /0|Services10 / Commerce30 / Session20:0 hata|
+| [8.4.27](https://github.com/Boydaksu/hostidercp/actions/runs/40367106726/job/121727667054) |52 /582 /0|0|11 /0; eski9 korundu|3 /0|Services10 / Commerce30 / Session20:0 hata|
+
+Her iki sürümde eski579 PHP PASS adı eksiksiz, yeni3 PHP regresyonu PASS;
+eski9 Chromium ve3 state adı eksiksiz, yeni2 Chromium kontrolü PASS.
+Native1/4/8 bağımsız PHP worker/send yarışları ve10/30/20 HTTP/session tekrarları
+yeniden çalıştı. PHPStan0; locked Composer ve npm audit temiz;384 PHP lint0 ihlal;
+403 pattern scan0 bulgu. Assertion silme/gevşetme, test skip/ignore yoktur.
+
+CI checkout `736fb0b021713ca4ba91dc3931824a635e6bd742` GitHub tree'si
+`412bb36ab783ede0c7076646b244f92b894fe562` ile uygulama tree'sine eşittir.
+Bu bir test checkout'udur; gerçek merge değildir. Ham job-log API linkleri
+`ci.json` içindedir. Credential içerebilen tam CI günlükleri repository'ye yazılmadı;
+PASS adları, sayımlar, adım sonuçları ve kaynak eşliği ayrıca kaydedildi.
+
+Yerel PHP8.4.24/MariaDB10.11.18 üzerinde eski3 FAIL→yeni3 PASS, E27/0,
+Chromium11/0 ve state3/0 gözlendi. Yalnız görevde oluşturulan test kök şeması
+temizlendi ve görevde başlatılan yerel DB kapatıldı; önceki şemalar silinmedi.
+Final dokümantasyon commit'i uygulama/test/migration kodunu değiştirmez.
+
+Bu sonuç bağımsız kabul kararı değildir. F5-E LIMITED MOCK teknik yeniden kabulü
+proje sahibinin bağımsız denetimini bekler. PR3 OPEN/DRAFT; canlı GATE'ler OPEN.
+Yeni geliştirme, F6, gerçek mail/provider, merge, staging ve production başlatılmadı.

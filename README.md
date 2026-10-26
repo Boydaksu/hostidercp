@@ -1,5 +1,16 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-E P1 metadata redaksiyonu — bağımsız yeniden kabul bekleniyor.**
+> Client UI ve legacy destek detaylarında mesaj author_id alanları kaldırıldı;
+> attachment kontrolü güncel Identity/mesaj sahipliğinden hesaplanan can_attach boolean'ını kullanır.
+> Native attachment upload yetkisi değişmedi.001–054 korundu; migration gerekmedi.
+> Uygulama[`e0d460d0aea05f496135d169ecbb64ce94659cc9`](https://github.com/Boydaksu/hostidercp/commit/e0d460d0aea05f496135d169ecbb64ce94659cc9).
+> [PHP8.3/8.4 tam CI SUCCESS](https://github.com/Boydaksu/hostidercp/actions/runs/40367106726):
+> her sürüm52 suite /582 test /0 hata; eski579 korundu. Chromium11/0 (eski9 korundu), state3/0.
+> [Denetim sonrası rapor](docs/F5_E_POST_AUDIT_REVIEW.md). PR3 OPEN/DRAFT; canlı GATE'ler OPEN.
+> Aşağıdaki ilk F5-E teslimi ve önceki kabul kayıtları tarihsel olarak korunmuştur.
+
+
 > **F5-E TEST/MOCK teknik teslimi — bağımsız teknik kabul bekleniyor.**
 > Native `/admin/support` ve `/client/support`, SQL kapsamlı inbox, şifreli oturum
 > taslakları, sürüme bağlı gönderim ve A/B/C/D işlem panelleri eklendi.
