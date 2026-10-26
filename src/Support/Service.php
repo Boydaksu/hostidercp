@@ -26,6 +26,11 @@ final readonly class Service
     {
         if(!is_int($v)||$v<1||$v>2147483647){throw new HttpError(422,'INVALID_SUPPORT_VERSION');}return $v;
     }
+    /** Native UI outer transaction owns idempotency and exact draft cleanup. */
+    public function compose(string $ref,string $ctx,string $action,array $p,string $trace): array
+    {
+        $this->gate();$this->c->db->requireTransaction();if(!in_array($action,['reply','note','state','move'],true)){throw new HttpError(422,'SUPPORT_COMPOSE_ACTION');}$this->fields($ctx,$action,$p);$work=function($u,$s)use($action,$p,$trace){$this->authorize($u,$s,$action,$p);return in_array($action,['reply','note'],true)?$this->reply($u,$s,$p,$action,$trace):$this->change($u,$s,$p,$action,$trace);};return $ctx==='admin'?$this->c->identity->withStepUp($ref,$ctx,$work):$this->c->identity->locked($ref,$ctx,$work);
+    }
     /** Scoped delegation uses the same canonical authorization/state/message/event path. */
     public function delegated(string $reference,string $action,array $p,string $trace): array
     {

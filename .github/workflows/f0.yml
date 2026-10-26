@@ -89,6 +89,15 @@ jobs:
       - run: php tests/provider-panel-http.php
       - run: php tests/support-migrations.php
       - run: php tests/support-http.php
+      - run: php tests/support-e.php
+      - run: node --check public/assets/support.js
+      - run: node tests/support-e-state.cjs
+      - name: Locked development-only Chromium checks
+        run: |
+          npm ci --prefix tools/browser --ignore-scripts
+          npm audit --prefix tools/browser --audit-level=high
+          ./tools/browser/node_modules/.bin/playwright install --with-deps chromium
+          F5_E_PLAYWRIGHT="$PWD/tools/browser/node_modules/playwright" php tests/support-e-browser.php
       - name: Repeated service HTTP stability
         run: php tools/repeat-suite.php services-http 10
       - name: Repeated commerce HTTP stability

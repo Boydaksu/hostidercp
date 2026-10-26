@@ -69,3 +69,9 @@ ek/export/mail alt kapsamları kapalı olduğundan tüm madde için koşulsuz PA
 DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED, PROV-005 ve tüm canlı GATE'ler OPEN.
 
 Her alt faz ayrı yetki ve bağımsız kabul ister. A sonunda durulur.
+
+## F5-E yetkilendirilmiş test/mock çalışması
+
+Başlangıç eb7731d6b955ff2473f4322c7e0e3b8f29e4a0bb. Proje sahibi E için ayrı yetki verdi.
+F5_E_PLAN.md, ADR-022 ve F5_E_DELIVERY_REPORT.md güncel E kapsamını/kanıtını tanımlar.
+D kabulü ve tüm tarihsel kayıtlar korunur. E bağımsız kabul bekler; F6 ve canlı GATE'ler OPEN.
