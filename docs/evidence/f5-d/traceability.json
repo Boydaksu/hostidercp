@@ -1,0 +1,562 @@
+{
+  "source_sha": "3404ddda79bc2017f05cb474b5546e23647910d8",
+  "source_tree": "bb187350ffeec1c0ed20881a2e216bdea23adf54",
+  "ci_run": 40298787710,
+  "independent_acceptance": "PENDING",
+  "test_mock_only": true,
+  "cases": [
+    {
+      "id": "SUP-008-A-A",
+      "counterexample": "Repeated self-trigger would execute again without chain guard",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 11,
+          "test": "SUP-008 self triggering A to A stops with immutable LOOP_BLOCKED and one tag action",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L11"
+        }
+      ],
+      "source": [
+        {
+          "method": "consume",
+          "line": 61,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61"
+        },
+        {
+          "method": "stage",
+          "line": 39,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L39"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-A-B-A",
+      "counterexample": "Priority NORMAL/HIGH rules can alternate indefinitely without immutable repeated-rule detection",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 35,
+          "test": "SUP-008 real A to B to A priority cycle is stopped by immutable repeated rule detection",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L35"
+        }
+      ],
+      "source": [
+        {
+          "method": "consume",
+          "line": 61,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-DEPTH",
+      "counterexample": "A distinct-rule chain can keep emitting sources without an independent depth budget",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 36,
+          "test": "SUP-008 four distinct rule chain reaches depth four and blocks the next action",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L36"
+        }
+      ],
+      "source": [
+        {
+          "method": "consume",
+          "line": 61,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61"
+        },
+        {
+          "method": "stage",
+          "line": 39,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L39"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-RECEIPT",
+      "counterexample": "Same payload or forged unpublished source must not create another action receipt",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 13,
+          "test": "SUP-008 exact event replay dedupes action and unpublished forged fingerprint jobs fail closed",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L13"
+        },
+        {
+          "line": 21,
+          "test": "SUP-008 independent 1 4 8 workers dedupe one event action and receipt",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L21"
+        }
+      ],
+      "source": [
+        {
+          "method": "bound",
+          "line": 53,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L53"
+        },
+        {
+          "method": "consume",
+          "line": 61,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-SIMULATION",
+      "counterexample": "A naive dry-run could create notes, notifications, outbox or last_seen mutations",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 10,
+          "test": "SUP-008 simulation rolls back native last seen and produces no message audit outbox or financial mutation",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L10"
+        }
+      ],
+      "source": [
+        {
+          "method": "simulate",
+          "line": 24,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L24"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-AST",
+      "counterexample": "Executable predicates or excessive depth could escape the supported model",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 8,
+          "test": "SUP-008 allowlisted versioned AST rejects SQL PHP dynamic actions unknown nodes and depth bombs",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L8"
+        }
+      ],
+      "source": [
+        {
+          "method": "rule",
+          "line": 13,
+          "file": "src/Support/Automation/Ast.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Ast.php#L13"
+        },
+        {
+          "method": "node",
+          "line": 17,
+          "file": "src/Support/Automation/Ast.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Ast.php#L17"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-AUTH",
+      "counterexample": "A published rule must not inherit unlimited authority after scope or session revocation",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 16,
+          "test": "SUP-008 revoked sponsor department and customer grants cannot authorize system actions",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L16"
+        },
+        {
+          "line": 41,
+          "test": "SUP-008 expired native step up or revoked sponsor session cannot be bypassed by rule publication",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L41"
+        }
+      ],
+      "source": [
+        {
+          "method": "consume",
+          "line": 61,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61"
+        },
+        {
+          "method": "preflight",
+          "line": 12,
+          "file": "src/Support/Advanced/Operations.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Operations.php#L12"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-008-ATOMIC",
+      "counterexample": "A later action failure must not retain an earlier tag, note or false success receipt",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 17,
+          "test": "SUP-008 atomic rule rollback prevents partial tag note and wrong success receipt",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L17"
+        }
+      ],
+      "source": [
+        {
+          "method": "consume",
+          "line": 61,
+          "file": "src/Support/Automation/Engine.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-009-TENANT",
+      "counterexample": "Shared incident joins could expose customer A's ticket content or IDs to B",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 23,
+          "test": "SUP-009 incident projection never mixes two customers private ticket message note or attachment data",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L23"
+        }
+      ],
+      "source": [
+        {
+          "method": "view",
+          "line": 32,
+          "file": "src/Support/Advanced/Incidents.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L32"
+        },
+        {
+          "method": "linkable",
+          "line": 16,
+          "file": "src/Support/Advanced/Incidents.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L16"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-009-ROOT",
+      "counterexample": "Private root cause must never be copied into incident public projection",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 45,
+          "test": "SUP-009 immutable encrypted root revisions never enter public projection and incident rules cannot resolve tickets",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L45"
+        }
+      ],
+      "source": [
+        {
+          "method": "view",
+          "line": 32,
+          "file": "src/Support/Advanced/Incidents.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L32"
+        },
+        {
+          "method": "update",
+          "line": 28,
+          "file": "src/Support/Advanced/Incidents.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L28"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    },
+    {
+      "id": "SUP-009-NO-FAKE-RESPONSE",
+      "counterexample": "Incident resolution or public update must not resolve tickets or complete FIRST/NEXT",
+      "counterexample_kind": "DESIGN_COUNTEREXAMPLE_NOT_A_CLAIM_OF_EXECUTED_OLD_SOURCE_FAILURE",
+      "tests": [
+        {
+          "line": 24,
+          "test": "SUP-009 incident public update and resolution never close tickets or response SLA clocks",
+          "file": "tests/support-d.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L24"
+        }
+      ],
+      "source": [
+        {
+          "method": "update",
+          "line": 28,
+          "file": "src/Support/Advanced/Incidents.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L28"
+        },
+        {
+          "method": "rule",
+          "line": 13,
+          "file": "src/Support/Automation/Ast.php",
+          "url": "https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Ast.php#L13"
+        }
+      ],
+      "result": "PASS",
+      "ci_jobs": [
+        121491275941,
+        121491276386
+      ]
+    }
+  ],
+  "test_index": [
+    {
+      "line": 8,
+      "test": "SUP-008 allowlisted versioned AST rejects SQL PHP dynamic actions unknown nodes and depth bombs",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 9,
+      "test": "SUP-008 unavailable predicate stays unavailable through NOT and cannot silently match",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 10,
+      "test": "SUP-008 simulation rolls back native last seen and produces no message audit outbox or financial mutation",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 11,
+      "test": "SUP-008 self triggering A to A stops with immutable LOOP_BLOCKED and one tag action",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 12,
+      "test": "SUP-008 A to B to A causation cycle converges with repeated rule blocked",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 13,
+      "test": "SUP-008 exact event replay dedupes action and unpublished forged fingerprint jobs fail closed",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 14,
+      "test": "SUP-008 stale rule snapshot and stale ticket source produce explicit skips",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 15,
+      "test": "SUP-008 deterministic rule ordering preserves both changes on the same ticket",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 16,
+      "test": "SUP-008 revoked sponsor department and customer grants cannot authorize system actions",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 17,
+      "test": "SUP-008 atomic rule rollback prevents partial tag note and wrong success receipt",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 18,
+      "test": "SUP-008 automated internal note stays private and HELD notification never enters customer mail",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 19,
+      "test": "SUP-008 priority override preserves requested priority and all previous SLA history",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 20,
+      "test": "SUP-008 closed tickets and invalid transitions cannot be mutated by rules",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 21,
+      "test": "SUP-008 independent 1 4 8 workers dedupe one event action and receipt",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 22,
+      "test": "SUP-008 scope cannot publish a rule for another customer or department",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 23,
+      "test": "SUP-009 incident projection never mixes two customers private ticket message note or attachment data",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 24,
+      "test": "SUP-009 incident public update and resolution never close tickets or response SLA clocks",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 25,
+      "test": "SUP-009 incident wrong department link and unconfirmed publication fail closed",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 26,
+      "test": "SUP-009 incident update transaction rollback leaves no partial public root audit or confirmation use",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 27,
+      "test": "F5-D CSAT requires explicit policy resolved state and integer score 1 to 5",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 28,
+      "test": "F5-D CSAT ownership version revision replay and HTML comment remain scoped without SLA effect",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 29,
+      "test": "F5-D CSAT expiry policy is server measured and rollback leaves no half rating",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 30,
+      "test": "F5-D reports enforce SQL customer department grants and redact all private content",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 31,
+      "test": "F5-D unavailable SLA never contributes to success numerator or denominator",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 32,
+      "test": "F5-D report UTC IANA range validation and deterministic pagination do not repeat tickets",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 33,
+      "test": "F5-D native HTTP CSRF MFA confirmation incident public and customer CSAT boundaries",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 34,
+      "test": "F5-D additive 052 to 053 upgrade preserves checksums and replay",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 35,
+      "test": "SUP-008 real A to B to A priority cycle is stopped by immutable repeated rule detection",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 36,
+      "test": "SUP-008 four distinct rule chain reaches depth four and blocks the next action",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 37,
+      "test": "SUP-008 native source adapter seed selects matching triggers without old-event starvation",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 38,
+      "test": "SUP-008 automation assignment uses canonical native eligibility and then assigned adapter",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 39,
+      "test": "SUP-008 rule incident link and public update adapter preserve customer isolation and SLA",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 40,
+      "test": "SUP-008 two rules under concurrent event workers retain both canonical effects without finance or provider writes",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 41,
+      "test": "SUP-008 expired native step up or revoked sponsor session cannot be bypassed by rule publication",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 42,
+      "test": "F5-D stale confirmation and rule publication rollback leave no half revision or idempotent success",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 43,
+      "test": "F5-D native HTTP resolved customer CSAT submission replay and membership revocation are enforced",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 44,
+      "test": "F5-D live mail flag and non-test environments deny advanced automation before mutation",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 45,
+      "test": "SUP-009 immutable encrypted root revisions never enter public projection and incident rules cannot resolve tickets",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 46,
+      "test": "SUP-008 native staff HELD receipt binds its own immutable execution and never means delivery",
+      "file": "tests/support-d.php"
+    },
+    {
+      "line": 47,
+      "test": "SUP-008 native rules and execution views redact templates and enforce current department access",
+      "file": "tests/support-d.php"
+    },
+    {
+      "file": "tests/support-d.php",
+      "line": 48,
+      "test": "F5-D native HTTP CSAT comment may be omitted and normalizes to empty on replay"
+    }
+  ]
+}

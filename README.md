@@ -1,5 +1,21 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-D test/mock teslimi — bağımsız teknik denetim bekliyor.**
+> Rule AST/simulation/causation, incident public/private ayrımı, CSAT ve scoped raporlar:
+> [plan](docs/F5_D_PLAN.md), [ADR-021](docs/adr/ADR-021-support-automation-incident-csat-report.md),
+> [teslim ve güvenlik/test matrisi](docs/F5_D_DELIVERY_REPORT.md).
+> Uygulama[`3404ddda79bc2017f05cb474b5546e23647910d8`](https://github.com/Boydaksu/hostidercp/commit/3404ddda79bc2017f05cb474b5546e23647910d8);
+> [PHP8.3/8.4 tam CI](https://github.com/Boydaksu/hostidercp/actions/runs/40298787710):
+> **51 suite /555 test /0 hata**; eski514 eksiksiz, yeni41 PASS.001–052 korunur;053 additive.
+> 111 korunan dosya ve10 native modül tree eşliği doğrulandı. SUP-008/009 yalnız uygulanan
+> test/mock alt kapsamındadır; F5-D DONE/FULL ACCEPTED değildir. Customer/service predicate
+> projection UNAVAILABLE; auto-close/merge/split ve SUP-010 açık bağımlılıktır.
+> F4/F5-A/F5-B/F5-C kabulleri ve F5-C'nin dört istisnası değişmez. EXTERNAL_MAIL_ALLOWED=false;
+> gerçek mail/provider/notification teslimi yoktur. DOMAIN-002 PARTIAL, mapping/import CRUD
+> DEFERRED, PROV-005 ve tüm canlı GATE'ler OPEN. PR #3 OPEN/DRAFT; F5-E/F6, merge,
+> staging veya production başlatılmaz. Bağımsız teknik denetim istenir ve burada durulur.
+> Aşağıdaki kabul kararları geçerlidir; önceki fazların durma/yetki bekleme ifadeleri tarihseldir.
+
 > **F5-C LIMITED MOCK TECHNICAL BASELINE — ACCEPTED WITH EXPLICIT EXCEPTIONS.**
 > Proje sahibinin bağımsız teknik kabulü SUP-001–004 için yalnız uygulanan ağsız
 > test/mock alt kapsamını kapsar. Yeni bloklayıcı P1 bulunmamıştır.

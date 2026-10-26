@@ -1,11 +1,71 @@
 # F5-D — otomasyon, incident, CSAT ve raporlama test/mock teslimi
 
-**Doğrulama sürüyor; bağımsız teknik kabul verilmiş değildir.**
+**F5-D TEST/MOCK teslimi — bağımsız teknik denetim bekliyor.**
 Başlangıç03d18666397d8dd63c5f23aa9818daf4548e41b4. Kabul edilen F5-C
-68fa3e51e315efd05fd8ddb34dffc9eabb7edd18:51 suite/514 test. Uygulama GitHub SHA/tree,
-tam PHP8.3/8.4 CI ve ham job kanıtları gerçek execution tamamlanınca eklenecek.
+68fa3e51e315efd05fd8ddb34dffc9eabb7edd18:51 suite/514 test.
+Gerçek GitHub uygulama kaynağı
+[`3404ddda79bc2017f05cb474b5546e23647910d8`](https://github.com/Boydaksu/hostidercp/commit/3404ddda79bc2017f05cb474b5546e23647910d8),
+tree `bb187350ffeec1c0ed20881a2e216bdea23adf54`.
+[Kaynak diff](https://github.com/Boydaksu/hostidercp/compare/03d18666397d8dd63c5f23aa9818daf4548e41b4...3404ddda79bc2017f05cb474b5546e23647910d8).
+Son belge/kanıt commit'i uygulama SHA'sından ayrıdır. İki PHP sürümünün tam CI
+kanıtı ve41 yeni regresyon aşağıdadır. Bağımsız teknik kabul verilmiş değildir.
 F5-D DONE/FULL ACCEPTED değildir. [Plan](F5_D_PLAN.md),
 [ADR-021](adr/ADR-021-support-automation-incident-csat-report.md).
+
+## Gerçek doğrulama kanıtı
+
+[Son kaynak tam CI](https://github.com/Boydaksu/hostidercp/actions/runs/40298787710): iki job SUCCESS.
+
+| Runtime / job | Suite | Test | Hata | Eski / yeni |
+|---|---:|---:|---:|---|
+| [PHP8.4.27](https://github.com/Boydaksu/hostidercp/actions/runs/40298787710/job/121491275941) |51|555|0|514 korundu /41 yeni PASS|
+| [PHP8.3.36](https://github.com/Boydaksu/hostidercp/actions/runs/40298787710/job/121491276386) |51|555|0|514 korundu /41 yeni PASS|
+
+Her sürümde PHPStan0 hata; Composer locked audit temiz;372 PHP lint dosyası0 ihlal;
+384 source/config/test pattern taraması0 bulgu. Services HTTP10, Commerce HTTP30,
+session concurrency20 tekrarlarının tamamı0 hata. Native MariaDB/HTTP/CSRF/MFA/ACL,
+1/4/8 bağımsız worker ve additive migration testleri tam job'ların içindedir.
+Kabul edilmiş F5-C job121443131969'daki514 PASS adı her iki ham log ile karşılaştırıldı:
+eksik0; yeni41. Suite sayısı51 kaldı; yeni testler existing support-http registry'sindedir.
+[Doğrulanmış CI özeti](evidence/f5-d/ci.json).
+
+PR sentetik checkout `502494913d583b4edf574f76ccd8226155bfe031`, uygulamayla aynı
+`bb187350ffeec1c0ed20881a2e216bdea23adf54` tree'yi taşır. Bu GitHub'ın test checkout'udur; gerçek merge yoktur.
+Ham günlükler repository erişimiyle [PHP8.3 log API](https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121491276386/logs)
+ve [PHP8.4 log API](https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121491275941/logs)
+üzerinden alınır. CI test credential'ı içeren tam loglar repository'ye kopyalanmadı;
+yalnız izinli PASS adları/sayılar/kalite sonuçları çıkarıldı. Bu bağlantılar gerçek
+job kanıtıdır; mock delivery veya bağımsız kabul sonucu değildir.
+
+Yerel PHP8.4.24 tam tur **51 suite /554 test /0 hata**:
+[özet](evidence/f5-d/local.json), [çıktı](evidence/f5-d/local-tests.txt).
+Tur40 yeni test registry'siyle başlamıştır; optional comment sözleşmesi tur sırasında
+tamamlandı. Son native HTTP sınırı [ayrıca1/0](evidence/f5-d/optional-targeted.txt)
+doğrulandı. Yerel tur555 olarak yeniden adlandırılmaz veya son tree'nin eksiksiz
+tek turu gibi sunulmaz; final555 tam kaynak kanıtı yukarıdaki iki CI job'ıdır.
+Son dört hedefli güvenlik kontrolü [4/0](evidence/f5-d/last-targeted.txt).
+Bu testler sentetik veri ve özel yerel MariaDB10.11.18 kullanır. Bu görevde açılan
+kök test DB'si ve özel33359 MariaDB süreci testlerden sonra kapatıldı; gerçek veri
+veya başka ortam değiştirilmedi.
+
+İlk12 test turunda3 fixture tablo-adı hatası gerçek identity_notifications adıyla
+düzeltildi;27 testlik turda HTTP nested stdClass/object dönüşümü422 üretiyordu,
+native JSON contract'ına uygun giderildi.37 testlik turdaki tek config testi,
+test ortamında native Config'in daha erken live-effect reddini yanlış beklentiyle
+kontrol ediyordu; production+mail=true altında Advanced503 kapısını doğrulayacak
+şekilde düzeltildi. Koruma veya assertion gevşetilmedi. İlk kaynak8.4 CI554 PASS
+olsa da optional comment commit'i sonrası eski run superseded/cancelled oldu;
+nihai kanıt olarak yalnız yukarıdaki tam555 job'ları kullanılır.
+
+[111 dosya Git blob/SHA256 koruması](evidence/f5-d/preservation.json),
+[10 native modül tree eşliği](evidence/f5-d/module-trees.json),
+[kaynak diff envanteri](evidence/f5-d/source-diff.txt).
+001–052, Native Core/Identity/Finance/Commerce/Services/Domain/Cloud/Providers/Mail
+korunur; Support.Service ve Work.Commands yalnız belgelenmiş canonical seam/origin
+projection genişletmesidir. Test adları silinmedi; eski migration list/count
+beklentileri yalnız053 ile genişletildi.
+
+
 
 ## Gereksinim ve değişiklik sözleşmesi
 
@@ -130,7 +190,7 @@ zorunludur. Son50 public update projection'ı; immutable tam DB history korunur.
 CSAT yalnız current native client membership/own ticket, RESOLVED ve current explicit
 department window policy.1–31536000 saniye teknik üst sınır; default gün/süre seed
 edilmez. Başlangıç latest canonical RESOLVED transition DB UTC timestamp'ıdır.
-Integer1–5; update window içinde revision+ticket version/idempotency. Immutable score/
+Integer1–5; comment alanı atlanabilir veya boş string olabilir (canonical replay eşdeğeridir). Update window içinde revision+ticket version/idempotency. Immutable score/
 encrypted comment/policy/window/user snapshot. Reopen oy ile tetiklenmez; eski rating'in
 resolution event'i sonraki resolve ile uyuşmazsa409 (yeni survey cycle bu alt kapsamda
 yok). Client başka customer rating'ini okuyamaz/yazamaz. Staff comment read ayrıca
@@ -162,6 +222,24 @@ Mutation native CSRF/session/Idempotency-Key/current grants/allowlist. Admin pre
 execute state/payload/session/identity-bound300s confirmation ve optimistic version.
 Rules view predicate/template değerlerini redakte eder, execution view current ticket
 automation grant ile ID/result/reason/causation gösterir. Customer report/rule route yok.
+CSAT window policy yönetimi mevcut administrative identity.staff.manage ve department-wide
+support.incident.manage wildcard customer grant/gerçek membership ister; sıradan
+incident veya report rolü tek başına policy değiştiremez. Priority ticket.manage,
+rule publish automation.manage ve ayrıca her aksiyonun kendi scoped iznini gerektirir.
+
+`simulate` body `{ticket_id,spec}`; `rule-publish` payload
+`{id,department_id,customer_id,sample_ticket_id,version,spec}`. Yeni logical rule
+UUID'si ve sample ticket aynı scope'ta olmalıdır. Örnek yalnız sentetik teknik AST:
+
+```json
+{"v":1,"trigger":"ticket_created","when":{"all":[{"field":"priority","op":"eq","value":"NORMAL"},{"not":{"field":"tag","op":"eq","value":"triaged"}}]},"actions":[{"kind":"tag","value":"triaged"},{"kind":"notify","value":"HELD"}],"enabled":true,"order":10}
+```
+
+Client CSAT body `{ticket_id,ticket_version,version,score,comment?}`; initial rating
+version0, sonraki revision current version ister. Comment yok/boş eşdeğerdir; null
+ve diğer tipler kabul edilmez. Report query zorunlu `from,to,timezone` ve optional
+string `offset` kullanır. Incident client GET `id,ticket_id` zorunludur; arbitrary
+incident UUID'si tek başına public veya private erişim vermez.
 
 Sentetik demo: tests/support-d.php native users/grants/MFA ile sample ticket ve explicit
 rule publish, side-effect-free simulate, native source→support:automation→outbox:dispatch
@@ -176,7 +254,28 @@ closed/invalid state; priority old SLA history; note privacy/no customer mail;
 incident tenant/private RCA isolation/no fake response/no auto close; CSAT ownership/
 score/window/replay/revision/rollback; report SQL ACL/UNAVAILABLE/pagination; atomic
 rule/incident/CSAT publication failure; old514 regression/migration. SUP-008/009
-karşı-örnek/test/PASS/source-line eşlemesi gerçek kanıt tamamlanınca aşağıya eklenecek.
+karşı-örnek/test/PASS/source-line eşlemesi aşağıdadır.
+
+## SUP-008 / SUP-009 karşı-örnek ve kaynak eşlemesi
+
+Aşağıdaki karşı-örnekler guard olmayan tasarımın riskini açıklar; eski kaynakta
+çalıştırılmış FAIL sonucu iddia edilmez. PASS sonuçları son iki CI ham günlüğündeki
+gerçek test adlarıyla doğrulanmıştır. [Tam eşleme ve41 test indeksi](evidence/f5-d/traceability.json).
+
+| Kimlik | Karşı-örnek | Test satırı | Kaynak satırı | Gerçek sonuç |
+|---|---|---|---|---|
+| SUP-008-A-A | Repeated self-trigger would execute again without chain guard | [test:11](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L11) | [Engine.php:61](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61) | PASS / iki CI |
+| SUP-008-A-B-A | Priority NORMAL/HIGH rules can alternate indefinitely without immutable repeated-rule detection | [test:35](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L35) | [Engine.php:61](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61) | PASS / iki CI |
+| SUP-008-DEPTH | A distinct-rule chain can keep emitting sources without an independent depth budget | [test:36](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L36) | [Engine.php:61](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61) | PASS / iki CI |
+| SUP-008-RECEIPT | Same payload or forged unpublished source must not create another action receipt | [test:13](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L13) | [Engine.php:53](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L53) | PASS / iki CI |
+| SUP-008-SIMULATION | A naive dry-run could create notes, notifications, outbox or last_seen mutations | [test:10](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L10) | [Engine.php:24](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L24) | PASS / iki CI |
+| SUP-008-AST | Executable predicates or excessive depth could escape the supported model | [test:8](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L8) | [Ast.php:13](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Ast.php#L13) | PASS / iki CI |
+| SUP-008-AUTH | A published rule must not inherit unlimited authority after scope or session revocation | [test:16](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L16) | [Engine.php:61](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61) | PASS / iki CI |
+| SUP-008-ATOMIC | A later action failure must not retain an earlier tag, note or false success receipt | [test:17](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L17) | [Engine.php:61](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Automation/Engine.php#L61) | PASS / iki CI |
+| SUP-009-TENANT | Shared incident joins could expose customer A's ticket content or IDs to B | [test:23](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L23) | [Incidents.php:32](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L32) | PASS / iki CI |
+| SUP-009-ROOT | Private root cause must never be copied into incident public projection | [test:45](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L45) | [Incidents.php:32](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L32) | PASS / iki CI |
+| SUP-009-NO-FAKE-RESPONSE | Incident resolution or public update must not resolve tickets or complete FIRST/NEXT | [test:24](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/tests/support-d.php#L24) | [Incidents.php:28](https://github.com/Boydaksu/hostidercp/blob/3404ddda79bc2017f05cb474b5546e23647910d8/src/Support/Advanced/Incidents.php#L28) | PASS / iki CI |
+
 
 ## Migration, geri dönüş ve açık sınırlar
 
