@@ -1,5 +1,23 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F5-E LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.**
+> Proje sahibinin son bağımsız teknik kabulü:
+> [`e0d460d0aea05f496135d169ecbb64ce94659cc9`](https://github.com/Boydaksu/hostidercp/commit/e0d460d0aea05f496135d169ecbb64ce94659cc9).
+> [PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40367106726): **52 suite /582 test /0 hata**;
+> önceki579 korundu; Chromium11/11 ve state3/3 PASS. Client author_id P1 **CLOSED**;
+> yeni/legacy projection, can_attach ve native attachment authorization PASS.
+> 277 korunan dosya hash eşliği ve001–054 migration koruması PASS.
+> F5-A/B/C/D kayıtları korunur; A–E yalnız test/mock alt kapsamlarıyla kabul edilmiştir.
+> **FULL F5, V1 veya production-ready kabulü değildir.** F5-C dört canlı istisnası,
+> auto-close, merge/split, tarihsel SLA raporu, SUP-010/F6, DOMAIN-002 PARTIAL,
+> mapping/import CRUD DEFERRED, PROV-005 ve tüm canlı GATE'ler **OPEN**.
+> [Kabul ve kapsam kaydı](docs/F5_E_DELIVERY_REPORT.md), [P1 denetim kaydı](docs/F5_E_POST_AUDIT_REVIEW.md),
+> [F5 planı](docs/F5_PLAN.md), [ADR-022](docs/adr/ADR-022-support-ui-session-drafts-polling.md).
+> PR #3 **OPEN/DRAFT**; merge/staging/production/canlı mail/provider yoktur.
+> Kabul kaydı tamamlandıktan sonra durulur; sonraki aşama için ayrı talimat beklenir.
+> Aşağıdaki eski teslim ve denetim bekleme açıklamaları tarihsel olarak korunmuştur.
+
+
 > **F5-E P1 metadata redaksiyonu — bağımsız yeniden kabul bekleniyor.**
 > Client UI ve legacy destek detaylarında mesaj author_id alanları kaldırıldı;
 > attachment kontrolü güncel Identity/mesaj sahipliğinden hesaplanan can_attach boolean'ını kullanır.
