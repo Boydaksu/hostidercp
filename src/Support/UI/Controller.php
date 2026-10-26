@@ -14,7 +14,7 @@ final class Controller
     public function routes(Router $r): void
     {
         foreach(['admin','client'] as $ctx){$r->add('GET','/'.$ctx.'/support',fn($q,$t)=>$this->handle($q,$t,$ctx,'page'));foreach(['status','list','detail','poll','draft','filters','export'] as $v){$r->add('GET','/api/v1/'.$ctx.'/support-ui/'.$v,fn($q,$t)=>$this->handle($q,$t,$ctx,$v));}foreach(['draft-save','draft-delete','filter-save','filter-delete','prepare','execute'] as $v){$r->add('POST','/api/v1/'.$ctx.'/support-ui/'.$v,fn($q,$t)=>$this->handle($q,$t,$ctx,$v));}}
-        foreach(['eligible','settings','rule','mail-outbound','presence'] as $v){$r->add('GET','/api/v1/admin/support-ui/'.$v,fn($q,$t)=>$this->handle($q,$t,'admin',$v));}$r->add('POST','/api/v1/admin/support-ui/presence',fn($q,$t)=>$this->handle($q,$t,'admin','presence'));
+        foreach(['eligible','settings','rule','mail-outbound','presence','clocks'] as $v){$r->add('GET','/api/v1/admin/support-ui/'.$v,fn($q,$t)=>$this->handle($q,$t,'admin',$v));}$r->add('POST','/api/v1/admin/support-ui/presence',fn($q,$t)=>$this->handle($q,$t,'admin','presence'));
     }
     private function handle(Request $q,string $trace,string $ctx,string $v): Response
     {
