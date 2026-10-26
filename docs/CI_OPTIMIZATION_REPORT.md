@@ -134,6 +134,24 @@ istendi. Trigger sonrası run/job, source-proof SHA/tree,582/11/3 ve10/30/20 kan
 alınmadan **CI optimizasyonu DONE değildir**. Bu eksik kullanıcı onayı değil,
 mevcut erişim araçlarının manual başlatma sınırıdır.
 
-Bu kanıt commit'i yalnız docs içerir. Gerçek docs-only Actions sonucu takip eden
-kayıtta eklenecek. F6 planı tamamlanmıştır; F6-A kodu başlatılmamıştır ve ayrı yetki
+İlk kanıt commit'i yalnız docs içerir. Gerçek docs-only Actions sonucu aşağıdadır.
+F6 planı tamamlanmıştır; F6-A kodu başlatılmamıştır ve ayrı yetki
 bekler. PR3 OPEN/DRAFT, main protection değişmemiştir.
+
+## Gerçek docs-only sonucu ve mevcut durma noktası
+
+Belge-only SHA [`b0c3eb7ec39f4640fb42ff7552ae7c2d924df90e`](https://github.com/Boydaksu/hostidercp/commit/b0c3eb7ec39f4640fb42ff7552ae7c2d924df90e),
+tree `1d23da2c7993aad988619134622004589b203841`.
+[Run40380246812](https://github.com/Boydaksu/hostidercp/actions/runs/40380246812)
+SUCCESS: profile docs, seçilen PHP suite0. Scope/security job121774220224 ve sabit
+FAST result job121774331980 SUCCESS; verify job121774334415 açıkça SKIPPED.
+MariaDB service/matris, Chromium, tekrarlar veya otomatik FULL başlamadı.
+[Ayıklanmış kanıt](evidence/ci-optimization/docs-only.json).
+
+**FAST ve docs-only gerçek doğrulandı; FULL gerçek çalışma BEKLİYOR.** Bu nedenle
+CI optimizasyonuna DONE veya FULL ACCEPTANCE verilmez. Manual FULL hedefi hâlâ
+`7e2092898287e566fc6a487c6540d6f70cec7481`; sonraki değişiklikler yalnız belgedir.
+F6 teknik planı [F6_PLAN.md](F6_PLAN.md) bağımsız incelemeye hazırdır, uygulama değildir.
+Kalan doğrulama: GitHub'da FULL manual run başlatılması; iki PHP sürümünde582/11/3,
+1/4/8,10/30/20 ve SHA/tree artifact'larının doğrulanıp rapora eklenmesi.
+Bu koşul gerçekleşmeden sonraki geliştirmeye geçilmez. PR3 OPEN/DRAFT kalır.

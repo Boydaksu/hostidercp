@@ -1,7 +1,8 @@
 # ADR-023 — FAST kapsamı ve exact SHA FULL kabulü
 
-Durum: CI optimizasyon talimatı kapsamında uygulanıyor; gerçek Actions kanıtı ve
-bağımsız inceleme bekleniyor. Üretim tasarımını veya önceki sınırlı kabulleri değiştirmez.
+Durum: FAST PHP8.3/8.4 ve docs-only gerçek Actions ile doğrulandı; manual FULL
+kanıtı ve bağımsız inceleme bekleniyor. CI optimizasyonu DONE değildir.
+Üretim tasarımını veya önceki sınırlı kabulleri değiştirmez.
 
 Eski f0.yml her push ve PR'da aynı tam matrisi çalıştırıyordu. Yeni FAST yalnız push
 olayını dinler; PR commit'i aynı push check'lerini taşır. Path trigger filtresi yoktur.
