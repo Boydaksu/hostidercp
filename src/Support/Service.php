@@ -26,6 +26,12 @@ final readonly class Service
     {
         if(!is_int($v)||$v<1||$v>2147483647){throw new HttpError(422,'INVALID_SUPPORT_VERSION');}return $v;
     }
+    /** Scoped delegation uses the same canonical authorization/state/message/event path. */
+    public function delegated(string $reference,string $action,array $p,string $trace): array
+    {
+        $this->gate();$this->c->db->requireTransaction();if(!in_array($action,['state','note'],true)){throw new HttpError(422,'DELEGATED_SUPPORT_ACTION_INVALID');}$this->fields('admin',$action,$p);
+        return $this->c->identity->withStepUp($reference,'admin',function($u,$s)use($action,$p,$trace){$this->authorize($u,$s,$action,$p);return $action==='note'?$this->reply($u,$s,$p,$action,$trace):$this->change($u,$s,$p,$action,$trace);});
+    }
     private static function body(mixed $v): string
     {
         if(!is_string($v)||!mb_check_encoding($v,'UTF-8')||trim($v)===''||mb_strlen($v)>16000||preg_match('/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/',$v)){throw new HttpError(422,'INVALID_SUPPORT_BODY');}return $v;
@@ -162,6 +168,7 @@ final readonly class Service
         $a=$this->access->actor($u,$s);$notes=false;if($a->staff){try{$this->access->require($u,$s,$row['customer_id'],$row['department_id'],'support.ticket.internal_note');$notes=true;}catch(HttpError $e){if($e->status!==404){throw $e;}}}
         $out=$this->summary($row);$messages=$this->c->db->execute('SELECT id,type,customer_visible,author_id,created_at,body_encrypted FROM support_messages WHERE ticket_id=? AND customer_id=?'.($notes?'':" AND type<>'internal_note' AND customer_visible=TRUE").' ORDER BY created_at,id',[$row['id'],$row['customer_id']])->fetchAll();
         foreach($messages as &$m){$m['body']=$this->crypto->decrypt($m['body_encrypted'],'support-message:'.$m['id']);unset($m['body_encrypted']);$origin=$this->c->db->execute('SELECT origin FROM support_mail_sources WHERE message_id=? AND customer_id=?',[$m['id'],$row['customer_id']])->fetchColumn();if($origin){$m['mail_origin']=$origin;}$m['customer_visible']=(bool)$m['customer_visible'];}unset($m);$out['messages']=$messages;$out['service_ids']=[];
+        if($notes){foreach($out['messages'] as &$item){if($item['type']==='internal_note'){$origin=$this->c->db->execute("SELECT execution_id,sponsor_id FROM support_advanced_events WHERE ticket_id=? AND customer_id=? AND kind='ACTION_note' AND execution_id IS NOT NULL AND JSON_UNQUOTE(JSON_EXTRACT(details,'$.canonical_effect'))=? LIMIT 1",[$row['id'],$row['customer_id'],$item['id']])->fetch();if($origin){$item['system_origin']=['actor_kind'=>'SYSTEM_RULE','execution_id'=>$origin['execution_id'],'sponsor_id'=>$origin['sponsor_id']];}}}unset($item);}
         foreach($this->c->db->execute('SELECT service_id FROM support_ticket_links WHERE ticket_id=? AND customer_id=?',[$row['id'],$row['customer_id']])->fetchAll() as $link){try{$out['service_ids'][]=(new SupportLinks($this->c))->owned($u,$s,$row['customer_id'],$link['service_id']);}catch(HttpError $e){if(!in_array($e->status,[403,404],true)){throw $e;}}}return $out;
     }
 }

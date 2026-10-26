@@ -71,6 +71,7 @@ require __DIR__.'/support-post-audit.php';
 require __DIR__.'/support-b.php';
 require __DIR__.'/support-b-post-audit.php';
 require __DIR__.'/support-c.php';
+require __DIR__.'/support-d.php';
 $exit=executeTests(true);
 if($exit===0&&getenv('F5_EVIDENCE')==='1'){file_put_contents(dirname(__DIR__).'/docs/evidence/f5-a/http-examples.json',json_encode(['environment'=>'test','synthetic'=>true,'provider_io'=>false,'examples'=>$examples],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));}
 }finally{$server->stop();$second->stop();}

@@ -31,6 +31,12 @@ final readonly class Commands
         foreach(['id','department_id','user_id','assignee_id'] as $k){if(array_key_exists($k,$p)&&($k!=='assignee_id'||$p[$k]!==null)){Access::id($p[$k]);}}
         if($action==='policy-publish'){$p['policy']=Policy::validate(Policy::array($p['policy']));}if($action==='roster-set'){$p['roster']=Policy::roster(Policy::array($p['roster']));}return $p;
     }
+    /** Internal delegation; outer rule transaction owns receipt and atomicity. */
+    public function delegated(string $reference,array $p,string $trace): array
+    {
+        $this->gate();$this->c->db->requireTransaction();$p=$this->fields('assign',$p);(new Eligibility($this->c))->fence();
+        return $this->c->identity->withStepUp($reference,'admin',function($u,$s)use($p,$trace){$this->authorize($u,$s,'assign',$p);$state=$this->state('assign',$p);$at=Time::now($this->c->db);$this->validate('assign',$p,$state,$at);return $this->apply($u,$s,'assign',$p,$state,$at,$trace);});
+    }
     private function authorize(array $u,array $s,string $action,array $p): void
     {
         $access=new Access($this->c);$a=$access->actor($u,$s);if(!$a->staff){throw new HttpError(403,'STAFF_REQUIRED');}
