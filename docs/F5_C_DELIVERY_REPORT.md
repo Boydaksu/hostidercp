@@ -1,6 +1,32 @@
 # F5-C — güvenli mail ve attachment test/mock teslimi
 
-26 Ekim2026. **F5-C TEST/MOCK teslimi; bağımsız teknik denetim beklenir.**
+26 Ekim 2026. **F5-C LIMITED MOCK TECHNICAL BASELINE — ACCEPTED WITH EXPLICIT EXCEPTIONS.**
+Proje sahibinin bağımsız teknik kabul kararı, uygulama
+`68fa3e51e315efd05fd8ddb34dffc9eabb7edd18` için kaydedilmiştir.
+SUP-001–004 yalnız uygulanan ağsız test/mock alt kapsamında kabul edilmiştir;
+yeni bloklayıcı P1 bulunmamıştır. Bu karar tam kapsam veya canlı kabul değildir.
+
+Bağımsız doğrulama: PHP 8.3/8.4 her sürümde51 suite /514 test /0 hata;
+eski472 test adı eksiksiz,42 yeni regresyon PASS.95 korunan dosyanın Git blob
+eşliği doğrulanmıştır;001–051 migration korunmuş,052 additive'dir.
+
+**Açık istisnalar:**
+
+1. Gerçek mailbox alıcı/departman yönlendirme doğrulaması ve sender authentication canlı kabul bekler.
+2. Retention süresi sonunda kesin erişim kesilmesi ve scheduler operasyonu canlı kabul bekler.
+3. Antivirus, gerçek IMAP/SMTP ve genel MIME uyumluluğu test/mock kabulüne dahil değildir.
+4. HELD/ACCEPTED_BY_TRANSPORT(mock) gerçek müşteri teslimi değildir.
+
+Kabul kaydı kapsamı yalnız README, bu rapor ve F5 planının güncellenmesidir.
+Uygulama, testler ve migration değişmez; yeni migration veya DB işlemi yoktur.
+Doğrulama belge diff'i ve korunan kaynak eşliğidir; önceki CI sonuçları yeniden
+çalıştırılmış gibi sunulmaz. Geri dönüş yalnız bu belge commit'inin geri alınmasıdır.
+F4/F5-A/F5-B kabul tabanları ve514 testlik F5-C tabanı korunur. Yeni geliştirme
+başlatılmaz; PR #3 OPEN/DRAFT kalır. Merge, staging, production ve gerçek SMTP/IMAP
+yoktur. F5-D için proje sahibinin ayrı talimatı beklenir.
+
+## İlk teslim ve kanıt kaydı
+
 Taban794816113dc56eea3c4223c73c1d68f37aff0b08; kabul edilmiş F5-B5869483,
 51 suite472 test. F4/F5-A/F5-B limited mock kabulleri değişmez. SUP-001–004 bu
 raporda yalnız tanımlanmış test/mock subset için değerlendirilir; V1 DONE yoktur.
@@ -192,4 +218,5 @@ Tutarlı code/DB/key/storage restore veya reviewed forward-fix; destructive down
 EXTERNAL_MAIL_ALLOWED=false. DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED,
 PROV-005 ve tüm canlı GATE'ler OPEN. PR3 açık/taslak; F5-D/E/F6, gerçek SMTP/IMAP,
 mail/notification/provider dispatch, merge, staging veya production yoktur.
-F5-C test/mock tesliminden sonra bağımsız teknik denetim istenir ve durulur.
+İlk teslimde bağımsız teknik denetim istenmiştir; güncel sınırlı kabul ve açık
+istisnalar raporun başındadır. Kabul kaydı tamamlandıktan sonra çalışma durur.

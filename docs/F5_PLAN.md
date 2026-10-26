@@ -1,10 +1,19 @@
 # F5 — Gelişmiş Destek Merkezi planı
 
-26 Ekim2026 güncel yetki: F4/F5-A/F5-B LIMITED MOCK TECHNICAL BASELINE kabulünden
-sonra yalnız F5-C test/mock geliştirmesi. Taban7948161;472 test;001–051 korunur.
+26 Ekim 2026 güncel karar: **F5-C LIMITED MOCK TECHNICAL BASELINE — ACCEPTED WITH
+EXPLICIT EXCEPTIONS**. Kabul edilen uygulama68fa3e51e315efd05fd8ddb34dffc9eabb7edd18;
+PHP8.3/8.4:51 suite /514 test /0 hata. Eski472 + yeni42 PASS; yeni bloklayıcı P1 yok.
+95 korunan dosyanın Git blob eşliği doğrulandı;001–051 korunur,052 additive.
+SUP-001–004 yalnız uygulanan ağsız test/mock alt kapsamında kabul edilmiştir.
 [F5_C_PLAN](F5_C_PLAN.md), [ADR-020](adr/ADR-020-support-mail-test-boundaries.md).
 [F5_C_DELIVERY_REPORT](F5_C_DELIVERY_REPORT.md) test/mock kaynak ve doğrulama
-kanıtlarını kaydeder; F5-C bağımsız teknik denetim bekler, DONE değildir.
+kanıtlarını ve açık istisnaları kaydeder. Gerçek mailbox alıcı/departman yönlendirmesi
+ve sender authentication; retention sonunda kesin erişim kesilmesi ve scheduler
+operasyonu canlı kabul bekler. Antivirus, gerçek IMAP/SMTP ve genel MIME uyumluluğu
+kabule dahil değildir; HELD/ACCEPTED_BY_TRANSPORT(mock) gerçek müşteri teslimi değildir.
+F4/F5-A/F5-B kabul tabanları ve514 testlik F5-C tabanı korunur. Yeni geliştirme yoktur;
+PR #3 OPEN/DRAFT kalır. Kabul kaydından sonra durulur, F5-D için proje sahibinin
+ayrı talimatı beklenir.
 Gerçek mail/SMTP/IMAP, F5-D/E/F6, merge ve ortam yayını yoktur. Aşağıdaki önceki
 yetki/kabul bekleme durumları tarihsel kayıtlardır.
 

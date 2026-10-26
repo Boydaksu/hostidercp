@@ -1,17 +1,24 @@
 # Hostider Automation — V1.0 Master Specification
 
-> **F5-C test/mock teslimi — bağımsız teknik denetim bekliyor.**
-> Yalnız güvenli inbound/outbound mock pipeline ve attachment alt kapsamı yetkilidir.
+> **F5-C LIMITED MOCK TECHNICAL BASELINE — ACCEPTED WITH EXPLICIT EXCEPTIONS.**
+> Proje sahibinin bağımsız teknik kabulü SUP-001–004 için yalnız uygulanan ağsız
+> test/mock alt kapsamını kapsar. Yeni bloklayıcı P1 bulunmamıştır.
 > [Plan](docs/F5_C_PLAN.md), [ADR-020](docs/adr/ADR-020-support-mail-test-boundaries.md),
 > [teslim, güvenlik matrisi ve test kanıtları](docs/F5_C_DELIVERY_REPORT.md).
 > Kaynak[`68fa3e5`](https://github.com/Boydaksu/hostidercp/commit/68fa3e51e315efd05fd8ddb34dffc9eabb7edd18);
 > [PHP8.3/8.4 CI](https://github.com/Boydaksu/hostidercp/actions/runs/40283941945):
 > **51 suite /514 test /0 hata**; eski472 eksiksiz, yeni42 PASS.
+> 95 korunan dosyanın Git blob eşliği bağımsız denetimde doğrulandı.
+> Açık istisnalar: gerçek mailbox alıcı/departman yönlendirmesi ve sender authentication;
+> retention süresi sonunda kesin erişim kesilmesi ve scheduler operasyonu canlı kabul bekler.
+> Antivirus, gerçek IMAP/SMTP ve genel MIME uyumluluğu bu kabule dahil değildir.
+> HELD/ACCEPTED_BY_TRANSPORT(mock) gerçek müşteri teslimi değildir.
 > Gerçek SMTP/IMAP, müşteri e-postası, gerçek antivirüs veya DELIVERED sonucu yoktur.
 > `EXTERNAL_MAIL_ALLOWED=false`; fixture dışındaki dosyalar QUARANTINED kalır.
 > 001–051 korunur; yalnız additive052. F4/F5-A/F5-B sınırlı mock kabulleri değişmez.
 > DOMAIN-002 PARTIAL, mapping/import CRUD DEFERRED, PROV-005 ve bütün canlı GATE'ler
 > OPEN. PR #3 açık/taslak; F5-D/E/F6, merge, staging veya production yapılmaz.
+> Kabul kaydından sonra çalışma durur; F5-D için proje sahibinin ayrı talimatı beklenir.
 > Aşağıdaki önceki faz yetki ve kabul bekleme ifadeleri tarihsel kayıtlardır.
 
 > **F5-B LIMITED MOCK TECHNICAL BASELINE — ACCEPTED — 26 Ekim 2026.**
