@@ -1,5 +1,13 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **CI optimizasyonu ve F6 teknik planlama — doğrulama sürüyor.**
+> [FAST/FULL ayrımı ve kanıt kaydı](docs/CI_OPTIMIZATION_REPORT.md),
+> [F6-A–E planı ve açık kabul kapıları](docs/F6_PLAN.md),
+> [ADR-023](docs/adr/ADR-023-ci-exact-source.md).
+> F6 yalnız planlanmıştır; uygulama/gerçek aktarım yetkisi yoktur. Önceki sınırlı
+> F4/F5 kabulleri korunur. PR3 OPEN/DRAFT; canlı GATE'ler ve G-O03 OPEN.
+> Yeni FAST sonucu FULL ACCEPTANCE değildir; FULL yalnız exact SHA ile açıkça tetiklenir.
+
 > **F5-E LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.**
 > Proje sahibinin son bağımsız teknik kabulü:
 > [`e0d460d0aea05f496135d169ecbb64ce94659cc9`](https://github.com/Boydaksu/hostidercp/commit/e0d460d0aea05f496135d169ecbb64ce94659cc9).
