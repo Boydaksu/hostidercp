@@ -1,5 +1,32 @@
 # CI optimizasyonu — çalışma ve kanıt kaydı
 
+## 27 Ekim 2026 — bağımsız kabul kaydı
+
+**CI OPTIMIZATION — LIMITED TECHNICAL BASELINE: ACCEPTED.** Proje sahibinin
+bağımsız teknik denetim kararı kaydedilmiştir; mevcut GitHub job/step sorgusu da
+iki job'un SUCCESS olduğunu doğrular. [FULL run40459020759](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759):
+[PHP8.3/122038976890](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759/job/122038976890),
+[PHP8.4/122038977146](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759/job/122038977146).
+Her sürüm582/582 uygulama testi ve ayrı6/6 CI güvenlik/seçim kontrolü PASS;
+Chromium11/11, JavaScript state3/3, Services HTTP10/10, Commerce HTTP30/30,
+Session concurrency20/20 PASS. PHPStan, Composer/npm audit, lint ve pattern
+taraması temizdir; önceki582 uygulama testinin tamamı korunmuştur.
+
+Doğrulanan uygulama SHA `7e2092898287e566fc6a487c6540d6f70cec7481`;
+uygulama tree `b4451d7e85cf42ce48b51cc577096a4de6537d0f`;
+workflow SHA `272eb2c3e6a8f6e8cc0b5c4f66a8272f0333c909`.
+Workflow/uygulama SHA farkı beklenen ve bağımsız doğrulanmış davranıştır.
+FAST etki profili, docs-only hafif kontrol ve manuel exact-SHA FULL ayrı
+kapsamlardır; birinin sonucu diğerinin yerine kullanılamaz. Bu kabul yeni
+uygulama adaylarını kapsamaz; FULL production release/deployment/merge izni değildir.
+
+Bu iş paketinin planı: yalnız README, bu rapor ve ADR-023'e kabul kaydı;
+uygulama/workflow/test/migration değişikliği yok. Doğrulama: üç dosyalı diff,
+belge kontrolü ve korunan Git tree eşliği. Migration yok; rollback yalnız belge
+commit'ini geri almaktır. PR3 OPEN/DRAFT, main protection ve açık sınırlar korunur.
+F6-A sentetik geliştirme ayrıca yetkilendirildi; F6-B ve canlı işlemler yetkili değil.
+Aşağıdaki önceki bekleme/erişim sınırı kayıtları tarihsel olarak korunmuştur.
+
 ## Yetki, başlangıç ve uygulama planı
 
 Başlangıç: `fb8a217619196b650d82a89a16b3d2680736cf2d`.

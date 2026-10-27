@@ -1,5 +1,22 @@
 # ADR-023 — FAST kapsamı ve exact SHA FULL kabulü
 
+## Güncel bağımsız karar — 27 Ekim 2026
+
+**CI OPTIMIZATION — LIMITED TECHNICAL BASELINE: ACCEPTED.**
+[FULL40459020759](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759),
+PHP8.3 job122038976890 ve PHP8.4 job122038977146 SUCCESS:
+582/582 uygulama + ayrı6/6 CI, Chromium11/11, state3/3, HTTP10/30 ve session20
+PASS; PHPStan/Composer/npm audit/lint/pattern temiz. Önceki582 test korunur.
+Uygulama `7e2092898287e566fc6a487c6540d6f70cec7481`,
+tree `b4451d7e85cf42ce48b51cc577096a4de6537d0f`,
+workflow `272eb2c3e6a8f6e8cc0b5c4f66a8272f0333c909`;
+SHA ayrılığı beklenen ve doğrulanmıştır. FAST/docs-only/manual FULL ayrı kapsamlarını korur.
+FULL production release, deployment veya merge izni vermez. PR3 OPEN/DRAFT,
+main protection ve canlı GATE'ler değişmez. F6-A yalnız sentetik sözleşme geliştirmesi
+için ayrıca GO aldı; F6-B/import/staging/cutover yoktur. Bu üç belgeli kabul commit'i
+uygulama/CI/test/migration değiştirmez; geri dönüş yalnız belge revert'üdür.
+Aşağıdaki bekleme ve plan-only ifadeleri tarihsel karar kaydıdır.
+
 Durum: FAST PHP8.3/8.4 ve docs-only gerçek Actions ile doğrulandı; manual FULL
 kanıtı ve bağımsız inceleme bekleniyor. CI optimizasyonu DONE değildir.
 Üretim tasarımını veya önceki sınırlı kabulleri değiştirmez.

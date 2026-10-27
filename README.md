@@ -1,5 +1,19 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **27 Ekim 2026 — CI OPTIMIZATION — LIMITED TECHNICAL BASELINE: ACCEPTED.**
+> Proje sahibinin bağımsız kabulü: [FULL run40459020759](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759),
+> [PHP8.3 job122038976890](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759/job/122038976890)
+> ve [PHP8.4 job122038977146](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759/job/122038977146) SUCCESS.
+> Her sürüm582/582 uygulama testi, ek6/6 CI kontrolü, Chromium11/11, state3/3,
+> Services10/10, Commerce30/30, Session20/20 PASS; PHPStan/audit/lint/pattern temiz.
+> Uygulama SHA `7e2092898287e566fc6a487c6540d6f70cec7481`, tree `b4451d7e85cf42ce48b51cc577096a4de6537d0f`;
+> workflow SHA `272eb2c3e6a8f6e8cc0b5c4f66a8272f0333c909`. Ayrı SHA'lar beklenen/doğrulanmış davranıştır.
+> FAST, docs-only ve manuel exact-SHA FULL kapsamları ayrı kalır. FULL production release,
+> deployment veya merge izni vermez. PR3 OPEN/DRAFT; main protection ve bütün canlı GATE'ler korunur.
+> **F6-A SYNTHETIC DISCOVERY & CONTRACT DEVELOPMENT: GO**; yalnız sentetik sözleşme/validasyon.
+> F6-B, gerçek WHMCS/import/provider, staging ve cutover yetkisi yoktur.
+> Aşağıdaki FULL bekleme ve F6 plan-only ifadeleri önceki tarihsel kayıtlardır.
+
 > **CI optimizasyonu ve F6 teknik planlama — FAST doğrulandı, FULL bekliyor.**
 > [FAST/FULL ayrımı ve kanıt kaydı](docs/CI_OPTIMIZATION_REPORT.md),
 > [F6-A–E planı ve açık kabul kapıları](docs/F6_PLAN.md),
