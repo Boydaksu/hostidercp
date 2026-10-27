@@ -44,7 +44,7 @@ Mapping yalnız bellek içi immutable kanıt: source identity/snapshot/schema,
 content/envelope hash, transform, target identity ve evidence digest. Aynı
 kanıt NOOP_REPLAY; değişmiş content/metadata/target CONFLICT; hiç mapping yoksa
 PROPOSED. Hiçbiri kalıcı yazma veya replay yürütme izni değildir. Yeni snapshot
-eski mapping'i overwrite etmez; MANUAL_REVIEW ister.
+eski mapping'i overwrite etmez; CONFLICT ve explicit manual review reason üretir.
 
 ## Güvenlik modeli ve matris
 

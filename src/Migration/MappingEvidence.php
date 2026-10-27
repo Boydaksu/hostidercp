@@ -42,7 +42,7 @@ final readonly class MappingEvidence implements \JsonSerializable
             if ($existing->data['identity'] !== $proposal->data['identity']) { $status = 'CONFLICT'; $reason = 'SOURCE_IDENTITY_MISMATCH'; }
             elseif ($existing->data['content_sha256'] !== $proposal->data['content_sha256']) { $status = 'CONFLICT'; $reason = 'SOURCE_CONTENT_CHANGED'; }
             elseif ($existing->data['target_type'] !== $targetType || $existing->data['target_id'] !== $targetId) { $status = 'CONFLICT'; $reason = 'TARGET_CONFLICT'; }
-            elseif ($existing->data['evidence_sha256'] !== $proposal->data['evidence_sha256']) { $status = 'MANUAL_REVIEW'; $reason = 'SOURCE_CONTEXT_CHANGED'; }
+            elseif ($existing->data['evidence_sha256'] !== $proposal->data['evidence_sha256']) { $status = 'CONFLICT'; $reason = 'SOURCE_CONTEXT_CHANGED'; }
             else { $status = 'NOOP_REPLAY'; }
         }
         return ['status' => $status, 'replay_eligible' => $status === 'NOOP_REPLAY', 'manual_review_reason' => $reason,

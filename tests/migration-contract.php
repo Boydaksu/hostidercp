@@ -148,7 +148,7 @@ test('F6-A 24 mapping target tamper metadata and snapshot conflict', function():
     same('TARGET_CONFLICT', MappingEvidence::compare($e, 'customer', 'target-b', $mapping)['manual_review_reason']);
     $tampered = $mapping->data; $tampered['target_id'] = 'target-b'; same('MAPPING_EVIDENCE', raises(InvalidArgumentException::class, fn() => MappingEvidence::fromArray($tampered))->getMessage());
     $row['snapshot'] = 'snapshot-2'; $changed = MappingEvidence::compare(SourceEnvelope::fromArray($row), 'customer', 'target-a', $mapping);
-    same('MANUAL_REVIEW', $changed['status']); same(false, $changed['replay_eligible']);
+    same('CONFLICT', $changed['status']); same('SOURCE_CONTEXT_CHANGED', $changed['manual_review_reason']); same(false, $changed['replay_eligible']);
     raises(InvalidArgumentException::class, fn() => MappingEvidence::propose($e, 'user', 'target-a'));
 });
 test('F6-A 25 partial payment limits refunds and immutable provenance', function(): void {

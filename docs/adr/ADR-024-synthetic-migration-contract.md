@@ -28,7 +28,7 @@ CREATE daima ret. Her sonuç effects_allowed=false; provider application seam'i 
 
 MappingEvidence immutable bellek içi öneridir, CRUD veya replay executor değildir.
 Aynı identity+content+context+target NOOP_REPLAY; farklı içerik/target CONFLICT;
-snapshot/schema/provenance/transform bağlam farkı MANUAL_REVIEW olur. Replay
+snapshot/schema/provenance/transform bağlam farkı da CONFLICT ve manual review reason üretir. Replay
 eligibility yalnız aynı kanıtı yeniden tanıma anlamındadır; load yetkisi vermez.
 Manifestte raw body/yazar kimliği diagnostic'e alınmaz; normal demo yalnız sentetiktir.
 
