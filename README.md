@@ -1,5 +1,29 @@
 # Hostider Automation — V1.0 Master Specification
 
+## 27 Ekim 2026 — F6-A sınırlı bağımsız kabulü ve F6-B yetkisi
+
+**F6-A LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.** Proje sahibinin bağımsız
+kararı yalnız sentetik contract, identity, snapshot, provenance, mapping evidence
+ve validation kapsamını kabul eder. Message kind/visibility P1 **CLOSED**.
+Kabul edilen uygulama `063e846999e4bda513f3563de0c4f13ac8858b97`,
+tree `fb238efc3aa70cbbd022652d192d9e89c089f211`.
+[FULL40475881946](https://github.com/Boydaksu/hostidercp/actions/runs/40475881946):
+PHP8.3/8.4 her sürüm54 suite/621 uygulama testi/0 hata; ayrı6 CI kontrolü,
+Chromium11/11, state3/3, Services HTTP10/10, Commerce HTTP30/30 ve
+session concurrency20/20 PASS.001–054 korunur.
+
+Gerçek WHMCS sürüm/şema keşfi, G-O03, gerçek SUP-010 ve PROV-004 kabul edilmedi.
+Diğer vendor/operasyon/live kapıları, DOMAIN-002 PARTIAL/MANUAL_REVIEW,
+production mapping/import CRUD DEFERRED, PROV-005 ve F5-C istisnaları korunur.
+**F6-B SYNTHETIC ISOLATED IMPORT & DRY-RUN DEVELOPMENT — GO**; yalnız ayrı geçici
+sentetik test şeması ve dry-run/load geliştirmesi yetkilidir. F6-C, gerçek veri,
+provider/ödeme/mail, staging, merge/deploy/cutover izni değildir. PR3 OPEN/DRAFT;
+main protection değişmez. Aşağıdaki bekleme ve yetki ifadeleri tarihsel kayıttır.
+
+Bu kabul iş paketi yalnız bu altı belgeyi değiştirir; uygulama/test/CI/migration
+kaynakları değişmez. Kontrol belge diff'i ve korunan kaynak eşliği; migration yok,
+geri dönüş yalnız kabul belge commit'inin revert'üdür. Sonraki F6-B planı ayrı yazılır.
+
 > **F6-A P1 mesaj türü/görünürlük düzeltmesi — bağımsız yeniden kabul bekler.**
 > PUBLIC_REPLY yalnız KNOWN PUBLIC ile geçerli; tutarsızlık MESSAGE_VISIBILITY_CONFLICT
 > ile incelemeye gider. INTERNAL_NOTE doğrulanmış source STAFF + KNOWN PRIVATE ister.
