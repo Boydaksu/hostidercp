@@ -1,0 +1,26 @@
+{
+  "full": "NOT_DISPATCHED",
+  "f6_e": "NOT_AUTHORIZED",
+  "main_protected": false,
+  "rulesets": [],
+  "development": "PARTIAL",
+  "classification": "SYNTHETIC",
+  "production": "UNCHANGED",
+  "blocked": [
+    "native identity rebinding",
+    "original archive bytes",
+    "cold signing issuer key recovery",
+    "production scheduler dashboard",
+    "PITR RPO RTO",
+    "real hosting permissions"
+  ],
+  "implemented": [
+    "encrypted issued backup",
+    "bounded DB snapshot",
+    "derived private files",
+    "escrow SQL restore",
+    "native Queue Worker probes",
+    "dry retention",
+    "sanitized telemetry"
+  ]
+}

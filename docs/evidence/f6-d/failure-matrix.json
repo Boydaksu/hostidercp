@@ -1,0 +1,223 @@
+{
+  "classification": "SYNTHETIC",
+  "executed_suite": "tests/migration-operations.php",
+  "final_tests": 32,
+  "failures": 0,
+  "cases": [
+    {
+      "test": "F6-D actual encrypted backup verifies bounded DB and private sample files",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D backup identity is deterministic while native crypto uses fresh nonces",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D reports contain no keys tokens paths private bodies or ciphertext",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D wrong rotated missing revoked and mismatched key identities fail closed",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D ciphertext tag truncation and missing package cannot verify",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D source file missing corrupt size or snapshot mismatch prevents complete backup",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D traversal absolute sibling Unicode case and unknown file types are rejected",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D foreign owner checksum and inventory loss block authenticated malformed packages",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D physical source symlink is denied where platform capability exists",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Windows subcase BLOCKED_PLATFORM; Linux FAST pending"
+    },
+    {
+      "test": "F6-D environment explicit authority wrong vault and expired lease fail closed",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D 1 4 8 independent backup processes publish one immutable artifact",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D real process crashes at capture encryption manifest and publish never expose final",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D controlled short write disk budget and stale operation do not verify partial files",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D escrow restore preserves exact DB evidence finance and sample file bytes",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D wrong target marker ownership lease grants and schema are denied",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D corrupted backup and wrong key leave owned destination empty",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D restore exception and real crashes rollback or re-read exact durable outcome",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D existing conflicting restore rows are never overwritten or rebound",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D source readiness lost migration checksum partial schema or evidence cannot back up",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D actual source connection loss prevents publication and fresh reconnect recovers",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D dry retention uses tier union and protects the last recoverable verified copy",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D retention clock key loss incomplete chain quota and timezone produce review not deletion",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D native Queue expiry keeps unsafe outcome UNKNOWN and rejects stale owner finish",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D native retry-safe poison work reaches DLQ without dispatching other engines",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D destination least privilege denies UPDATE DELETE DDL and cross-schema reads",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D compression version duplicate archive key and partial manifest cannot authenticate",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D dry retention rejects duplicate identities and never performs filesystem deletion",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D native Worker executes only an explicitly registered synthetic backup handler",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D operations module has no provider finance mail transport or public endpoint dependency",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D authenticated duplicate JSON archive keys are rejected before restore",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D encryption key alone cannot issue a forged source ownership backup",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    },
+    {
+      "test": "F6-D unapproved target definer trigger blocks restore before any insert",
+      "local_result": "PASS",
+      "scope": "SYNTHETIC",
+      "platform_note": "Executed"
+    }
+  ],
+  "controlled_faults": [
+    "DISK_FULL is short-write injection, not physical exhaustion",
+    "EXPIRE is stale operation fault; actual expired marker separately executed"
+  ],
+  "real_child_exit": 73,
+  "real_process_counts": [
+    1,
+    4,
+    8
+  ],
+  "before_failures": [
+    "format-before.txt",
+    "issuer-before.txt",
+    "trigger-before.txt"
+  ],
+  "not_verified": [
+    "Cold native application restore",
+    "Original archive bytes",
+    "Permanent key/issuer recovery",
+    "Real hosting cron overlap/capacity",
+    "PITR/RPO/RTO",
+    "Power loss directory fsync durability"
+  ]
+}

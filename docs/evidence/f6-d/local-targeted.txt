@@ -1,0 +1,33 @@
+PASS F6-D actual encrypted backup verifies bounded DB and private sample files
+PASS F6-D backup identity is deterministic while native crypto uses fresh nonces
+PASS F6-D reports contain no keys tokens paths private bodies or ciphertext
+PASS F6-D wrong rotated missing revoked and mismatched key identities fail closed
+PASS F6-D ciphertext tag truncation and missing package cannot verify
+PASS F6-D source file missing corrupt size or snapshot mismatch prevents complete backup
+PASS F6-D traversal absolute sibling Unicode case and unknown file types are rejected
+PASS F6-D foreign owner checksum and inventory loss block authenticated malformed packages
+PASS F6-D physical source symlink is denied where platform capability exists
+PASS F6-D environment explicit authority wrong vault and expired lease fail closed
+PASS F6-D 1 4 8 independent backup processes publish one immutable artifact
+PASS F6-D real process crashes at capture encryption manifest and publish never expose final
+PASS F6-D controlled short write disk budget and stale operation do not verify partial files
+PASS F6-D escrow restore preserves exact DB evidence finance and sample file bytes
+PASS F6-D wrong target marker ownership lease grants and schema are denied
+PASS F6-D corrupted backup and wrong key leave owned destination empty
+PASS F6-D restore exception and real crashes rollback or re-read exact durable outcome
+PASS F6-D existing conflicting restore rows are never overwritten or rebound
+PASS F6-D source readiness lost migration checksum partial schema or evidence cannot back up
+PASS F6-D actual source connection loss prevents publication and fresh reconnect recovers
+PASS F6-D dry retention uses tier union and protects the last recoverable verified copy
+PASS F6-D retention clock key loss incomplete chain quota and timezone produce review not deletion
+PASS F6-D native Queue expiry keeps unsafe outcome UNKNOWN and rejects stale owner finish
+PASS F6-D native retry-safe poison work reaches DLQ without dispatching other engines
+PASS F6-D destination least privilege denies UPDATE DELETE DDL and cross-schema reads
+PASS F6-D compression version duplicate archive key and partial manifest cannot authenticate
+PASS F6-D dry retention rejects duplicate identities and never performs filesystem deletion
+PASS F6-D native Worker executes only an explicitly registered synthetic backup handler
+PASS F6-D operations module has no provider finance mail transport or public endpoint dependency
+PASS F6-D authenticated duplicate JSON archive keys are rejected before restore
+PASS F6-D encryption key alone cannot issue a forged source ownership backup
+PASS F6-D unapproved target definer trigger blocks restore before any insert
+32 tests, 0 failures

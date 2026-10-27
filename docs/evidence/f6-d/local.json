@@ -1,0 +1,32 @@
+{
+  "failures": 0,
+  "development_failed": {
+    "acceptance_evidence": false,
+    "tests": 32,
+    "reason": "PK ordering after canonical JSON",
+    "failures": 2
+  },
+  "old_699_rerun_locally": false,
+  "negative_before": [
+    "format-before.txt",
+    "issuer-before.txt",
+    "trigger-before.txt"
+  ],
+  "physical_disk_full": false,
+  "disk_full_fault": "CONTROLLED_SHORT_WRITE",
+  "lint_files": 435,
+  "actual_crash_exit": 73,
+  "pattern_files": 457,
+  "pattern_findings": 0,
+  "lint_violations": 0,
+  "tests": 32,
+  "windows_symlink": "BLOCKED_PLATFORM",
+  "native_activation": "ACTUALLY_REJECTED",
+  "php": "8.4.24",
+  "phpstan_errors": 0,
+  "actual_child_process_counts": [
+    1,
+    4,
+    8
+  ]
+}

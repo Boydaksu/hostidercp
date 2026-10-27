@@ -128,6 +128,7 @@ jobs:
       - run: php tests/migration-visibility.php
       - run: php tests/migration-import.php
       - run: php tests/migration-reconciliation.php
+      - run: php tests/migration-operations.php
       - run: node --check public/assets/support.js
       - run: node tests/support-e-state.cjs
       - name: Locked development-only Chromium checks
