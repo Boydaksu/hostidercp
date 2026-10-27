@@ -29,7 +29,11 @@ final readonly class Loader
                 $sandbox->db->execute('INSERT INTO f6b_runs VALUES (?,?,?,?,?,?,?,?,?)',array_values($row));
                 $this->event($row,$sandbox,'PLANNED');
                 if($plan->reasons!==[]){$row['safe_code']=$plan->reasons[0];$this->event($row,$sandbox,'REVIEW_REQUIRED');}
-                else{$this->event($row,$sandbox,'VALIDATED');}
+                else{
+                    $snapshotReasons=$this->snapshotConflicts($plan,$sandbox);
+                    if($snapshotReasons!==[]){$row['safe_code']=$snapshotReasons[0];$this->event($row,$sandbox,'REVIEW_REQUIRED');}
+                    else{foreach($plan->snapshots() as $key=>$root){if(!$sandbox->db->execute('SELECT 1 FROM f6b_source_snapshots WHERE snapshot_key=?',[$key])->fetchColumn()){$sandbox->db->execute('INSERT INTO f6b_source_snapshots VALUES (?,?,?)',[$key,$root,$plan->hash]);}}$this->event($row,$sandbox,'VALIDATED');}
+                }
                 $this->saveRun($row,$sandbox);return $row;
             });
             if($run['state']==='REVIEW_REQUIRED' && $plan->reasons!==[]){return $this->manifest($plan,$run,$sandbox,false,$plan->reasons);}
@@ -63,7 +67,7 @@ final readonly class Loader
     }
     private function conflicts(Plan $plan,Sandbox $sandbox): array
     {
-        $reasons=[];
+        $reasons=$this->snapshotConflicts($plan,$sandbox);
         foreach($plan->items as $e){
             $key=$e->identity->key();$target=Plan::target($e);
             $existing=$sandbox->db->execute('SELECT * FROM f6b_mappings WHERE source_key=?',[$key])->fetch();
@@ -79,6 +83,11 @@ final readonly class Loader
             foreach(Plan::claims($e) as $kind=>$hash){$owner=$sandbox->db->execute('SELECT source_key FROM f6b_claims WHERE kind=? AND claim_hash=?',[$kind,$hash])->fetchColumn();if($owner!==false && $owner!==$key){$reasons[]=$kind.'_CONFLICT';}}
         }
         return array_values(array_unique($reasons));
+    }
+    private function snapshotConflicts(Plan $plan,Sandbox $sandbox): array
+    {
+        foreach($plan->snapshots() as $key=>$root){$stored=$sandbox->db->execute('SELECT snapshot_hash FROM f6b_source_snapshots WHERE snapshot_key=?',[$key])->fetchColumn();if($stored!==false && !hash_equals($stored,$root)){return ['SOURCE_SNAPSHOT_CONFLICT'];}}
+        return [];
     }
     private function apply(SourceEnvelope $e,Plan $plan,Sandbox $sandbox): void
     {

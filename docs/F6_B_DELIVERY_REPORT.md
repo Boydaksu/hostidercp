@@ -90,8 +90,8 @@ NOT APPLICABLE; yeni auth yüzeyi açılmadı. Eski native621 regresyon aynen ko
 
 ## Hedefli test ve başarısız denemeler
 
-[Yerel40 test](evidence/f6-b/local-targeted.txt): PHP8.4.24 + gerçek MariaDB10.11,
-40/40 PASS. F6-A31+8 ve ayrı6 CI helper de PASS. PHPStan0 hata; son lint/pattern
+[Yerel41 test](evidence/f6-b/local-targeted.txt): PHP8.4.24 + gerçek MariaDB10.11,
+41/41 PASS. F6-A31+8 ve ayrı6 CI helper de PASS. PHPStan0 hata; son lint/pattern
 ve gerçek FAST sonuçları kaynak kimliğiyle kapanış kaydına eklenecek.
 [Gerçek demo manifest'i](evidence/f6-b/example-manifest.json) DRY_RUN, ilk load ve
 replay'i ayrı gösterir; gerçek dosya/native entity yazısı yoktur. Tekrar demo:
@@ -104,8 +104,22 @@ haklarının gate tarafından reddiydi. Yalnız görev için oluşturulan/datadi
 doğrulanan yerel test sunucusunda PUBLIC test hakları kaldırıldı; runtime gate
 gevşetilmedi. Sonraki37/37 PASS. Ek kardeş-schema regresyonu39-test turunda1 FAIL
 ile underscore wildcard riskini yakaladı; literal privilege escape sonrası39/39,
-son40/40 PASS. Başarısız turlar başarı veya kabul yerine sunulmaz; yeni testler dışında
+son41/41 PASS. Başarısız turlar başarı veya kabul yerine sunulmaz; yeni testler dışında
 eski test/assertion değiştirilmedi. Gerçek dosya/MIME/AV/retention henüz doğrulanmadı.
+
+Ek negatif test, eski422bf81 kaynağında ilk1 kayıt sonrası aynı snapshot'ın henüz
+aktarılmamış customer-a içeriğinin değişmesini yakaladı:41 test/1 FAIL,
+beklenen REVIEW_REQUIRED yerine APPLIED. [Önceki çıktı](evidence/f6-b/snapshot-before.txt).
+Tam kaynak snapshot'ı ilk batch öncesinde immutable envelope köküne bağlandı;
+SOURCE_SNAPSHOT_CONFLICT artık prefix'i değiştirmez, orijinal checkpoint devam eder.
+Son yerel tur41/41 PASS. Kaynak snapshot kökleri de runtime UPDATE/DELETE dışındadır.
+
+İlk gerçek FAST [40501763210](https://github.com/Boydaksu/hostidercp/actions/runs/40501763210)
+iki PHP sürümünde eski621 testi0 hata ile geçti; yeni40 test35 setup hatası verdi
+(F6B_TEST_SETUP_FAILED_1045). Docker köprüsünde server-observed client host'u
+127.0.0.1 olmadığından yalnız test hesaplarının literal host bağlamı uyarlandı;
+wildcard host/hak eklenmedi. [Başarısız CI kaydı](evidence/f6-b/ci-first-failure.json)
+kabul kanıtı değildir; son adayda iki gerçek FAST sonucu ayrıca gereklidir.
 
 ## Migration / rollback / F6-C bağımlılığı
 

@@ -20,29 +20,33 @@ function provisionImportFixture(): array
 {
     $a=importAdmin();$root=$a['root'];$schema='f6b_'.bin2hex(random_bytes(12));$user='f6b_'.bin2hex(random_bytes(8));$migration='f6b_m_'.bin2hex(random_bytes(8));
     $password=bin2hex(random_bytes(32));$migrationPassword=bin2hex(random_bytes(32));$secret=bin2hex(random_bytes(32));$snapshot=bin2hex(random_bytes(32));
-    $owned=[$root,$schema,$user,$migration];$GLOBALS['f6b_owned'][]=$owned;
+    // A published Docker port reaches MariaDB from its bridge address, not 127.0.0.1.
+    $host=(string)$root->execute("SELECT SUBSTRING_INDEX(USER(),'@',-1)")->fetchColumn();
+    if($host!=='localhost' && filter_var($host,FILTER_VALIDATE_IP)===false){throw new RuntimeException('F6B_TEST_HOST_DENIED');}
+    $owned=[$root,$schema,$user,$migration,$host];$GLOBALS['f6b_owned'][]=$owned;
     $root->execute('CREATE DATABASE `'.$schema.'` CHARACTER SET utf8mb4 COLLATE utf8mb4_bin');
-    foreach([[$user,$password],[$migration,$migrationPassword]] as [$account,$value]){$root->execute("CREATE USER '".$account."'@'127.0.0.1' IDENTIFIED BY '".$value."'");}
+    foreach([[$user,$password],[$migration,$migrationPassword]] as [$account,$value]){$root->execute("CREATE USER '".$account."'@'".$host."' IDENTIFIED BY '".$value."'");}
     $schemaPrivilege=str_replace('_','\\_',$schema);
-    $root->execute("GRANT SELECT,INSERT,UPDATE,CREATE,ALTER,INDEX,REFERENCES,TRIGGER ON `".$schemaPrivilege."`.* TO '".$migration."'@'127.0.0.1'");
+    $root->execute("GRANT SELECT,INSERT,UPDATE,CREATE,ALTER,INDEX,REFERENCES,TRIGGER ON `".$schemaPrivilege."`.* TO '".$migration."'@'".$host."'");
     $dsn='mysql:host=127.0.0.1;port='.$a['port'].';dbname='.$schema.';charset=utf8mb4';
     $setup=Database::connect(new Config('test','https://synthetic.example.invalid',base64_encode(random_bytes(32)),$dsn,$migration,$migrationPassword));
     (new Migrator($setup,Sandbox::directory()))->migrate();
     $setup->execute('INSERT INTO f6b_environment VALUES (1,?,?,?,?,TIMESTAMPADD(MINUTE,30,UTC_TIMESTAMP(6)))',[$schema,$user,hash('sha256',$secret),$snapshot]);
     $schemaPrivilege=str_replace('_','\\_',$schema);
-    $root->execute("GRANT SELECT ON `".$schemaPrivilege."`.* TO '".$user."'@'127.0.0.1'");
-    foreach(Sandbox::INSERT_TABLES as $table){$root->execute("GRANT INSERT ON `".$schema.'`.`'.$table."` TO '".$user."'@'127.0.0.1'");}
-    $root->execute("GRANT UPDATE ON `".$schema."`.`f6b_runs` TO '".$user."'@'127.0.0.1'");
+    $root->execute("GRANT SELECT ON `".$schemaPrivilege."`.* TO '".$user."'@'".$host."'");
+    foreach(Sandbox::INSERT_TABLES as $table){$root->execute("GRANT INSERT ON `".$schema.'`.`'.$table."` TO '".$user."'@'".$host."'");}
+    $root->execute("GRANT UPDATE ON `".$schema."`.`f6b_runs` TO '".$user."'@'".$host."'");
     putenv('SYNTHETIC_IMPORT_ALLOWED=1');
     $params=[$a['port'],$schema,$user,$password,$secret];$sandbox=Sandbox::open(...$params);
-    return compact('root','setup','schema','user','secret','snapshot','params','sandbox');
+    return compact('root','setup','schema','user','host','secret','snapshot','params','sandbox');
 }
 function importCleanup(): void
 {
-    foreach(array_reverse($GLOBALS['f6b_owned']??[]) as [$root,$schema,$user,$migration]){
+    foreach(array_reverse($GLOBALS['f6b_owned']??[]) as [$root,$schema,$user,$migration,$host]){
         if(preg_match('/^f6b_[a-f0-9]{24}$/D',$schema)!==1 || preg_match('/^f6b_[a-f0-9]{16}$/D',$user)!==1 || preg_match('/^f6b_m_[a-f0-9]{16}$/D',$migration)!==1){throw new RuntimeException('F6B_TEARDOWN_DENIED');}
         $root->execute('DROP DATABASE IF EXISTS `'.$schema.'`');
-        foreach([$user,$migration] as $account){$root->execute("DROP USER IF EXISTS '".$account."'@'127.0.0.1'");}
+        if($host!=='localhost' && filter_var($host,FILTER_VALIDATE_IP)===false){throw new RuntimeException('F6B_TEARDOWN_DENIED');}
+        foreach([$user,$migration] as $account){$root->execute("DROP USER IF EXISTS '".$account."'@'".$host."'");}
     }
     $GLOBALS['f6b_owned']=[];
 }

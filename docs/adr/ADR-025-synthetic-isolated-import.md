@@ -20,6 +20,13 @@ provenance/history ve HMAC checkpoint'i atomik tutar. Crash/connection-loss fixt
 yalnız test modülündeki allowlisted fault enum'dur; caller callback/SQL/URL almaz.
 Gerçek dış etki yolu yoktur. Named lock genel Queue/lease yerine geçmez.
 
+Kaynak snapshot'ın tamamı ilk prefix öncesinde instance+snapshot anahtarı ve
+sıralanmış envelope fingerprint köküyle immutable f6b_source_snapshots tablosuna
+bağlanır. Böylece henüz mapping'i olmayan satırın değişmesi de review gerektirir.
+Runtime bu kökleri UPDATE/DELETE edemez. Docker published portunda hesap host'u
+server-observed literal USER() host'udur; wildcard hesap açılmaz. İstemci DSN'i
+yine yalnız loopback'tir ve CURRENT_USER() aynı literal host ile doğrulanır.
+
 F6-A review sonuçları load sırasında bypass edilmez: refund dahil review-only
 facts otomatik APPLIED yapılmaz. Bu finansal kapsam daraltması değil, kabul edilmiş
 F6-A güvenlik kararını korumadır; gerçek mutabakat ve policy F6-C açık bağımlılığıdır.

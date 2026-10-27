@@ -26,6 +26,9 @@ SYNTHETIC_LOAD yalnız geçici sandbox'ta aynı fixture'ı tekrar doğrular. Imm
 plan fingerprint server tarafından türetilir; caller idempotency key veya target ID
 almaz. Her batch güncel mapping/target/external claim ve checkpoint'i yeniden denetler.
 Plan PASS, load garantisi değildir. Belirsiz/invalid fixture REVIEW_REQUIRED olur;
+İlk batch öncesinde instance+snapshot kimliği, bütün üyelerin sıralı envelope
+fingerprint köküne immutable olarak bağlanır. Henüz aktarılmamış bir satır değişse
+bile aynı snapshot kimliği farklı kökle devam edemez (SOURCE_SNAPSHOT_CONFLICT).
 UNKNOWN/FX/refund için F6-A'nın review kararları gevşetilmez. Refund contract/limit
 senaryoları review-only kalır; native ledger veya yeni finans kararı oluşturulmaz.
 

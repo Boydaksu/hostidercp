@@ -30,6 +30,13 @@ final readonly class Plan
         }
     }
     public static function target(SourceEnvelope $e): string { return Contract::hash(['f6b-target.v1',$e->identity->key()]); }
+    /** Bind the entire immutable source snapshot before any prefix can commit. */
+    public function snapshots(): array
+    {
+        $groups=[];
+        foreach($this->items as $e){$key=Contract::hash(['f6b-source-snapshot.v1',$e->identity->instance,$e->metadata['snapshot']]);$groups[$key][$e->identity->key()]=$e->fingerprint;}
+        $roots=[];foreach($groups as $key=>$members){ksort($members,SORT_STRING);$roots[$key]=Contract::hash($members);}ksort($roots,SORT_STRING);return $roots;
+    }
     public static function dependencies(SourceEnvelope $e): array
     {
         $p=$e->payload; $refs=[];

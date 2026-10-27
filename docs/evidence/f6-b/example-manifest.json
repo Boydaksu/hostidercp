@@ -64,10 +64,10 @@
         "replay": false,
         "checkpoint": {
             "run_id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
-            "target_snapshot": "6705e6b17109b7a89b70e8e86ed2c6b251ca7f69d762a2b798f776b67b4fe17a",
+            "target_snapshot": "149435d6b4bf3ed0765f5989371fb08e972636b5e62254d73f90aa47d0b79af6",
             "cursor": 26,
             "version": 1,
-            "hash": "331adf9d182b89f879e418a4da714bade79a2250552644bfaf2576e80b347743"
+            "hash": "584cfe490dfe9c5630a14896fcd2621967701f66ec2b90471e4b237bec51824d"
         },
         "effects": {
             "calls": {
@@ -109,10 +109,10 @@
         "replay": true,
         "checkpoint": {
             "run_id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
-            "target_snapshot": "6705e6b17109b7a89b70e8e86ed2c6b251ca7f69d762a2b798f776b67b4fe17a",
+            "target_snapshot": "149435d6b4bf3ed0765f5989371fb08e972636b5e62254d73f90aa47d0b79af6",
             "cursor": 26,
             "version": 1,
-            "hash": "331adf9d182b89f879e418a4da714bade79a2250552644bfaf2576e80b347743"
+            "hash": "584cfe490dfe9c5630a14896fcd2621967701f66ec2b90471e4b237bec51824d"
         },
         "effects": {
             "calls": {

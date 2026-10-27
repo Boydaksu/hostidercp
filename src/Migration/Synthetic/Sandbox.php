@@ -7,8 +7,8 @@ use Hostider\Migration\Contract;
 
 final readonly class Sandbox
 {
-    public const INSERT_TABLES=['f6b_runs','f6b_entities','f6b_mappings','f6b_claims','f6b_provenance','f6b_history'];
-    public const TABLES=['f6b_environment','f6b_runs','f6b_entities','f6b_mappings','f6b_claims','f6b_provenance','f6b_history','schema_migrations'];
+    public const INSERT_TABLES=['f6b_runs','f6b_source_snapshots','f6b_entities','f6b_mappings','f6b_claims','f6b_provenance','f6b_history'];
+    public const TABLES=['f6b_environment','f6b_runs','f6b_source_snapshots','f6b_entities','f6b_mappings','f6b_claims','f6b_provenance','f6b_history','schema_migrations'];
     private function __construct(public Database $db, public string $schema, private string $account, private string $secret, public string $snapshot) {}
 
     public static function directory(): string { return dirname(__DIR__,3).'/tests/fixtures/f6b-schema'; }
@@ -44,7 +44,8 @@ final readonly class Sandbox
         self::flags();
         Contract::require($this->db->execute('SELECT DATABASE()')->fetchColumn()===$this->schema,'F6B_SCHEMA_MISMATCH');
         $user=$this->db->execute('SELECT CURRENT_USER()')->fetchColumn();
-        Contract::require(in_array($user,[$this->account.'@127.0.0.1',$this->account.'@localhost'],true),'F6B_ACCOUNT_MISMATCH');
+        $host=(string)$this->db->execute("SELECT SUBSTRING_INDEX(USER(),'@',-1)")->fetchColumn();
+        Contract::require(($host==='localhost' || filter_var($host,FILTER_VALIDATE_IP)!==false) && $user===$this->account.'@'.$host,'F6B_ACCOUNT_MISMATCH');
         Contract::require(in_array(strtoupper((string)$this->db->execute('SELECT CURRENT_ROLE()')->fetchColumn()),['','NONE'],true),'F6B_ROLE_DENIED');
         $row=$this->db->execute('SELECT *,expires_at>UTC_TIMESTAMP(6) AS fresh FROM f6b_environment WHERE id=1')->fetch();
         Contract::require($row && (int)$row['fresh']===1 && $row['schema_name']===$this->schema && $row['account_name']===$this->account

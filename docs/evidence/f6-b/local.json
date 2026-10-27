@@ -1,6 +1,6 @@
 {
   "php": "8.4.24",
-  "targeted_tests": 40,
+  "targeted_tests": 41,
   "targeted_failures": 0,
   "old_f6_a_targeted_tests": 39,
   "old_f6_a_failures": 0,
