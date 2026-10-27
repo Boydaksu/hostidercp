@@ -1,5 +1,17 @@
 # F6-B — sentetik izole import / dry-run teknik teslimi
 
+## 27 Ekim 2026 — B-01 bağımsız denetim düzeltmesi
+
+Commit öncesi tam readiness kontrolü eklendi; mevcut assertBound korundu.
+[B-01 karşı-örnek, hedefli test ve kanıt kaydı](F6_B_B01_REVIEW.md).
+Yeni uygulama / FULL aday SHA `d4ead54db3aad6208e1a40e70822da7ad1346e33`,
+tree `0057f233dbbeebfae1b3c094ec8eeafdb0fad7a4`. Tek yeni negatif test eski
+kaynakta FAIL, düzeltilmiş kaynakta PASS; eski42 test değişmedi.
+[FAST40514399931](https://github.com/Boydaksu/hostidercp/actions/runs/40514399931):
+PHP8.3/8.4 her sürüm55 suite/664 test/0 hata; eski621+42 adları eksiksiz, yeni1 PASS.
+Bağımsız teknik kabul bekler; FULL/F6-C yetkisi yoktur.
+Aşağıdaki663-test/eb3c2f6 kaydı ilk F6-B tesliminin tarihsel kanıtıdır.
+
 Durum: sentetik geliştirme ve gerçek PHP8.3/8.4 FAST tamamlandı; bağımsız teknik kabul bekler.
 F6-B ACCEPTED, FULL DONE veya PRODUCTION READY değildir.
 Yetki/kapsam: [F6_B_PLAN](F6_B_PLAN.md), [ADR-025](adr/ADR-025-synthetic-isolated-import.md).

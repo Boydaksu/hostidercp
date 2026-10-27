@@ -1,5 +1,15 @@
 # Hostider Automation — V1.0 Master Specification
 
+## 27 Ekim 2026 — F6-B B-01 düzeltmesi
+
+Batch commit öncesi tam readiness kontrolü eklendi; tek yeni negatif test rollback
+ve committed cursor korumasını doğrular. [B-01 kanıtı](docs/F6_B_B01_REVIEW.md).
+Yeni uygulama / FULL aday `d4ead54db3aad6208e1a40e70822da7ad1346e33`,
+tree `0057f233dbbeebfae1b3c094ec8eeafdb0fad7a4`.
+[FAST40514399931](https://github.com/Boydaksu/hostidercp/actions/runs/40514399931):
+PHP8.3/8.4 her sürüm55 suite/664 test/0 hata; eski621+42 korunmuş, yeni1 PASS.
+Bağımsız kabul bekler. FULL/F6-C/canlı işlemlere geçilmez; önceki teslimler aşağıdadır.
+
 ## 27 Ekim 2026 — F6-B sentetik teknik teslimi
 
 F6-B izole dry-run/load, idempotent mapping/provenance, batch recovery ve1/4/8

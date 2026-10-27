@@ -1,5 +1,15 @@
 # F6 — Aktarım ve operasyon teknik planı
 
+## 27 Ekim 2026 — F6-B B-01 güncellemesi
+
+[B-01](F6_B_B01_REVIEW.md) commit öncesi readiness düzeltmesi bağımsız yeniden
+kabul bekler. Yeni uygulama / FULL aday `d4ead54db3aad6208e1a40e70822da7ad1346e33`,
+tree `0057f233dbbeebfae1b3c094ec8eeafdb0fad7a4`; tek yeni negatif test eklendi,
+mevcut42 F6-B testi korunur.
+[FAST40514399931](https://github.com/Boydaksu/hostidercp/actions/runs/40514399931):
+PHP8.3/8.4 her sürüm55 suite/664 test/0 hata; FULL/F6-C/canlı yetkisi yoktur.
+Aşağıdaki eb3c2f6 ve663-test kaydı ilk teslimin tarihsel referansıdır.
+
 ## 27 Ekim 2026 — güncel F6-B teslim durumu
 
 F6-A yalnız kabul edilmiş sentetik sözleşme tabanıdır. F6-B izole dry-run/load

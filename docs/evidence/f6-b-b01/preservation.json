@@ -1,0 +1,23 @@
+{
+  "new_negative_tests": 1,
+  "normalized_source_sha256": "4990ad484ea78a1473bbd6b6392db24f6913e765eb363a249cde305393fa9233",
+  "production_migration_count": 54,
+  "protected_baseline_files": 404,
+  "baseline_application_sha": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+  "old_f6_b_test_source_equal_after_removing_only_new_registration": true,
+  "application_changes": [
+    "src/Migration/Synthetic/Loader.php",
+    "tests/migration-import.php",
+    "tests/migration-readiness.php"
+  ],
+  "old_application_tests": 621,
+  "application_tree": "0057f233dbbeebfae1b3c094ec8eeafdb0fad7a4",
+  "ci_workflow_and_registry_unchanged": true,
+  "old_f6_b_tests": 42,
+  "production_migration_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "protected_file_changes": 0,
+  "application_sha": "d4ead54db3aad6208e1a40e70822da7ad1346e33",
+  "negative_test_blob": "482cc5efbdfd75bf8eb73618a43666020247c85f",
+  "reference_loader_blob": "944df114ec2a7d11df43fb0c32c6fe9ac496bc65",
+  "candidate_loader_blob": "41bb63369d7f45009bd9a92d8b6e7a1604453549"
+}
