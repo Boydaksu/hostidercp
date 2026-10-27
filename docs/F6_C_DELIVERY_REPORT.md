@@ -1,5 +1,25 @@
 # F6-C — sentetik reconciliation ve güvenlik teknik teslimi
 
+## 27 Ekim 2026 — F6-C proje sahibi kabul kararı
+
+**F6-C LIMITED SYNTHETIC RECONCILIATION & SECURITY TECHNICAL BASELINE — ACCEPTED.**
+Application `c5ee92645a3cda842581fccd86707e76cea4dfde`, tree
+`6418118929a977729f6fe12383c689c91f3edad5`; ayrı evidence commit'i
+`2e5761921874cfef2ae25327434655a260064ff8`.
+[FAST40530996504](https://github.com/Boydaksu/hostidercp/actions/runs/40530996504):
+PHP8.3/8.4 her sürüm56 suite/699 test/0 hata; eski664+35 korunmuş; PHPStan0,
+lint423/0, pattern445/0. Evidence-binding negatif düzeltmesi doğrulanmıştır.
+Kabul yalnız sentetik source/target count, mapping/provenance/claim, checkpoint/HMAC,
+SELECT-only Inspector, currency metadata, provider ownership, support privacy,
+redaksiyon, evidence fingerprint ve bounded fail-closed sorgular içindir.
+Gerçek WHMCS/ledger/provider/arşiv/PDF bytes, backup/restore operasyonu, FULL,
+production readiness, merge/deploy/cutover kabul edilmez. F6-D yalnız SYNTHETIC
+OPERATIONAL READINESS DEVELOPMENT GO; F6-E ve gerçek operasyon yetkisi yoktur.
+Bu docs-only kabul dört belgeyi değiştirir; application/test/fixture/CI/migration
+aynıdır. Başarılı FAST tekrar edilmedi. Rollback yalnız bu belge commit revert'üdür.
+PR3 OPEN/DRAFT; main protected=false/rulesets=[] gözlendi, ayarlar değiştirilmedi.
+Aşağıdaki eski teslim/bekleme ifadeleri tarihsel kayıttır.
+
 Durum: F6-C SYNTHETIC DEVELOPMENT COMPLETED; exact aday FAST SUCCESS,
 F6-C INDEPENDENT ACCEPTANCE PENDING. FULL DONE/PRODUCTION READY değildir.
 F6-B LIMITED SYNTHETIC ISOLATED IMPORT & DRY-RUN TECHNICAL BASELINE ACCEPTED;
