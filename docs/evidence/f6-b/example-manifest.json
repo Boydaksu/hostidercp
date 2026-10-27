@@ -1,0 +1,133 @@
+{
+    "classification": "SYNTHETIC",
+    "fixture_byte_sha256": "91b125b1016dc3947ab4cd886cbfc13a7c6f09a2a0f1b19989e704601020caf7",
+    "dry_run": {
+        "classification": "SYNTHETIC",
+        "mode": "DRY_RUN",
+        "status": "PLANNED",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "counts": {
+            "allocation": 1,
+            "attachment": 2,
+            "customer": 2,
+            "document": 2,
+            "membership": 2,
+            "message": 2,
+            "order": 1,
+            "payment": 1,
+            "resource": 4,
+            "service": 4,
+            "ticket": 1,
+            "user": 3,
+            "wallet": 1
+        },
+        "reasons": [],
+        "effects_allowed": false,
+        "imported_records": 0,
+        "effects": {
+            "calls": {
+                "CPANEL_CREATE": 0,
+                "VOYAR_CREATE": 0,
+                "RESELLERCLUB_CREATE": 0,
+                "DOMAINNAMEAPI_CREATE": 0,
+                "PAYMENT": 0,
+                "BILLING": 0,
+                "MAIL": 0,
+                "NOTIFICATION": 0
+            },
+            "denied": 0
+        }
+    },
+    "synthetic_load": {
+        "classification": "SYNTHETIC",
+        "mode": "SYNTHETIC_LOAD",
+        "status": "APPLIED",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "counts": {
+            "allocation": 1,
+            "attachment": 2,
+            "customer": 2,
+            "document": 2,
+            "membership": 2,
+            "message": 2,
+            "order": 1,
+            "payment": 1,
+            "resource": 4,
+            "service": 4,
+            "ticket": 1,
+            "user": 3,
+            "wallet": 1
+        },
+        "reasons": [],
+        "effects_allowed": false,
+        "imported_records": 26,
+        "replay": false,
+        "checkpoint": {
+            "run_id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+            "target_snapshot": "6705e6b17109b7a89b70e8e86ed2c6b251ca7f69d762a2b798f776b67b4fe17a",
+            "cursor": 26,
+            "version": 1,
+            "hash": "331adf9d182b89f879e418a4da714bade79a2250552644bfaf2576e80b347743"
+        },
+        "effects": {
+            "calls": {
+                "CPANEL_CREATE": 0,
+                "VOYAR_CREATE": 0,
+                "RESELLERCLUB_CREATE": 0,
+                "DOMAINNAMEAPI_CREATE": 0,
+                "PAYMENT": 0,
+                "BILLING": 0,
+                "MAIL": 0,
+                "NOTIFICATION": 0
+            },
+            "denied": 0
+        }
+    },
+    "replay": {
+        "classification": "SYNTHETIC",
+        "mode": "SYNTHETIC_LOAD",
+        "status": "APPLIED",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "counts": {
+            "allocation": 1,
+            "attachment": 2,
+            "customer": 2,
+            "document": 2,
+            "membership": 2,
+            "message": 2,
+            "order": 1,
+            "payment": 1,
+            "resource": 4,
+            "service": 4,
+            "ticket": 1,
+            "user": 3,
+            "wallet": 1
+        },
+        "reasons": [],
+        "effects_allowed": false,
+        "imported_records": 26,
+        "replay": true,
+        "checkpoint": {
+            "run_id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+            "target_snapshot": "6705e6b17109b7a89b70e8e86ed2c6b251ca7f69d762a2b798f776b67b4fe17a",
+            "cursor": 26,
+            "version": 1,
+            "hash": "331adf9d182b89f879e418a4da714bade79a2250552644bfaf2576e80b347743"
+        },
+        "effects": {
+            "calls": {
+                "CPANEL_CREATE": 0,
+                "VOYAR_CREATE": 0,
+                "RESELLERCLUB_CREATE": 0,
+                "DOMAINNAMEAPI_CREATE": 0,
+                "PAYMENT": 0,
+                "BILLING": 0,
+                "MAIL": 0,
+                "NOTIFICATION": 0
+            },
+            "denied": 0
+        }
+    },
+    "real_files_verified": false,
+    "native_entities_written": false
+}

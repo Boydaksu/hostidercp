@@ -1,0 +1,18 @@
+{
+  "php": "8.4.24",
+  "targeted_tests": 40,
+  "targeted_failures": 0,
+  "old_f6_a_targeted_tests": 39,
+  "old_f6_a_failures": 0,
+  "ci_helper_tests_separate": 6,
+  "ci_helper_failures": 0,
+  "phpstan_errors": 0,
+  "composer_locked_audit": "No security vulnerability advisories found",
+  "lint_php_files": 414,
+  "lint_violations": 0,
+  "pattern_files": 436,
+  "pattern_findings": 0,
+  "full_local_621_test_run": false,
+  "test_database": "temporary least-privileged MariaDB schemas",
+  "real_external_effects": false
+}

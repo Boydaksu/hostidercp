@@ -1,0 +1,36 @@
+{
+  "runs": [
+    {
+      "local_run": "f6b-local-first.txt",
+      "tests": 37,
+      "failures": 33,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-third.txt",
+      "tests": 37,
+      "failures": 33,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-fourth.txt",
+      "tests": 37,
+      "failures": 0,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-scope.txt",
+      "tests": 39,
+      "failures": 1,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-final.txt",
+      "tests": 39,
+      "failures": 0,
+      "passed_as_acceptance": false
+    }
+  ],
+  "final_targeted": "local-targeted.txt",
+  "note": "Development failures retained; only final exact-candidate CI is acceptance evidence"
+}
