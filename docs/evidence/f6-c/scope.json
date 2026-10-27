@@ -1,0 +1,27 @@
+{
+  "classification": "SYNTHETIC",
+  "rulesets": [],
+  "main_protected": false,
+  "no_protection_mutations": true,
+  "external_gate_blocked": [
+    "real WHMCS",
+    "real ledger/provider",
+    "real file bytes/AV/MIME/retention",
+    "production CRUD",
+    "F6-D/E"
+  ],
+  "review_required": [
+    "uncertainty",
+    "refund",
+    "partial failed run",
+    "mismatches"
+  ],
+  "implementable": [
+    "source-target integrity",
+    "read-only bounded reconciliation",
+    "finance metadata by currency",
+    "provider metadata ownership",
+    "support metadata privacy",
+    "snapshot checkpoint history"
+  ]
+}

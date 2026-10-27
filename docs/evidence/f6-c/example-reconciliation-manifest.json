@@ -1,0 +1,321 @@
+{
+    "content": {
+        "classification": "SYNTHETIC",
+        "contract": "hostider.reconciliation.v1",
+        "status": "PASS",
+        "source_contract": "hostider.synthetic.v1",
+        "transform": "synthetic.v1",
+        "plan_version": "f6b.v1",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "source_snapshot_roots": {
+            "c234af6e1c86872cb1175a25bc4960ed6ee9294035f85088279365ce1821858e": "7c0ed76d4326a1ed5d009d9fe0bcd2d6f788952075d4ca567f1852c1699dabc9"
+        },
+        "target_snapshot": "9af9b598f935d36f7da6f16bed2bb0e9ff733787f7eff6d9f2b0ef4a7c846fa4",
+        "run": {
+            "id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+            "state": "APPLIED",
+            "cursor": 26,
+            "version": 1
+        },
+        "source_target_counts": {
+            "allocation": {
+                "source": 1,
+                "target": 1,
+                "matched": 1,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "attachment": {
+                "source": 2,
+                "target": 2,
+                "matched": 2,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "customer": {
+                "source": 2,
+                "target": 2,
+                "matched": 2,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "document": {
+                "source": 2,
+                "target": 2,
+                "matched": 2,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "membership": {
+                "source": 2,
+                "target": 2,
+                "matched": 2,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "message": {
+                "source": 2,
+                "target": 2,
+                "matched": 2,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "order": {
+                "source": 1,
+                "target": 1,
+                "matched": 1,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "payment": {
+                "source": 1,
+                "target": 1,
+                "matched": 1,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "refund": {
+                "source": 0,
+                "target": 0,
+                "matched": 0,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "resource": {
+                "source": 4,
+                "target": 4,
+                "matched": 4,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "service": {
+                "source": 4,
+                "target": 4,
+                "matched": 4,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "ticket": {
+                "source": 1,
+                "target": 1,
+                "matched": 1,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "user": {
+                "source": 3,
+                "target": 3,
+                "matched": 3,
+                "unmatched": 0,
+                "extra": 0
+            },
+            "wallet": {
+                "source": 1,
+                "target": 1,
+                "matched": 1,
+                "unmatched": 0,
+                "extra": 0
+            }
+        },
+        "integrity": "MATCHED",
+        "differences": [],
+        "reasons": [],
+        "finance": {
+            "source": {
+                "status": "OBSERVED_SYNTHETIC_METADATA",
+                "totals": {
+                    "allocation": {
+                        "TRY": "4000"
+                    },
+                    "confirmed_collection": {
+                        "TRY": "6000"
+                    },
+                    "official_pdf": {
+                        "TRY": "10000"
+                    },
+                    "order_total": {
+                        "TRY": "10000"
+                    },
+                    "payment_amount": {
+                        "TRY": "6000"
+                    },
+                    "proforma": {
+                        "TRY": "10000"
+                    },
+                    "remaining_balance": {
+                        "TRY": "6000"
+                    },
+                    "wallet_liability": {
+                        "TRY": "2000"
+                    }
+                },
+                "no_facts_in_observed_scope": [
+                    "refund"
+                ],
+                "ledger_debit": "NOT_AVAILABLE",
+                "ledger_credit": "NOT_AVAILABLE",
+                "real_payment_reconciliation": "NOT_VERIFIED"
+            },
+            "target": {
+                "status": "OBSERVED_SYNTHETIC_METADATA",
+                "totals": {
+                    "allocation": {
+                        "TRY": "4000"
+                    },
+                    "confirmed_collection": {
+                        "TRY": "6000"
+                    },
+                    "official_pdf": {
+                        "TRY": "10000"
+                    },
+                    "order_total": {
+                        "TRY": "10000"
+                    },
+                    "payment_amount": {
+                        "TRY": "6000"
+                    },
+                    "proforma": {
+                        "TRY": "10000"
+                    },
+                    "remaining_balance": {
+                        "TRY": "6000"
+                    },
+                    "wallet_liability": {
+                        "TRY": "2000"
+                    }
+                },
+                "no_facts_in_observed_scope": [
+                    "refund"
+                ],
+                "ledger_debit": "NOT_AVAILABLE",
+                "ledger_credit": "NOT_AVAILABLE",
+                "real_payment_reconciliation": "NOT_VERIFIED"
+            },
+            "differences_by_currency": {
+                "allocation": {
+                    "TRY": "0"
+                },
+                "confirmed_collection": {
+                    "TRY": "0"
+                },
+                "official_pdf": {
+                    "TRY": "0"
+                },
+                "order_total": {
+                    "TRY": "0"
+                },
+                "payment_amount": {
+                    "TRY": "0"
+                },
+                "proforma": {
+                    "TRY": "0"
+                },
+                "remaining_balance": {
+                    "TRY": "0"
+                },
+                "wallet_liability": {
+                    "TRY": "0"
+                }
+            },
+            "equal": true
+        },
+        "providers": {
+            "CPANEL": {
+                "source": 1,
+                "target": 1,
+                "operations": {
+                    "CREATE": 0,
+                    "RENEW": 0,
+                    "TERMINATE": 0,
+                    "TRANSFER": 0,
+                    "UPGRADE": 0,
+                    "DOWNGRADE": 0
+                }
+            },
+            "VOYAR": {
+                "source": 1,
+                "target": 1,
+                "operations": {
+                    "CREATE": 0,
+                    "RENEW": 0,
+                    "TERMINATE": 0,
+                    "TRANSFER": 0,
+                    "UPGRADE": 0,
+                    "DOWNGRADE": 0
+                }
+            },
+            "RESELLERCLUB": {
+                "source": 1,
+                "target": 1,
+                "operations": {
+                    "CREATE": 0,
+                    "RENEW": 0,
+                    "TERMINATE": 0,
+                    "TRANSFER": 0,
+                    "UPGRADE": 0,
+                    "DOWNGRADE": 0
+                }
+            },
+            "DOMAINNAMEAPI": {
+                "source": 1,
+                "target": 1,
+                "operations": {
+                    "CREATE": 0,
+                    "RENEW": 0,
+                    "TERMINATE": 0,
+                    "TRANSFER": 0,
+                    "UPGRADE": 0,
+                    "DOWNGRADE": 0
+                }
+            }
+        },
+        "support": {
+            "source": {
+                "public_messages": 1,
+                "private_or_unverified_messages": 1,
+                "attachments": 2,
+                "message_order_sha256": "868b6439bbbe710337c3fdf80b95adec4cf5c62f55dd5041f02f993e2805fdac"
+            },
+            "target": {
+                "public_messages": 1,
+                "private_or_unverified_messages": 1,
+                "attachments": 2,
+                "message_order_sha256": "868b6439bbbe710337c3fdf80b95adec4cf5c62f55dd5041f02f993e2805fdac"
+            },
+            "projection": "AGGREGATE_ONLY_NO_BODY_AUTHOR_PATH",
+            "native_client_api": false
+        },
+        "documents": {
+            "source": {
+                "count": 2,
+                "metadata_sha256": "48824fe5599b252670e2c01541d54fe7bb2a60a74f01ad523980ad8d859b942e",
+                "byte_checksum": "NOT_VERIFIED"
+            },
+            "target": {
+                "count": 2,
+                "metadata_sha256": "48824fe5599b252670e2c01541d54fe7bb2a60a74f01ad523980ad8d859b942e",
+                "byte_checksum": "NOT_VERIFIED"
+            }
+        },
+        "bounds": {
+            "source": 256,
+            "rows_per_table": 512,
+            "total_bytes": 2097152,
+            "data_queries": 18,
+            "metadata_queries": 18
+        },
+        "real_whmcs": "NOT_VERIFIED",
+        "real_provider": "NOT_VERIFIED",
+        "real_support_archive": "NOT_VERIFIED",
+        "file_bytes": "NOT_VERIFIED",
+        "av": "NOT_VERIFIED",
+        "mime_bytes": "NOT_VERIFIED",
+        "retention": "NOT_VERIFIED",
+        "native_auth": "NOT_APPLICABLE_NO_ENDPOINT",
+        "effects_allowed": false,
+        "provider_operations_dispatched": 0,
+        "native_writes": 0
+    },
+    "fingerprint": "1f3552abe2dad16132940966329c9900c362e61ff18e73229c1b01df976caf00",
+    "attestation": null
+}

@@ -1,0 +1,27 @@
+{
+  "pattern_findings": 0,
+  "php": "8.4.24",
+  "phpstan_errors": 0,
+  "real_external_effects": false,
+  "development": [
+    {
+      "failures": 0,
+      "tests": 31,
+      "acceptance_evidence": false
+    },
+    {
+      "failures": 1,
+      "tests": 34,
+      "safe_error": "1553 FK requires supporting index",
+      "acceptance_evidence": false
+    }
+  ],
+  "lint_violations": 0,
+  "failures": 0,
+  "tests": 34,
+  "pattern_files": 444,
+  "old_664_rerun_locally": false,
+  "database": "owned ephemeral MariaDB 10.11 schemas",
+  "independent_read_processes": 4,
+  "lint_files": 422
+}
