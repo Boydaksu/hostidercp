@@ -5,6 +5,10 @@
 > [ADR-024](docs/adr/ADR-024-synthetic-migration-contract.md). Gerçek WHMCS bağlantısı,
 > importer, persistent mapping CRUD, dosya aktarımı veya dış servis etkisi yoktur.
 > Yeni migration yok;001–054 korunur. F6-B ve bütün canlı GATE'ler açık kalır.
+> Son uygulama `8340be6c5a12e551587ab92e72da930a18a7894d`;
+> [FAST PHP8.3/8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40465060398)
+> her sürüm53 suite/613 test/0 hata: eski582 ad eksiksiz, yeni31 PASS; state3/3.
+> FULL bu adayda çalıştırılmadı; PR3 OPEN/DRAFT, merge/deploy/cutover yoktur.
 
 > **27 Ekim 2026 — CI OPTIMIZATION — LIMITED TECHNICAL BASELINE: ACCEPTED.**
 > Proje sahibinin bağımsız kabulü: [FULL run40459020759](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759),

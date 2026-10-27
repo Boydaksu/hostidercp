@@ -1,0 +1,377 @@
+{
+  "application_sha": "8340be6c5a12e551587ab92e72da930a18a7894d",
+  "baseline_sha": "7e2092898287e566fc6a487c6540d6f70cec7481",
+  "old_suite_count": 52,
+  "old_tests": 582,
+  "new_suite": "tests/migration-contract.php",
+  "new_tests": 31,
+  "missing_names_php83": [],
+  "missing_names_php84": [],
+  "all_original_suite_counts_retained": true,
+  "matrix": [
+    {
+      "suite": "tests/run.php",
+      "baseline_tests": 19,
+      "php83_tests": 19,
+      "php84_tests": 19,
+      "retained": true
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "baseline_tests": 7,
+      "php83_tests": 7,
+      "php84_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/session.php",
+      "baseline_tests": 1,
+      "php83_tests": 1,
+      "php84_tests": 1,
+      "retained": true
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "baseline_tests": 7,
+      "php83_tests": 7,
+      "php84_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/session-http.php",
+      "baseline_tests": 1,
+      "php83_tests": 1,
+      "php84_tests": 1,
+      "retained": true
+    },
+    {
+      "suite": "tests/integration.php",
+      "baseline_tests": 26,
+      "php83_tests": 26,
+      "php84_tests": 26,
+      "retained": true
+    },
+    {
+      "suite": "tests/identity.php",
+      "baseline_tests": 16,
+      "php83_tests": 16,
+      "php84_tests": 16,
+      "retained": true
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "baseline_tests": 8,
+      "php83_tests": 8,
+      "php84_tests": 8,
+      "retained": true
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "baseline_tests": 6,
+      "php83_tests": 6,
+      "php84_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/http.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "baseline_tests": 4,
+      "php83_tests": 4,
+      "php84_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/finance.php",
+      "baseline_tests": 10,
+      "php83_tests": 10,
+      "php84_tests": 10,
+      "retained": true
+    },
+    {
+      "suite": "tests/catalog.php",
+      "baseline_tests": 7,
+      "php83_tests": 7,
+      "php84_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/pricing.php",
+      "baseline_tests": 9,
+      "php83_tests": 9,
+      "php84_tests": 9,
+      "retained": true
+    },
+    {
+      "suite": "tests/addons.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/orders.php",
+      "baseline_tests": 6,
+      "php83_tests": 6,
+      "php84_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/payments.php",
+      "baseline_tests": 6,
+      "php83_tests": 6,
+      "php84_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "baseline_tests": 4,
+      "php83_tests": 4,
+      "php84_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/commerce.php",
+      "baseline_tests": 5,
+      "php83_tests": 5,
+      "php84_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "baseline_tests": 10,
+      "php83_tests": 10,
+      "php84_tests": 10,
+      "retained": true
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "baseline_tests": 2,
+      "php83_tests": 2,
+      "php84_tests": 2,
+      "retained": true
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "baseline_tests": 9,
+      "php83_tests": 9,
+      "php84_tests": 9,
+      "retained": true
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "baseline_tests": 5,
+      "php83_tests": 5,
+      "php84_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-model.php",
+      "baseline_tests": 6,
+      "php83_tests": 6,
+      "php84_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "baseline_tests": 5,
+      "php83_tests": 5,
+      "php84_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "baseline_tests": 7,
+      "php83_tests": 7,
+      "php84_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "baseline_tests": 4,
+      "php83_tests": 4,
+      "php84_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "baseline_tests": 13,
+      "php83_tests": 13,
+      "php84_tests": 13,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-package.php",
+      "baseline_tests": 4,
+      "php83_tests": 4,
+      "php84_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-http.php",
+      "baseline_tests": 10,
+      "php83_tests": 10,
+      "php84_tests": 10,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "baseline_tests": 6,
+      "php83_tests": 6,
+      "php84_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "baseline_tests": 4,
+      "php83_tests": 4,
+      "php84_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "baseline_tests": 3,
+      "php83_tests": 3,
+      "php84_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "baseline_tests": 12,
+      "php83_tests": 12,
+      "php84_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "baseline_tests": 12,
+      "php83_tests": 12,
+      "php84_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud.php",
+      "baseline_tests": 12,
+      "php83_tests": 12,
+      "php84_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "baseline_tests": 7,
+      "php83_tests": 7,
+      "php84_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "baseline_tests": 1,
+      "php83_tests": 1,
+      "php84_tests": 1,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-audit.php",
+      "baseline_tests": 15,
+      "php83_tests": 15,
+      "php84_tests": 15,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-final-audit.php",
+      "baseline_tests": 12,
+      "php83_tests": 12,
+      "php84_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-costs.php",
+      "baseline_tests": 25,
+      "php83_tests": 25,
+      "php84_tests": 25,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-cost-races.php",
+      "baseline_tests": 5,
+      "php83_tests": 5,
+      "php84_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/provider-panel-http.php",
+      "baseline_tests": 39,
+      "php83_tests": 39,
+      "php84_tests": 39,
+      "retained": true
+    },
+    {
+      "suite": "tests/support-migrations.php",
+      "baseline_tests": 4,
+      "php83_tests": 4,
+      "php84_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/support-http.php",
+      "baseline_tests": 157,
+      "php83_tests": 157,
+      "php84_tests": 157,
+      "retained": true
+    },
+    {
+      "suite": "tests/support-e.php",
+      "baseline_tests": 27,
+      "php83_tests": 27,
+      "php84_tests": 27,
+      "retained": true
+    }
+  ]
+}
