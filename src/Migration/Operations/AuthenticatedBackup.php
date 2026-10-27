@@ -6,7 +6,7 @@ use Hostider\Migration\Contract;
 
 final readonly class AuthenticatedBackup
 {
-    private function __construct(public array $payload) {}
+    private function __construct(public array $payload,public string $cipherSha256) {}
     public static function open(string $id,#[\SensitiveParameter] string $cipher,#[\SensitiveParameter] Crypto $crypto,string $keyId,#[\SensitiveParameter] Vault $issuer): self
     {
         Contract::sha($id);Contract::require(strlen($cipher)<=4194304,'F6D_PACKAGE_BOUND');
@@ -15,6 +15,6 @@ final readonly class AuthenticatedBackup
         Contract::fields($value,['data','logical_sha256','created_at','key_id','encoding','issuer_id','issuer_mac']);
         Contract::require($value['encoding']==='json-base64-no-compression'&&$value['key_id']===$keyId&&$value['logical_sha256']===$id&&Contract::hash($value['data'])===$id,'F6D_MANIFEST_INTEGRITY');
         Contract::require($issuer->acceptIssued($id,$value['issuer_id'],$value['issuer_mac']),'F6D_UNISSUED_BACKUP');
-        Contract::timestamp($value['created_at']);Vault::validateData($value['data']);return new self($value);
+        Contract::timestamp($value['created_at']);Vault::validateData($value['data']);return new self($value,hash('sha256',$cipher));
     }
 }

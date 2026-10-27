@@ -55,5 +55,6 @@
   "tests/migration-visibility.php",
   "tests/migration-import.php",
   "tests/migration-reconciliation.php",
-  "tests/migration-operations.php"
+  "tests/migration-operations.php",
+  "tests/migration-recovery.php"
 ]

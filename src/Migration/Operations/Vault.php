@@ -92,6 +92,13 @@ final readonly class Vault
     {
         $this->fence();$package=AuthenticatedBackup::open($id,$this->read($id.'.sealed'),$crypto,$keyId,$this);return $target->restore($package,$fault);
     }
+    /** Enrol an unchanged verified artifact while its original issuer is still available. */
+    public function recoveryCapsule(string $id,#[\SensitiveParameter] Crypto $crypto,string $keyId,#[\SensitiveParameter] RecoverySigner $signer): string
+    {
+        $this->fence();Contract::sha($id);$cipher=$this->read($id.'.sealed');
+        $verified=AuthenticatedBackup::open($id,$cipher,$crypto,$keyId,$this);$this->fence();
+        return $signer->attest($verified,$cipher,$this);
+    }
     private function manifest(array $value): array
     {
         $d=$value['data'];$counts=[];$bytes=0;foreach($d['tables'] as $table=>$rows){$counts[$table]=count($rows);}foreach($d['files'] as $f){$bytes+=$f['size'];}

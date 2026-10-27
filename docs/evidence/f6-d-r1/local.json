@@ -1,0 +1,40 @@
+{
+  "classification": "SYNTHETIC",
+  "php": "8.4.24",
+  "new_tests": 25,
+  "new_failures": 0,
+  "relevant_existing_f6d_tests": 32,
+  "relevant_existing_failures": 0,
+  "other_old_699_rerun_locally": false,
+  "phpstan_errors": 0,
+  "lint_files": 443,
+  "lint_violations": 0,
+  "pattern_files": 465,
+  "pattern_findings": 0,
+  "ci_helper_tests": 6,
+  "ci_helper_failures": 0,
+  "composer_locked_audit": "No security vulnerability advisories found.",
+  "actual_child_exit": 73,
+  "concurrent_cold_processes": 4,
+  "source_schema_actually_dropped": true,
+  "old_vault_lease_actually_expired": true,
+  "source_signing_secret_or_db_credentials_given_to_cold_child": false,
+  "native_activation": "ACTUALLY_REJECTED",
+  "development_failed": {
+    "tests": 23,
+    "failures": 1,
+    "reason": "Test fixture updated multiple unique event hashes to same value; fixed one-row mutation",
+    "acceptance_evidence": false
+  },
+  "baseline_before": {
+    "tests": 1,
+    "failures": 1,
+    "reason": "F6D_LEASE: old cold-verification capability absent, correct fail-closed behavior"
+  },
+  "enrolment_before": {
+    "tests": 1,
+    "failures": 1,
+    "reason": "Cached authentication could enrol after lease expiry; current-issuer check added"
+  },
+  "earlier_probe_setup_error": "Missing CanonicalJson namespace alias fixed before baseline F6D_LEASE evidence; not counted as security result"
+}
