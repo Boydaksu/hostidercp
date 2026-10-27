@@ -111,7 +111,7 @@ final readonly class Inspector
             if(!isset($counts[$type])){$this->issue($issues,'UNEXPECTED_ENTITY_TYPE');$financialUnknown=true;continue;}++$counts[$type]['target'];
             if(!isset($source[$key])){++$counts[$type]['extra'];$this->issue($issues,'EXTRA_TARGET');if(in_array($type,['order','payment','allocation','refund','wallet','document'],true)){$financialUnknown=true;}continue;}
             $e=$source[$key];$owner=isset($e->payload['customer'])?(new SourceIdentity($e->identity->instance,Entity::Customer,$e->payload['customer']))->key():null;
-            if($row['target_id']!==Plan::target($e)||$type!==$e->identity->entity->value){$this->issue($issues,'TARGET_IDENTITY_CONFLICT');}
+            if($row['target_id']!==Plan::target($e)||$type!==$e->identity->entity->value){$this->issue($issues,'TARGET_IDENTITY_CONFLICT');if($type!==$e->identity->entity->value){++$counts[$type]['extra'];}}
             if($row['owner_key']!==$owner){$this->issue($issues,'CUSTOMER_OWNERSHIP_CONFLICT');}
             try{
                 $p=json_decode($row['payload_json'],true,32,JSON_THROW_ON_ERROR);Contract::require(is_array($p),'F6C_TARGET_PAYLOAD');
@@ -166,7 +166,7 @@ final readonly class Inspector
         try{Contract::require(!$financialUnknown,'F6C_FINANCE_UNKNOWN_SCOPE');$finance=['source'=>Finance::totals($facts),'target'=>Finance::totals($targetFacts)];$finance['differences_by_currency']=Finance::differences($finance['source'],$finance['target']);$finance['equal']=Contract::hash($finance['source'])===Contract::hash($finance['target']);if(!$finance['equal']){$reasons[]='FINANCE_TOTALS_MISMATCH';if($complete){$status='REVIEW_REQUIRED';}}}catch(\Throwable){$finance=['status'=>'NOT_AVAILABLE'];$reasons[]='FINANCE_UNVERIFIABLE';$status='REVIEW_REQUIRED';}
         $reasons=array_values(array_unique($reasons));sort($reasons,SORT_STRING);
         return new Report(['classification'=>'SYNTHETIC','contract'=>'hostider.reconciliation.v1','status'=>$status,'source_contract'=>Contract::VERSION,'transform'=>Contract::TRANSFORM,
-            'plan_version'=>'f6b.v1','plan_hash'=>$plan->hash,'source_snapshot_roots'=>$plan->snapshots(),'target_snapshot'=>$this->authority->snapshot,
+            'plan_version'=>'f6b.v1','plan_hash'=>$plan->hash,'source_snapshot_roots'=>$plan->snapshots(),'target_snapshot'=>$this->authority->snapshot,'observed_target_evidence_sha256'=>Contract::hash($tables),
             'run'=>$run?['id'=>$run['id'],'state'=>$run['state'],'cursor'=>(int)$run['cursor'],'version'=>(int)$run['version']]:null,
             'source_target_counts'=>$counts,'integrity'=>$issues===[]?'MATCHED':'DIFFERENCES','differences'=>$issues,'reasons'=>$reasons,'finance'=>$finance,
             'providers'=>$this->providers($facts,$targetFacts),'support'=>$this->support($facts,$targetFacts),'documents'=>$this->documents($facts,$targetFacts),

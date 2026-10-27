@@ -10,7 +10,8 @@
         "source_snapshot_roots": {
             "c234af6e1c86872cb1175a25bc4960ed6ee9294035f85088279365ce1821858e": "7c0ed76d4326a1ed5d009d9fe0bcd2d6f788952075d4ca567f1852c1699dabc9"
         },
-        "target_snapshot": "9af9b598f935d36f7da6f16bed2bb0e9ff733787f7eff6d9f2b0ef4a7c846fa4",
+        "target_snapshot": "c66d1c7e1415a1596c34a16c434c122a3c32041565b351ceac9347dea80e2bf3",
+        "observed_target_evidence_sha256": "4bb05f04ff674d15bd7be036b936729d7454cb6e96842ee97864048bbe46d902",
         "run": {
             "id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
             "state": "APPLIED",
@@ -316,6 +317,6 @@
         "provider_operations_dispatched": 0,
         "native_writes": 0
     },
-    "fingerprint": "1f3552abe2dad16132940966329c9900c362e61ff18e73229c1b01df976caf00",
+    "fingerprint": "e7a8c57b6e731a5aab7ca7af0d4913ff3fddbc38771fe2e096e81ae8e3990220",
     "attestation": null
 }

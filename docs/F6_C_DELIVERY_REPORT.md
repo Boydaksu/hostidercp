@@ -118,3 +118,16 @@ immutable evidence'ı değiştirmez; contract değişirse ayrı versioned tasar�
 
 F6-C SYNTHETIC DEVELOPMENT tamamlandıktan sonra INDEPENDENT ACCEPTANCE PENDING
 kalır. PR3 OPEN/DRAFT, production UNCHANGED. Exact kaynak/CI kapanışı sonrası DUR.
+
+## Geliştirme sırasında bulunan kanıt bağlama bulgusu
+
+Ara kaynak3b1fdd1'de iki farklı target e-posta içeriği aynı aggregate farkları
+üretince aynı rapor fingerprint'ine sahip olabiliyordu. Bu durumlarda status zaten
+REVIEW_REQUIRED idi; PASS veya gerçek veri/credential sızıntısı olmadı. Buna rağmen
+raporun actual target verisini bağlamaması veri bütünlüğü açısından P1 olarak ele
+alındı. Yeni tek negatif test ara kaynakta1 FAIL (false != true) verdi.
+Bounded ve PK-sıralı tüm target evidence'ının canonical SHA-256 kökü manifest'e
+eklenerek aynı özetli farklı içeriğin fingerprint'i ayrıldı. Yanlış entity türünün
+extra sayımı da düzeltildi; yeni test10 içindeki ek fault ile doğrulandı.
+Son35/35 PASS; önceki664 test değişmez. İlk ara FAST concurrency ile iptal edilir;
+son exact adayda tek tamamlanmış geniş FAST kanıtı gereklidir. İptal başarı sayılmaz.

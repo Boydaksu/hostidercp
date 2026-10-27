@@ -18,10 +18,16 @@
   ],
   "lint_violations": 0,
   "failures": 0,
-  "tests": 34,
-  "pattern_files": 444,
+  "tests": 35,
+  "pattern_files": 445,
   "old_664_rerun_locally": false,
   "database": "owned ephemeral MariaDB 10.11 schemas",
   "independent_read_processes": 4,
-  "lint_files": 422
+  "lint_files": 423,
+  "evidence_binding_before": {
+    "failures": 1,
+    "source": "3b1fdd1cd42e5826b2107d4d906226d1df8960f8",
+    "tests": 1,
+    "acceptance_evidence": false
+  }
 }

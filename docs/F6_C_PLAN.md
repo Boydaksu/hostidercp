@@ -86,3 +86,11 @@ gerçek SUP-010/PROV-004 NOT PASSED, PROV-005 OPEN, DOMAIN-002 PARTIAL/MANUAL_RE
 production mapping/import CRUD DEFERRED; F5-C dört istisna, auto-close/merge/split/
 tarihsel SLA, F6-D/E açık/yetkisiz. Main protected=false/rulesets=[] gözlendi;
 ayar değişikliği yoktur. PR3 OPEN/DRAFT. Exact SHA/tree ve FAST ile teslim ve DUR.
+
+## Kanıt bağlama düzeltmesi
+
+Aggregate rapor özeti aynı olsa da farklı target içeriği farklı fingerprint üretmelidir.
+Bu nedenle bounded, sıralanmış actual target tablolarının CanonicalJson kökü ayrıca
+observed_target_evidence_sha256 alanına bağlanır; private içerik yalnız hash'e girer,
+ham içerik rapora çıkmaz. Yanlış entity türü gerçek türünde extra olarak sayılır.
+Ek tek regresyon hash bağını kanıtlar; yeni test toplamı35'tir.

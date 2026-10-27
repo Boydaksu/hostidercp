@@ -32,4 +32,5 @@ PASS F6-C module has no native effect adapters transport file copy or repair SQL
 PASS F6-C unexpected refund cannot disappear into equal financial totals
 PASS F6-C target legacy credentials admin and MFA flags remain forbidden facts
 PASS F6-C unexpected columns or lost uniqueness block bounded reconciliation
-34 tests, 0 failures
+PASS F6-C different target contents with identical summaries have different evidence fingerprints
+35 tests, 0 failures
