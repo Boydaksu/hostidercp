@@ -1,5 +1,28 @@
 # F6-B — sentetik izole import / dry-run teknik teslimi
 
+## 27 Ekim 2026 — proje sahibi F6-B kabul kararı
+
+**F6-B LIMITED SYNTHETIC ISOLATED IMPORT & DRY-RUN TECHNICAL BASELINE — ACCEPTED.**
+**B-01 CLOSED.** Kabul edilen uygulama `d4ead54db3aad6208e1a40e70822da7ad1346e33`,
+tree `0057f233dbbeebfae1b3c094ec8eeafdb0fad7a4`; ayrı kanıt belge commit'i
+`dadef0b3c2d36e44dcbf2236227d160071945566`.
+[FAST40514399931](https://github.com/Boydaksu/hostidercp/actions/runs/40514399931):
+PHP8.3/8.4 her sürüm55 suite/664 test/0 hata; eski621+42 ve yeni1 B-01 PASS.
+001–054 subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b` korunur.
+
+Kabul yalnız sentetik source validation, deterministic dry-run, isolated load,
+mapping/provenance, idempotency/replay, transaction/checkpoint/recovery, sandbox/grant
+izolasyonu, provider CREATE-zero, sentetik finance/support privacy ve commit öncesi
+migration readiness içindir. Gerçek WHMCS, payment/ledger mutabakatı, provider resource,
+support dosyaları, mailbox/AV/retention, FULL ve production-ready kabulü değildir.
+F6-C SYNTHETIC RECONCILIATION & SECURITY DEVELOPMENT — GO; gerçek bağlantı,
+production mapping CRUD, F6-D/E, merge/staging/deploy/cutover yetkisi yoktur.
+
+Bu kabul commit'i yalnız dört belgeyi değiştirir; uygulama/test/fixture/CI/migration
+aynıdır. Önceki CI tekrar çalıştırılmadı. Rollback yalnız belge commit revert'üdür.
+PR3 OPEN/DRAFT. Son kontrolde main protected=false ve rulesets=[] görüldü;
+ayarlar değiştirilmedi. Aşağıdaki teslim/bekleme kayıtları tarihçe olarak korunur.
+
 ## 27 Ekim 2026 — B-01 bağımsız denetim düzeltmesi
 
 Commit öncesi tam readiness kontrolü eklendi; mevcut assertBound korundu.
