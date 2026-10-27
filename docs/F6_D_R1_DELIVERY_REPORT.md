@@ -1,6 +1,46 @@
 # F6-D-R1 — bağımsız cold verification hardening teslimi
 
-Durum: SYNTHETIC DEVELOPMENT PARTIAL; independent acceptance PENDING; final FAST bekler.
+Durum: SYNTHETIC DEVELOPMENT PARTIAL; independent acceptance PENDING; final exact FAST PASS.
+
+## Exact application ve son CI
+
+Application SHA: `3773351c01164dc3e58a7c4b869ef980a5b7cf79`.
+Application tree: `80beecd299c60ed669e4d0c52c76751ee020b692`.
+[FAST40566808738](https://github.com/Boydaksu/hostidercp/actions/runs/40566808738),
+push attempt1 **SUCCESS**; kaynak değişmeden ek geniş FAST yok.
+[PHP8.3](https://github.com/Boydaksu/hostidercp/actions/runs/40566808738/job/122410289939)
+ve [PHP8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40566808738/job/122410289945):
+her sürüm **58 suite /756 test /0 hata**.
+Eski **731 PASS adı** multiset karşılaştırmasıyla eksiksiz; **57 eski suite sayımı**
+aynı; **25 yeni R1** test PASS.125 eski test dosyasının Git blob eşliği korunmuştur.
+PHPStan0; lint443/0; pattern465/0; Composer locked audit ve npm lock audit bulgusuz;
+JS state3/0; ayrı scope/helper6/0 ve docs505 PASS (756 toplamına dahil değil).
+Raw CI log'ları Git'e konulmadı; yalnız sanitized test/suite/quality kanıtı kaydedildi.
+Runner her suite öncesi ve finalde59 kez sessiz exact SHA/tree/clean tracked checkout
+kontrolü uygular. Tree log'da yazdırılmaz; GitHub Git commit API tree'si yerel tree
+ile ayrıca eşleştirildi. FULL/Chromium/10/30/20 maratonları dispatch edilmedi.
+
+[CI ve suite dökümü](evidence/f6-d-r1/ci.json),
+[yeni25 ad/baseline referansı](evidence/f6-d-r1/test-index.json),
+[125 blob korunması](evidence/f6-d-r1/preservation.json),
+[source proof](evidence/f6-d-r1/source-proof.json),
+[recovery matrisi](evidence/f6-d-r1/recovery-matrix.json),
+[gerçek cold child örneği](evidence/f6-d-r1/example-cold-recovery-manifest.json),
+[negatif önce FAIL](evidence/f6-d-r1/negative-before.txt).
+Son yerel25/0 ve ilgili32/0; başarısız development23/1 sonucu kabul kanıtı sayılmadı.
+Cached-issuer negatif testi final25 ve iki CI sürümünde PASS; eski F6D_LEASE
+ret davranışı korunur, bağımsız authorization ile yalnız read-only verification eklenir.
+
+Production migration001–054 subtree
+`c0729c92dd143c017fdec32421bf67fe6b51e05b`.
+Rollback application commit listesi yalnız
+`3773351c01164dc3e58a7c4b869ef980a5b7cf79`; source/test/CI değişmeyen ayrı docs-only
+kapanış hazırlanmıştır. Mevcut docs/F6_B_B01_REVIEW.md kullanıcı düzenlemesi dışarıda
+korunur. Main `ada37dc52b324e34380ba836ae7794cebb174ec4`,
+protected=false/rulesets=[] gözlemi güncel; ayarlar değişmedi, merge/release öncesi açık.
+PR3 OPEN/DRAFT. Native recovery BLOCKED; issuer recovery PARTIAL; original bytes OPEN;
+gerçek cold restore/offsite/key custody NOT VERIFIED. R1 independent acceptance PENDING.
+FULL NOT DISPATCHED; F6-E NOT AUTHORIZED; production UNCHANGED. Teslim ve DUR.
 
 ## F6-D kabul kapanışı
 
@@ -91,8 +131,8 @@ verification DB/artifact state değiştirmez. Duplicate verification read-only v
 izinlidir; duplicate native activation BLOCKED'dır, one-time authorization iddiası yoktur.
 R1 DB INSERT yapmadığından yeni cold restore INSERT/after-commit crash proof'u yoktur;
 mevcut escrow crash/rollback/re-read garantileri değişmeyen32 F6-D testiyle korunur.
-Old731 test adları/57 suite ve125 eski test dosyası Git blob eşliği korunacaktır;
-son exact application FAST ayrı kanıtla kaydedilir. Başarısız/cancelled koşu PASS sayılmaz.
+Old731 test adları/57 suite ve125 eski test dosyası Git blob eşliği korunmuştur;
+son exact application FAST ayrı kanıtla kaydedilmiştir. Başarısız/cancelled koşu PASS sayılmaz.
 
 ## Migration / rollback / kapılar
 

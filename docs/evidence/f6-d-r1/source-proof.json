@@ -1,0 +1,66 @@
+{
+  "classification": "SYNTHETIC",
+  "application_sha": "3773351c01164dc3e58a7c4b869ef980a5b7cf79",
+  "application_tree": "80beecd299c60ed669e4d0c52c76751ee020b692",
+  "f6d_accepted_application_sha": "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa",
+  "f6d_accepted_application_tree": "0c5f1729089dafb07dec2e374e1079efa75fcbba",
+  "f6d_evidence_docs_sha": "f16c306d7a6670ad512fbb224a824af1e844eac6",
+  "f6d_acceptance_docs_sha": "113334dd2c37556ed20a83b6e84eeeab3dcfc42b",
+  "f6d_acceptance_files": [
+    "README.md",
+    "docs/F6_PLAN.md",
+    "docs/F6_D_PLAN.md",
+    "docs/F6_D_DELIVERY_REPORT.md"
+  ],
+  "f6d_acceptance_source_test_fixture_ci_migration_changes": [],
+  "old_test_count": 731,
+  "old_test_files_equal": 125,
+  "production_migrations_subtree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "source_files_modified": [
+    "src/Migration/Operations/AuthenticatedBackup.php",
+    "src/Migration/Operations/Vault.php"
+  ],
+  "source_files_added": [
+    "src/Migration/Operations/ColdRecovery.php",
+    "src/Migration/Operations/RecoverySigner.php",
+    "src/Migration/Operations/RecoveryAuthorization.php"
+  ],
+  "protected_modules_unchanged": [
+    "Sandbox",
+    "Inspector",
+    "Loader",
+    "Destination",
+    "Snapshot",
+    "Retention",
+    "Core Crypto",
+    "Database",
+    "Migrator",
+    "Queue",
+    "Finance",
+    "Identity",
+    "Support"
+  ],
+  "ci_registry_changes": [
+    "tools/ci/suites.json",
+    ".github/workflows/f0.yml"
+  ],
+  "branch": "codex/f5-support-center",
+  "pr": {
+    "number": 3,
+    "state": "OPEN",
+    "draft": true
+  },
+  "unrelated_unstaged_user_edit": "docs/F6_B_B01_REVIEW.md",
+  "rollback_application_commits": [
+    "3773351c01164dc3e58a7c4b869ef980a5b7cf79"
+  ],
+  "full_dispatch": false,
+  "production_unchanged": true,
+  "main": {
+    "sha": "ada37dc52b324e34380ba836ae7794cebb174ec4",
+    "protected": false,
+    "rulesets": []
+  },
+  "final_ci_run": 40566808738,
+  "remote_git_commit_tree_verified": true
+}

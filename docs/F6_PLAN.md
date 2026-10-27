@@ -1,5 +1,28 @@
 # F6 — Aktarım ve operasyon teknik planı
 
+## 27 Ekim 2026 — F6-D-R1 sentetik recovery hardening teslimi
+
+F6-D **LIMITED SYNTHETIC ENCRYPTED BACKUP & RECOVERY ESCROW — ACCEPTED WITH EXPLICIT
+EXCEPTIONS**, kabul docs `113334dd2c37556ed20a83b6e84eeeab3dcfc42b`.
+F6-D genel **PARTIAL**. R1 geliştirme **PARTIAL; INDEPENDENT ACCEPTANCE PENDING**.
+Application `3773351c01164dc3e58a7c4b869ef980a5b7cf79`, tree
+`80beecd299c60ed669e4d0c52c76751ee020b692`.
+[FAST40566808738](https://github.com/Boydaksu/hostidercp/actions/runs/40566808738): PHP8.3/8.4 her sürüm58 suite/756 test/0 hata; eski731 ad ve57 suite sayımı korunmuş, yeni25 PASS.
+Yeni25 hedefli R1 ve32 ilgili F6-D test PASS; eski731 testin125 dosyası blob-equal.
+Bağımsız pinned Ed25519 attestation, exact cipher/issuer/source binding, fresh operator
+policy ve gerçek source-schema-loss/expired-Vault/fresh-process cold verification
+uygulandı. Orijinal artifacts/MAC/history/provenance/backup ID değişmez.
+**BLOCKED_ISSUER_RECOVERY PARTIAL**: yalnız önceden enrolled paketin read-only
+verification'ı; gerçek custody/offsite/key-policy operasyonu NOT VERIFIED.
+**BLOCKED_IDENTITY_BOUND OPEN; native recovery BLOCKED**; Sandbox/Inspector/marker
+koşulları gevşetilmedi. **BLOCKED_ORIGINAL_ARCHIVE_BYTES OPEN**.
+Migration001–054 subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b` değişmez.
+G-O01–04 ve bütün gerçek vendor/finance/support/cutover kapıları açık;
+PR3 OPEN/DRAFT, main protected=false/rulesets=[] gözlendi ve değiştirilmedi.
+FULL NOT DISPATCHED; F6-E NOT AUTHORIZED; production UNCHANGED.
+[Plan](F6_D_R1_PLAN.md), [teslim ve sınırlar](F6_D_R1_DELIVERY_REPORT.md), [recovery matrix](evidence/f6-d-r1/recovery-matrix.json).
+Aşağıdaki önceki teslim/bekleme ifadeleri tarihsel kayıttır.
+
 ## 27 Ekim 2026 — F6-D sınırlı bağımsız kabulü
 
 **F6-D LIMITED SYNTHETIC ENCRYPTED BACKUP & RECOVERY ESCROW — ACCEPTED WITH EXPLICIT EXCEPTIONS.**

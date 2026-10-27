@@ -36,5 +36,6 @@
   },
   "original_archive_bytes": "OPEN",
   "verification_duplicates": "READ_ONLY_ALLOWED_NOT_SINGLE_USE_ACTIVATION",
-  "crash_before_authority_after_verification": "REAL_CHILD_EXIT_73_NO_REPORT_NO_WRITES"
+  "crash_before_authority_after_verification": "REAL_CHILD_EXIT_73_NO_REPORT_NO_WRITES",
+  "final_ci": "40566808738: PHP8.3/8.4 both58 suites/756 tests/0 failures; native recovery remains BLOCKED"
 }

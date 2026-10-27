@@ -767,5 +767,8 @@
   ],
   "migrations_count": 54,
   "migrations_subtree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
-  "unrelated_user_edit_excluded": "docs/F6_B_B01_REVIEW.md"
+  "unrelated_user_edit_excluded": "docs/F6_B_B01_REVIEW.md",
+  "application_sha": "3773351c01164dc3e58a7c4b869ef980a5b7cf79",
+  "old_731_ci_names_preserved_php83_php84": true,
+  "old_57_suite_counts_preserved_php83_php84": true
 }
