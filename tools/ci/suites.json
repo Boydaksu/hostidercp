@@ -51,5 +51,6 @@
   "tests/support-migrations.php",
   "tests/support-http.php",
   "tests/support-e.php",
-  "tests/migration-contract.php"
+  "tests/migration-contract.php",
+  "tests/migration-visibility.php"
 ]

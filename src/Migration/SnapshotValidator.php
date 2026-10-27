@@ -115,7 +115,8 @@ final class SnapshotValidator
                     $author = $this->parent($index, $e, Entity::User, $p['author']);
                     if ($p['author_kind'] !== $author->payload['kind'] || ($p['author_kind'] === 'CUSTOMER' && !$this->member($index, $e, $p['author']))) { $reasons[] = 'AUTHOR_REVIEW'; }
                     $visibility = Fact::fromArray($p['visibility']);
-                    Contract::require($p['kind'] !== 'INTERNAL_NOTE' || ($visibility->state === Knowledge::Known && $visibility->value === 'PRIVATE' && $p['author_kind'] === 'STAFF'), 'PRIVATE_NOTE_EXPOSURE');
+                    Contract::require($p['kind'] !== 'INTERNAL_NOTE' || ($visibility->state === Knowledge::Known && $visibility->value === 'PRIVATE' && $p['author_kind'] === 'STAFF' && $author->payload['kind'] === 'STAFF'), 'PRIVATE_NOTE_EXPOSURE');
+                    if ($p['kind'] === 'PUBLIC_REPLY' && ($visibility->state !== Knowledge::Known || $visibility->value !== 'PUBLIC')) { $reasons[] = 'MESSAGE_VISIBILITY_CONFLICT'; }
                     Contract::require($p['created_at'] >= $ticket->payload['created_at'], 'MESSAGE_TIME');
                     $ticketKey = $ticket->identity->key();
                     Contract::require(!isset($sequences[$ticketKey][$p['sequence']]), 'MESSAGE_SEQUENCE');
