@@ -1,5 +1,28 @@
 # Hostider Automation — V1.0 Master Specification
 
+## 27 Ekim 2026 — F6-D sınırlı bağımsız kabulü
+
+**F6-D LIMITED SYNTHETIC ENCRYPTED BACKUP & RECOVERY ESCROW — ACCEPTED WITH EXPLICIT EXCEPTIONS.**
+Kabul edilen application `71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa`, tree
+`0c5f1729089dafb07dec2e374e1079efa75fcbba`; evidence docs
+`f16c306d7a6670ad512fbb224a824af1e844eac6`.
+[FAST40555003177](https://github.com/Boydaksu/hostidercp/actions/runs/40555003177):
+PHP8.3/8.4 her sürüm57 suite/731 test/0 hata, eski699+32 korunmuş;
+PHPStan0, lint435/0, pattern457/0, migrations001–054 değişmez.
+Kabul sentetik read-only/bounded DB snapshot, private file inventory, gerçek
+XChaCha20-Poly1305, deterministic identity, atomic immutable publication/replay,
+authenticated owned escrow restore/INSERT-only writer/metadata witness,
+checksum/provenance/finance eşliği, crash/rollback/retry,1/4/8 process,
+retention dry-run ve native Queue/Worker test/mock güvenliği içindir.
+Genel F6-D **PARTIAL**. Açık istisnalar: **BLOCKED_IDENTITY_BOUND,
+BLOCKED_ISSUER_RECOVERY, BLOCKED_ORIGINAL_ARCHIVE_BYTES**, gerçek offsite/PITR/binlog,
+RPO/RTO/hosting kapasitesi, WHMCS/support/PDF restore ve key custody/rotation.
+Bu işlem yalnız dört kabul belgesini değiştirir; source/test/fixture/CI/migration
+değişmez, başarılı731 test tekrar çalıştırılmaz. Rollback yalnız docs commit revert.
+F6-D-R1 recovery hardening yalnız sentetik GO. F6-E/FULL/production restore/staging/
+merge/deployment/cutover yetkisi yoktur. Main protected=false/rulesets=[] gözlemi,
+PR3 OPEN/DRAFT ve bütün gerçek GATE'ler korunur. Aşağıdaki bekleme kayıtları tarihseldir.
+
 ## 27 Ekim 2026 — F6-D sentetik operasyon teslimi
 
 F6-A/B/C **ACCEPTED — LIMITED SYNTHETIC**. F6-C kabul kaydı
