@@ -42,7 +42,7 @@ final readonly class Loader
                 $row=$sandbox->db->execute('SELECT * FROM f6b_runs WHERE id=? FOR UPDATE',[$plan->hash])->fetch();
                 $this->verifyRun($row,$plan,$sandbox);$sandbox->assertBound();
                 $reasons=[...$plan->reasons,...$this->conflicts($plan,$sandbox)];
-                if($reasons!==[]){$row['safe_code']=$reasons[0];$row['version']=(int)$row['version']+1;$this->event($row,$sandbox,'REVIEW_REQUIRED');$this->saveRun($row,$sandbox);return $this->manifest($plan,$row,$sandbox,false,$reasons);}
+                if($reasons!==[]){$row['safe_code']=$reasons[0];$row['version']=(int)$row['version']+1;$this->event($row,$sandbox,'REVIEW_REQUIRED');$this->saveRun($row,$sandbox);$sandbox->assertReady();return $this->manifest($plan,$row,$sandbox,false,$reasons);}
                 $row['version']=(int)$row['version']+1;$this->event($row,$sandbox,'APPLYING');
                 $end=min(count($plan->items),(int)$row['cursor']+$batchSize);
                 for($position=(int)$row['cursor'];$position<$end;++$position){
@@ -55,7 +55,7 @@ final readonly class Loader
                 }
                 $row['cursor']=$end;$row['safe_code']=null;$this->event($row,$sandbox,$end===count($plan->items)?'APPLIED':'APPLYING');$this->saveRun($row,$sandbox);
                 if($fault===Fault::AfterCheckpoint){throw new \RuntimeException('F6B_SYNTHETIC_FAILURE');}
-                $sandbox->assertBound();return $this->manifest($plan,$row,$sandbox,false);
+                $sandbox->assertBound();$sandbox->assertReady();return $this->manifest($plan,$row,$sandbox,false);
             });
         }catch(\Throwable $error){
             $code=$error instanceof \InvalidArgumentException && preg_match('/^F6B_[A-Z0-9_]+$/D',$error->getMessage())===1 ? $error->getMessage() : ($error->getMessage()==='F6B_SYNTHETIC_FAILURE'?'F6B_SYNTHETIC_FAILURE':'F6B_STORAGE_UNAVAILABLE');
