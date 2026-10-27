@@ -23,5 +23,16 @@
     "provider metadata ownership",
     "support metadata privacy",
     "snapshot checkpoint history"
-  ]
+  ],
+  "final_status": {
+    "b01": "CLOSED",
+    "f6_c_development": "COMPLETED_SYNTHETIC",
+    "f6_c_acceptance": "PENDING",
+    "full": "NOT_DISPATCHED",
+    "f6_d_e": "NOT_AUTHORIZED",
+    "production": "UNCHANGED",
+    "f6_b": "ACCEPTED_LIMITED_SYNTHETIC",
+    "g_o03": "OPEN",
+    "real_sup010_prov004": "NOT_PASSED"
+  }
 }

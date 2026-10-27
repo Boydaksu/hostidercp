@@ -1,6 +1,7 @@
 # F6-C — sentetik reconciliation ve güvenlik teknik teslimi
 
-Durum: yeni modül ve hedefli testler tamamlandı; exact aday FAST ve bağımsız kabul bekler.
+Durum: F6-C SYNTHETIC DEVELOPMENT COMPLETED; exact aday FAST SUCCESS,
+F6-C INDEPENDENT ACCEPTANCE PENDING. FULL DONE/PRODUCTION READY değildir.
 F6-B LIMITED SYNTHETIC ISOLATED IMPORT & DRY-RUN TECHNICAL BASELINE ACCEPTED;
 B-01 CLOSED, kabul belge commit'i541cf9cb6d2efafd4bbc9a7effe03cdd4b70807f.
 Yalnız README/F6_PLAN/F6_B_DELIVERY_REPORT/F6_B_B01_REVIEW değişti; uygulama,
@@ -66,7 +67,7 @@ native API değildir; cross-owner ret mevcut accepted seam üzerinden de doğrul
 
 ## Hedefli testler, demo ve gelişim kayıtları
 
-Yeni34 F6-C testi gerçek ephemeral MariaDB schema/account'larında34/34 PASS.
+Son kaynakta35 F6-C testi gerçek ephemeral MariaDB schema/account'larında35/35 PASS.
 İlk31-test turu31/31 PASS idi. Fiziksel unique-index negatif testinin ilk34-test
 turunda1 setup FAIL'i oldu: FK'nin kullandığı indeks doğrudan drop edilemedi
 (SQLSTATE1553). Test setup'ı FK'yi koruyan non-unique destek index'i ekleyerek
@@ -84,8 +85,9 @@ gerçek yeni suite'te çalışır. Schema/index bozulması yalnız owned test sc
 Tekrar demo, explicit test env ve kontrollü fixture admin yetkisiyle
 `php tools/migration-reconciliation-demo.php` komutudur; fixture kurulumu/load ayrı,
 Inspector'ın kendisi salt okunurdur. Örnek manifest gerçek yerel DB'den üretilir.
-PHPStan0; lint422/0, pattern444/0. Eski664 test yerelde tekrar koşturulmadı;
-son adayın tek FAST8.3/8.4 turu ve ad eşliği kanıtı kapanışta kaydedilecek.
+PHPStan0; ilk tam lint422/0 + yeni tek script syntax0, son pattern445/0.
+Eski664 test yerelde tekrar koşturulmadı;
+son adayın tek tamamlanmış FAST8.3/8.4 turu ve ad eşliği kanıtı aşağıda kayıtlıdır.
 
 ## Migration / rollback / forward-fix
 
@@ -129,5 +131,51 @@ alındı. Yeni tek negatif test ara kaynakta1 FAIL (false != true) verdi.
 Bounded ve PK-sıralı tüm target evidence'ının canonical SHA-256 kökü manifest'e
 eklenerek aynı özetli farklı içeriğin fingerprint'i ayrıldı. Yanlış entity türünün
 extra sayımı da düzeltildi; yeni test10 içindeki ek fault ile doğrulandı.
-Son35/35 PASS; önceki664 test değişmez. İlk ara FAST concurrency ile iptal edilir;
-son exact adayda tek tamamlanmış geniş FAST kanıtı gereklidir. İptal başarı sayılmaz.
+Son35/35 PASS; önceki664 test değişmez. İlk ara FAST
+[40530063830](https://github.com/Boydaksu/hostidercp/actions/runs/40530063830)
+concurrency ile CANCELLED oldu; başarı sayılmaz. Son exact adayda tek tamamlanmış
+geniş FAST kanıtı gereklidir.
+
+## Exact kaynak / test koruma / son FAST
+
+| Kayıt | Değer |
+|---|---|
+| F6-B kabul docs-only commit |`541cf9cb6d2efafd4bbc9a7effe03cdd4b70807f`|
+| Kabul edilmiş F6-B uygulama / kanıt |`d4ead54db3aad6208e1a40e70822da7ad1346e33` / `dadef0b3c2d36e44dcbf2236227d160071945566`|
+| Son F6-C application SHA / FULL aday |`c5ee92645a3cda842581fccd86707e76cea4dfde`|
+| Application tree |`6418118929a977729f6fe12383c689c91f3edad5`|
+| Son FAST |[40530996504](https://github.com/Boydaksu/hostidercp/actions/runs/40530996504), SUCCESS|
+| PHP8.3 job |[122284387633](https://github.com/Boydaksu/hostidercp/actions/runs/40530996504/job/122284387633),56 suite/699 test/0 hata|
+| PHP8.4 job |[122284387916](https://github.com/Boydaksu/hostidercp/actions/runs/40530996504/job/122284387916),56 suite/699 test/0 hata|
+
+[Koruma manifesti](evidence/f6-c/preservation.json): eski450 dosya için Git blob
+eşliği,0 değişiklik; migration54 SHA-256 + subtree. Eski664 test dosyaları aynıdır.
+İzinli mevcut application kayıt değişikliği yalnız suite registry ve FULL listesine
+yeni suite eklenmesidir; eski55 suite değişmez, yeni56.'dır.
+[Test indeksi](evidence/f6-c/test-index.json)35 adı/source satırını talimattaki22
+senaryoya bağlar. [Source proof](evidence/f6-c/source-proof.json) exact GitHub
+commit/tree ve kabul/kanıt ayrımını kaydeder. [Örnek gerçek sentetik manifest](evidence/f6-c/example-reconciliation-manifest.json),
+[yerel sonuç](evidence/f6-c/local-targeted.txt), [geliştirme FAIL](evidence/f6-c/development-failed.txt)
+ve [kanıt bağlama negatif-before](evidence/f6-c/evidence-binding-before.txt) ayrıdır.
+Runtime/test/CI source bu application SHA'da donduruldu; kanıt kapanışı docs-only'dir.
+Code rollback gerekirse c5ee926 →3b1fdd1 ters sırasıdır; F6-B kabul541cf9c korunur.
+
+[CI kanıtı](evidence/f6-c/ci.json): iki gerçek job'da eski664 PASS adı multiset
+olarak eksiksiz, missing0; eski55 suite'in test sayıları aynı, yeni suite35/35.
+Her job PHPStan0, tam lint423/0, pattern445/0, Composer locked audit temiz;
+dört native JS syntax ve3 state kontrolü PASS, browser lock audit temizdir.
+Scope job122284243403'te ayrı6 CI helper PASS; FAST result122293226127 SUCCESS.
+Chromium E2E, Services10/Commerce30/session20 tekrarları veya FULL çalıştırılmadı.
+Yerel önceki664 test tekrar edilmedi. İlk CANCELLED aday başarı sayılmadı.
+
+## Nihai durum ve durma noktası
+
+- F6-B LIMITED SYNTHETIC TECHNICAL BASELINE ACCEPTED; B-01 CLOSED.
+- F6-C SYNTHETIC DEVELOPMENT COMPLETED; INDEPENDENT ACCEPTANCE PENDING.
+- FULL ACCEPTANCE NOT DISPATCHED; G-O03 OPEN; gerçek SUP-010/PROV-004 NOT PASSED.
+- F6-D/E NOT AUTHORIZED; PR3 OPEN/DRAFT; production UNCHANGED.
+- main protected=false/rulesets=[] gözlemi raporlandı; protection/ruleset değişmedi.
+- Eski body/history kayıtları ve önceden bulunan yerel belge yazım değişikliği korundu.
+
+Bu kanıt kapanışı ayrı docs-only commit'tir; application/test/CI source c5ee926
+ile aynıdır. Bağımsız inceleme için teslim edilir ve DURULUR.

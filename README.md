@@ -1,5 +1,21 @@
 # Hostider Automation — V1.0 Master Specification
 
+## 27 Ekim 2026 — F6-C sentetik reconciliation teslimi
+
+[Plan](docs/F6_C_PLAN.md), [teknik teslim/istisnalar](docs/F6_C_DELIVERY_REPORT.md),
+[ADR-026](docs/adr/ADR-026-synthetic-reconciliation-security.md).
+Separate SELECT-only reader, bounded consistent snapshot, bağımsız source/target
+identity/hash/owner/mapping/provenance/claim/checkpoint/history karşılaştırması,
+currency bazlı Money özeti ve private metadata redaksiyonu geliştirildi.
+Son uygulama `c5ee92645a3cda842581fccd86707e76cea4dfde`,
+tree `6418118929a977729f6fe12383c689c91f3edad5`.
+[FAST40530996504](https://github.com/Boydaksu/hostidercp/actions/runs/40530996504):
+PHP8.3/8.4 her sürüm56 suite/699 test/0 hata; eski664 ad eksiksiz, yeni35 PASS.
+Yerel35 yeni test PASS; eski664 kaynak ve001–054 değişmez. F6-C bağımsız kabul
+PENDING, FULL NOT DISPATCHED; gerçek WHMCS/ledger/provider/dosya NOT VERIFIED.
+F6-D/E ve staging/merge/deploy/cutover yoktur. PR3 OPEN/DRAFT; production unchanged.
+Aşağıdaki F6-B kabul ve önceki teslimler tarihsel referans olarak korunur.
+
 ## 27 Ekim 2026 — proje sahibi F6-B kabul kararı
 
 **F6-B LIMITED SYNTHETIC ISOLATED IMPORT & DRY-RUN TECHNICAL BASELINE — ACCEPTED.**

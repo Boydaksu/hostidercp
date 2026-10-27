@@ -1,5 +1,19 @@
 # F6 — Aktarım ve operasyon teknik planı
 
+## 27 Ekim 2026 — F6-C güncel teknik durum
+
+F6-B LIMITED SYNTHETIC TECHNICAL BASELINE ACCEPTED, B-01 CLOSED.
+F6-C SYNTHETIC RECONCILIATION & SECURITY geliştirildi; [plan](F6_C_PLAN.md),
+[teslim/kanıt/istisnalar](F6_C_DELIVERY_REPORT.md), ADR-026 kapsamı geçerlidir.
+Son uygulama `c5ee92645a3cda842581fccd86707e76cea4dfde`,
+tree `6418118929a977729f6fe12383c689c91f3edad5`.
+[FAST40530996504](https://github.com/Boydaksu/hostidercp/actions/runs/40530996504):
+PHP8.3/8.4 her sürüm56 suite/699 test/0 hata; eski664 ve55 suite korunur, yeni35 PASS.
+Yerel35 yeni test PASS; native664 ve001–054 korunur. F6-C bağımsız kabul PENDING;
+FULL NOT DISPATCHED, gerçek G-O03/SUP-010/PROV-004 ve bütün vendor/operasyon
+kapıları açıktır. F6-D/E NOT AUTHORIZED, PR3 OPEN/DRAFT, production unchanged.
+Aşağıdaki F6-B ve önceki yetki/bekleme kayıtları tarihçedir.
+
 ## 27 Ekim 2026 — proje sahibi F6-B kabul kararı
 
 **F6-B LIMITED SYNTHETIC ISOLATED IMPORT & DRY-RUN TECHNICAL BASELINE — ACCEPTED.**

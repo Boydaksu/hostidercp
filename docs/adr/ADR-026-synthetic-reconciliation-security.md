@@ -19,3 +19,8 @@ olmayan ledger/byte/vendor kanıtı NOT_AVAILABLE/NOT_VERIFIED olarak kalır.
 Inspector salt okunur olduğu için production migration veya yeni tablo gerekmez.
 Bound aşımı raporu kesip PASS üretmez; INCONCLUSIVE döner. Operasyonel attestation
 deterministik content hash'inden ayrıdır. Rollback code revert + owned fixture cleanup.
+
+Rapor fingerprint'i yalnız aggregate fark özetine dayanamaz: bounded actual target
+tablolarının canonical evidence kökü de içerilir. Bu, aynı özetli farklı bozuk
+veriyi ayırır; ham body/author/path/credential rapora çıkmaz. Fiziksel kolon ve
+gerekli PK/unique kontrolleri bounded okumanın temel varsayımlarını da doğrular.

@@ -1,0 +1,337 @@
+{
+  "application_sha": "c5ee92645a3cda842581fccd86707e76cea4dfde",
+  "count": 35,
+  "additional_critical_cases": [
+    27,
+    30,
+    31,
+    33,
+    35
+  ],
+  "cases": [
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 8,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C completed snapshot independently matches all entities and evidence",
+      "case_id": 1
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 9,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C repeat reversed input and reviewer metadata preserve deterministic fingerprint",
+      "case_id": 2
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 10,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C partial and failed runs never claim complete reconciliation",
+      "case_id": 3
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 11,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C APPLIED status cannot hide missing mapping and orphan target",
+      "case_id": 4
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 12,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C unexpected target entity is reported without repair",
+      "case_id": 5
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 13,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C tampered mapping provenance and payload hashes are independently rejected",
+      "case_id": 6
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 14,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C missing provenance is not accepted from APPLIED flag",
+      "case_id": 7
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 15,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C stale checkpoint wrong snapshot and root tampering require review",
+      "case_id": 8
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 16,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C changed source snapshot never silently reuses APPLIED target",
+      "case_id": 9
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 17,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C customer ownership and target identity mismatch reject matching payload",
+      "case_id": 10
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 18,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C provider account service external identity and claim conflicts are visible",
+      "case_id": 11
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 19,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C wrong claim owner cannot be hidden by valid mapping",
+      "case_id": 12
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 20,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C provider operations remain zero after load retry replay and parallel reads",
+      "case_id": 13
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 21,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C payment allocation and refund mismatches stay review only",
+      "case_id": 14
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 22,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C native Money totals keep allocation wallet collection and remaining separate",
+      "case_id": 15
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 23,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C wallet liability and currency mismatches never cross sum currencies",
+      "case_id": 16
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 24,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C unknown historical FX and payment evidence cannot produce zero difference PASS",
+      "case_id": 17
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 25,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C official PDF and proforma retain independent metadata without byte claims",
+      "case_id": 18
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 26,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C tied message timestamps retain deterministic source sequence and identity order",
+      "case_id": 19
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 27,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C reports never expose private body author path email or credentials",
+      "case_id": 20
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 28,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C private message and attachment metadata conflicts never gain public eligibility",
+      "case_id": 21
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 29,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C test archive still refuses cross customer projection",
+      "case_id": 22
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 30,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C incomplete migration and expired marker fail closed before data reporting",
+      "case_id": 23
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 31,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C reader has physical SELECT only grants and denies excess permissions",
+      "case_id": 24
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 32,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C reader cannot access similarly named sibling or native schema",
+      "case_id": 25
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 33,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C arbitrary DSN source paths users and revoked synthetic authorization are denied",
+      "case_id": 26
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 34,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C missing customer parent and orphan dependencies require review",
+      "case_id": 27
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 35,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C repeated reports leave target finance history and every table byte unchanged",
+      "case_id": 28
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 36,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C absent real source ledger and attachment bytes remain explicitly unverified",
+      "case_id": 29
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 37,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C oversized payload and row inventory are inconclusive rather than truncated PASS",
+      "case_id": 30
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 38,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C module has no native effect adapters transport file copy or repair SQL",
+      "case_id": 31
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 39,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C unexpected refund cannot disappear into equal financial totals",
+      "case_id": 32
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 40,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C target legacy credentials admin and MFA flags remain forbidden facts",
+      "case_id": 33
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 41,
+      "file": "tests/migration-reconciliation.php",
+      "name": "F6-C unexpected columns or lost uniqueness block bounded reconciliation",
+      "case_id": 34
+    },
+    {
+      "status": "LOCAL_AND_PHP83_PHP84_PASS",
+      "line": 6,
+      "file": "tests/migration-reconciliation-evidence.php",
+      "name": "F6-C different target contents with identical summaries have different evidence fingerprints",
+      "case_id": 35
+    }
+  ],
+  "user_required_scenarios": {
+    "1": [
+      1
+    ],
+    "2": [
+      2
+    ],
+    "3": [
+      2
+    ],
+    "4": [
+      3
+    ],
+    "5": [
+      4
+    ],
+    "6": [
+      5,
+      32
+    ],
+    "7": [
+      6,
+      7
+    ],
+    "8": [
+      8,
+      9
+    ],
+    "9": [
+      10
+    ],
+    "10": [
+      11,
+      12
+    ],
+    "11": [
+      13
+    ],
+    "12": [
+      14,
+      15,
+      32
+    ],
+    "13": [
+      16
+    ],
+    "14": [
+      17
+    ],
+    "15": [
+      18
+    ],
+    "16": [
+      19
+    ],
+    "17": [
+      20,
+      21
+    ],
+    "18": [
+      22
+    ],
+    "19": [
+      23,
+      24,
+      25,
+      26,
+      34
+    ],
+    "20": [
+      28
+    ],
+    "21": [
+      13
+    ],
+    "22": [
+      29
+    ]
+  }
+}
