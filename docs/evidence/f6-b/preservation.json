@@ -2650,5 +2650,7 @@
       "path": "migrations/054_support_ui_state.php",
       "sha256": "7ed95a2c5ad2992283252ee0f4671be6e280959ce7fe11e499f2dda5e7249c04"
     }
-  ]
+  ],
+  "application_sha": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+  "application_tree": "7c69d2420591777ec09aee56d57d79cc46783fa1"
 }

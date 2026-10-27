@@ -1,5 +1,21 @@
 # Hostider Automation — V1.0 Master Specification
 
+## 27 Ekim 2026 — F6-B sentetik teknik teslimi
+
+F6-B izole dry-run/load, idempotent mapping/provenance, batch recovery ve1/4/8
+bağımsız PHP process testleri tamamlandı; bağımsız teknik kabul bekler.
+[Plan](docs/F6_B_PLAN.md), [teslim/kanıt ve açık kapılar](docs/F6_B_DELIVERY_REPORT.md),
+[ADR-025](docs/adr/ADR-025-synthetic-isolated-import.md).
+Son uygulama ve FULL aday SHA `eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576`,
+tree `7c69d2420591777ec09aee56d57d79cc46783fa1`.
+[FAST40505208818](https://github.com/Boydaksu/hostidercp/actions/runs/40505208818)
+PHP8.3/8.4: her sürüm55 suite/663 test/0 hata; ayrı6 CI kontrolü PASS.
+Eski621 test (F6-A39 dahil),404 korunan kaynak/test ve001–054 korunur.
+Yeni42 F6-B testi vardır; gerçek WHMCS/dosya/provider/ödeme/mail işlemi yoktur.
+FULL bu aday için çalıştırılmadı; ayrıca açık yetki olmadan dispatch yapılmaz.
+F6-B ACCEPTED/FULL DONE/PRODUCTION READY ilan edilmez; F6-C'ye geçilmez.
+PR3 OPEN/DRAFT ve bütün canlı GATE'ler açıktır. Aşağıdaki kayıtlar tarihçedir.
+
 ## 27 Ekim 2026 — F6-A sınırlı bağımsız kabulü ve F6-B yetkisi
 
 **F6-A LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.** Proje sahibinin bağımsız

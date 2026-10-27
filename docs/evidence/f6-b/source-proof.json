@@ -1,0 +1,25 @@
+{
+  "application": {
+    "sha": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+    "tree": "7c69d2420591777ec09aee56d57d79cc46783fa1",
+    "parents": [
+      "5bdda5542f1cb42be2a8060cc5f3b547dfa3f8c1"
+    ]
+  },
+  "acceptance_documentation_commit": "c70ecf84215d65a5d582f5251cfb6a7de7a76087",
+  "acceptance_documentation_paths": [
+    "README.md",
+    "docs/F6_A_PLAN.md",
+    "docs/F6_A_DELIVERY_REPORT.md",
+    "docs/F6_A_POST_AUDIT_REVIEW.md",
+    "docs/adr/ADR-024-synthetic-migration-contract.md",
+    "docs/F6_PLAN.md"
+  ],
+  "full_acceptance_candidate": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+  "full_dispatched": false,
+  "branch": "codex/f5-support-center",
+  "pr": 3,
+  "pr_state": "open",
+  "pr_draft": true,
+  "production_operations": false
+}

@@ -1,5 +1,21 @@
 # F6 — Aktarım ve operasyon teknik planı
 
+## 27 Ekim 2026 — güncel F6-B teslim durumu
+
+F6-A yalnız kabul edilmiş sentetik sözleşme tabanıdır. F6-B izole dry-run/load
+geliştirmesi ve42 regresyon teslim edildi; bağımsız teknik kabul bekler.
+[F6_B_PLAN](F6_B_PLAN.md), [teslim/kanıt](F6_B_DELIVERY_REPORT.md),
+[ADR-025](adr/ADR-025-synthetic-isolated-import.md) güncel uygulama sınırını gösterir.
+Son uygulama / FULL aday SHA `eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576`,
+tree `7c69d2420591777ec09aee56d57d79cc46783fa1`.
+[FAST40505208818](https://github.com/Boydaksu/hostidercp/actions/runs/40505208818)
+PHP8.3/8.4: her sürüm55 suite/663 test/0 hata; ayrı6 CI kontrolü PASS.
+Eski621 testin içinde F6-A39 vardır;001–054 ve native uygulamalar korunur.
+Yeni FULL dispatch yapılmadı. F6-B ACCEPTED/FULL DONE değildir.
+F6-C gerçek mutabakat, F6-D operasyon, F6-E cutover ve bütün canlı GATE'ler açıktır;
+PR3 OPEN/DRAFT, main protection değişmez. Bu teslimden sonra DURULUR.
+Aşağıdaki yetki/bekleme ifadeleri önceki aşamaların tarihsel kaydıdır.
+
 ## 27 Ekim 2026 — F6-A sınırlı bağımsız kabulü ve F6-B yetkisi
 
 **F6-A LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.** Proje sahibinin bağımsız

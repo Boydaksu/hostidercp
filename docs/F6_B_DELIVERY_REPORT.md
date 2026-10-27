@@ -1,6 +1,6 @@
 # F6-B — sentetik izole import / dry-run teknik teslimi
 
-Durum: hedefli geliştirme tamamlandı; gerçek FAST ve bağımsız teknik inceleme bekler.
+Durum: sentetik geliştirme ve gerçek PHP8.3/8.4 FAST tamamlandı; bağımsız teknik kabul bekler.
 F6-B ACCEPTED, FULL DONE veya PRODUCTION READY değildir.
 Yetki/kapsam: [F6_B_PLAN](F6_B_PLAN.md), [ADR-025](adr/ADR-025-synthetic-isolated-import.md).
 F6-A sınırlı kabulü ayrı c70ecf84215d65a5d582f5251cfb6a7de7a76087 belge commit'indedir.
@@ -10,8 +10,10 @@ F6-A sınırlı kabulü ayrı c70ecf84215d65a5d582f5251cfb6a7de7a76087 belge com
 `src/Migration/Synthetic/` yalnız controlled Fixture→F6-A validation→Plan→Sandbox→
 Loader akışıdır. Native Database/transaction/Migrator ve F6-A Money/Currency,
 SourceIdentity/MappingEvidence tekrar kullanılır. DRY_RUN salt öneridir, imported_records0;
-SYNTHETIC_LOAD yalnız ephemeral teknik facts yazar. Cumulative imported_records,
+SYNTHETIC_LOAD yalnız ephemeral teknik facts yazar. Başarılı load'da imported_records,
 committed cursor'dur; replay=true yeni26 kayıt oluşturduğu anlamına gelmez.
+FAILED manifestindeki0, mevcut toplamın yeniden okunup sıfırlandığı iddiası değildir;
+kalıcı ilerleme yalnız doğrulanmış DB checkpoint'i yeniden okunarak belirlenir.
 Yeni Identity/Queue/Outbox/Audit/Finance engine veya native API/cron handler yoktur.
 
 Input kabul edilmiş JSON'un sabit byte SHA-256'sı ve kod allowlist'i ile sınırlıdır.
@@ -30,6 +32,7 @@ DB'ye SELECT de reddedilir. PUBLIC/role/başka schema/global haklar fail-closed'
 | İlk synthetic load |26 typed entity +26 mapping +26 provenance, ayrı source/target keys|
 | Aynı snapshot tekrar / worker retry / queue replay simülasyonu |APPLIED no-op; checkpoint/history/facts değişmez|
 | Aynı source ID, farklı içerik/snapshot |SOURCE_CONTENT_CHANGED / SOURCE_CONTEXT_CHANGED review; overwrite yok|
+| Aynı snapshot ID, farklı tam kök; değişen satır henüz yüklenmemiş |SOURCE_SNAPSHOT_CONFLICT; committed prefix ve orijinal resume korunur|
 | Başka source'un aynı target'ı sahiplenmesi | preflight conflict ve fiziksel UNIQUE(target_id) ret |
 | Aynı resource/payment/email başka source | unique external claim conflict; sessiz merge yok |
 | Ayrı instance/account/ref | ayrı52 fact/mapping; source identity birleştirilmez |
@@ -74,6 +77,13 @@ mail/notification sayaçları da0. Effect boundary explicit talepleri reddeder;
 runtime native adapter/transport bağımlılığı yoktur ve native tablo hakları yoktur.
 Bu gerçek provider resource doğrulaması veya gerçek queue consumer teslimi değildir.
 
+| Sentetik provider | İlk load | İkinci load / retry / queue replay |1/4/8 process|
+|---|---|---|---|
+| cPanel |CREATE0|CREATE0|CREATE0|
+| Voyar |CREATE0|CREATE0|CREATE0|
+| ResellerClub |CREATE0|CREATE0|CREATE0|
+| DomainNameAPI |CREATE0|CREATE0|CREATE0|
+
 | Support alanı | Korunan davranış |
 |---|---|
 | Ticket/customer/requester | immutable source bağları; test-only public projection cross-owner ret |
@@ -91,8 +101,8 @@ NOT APPLICABLE; yeni auth yüzeyi açılmadı. Eski native621 regresyon aynen ko
 ## Hedefli test ve başarısız denemeler
 
 [Yerel42 test](evidence/f6-b/local-targeted.txt): PHP8.4.24 + gerçek MariaDB10.11,
-42/42 PASS. F6-A31+8 ve ayrı6 CI helper de PASS. PHPStan0 hata; son lint/pattern
-ve gerçek FAST sonuçları kaynak kimliğiyle kapanış kaydına eklenecek.
+42/42 PASS. F6-A31+8 ve ayrı6 CI helper de PASS. PHPStan0 hata; lint414/0,
+pattern436/0. Gerçek FAST sonuçları exact kaynak kimliğiyle aşağıda kayıtlıdır.
 [Gerçek demo manifest'i](evidence/f6-b/example-manifest.json) DRY_RUN, ilk load ve
 replay'i ayrı gösterir; gerçek dosya/native entity yazısı yoktur. Tekrar demo:
 Manifest mapping_plan alanı F6-A MappingEvidence hedef/kanıt/dependency önerilerinin
@@ -108,7 +118,7 @@ haklarının gate tarafından reddiydi. Yalnız görev için oluşturulan/datadi
 doğrulanan yerel test sunucusunda PUBLIC test hakları kaldırıldı; runtime gate
 gevşetilmedi. Sonraki37/37 PASS. Ek kardeş-schema regresyonu39-test turunda1 FAIL
 ile underscore wildcard riskini yakaladı; literal privilege escape sonrası39/39,
-son41/41 PASS. Başarısız turlar başarı veya kabul yerine sunulmaz; yeni testler dışında
+son40/40 PASS. Başarısız turlar başarı veya kabul yerine sunulmaz; yeni testler dışında
 eski test/assertion değiştirilmedi. Gerçek dosya/MIME/AV/retention henüz doğrulanmadı.
 
 Ek negatif test, eski422bf81 kaynağında ilk1 kayıt sonrası aynı snapshot'ın henüz
@@ -116,7 +126,7 @@ aktarılmamış customer-a içeriğinin değişmesini yakaladı:41 test/1 FAIL,
 beklenen REVIEW_REQUIRED yerine APPLIED. [Önceki çıktı](evidence/f6-b/snapshot-before.txt).
 Tam kaynak snapshot'ı ilk batch öncesinde immutable envelope köküne bağlandı;
 SOURCE_SNAPSHOT_CONFLICT artık prefix'i değiştirmez, orijinal checkpoint devam eder.
-Son yerel tur41/41 PASS. Kaynak snapshot kökleri de runtime UPDATE/DELETE dışındadır.
+Snapshot düzeltmesi sonrası41/41 PASS. Kaynak kökleri runtime UPDATE/DELETE dışındadır.
 
 İlk gerçek FAST [40501763210](https://github.com/Boydaksu/hostidercp/actions/runs/40501763210)
 iki PHP sürümünde eski621 testi0 hata ile geçti; yeni40 test35 setup hatası verdi
@@ -124,6 +134,10 @@ iki PHP sürümünde eski621 testi0 hata ile geçti; yeni40 test35 setup hatası
 127.0.0.1 olmadığından yalnız test hesaplarının literal host bağlamı uyarlandı;
 wildcard host/hak eklenmedi. [Başarısız CI kaydı](evidence/f6-b/ci-first-failure.json)
 kabul kanıtı değildir; son adayda iki gerçek FAST sonucu ayrıca gereklidir.
+
+Ara aday5bdda55 için [40504982899](https://github.com/Boydaksu/hostidercp/actions/runs/40504982899)
+yeni eb3c2f6 push'u nedeniyle concurrency tarafından CANCELLED oldu; tamamlanmış
+uygulama testi kanıtı olarak sayılmaz. Son aday tüm55 suite'i yeniden çalıştırır.
 
 ## Migration / rollback / F6-C bağımlılığı
 
@@ -133,6 +147,9 @@ Migrator ile uygulanır; runtime DDL yetkisi yok. Fixture teardown exact rastgel
 schema ve iki geçici hesabı kaldırır; native DB restore/down yapılmaz. Rollback
 F6-B uygulama commit revert ve owned test fixture teardown; forward-fix immutable
 facts/provenance'i overwrite etmez. Gerekli sözleşme değişikliği versioned olmalıdır.
+Kod geri dönüşü gerekirse son uygulama değişiklikleri ters sırayla ele alınır:
+eb3c2f6 →5bdda55 →422bf81. Ayrı F6-A kabul kaydı c70ecf8 bu geri dönüşün parçası
+değildir. Bu rapor bir rollback icrası değil, geri dönüş planıdır.
 
 F6-C: gerçek schema discovery/adapter, native application seam uygunluğu, para ve
 ownership/file mutabakatı, gerçek resource account eşliği ve current ACL tekrar
@@ -141,4 +158,55 @@ production mapping/import CRUD DEFERRED, PROV-005, F5-C dört canlı istisna,
 auto-close/merge/split/tarihsel SLA ve tüm vendor/operasyon/live GATE'ler açık kalır.
 F6-D/F6-E, staging/merge/deploy/cutover yetkisi yoktur. PR3 OPEN/DRAFT;
 main protection değişmez. FULL bu adayda henüz çalıştırılmadı; dispatch yapılmayacak.
-Son SHA/tree ve gerçek FAST kanıtı tamamlandıktan sonra DURULUR.
+Son SHA/tree ve gerçek FAST kanıtı aşağıda kaydedilmiştir; F6-C'ye geçilmeden DURULUR.
+
+## Açık GATE envanteri
+
+[Asıl teknik kapı kaydı](14_OPEN_VALIDATIONS.md) ve [kabul testleri](13_ACCEPTANCE_TESTS.md)
+değişmez; bu faz aşağıdakileri kapatmaz:
+
+| Kapı | Açık doğrulama |
+|---|---|
+| G-V01–04 | Voyar ücretli saat, account auth, unknown create ve custom upgrade |
+| G-P01–02 | PayTR merchant currency ve gerçek callback/refund mutabakatı |
+| G-C01 / G-R01 / G-D01 | WHM ACL/versiyon, ResellerClub hesap/API, DomainNameAPI OT&E |
+| G-X01–02 | Ticari FX kaynağı ve resmî e-belge/mali müşavir kabulü |
+| G-O01–04 | Hosting runtime, PITR/restore, gerçek WHMCS schema/hash, retention/PDF erişimi |
+| G-T01 | Gerçek hizmet devri edge kabulü |
+| SUP-010 / PROV-004 | Gerçek destek arşivi ve imported provider resource kabulü |
+| DOMAIN-002 / mapping-import CRUD / PROV-005 | PARTIAL-MANUAL_REVIEW / DEFERRED / OPEN |
+| F5-C dört istisna | Gerçek mailbox routing/sender auth; retention cutoff/scheduler; AV/IMAP/SMTP/genel MIME; mock transport kabulü gerçek müşteri teslimi sayılmaz |
+| Support ileri kapsam | Auto-close, merge/split ve kurum geneli tarihsel SLA doğrulaması |
+| F6-C / F6-D / F6-E | Gerçek mutabakat-güvenlik / operasyon hazırlığı / canlı cutover |
+
+F5-C istisnalarının bağlayıcı kaydı [F5_C_DELIVERY_REPORT](F5_C_DELIVERY_REPORT.md)
+başındadır. Bütün vendor/operasyon/production kapıları ayrıca açık kalır.
+
+## Son kaynak kimliği ve CI kapanışı
+
+| Kayıt | Exact değer |
+|---|---|
+| Ayrı F6-A kabul belge commit'i |`c70ecf84215d65a5d582f5251cfb6a7de7a76087`|
+| F6-B son uygulama SHA |`eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576`|
+| Uygulama tree |`7c69d2420591777ec09aee56d57d79cc46783fa1`|
+| FULL ACCEPTANCE aday SHA |`eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576`|
+| Son FAST run |[40505208818](https://github.com/Boydaksu/hostidercp/actions/runs/40505208818), SUCCESS|
+| PHP8.3 job |[122193388678](https://github.com/Boydaksu/hostidercp/actions/runs/40505208818/job/122193388678),55 suite/663 test/0 hata|
+| PHP8.4 job |[122193388489](https://github.com/Boydaksu/hostidercp/actions/runs/40505208818/job/122193388489),55 suite/663 test/0 hata|
+
+[Makinece okunabilir CI kanıtı](evidence/f6-b/ci.json), kabul edilmiş FULL40475881946
+job122093868403'teki621 PASS adını her yeni job'un uygulama test adlarıyla multiset
+olarak karşılaştırır: her sürüm621/621 korunmuş, missing0; yeni42/42 PASS. Eski54
+suite'in test sayıları da aynıdır; yeni suite55.'dir. F6-A31+8 bu621'e dahildir.
+Scope job122193280924'te ayrı6 CI helper PASS. Her PHP job'unda PHPStan0,
+lint414/0, pattern436/0, Composer locked audit temiz, dört native JS syntax kontrolü,
+state3/3 ve browser lock audit temizdir. Bu yeni Chromium veya10/30/20 koşusu değildir.
+Stable FAST result job122200474221 SUCCESS; FULL ACCEPTANCE ayrı ve çalıştırılmamıştır.
+
+[Koruma manifesti](evidence/f6-b/preservation.json) eski404 kaynak/test dosyası için
+Git blob eşliği,54 migration SHA-256 ve migration subtree kimliğini içerir.
+[Yeni test indeksi](evidence/f6-b/test-index.json)42 F6-B testini aday kaynak
+satırına ve talimattaki28 asgari senaryoya bağlar. Test/CI kaynakları bu uygulama
+SHA'sında dondurulmuştur; bu kapanış ayrı docs-only commit olarak kaydedilir.
+[Kaynak kanıtı](evidence/f6-b/source-proof.json) GitHub commit/tree eşliğini ve
+ayrı altı-dosyalık F6-A kabul kaydını gösterir. Yeni FULL dispatch yoktur.
