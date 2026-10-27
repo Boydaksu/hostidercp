@@ -705,7 +705,7 @@
   "baseline_count": 699,
   "new_suite": "tests/migration-operations.php",
   "new_tests": 32,
-  "ci_comparison": "PENDING_EXACT_APPLICATION_FAST",
+  "ci_comparison": "PHP8.3/8.4: all 699 baseline PASS names and 56 suite counts preserved; 32 new PASS; 57 suites /731 tests /0 failures each",
   "new_test_names": [
     "F6-D actual encrypted backup verifies bounded DB and private sample files",
     "F6-D backup identity is deterministic while native crypto uses fresh nonces",

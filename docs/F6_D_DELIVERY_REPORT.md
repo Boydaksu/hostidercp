@@ -1,10 +1,43 @@
 # F6-D — sentetik operasyon ve encrypted recovery escrow teslimi
 
-Durum: SYNTHETIC DEVELOPMENT PARTIAL; bağımsız kabul PENDING; son aday FAST bekler.
+Durum: SYNTHETIC DEVELOPMENT PARTIAL; bağımsız kabul PENDING; son exact aday FAST PASS.
 F6-C LIMITED SYNTHETIC ACCEPTED: docs-only90aaaaa8a8c8c743119b2c8f08e71cc58445a534.
 Yalnız README/F6_PLAN/F6_C_PLAN/F6_C_DELIVERY_REPORT değişti; application c5ee926,
 tree6418118929a977729f6fe12383c689c91f3edad5 ve evidence2e57619 ayrıdır.
 Eski699 test/kod korunur; kabul için eski FAST tekrar çalıştırılmadı.
+
+## Exact source ve son FAST kanıtı
+
+Application SHA: `71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa`.
+Application tree: `0c5f1729089dafb07dec2e374e1079efa75fcbba`.
+[FAST40555003177](https://github.com/Boydaksu/hostidercp/actions/runs/40555003177): PHP8.3/8.4 her sürüm57 suite/731 test/0 hata; eski699 ve56 suite sayıları korunmuş, yeni32 PASS.
+[PHP8.3 job](https://github.com/Boydaksu/hostidercp/actions/runs/40555003177/job/122368732702);
+[PHP8.4 job](https://github.com/Boydaksu/hostidercp/actions/runs/40555003177/job/122368732856).
+PHPStan0, lint435/0, pattern457/0, Composer/npm audit0, JS state3/0.
+Scope helper6/0 ve docs487 PASS ayrıca; 731 toplamına eklenmez.
+İki job'ın raw log'larından PASS adlarının multiset karşılaştırması yapıldı;
+eski699 ad eksiksiz,56 eski suite sayısı aynı,32 yeni ad eşittir.
+[32 yeni test adı ve korunmuş adlar](evidence/f6-d/test-index.json),
+[CI/suite/quality](evidence/f6-d/ci.json),
+[119 test dosyasının Git blob eşliği](evidence/f6-d/preservation.json),
+[source/commit proof](evidence/f6-d/source-proof.json),
+[failure matrix](evidence/f6-d/failure-matrix.json).
+ciSourceProof her suite öncesi ve finalde58 kez exact SHA/tree/clean tracked source
+kontrolünü sessiz uygular; tree log'da yazdırılmaz. GitHub Git commit API tree'si
+yerel tree ile ayrıca eşleştirildi. Son kaynak için tek push FAST attempt1 success;
+başarısız/cancelled koşu sonuca dahil edilmedi. FULL/Chromium/10/30/20 maraton yok.
+Linux symlink case iki job'da gerçekten yürüdü; yerel Windows blok kaydı korunur.
+
+Rollback application commit listesi: yalnız
+`71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa`.
+Migration001–054 subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b`.
+Kanıt kapanışı ayrı docs-only commit'tir; kaynak/test/CI değişmez.
+Mevcut kullanıcı düzenlemesi docs/F6_B_B01_REVIEW.md commit dışı korunur.
+Main `ada37dc52b324e34380ba836ae7794cebb174ec4`: protected=false/rulesets=[];
+PR3 OPEN/DRAFT, ayarlar değişmedi. Bu açık branch koruması merge/release öncesi
+sahip tarafından ayrı kapatılmalıdır. F6-D PARTIAL, bağımsız kabul PENDING;
+FULL NOT DISPATCHED, production backup/restore NOT VERIFIED, F6-E NOT AUTHORIZED.
+Gerçek WHMCS/provider/payment/mail/file transfer/staging/merge/deploy yok. DUR.
 
 ## Gerçek geliştirilen bileşenler
 
@@ -99,7 +132,7 @@ restore insert/files/after commit. Bunlar exception mock'u diye sunulmaz.
 DISK_FULL fault kontrollü kısa write'tır; fiziksel disk doldurulmadı. EXPIRE fault
 commit öncesi stale-op kontrollü reddidir; ayrıca gerçek lease zamanı geçmiş marker
 testleri vardır. Windows symlink fixture alt senaryosu BLOCKED_PLATFORM; Linux
-FAST'te gerçek symlink case yürür. Full power-loss/fsync-directory dayanıklılığı
+FAST'te gerçek symlink case yürüdü. Full power-loss/fsync-directory dayanıklılığı
 ve Windows ACL/shared-host filesystem kabulü NOT_VERIFIED'dır.
 
 ## Retention / monitoring / rollback
@@ -110,6 +143,7 @@ adaylar silinmez. key_available tüm gerekli key+issuer capability erişimi içi
 sentetik metadata'dır, gerçek doğrulama yerine geçmez. Future clock/quota review;
 duplicate IDs ret. Format full-snapshot-only'dir; incremental dependency chain
 metadata'sı desteklenmez ve BLOCKED olur. Hiçbir deletion execution API'si yoktur.
+Ayrı fixed-source aylık sınır probe 12 monthly referans ve daily/monthly union eşliğini doğruladı; nonempty incremental chain reddedildi (32 suite testine eklenmez).
 Gerçek clock/retention/KVKK G-O04 açıktır. Telemetry no mail/SMS/webhook; secret,
 body, source path veya credential döndürmez. Prod capacity/RPO/RTO NOT_VERIFIED.
 
@@ -139,4 +173,4 @@ overwrite etmez. Gerçek cutover rollback'i ayrıca delta/reconciliation/owner k
 | F6-E/FULL | Not dispatched | NOT AUTHORIZED | Ayrı açık talimat | Canlı ilerleme yok | Owner kararı |
 
 F6-A/B/C ACCEPTED LIMITED SYNTHETIC; F6-D PARTIAL, INDEPENDENT ACCEPTANCE PENDING.
-PR3 OPEN/DRAFT; production UNCHANGED. Son exact SHA/tree FAST kanıtı sonrası DUR.
+PR3 OPEN/DRAFT; production UNCHANGED. Son exact SHA/tree FAST kanıtıyla teslim ve DUR.

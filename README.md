@@ -1,5 +1,27 @@
 # Hostider Automation — V1.0 Master Specification
 
+## 27 Ekim 2026 — F6-D sentetik operasyon teslimi
+
+F6-A/B/C **ACCEPTED — LIMITED SYNTHETIC**. F6-C kabul kaydı
+`90aaaaa8a8c8c743119b2c8f08e71cc58445a534` docs-only'dir.
+F6-D **SYNTHETIC DEVELOPMENT PARTIAL; INDEPENDENT ACCEPTANCE PENDING**.
+Application `71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa`, tree
+`0c5f1729089dafb07dec2e374e1079efa75fcbba`.
+[FAST40555003177](https://github.com/Boydaksu/hostidercp/actions/runs/40555003177): PHP8.3/8.4 her sürüm57 suite/731 test/0 hata; eski699 ve56 suite sayıları korunmuş, yeni32 PASS.
+Yeni32 hedefli test PASS; eski699 testin119 dosyası blob-equal; migrations001–054
+subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b` değişmez.
+Native Crypto ile encrypted/authenticated snapshot, private derived sample files,
+izole escrow SQL restore,1/4/8 child process, crash/replay, native Queue/Worker,
+dry-run14/8/12 retention ve sanitized status geliştirildi.
+Native application activation **BLOCKED_IDENTITY_BOUND**; original archive bytes
+ve kalıcı issuer/key cold recovery doğrulanmadı. Bu teslim gerçek operasyon kabulü değildir.
+G-O01/02/03/04 ve tüm vendor/finance/support/cutover kapıları açık;
+main protected=false/rulesets=[] gözlendi, değiştirilmedi. PR3 OPEN/DRAFT.
+FULL NOT DISPATCHED; PRODUCTION BACKUP/RESTORE NOT VERIFIED; F6-E NOT AUTHORIZED;
+production UNCHANGED. Bağımsız incelemeye teslim ve DUR.
+[Plan](docs/F6_D_PLAN.md), [teslim/kapılar](docs/F6_D_DELIVERY_REPORT.md), [kanıt](docs/evidence/f6-d/source-proof.json).
+Aşağıdaki önceki teslim durumları tarihsel kayıttır.
+
 ## 27 Ekim 2026 — F6-C proje sahibi kabul kararı
 
 **F6-C LIMITED SYNTHETIC RECONCILIATION & SECURITY TECHNICAL BASELINE — ACCEPTED.**

@@ -28,5 +28,7 @@
     1,
     4,
     8
-  ]
+  ],
+  "final_application_sha": "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa",
+  "supplemental_monthly_probe": "retention-probe.json (excluded from suite count)"
 }

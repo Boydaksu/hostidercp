@@ -723,5 +723,9 @@
   "migrations_count": 54,
   "migrations_subtree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
   "accepted_application_source_modified": [],
-  "unrelated_user_edit_excluded": "docs/F6_B_B01_REVIEW.md"
+  "unrelated_user_edit_excluded": "docs/F6_B_B01_REVIEW.md",
+  "application_sha": "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa",
+  "f6c_acceptance_source_unchanged": true,
+  "ci_old_699_names_equal_php83_php84": true,
+  "ci_old_56_suite_counts_equal": true
 }
