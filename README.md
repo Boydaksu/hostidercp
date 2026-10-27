@@ -1,5 +1,15 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F6-A P1 mesaj türü/görünürlük düzeltmesi — bağımsız yeniden kabul bekler.**
+> PUBLIC_REPLY yalnız KNOWN PUBLIC ile geçerli; tutarsızlık MESSAGE_VISIBILITY_CONFLICT
+> ile incelemeye gider. INTERNAL_NOTE doğrulanmış source STAFF + KNOWN PRIVATE ister.
+> Attachment ilişkileri private mesajı client-visible yapmaz. Native F5-E/Identity/Finance
+> ve001–054 değişmedi. [Karşı-örnek ve denetim raporu](docs/F6_A_POST_AUDIT_REVIEW.md).
+> Son uygulama `063e846999e4bda513f3563de0c4f13ac8858b97`; FULL dispatch yapılmadı.
+> [FAST PHP8.3/8.4](https://github.com/Boydaksu/hostidercp/actions/runs/40470409239):
+> her sürüm54 suite/621 test/0 hata; eski613 ad eksiksiz, yeni8 PASS. Eski kaynakta aynı8 test4 FAIL verdi.
+> PR3 OPEN/DRAFT; F6-B ve bütün canlı GATE'ler açık kalır.
+
 > **F6-A sentetik sözleşme geliştirmesi — bağımsız teknik kabul bekler.**
 > [Plan](docs/F6_A_PLAN.md), [teknik teslim ve açık kapılar](docs/F6_A_DELIVERY_REPORT.md),
 > [ADR-024](docs/adr/ADR-024-synthetic-migration-contract.md). Gerçek WHMCS bağlantısı,
