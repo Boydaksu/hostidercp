@@ -39,4 +39,5 @@ PASS F6-B schema underscore cannot grant SELECT to a similarly named sibling dat
 PASS F6-B real failed additive test DDL remains APPLYING and blocks sandbox replay
 PASS F6-B synthetic module has no native engines transports or external dispatch dependency
 PASS F6-B partial snapshot cannot admit changed content before that source row is mapped
-41 tests, 0 failures
+PASS F6-B dry-run mapping evidence matches committed mappings and source roots are immutable
+42 tests, 0 failures

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Hostider\Migration\Synthetic;
-use Hostider\Migration\{Contract, Entity, SourceEnvelope, SourceIdentity, SnapshotValidator};
+use Hostider\Migration\{Contract, Entity, MappingEvidence, SourceEnvelope, SourceIdentity, SnapshotValidator};
 
 final readonly class Plan
 {
@@ -63,7 +63,8 @@ final readonly class Plan
     public function manifest(string $mode, array $reasons=[]): array
     {
         $all=array_values(array_unique([...$this->reasons,...$reasons]));sort($all,SORT_STRING);
+        $proposals=[];foreach($this->items as $e){$mapping=MappingEvidence::propose($e,$e->identity->entity->value,self::target($e));$proposals[$e->identity->key()]=['target'=>self::target($e),'evidence'=>$mapping->data['evidence_sha256'],'dependencies'=>self::dependencies($e)];}ksort($proposals,SORT_STRING);
         return ['classification'=>'SYNTHETIC','mode'=>$mode,'status'=>$all===[]?'PLANNED':'REVIEW_REQUIRED','plan_hash'=>$this->hash,
-            'counts'=>$this->counts,'reasons'=>$all,'effects_allowed'=>false,'imported_records'=>0];
+            'counts'=>$this->counts,'mapping_plan'=>['records'=>count($proposals),'sha256'=>Contract::hash($proposals)],'source_snapshot_roots'=>$this->snapshots(),'reasons'=>$all,'effects_allowed'=>false,'imported_records'=>0];
     }
 }

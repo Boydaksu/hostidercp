@@ -90,11 +90,15 @@ NOT APPLICABLE; yeni auth yüzeyi açılmadı. Eski native621 regresyon aynen ko
 
 ## Hedefli test ve başarısız denemeler
 
-[Yerel41 test](evidence/f6-b/local-targeted.txt): PHP8.4.24 + gerçek MariaDB10.11,
-41/41 PASS. F6-A31+8 ve ayrı6 CI helper de PASS. PHPStan0 hata; son lint/pattern
+[Yerel42 test](evidence/f6-b/local-targeted.txt): PHP8.4.24 + gerçek MariaDB10.11,
+42/42 PASS. F6-A31+8 ve ayrı6 CI helper de PASS. PHPStan0 hata; son lint/pattern
 ve gerçek FAST sonuçları kaynak kimliğiyle kapanış kaydına eklenecek.
 [Gerçek demo manifest'i](evidence/f6-b/example-manifest.json) DRY_RUN, ilk load ve
 replay'i ayrı gösterir; gerçek dosya/native entity yazısı yoktur. Tekrar demo:
+Manifest mapping_plan alanı F6-A MappingEvidence hedef/kanıt/dependency önerilerinin
+sıralanmış digest'ini, source_snapshot_roots tam kaynak bağını verir. Ek42. test
+bu digest'i gerçek DB mapping kayıtlarından yeniden hesaplar; eşitlik ve köklerin
+UPDATE/DELETE reddi PASS. Son hedefli test toplamı42/42'dir.
 yalnız explicit test env ve izole admin fixture harness ile `php tools/migration-import-demo.php`.
 Root/setup hesabı yalnız test schema/account kurup kaldırır; loader en az yetkili ayrı hesap kullanır.
 
