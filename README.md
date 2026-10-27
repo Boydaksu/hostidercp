@@ -1,5 +1,11 @@
 # Hostider Automation — V1.0 Master Specification
 
+> **F6-A sentetik sözleşme geliştirmesi — bağımsız teknik kabul bekler.**
+> [Plan](docs/F6_A_PLAN.md), [teknik teslim ve açık kapılar](docs/F6_A_DELIVERY_REPORT.md),
+> [ADR-024](docs/adr/ADR-024-synthetic-migration-contract.md). Gerçek WHMCS bağlantısı,
+> importer, persistent mapping CRUD, dosya aktarımı veya dış servis etkisi yoktur.
+> Yeni migration yok;001–054 korunur. F6-B ve bütün canlı GATE'ler açık kalır.
+
 > **27 Ekim 2026 — CI OPTIMIZATION — LIMITED TECHNICAL BASELINE: ACCEPTED.**
 > Proje sahibinin bağımsız kabulü: [FULL run40459020759](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759),
 > [PHP8.3 job122038976890](https://github.com/Boydaksu/hostidercp/actions/runs/40459020759/job/122038976890)

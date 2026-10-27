@@ -50,5 +50,6 @@
   "tests/provider-panel-http.php",
   "tests/support-migrations.php",
   "tests/support-http.php",
-  "tests/support-e.php"
+  "tests/support-e.php",
+  "tests/migration-contract.php"
 ]

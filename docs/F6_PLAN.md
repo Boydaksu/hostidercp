@@ -1,5 +1,14 @@
 # F6 — Aktarım ve operasyon teknik planı
 
+## 27 Ekim 2026 — yalnız F6-A geliştirme yetkisi
+
+Proje sahibi F6-A SYNTHETIC DISCOVERY & CONTRACT DEVELOPMENT için GO verdi.
+Güncel kapsam [F6_A_PLAN](F6_A_PLAN.md), karar ADR-024, teknik teslim
+[F6_A_DELIVERY_REPORT](F6_A_DELIVERY_REPORT.md) ile izlenir. Bu yetki sentetik
+sözleşme/fixture/validasyon içindir; F6-B/import/staging/merge/cutover izni değildir.
+G-O03/SUP-010/gerçek PROV-004 ve tüm canlı GATE'ler açık kalır. Aşağıdaki
+F6-A NOT STARTED/yetki bekleme ifadeleri önceki planın tarihsel kaydıdır.
+
 ## Yetki ve mevcut taban
 
 Bu belge yalnız plan teslimidir. F6-A kodu dahil hiçbir F6 uygulaması, gerçek WHMCS

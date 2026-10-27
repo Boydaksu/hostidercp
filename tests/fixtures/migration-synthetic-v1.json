@@ -1,0 +1,1492 @@
+{
+    "classification": "SYNTHETIC",
+    "scope": "CONTRACT_DEMO_ONLY",
+    "manifest": {
+        "classification": "SYNTHETIC",
+        "contract": "hostider.synthetic.v1",
+        "entities": 26,
+        "snapshot_fingerprint": "7c0ed76d4326a1ed5d009d9fe0bcd2d6f788952075d4ca567f1852c1699dabc9",
+        "status": "VALID_SYNTHETIC_CONTRACT",
+        "reasons": [],
+        "effects_allowed": false
+    },
+    "entities": [
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "customer",
+            "source_id": "customer-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                },
+                "currency": "TRY"
+            },
+            "content_sha256": "712f11976e82247d4302e3125be4a311273cca52aec8f31d1ebb0eb316acc140"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "customer",
+            "source_id": "customer-b",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                },
+                "currency": "TRY"
+            },
+            "content_sha256": "712f11976e82247d4302e3125be4a311273cca52aec8f31d1ebb0eb316acc140"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "user",
+            "source_id": "user-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "kind": "CUSTOMER",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                },
+                "email": "user-a@synthetic.example.invalid",
+                "password_format": "NONE",
+                "reset_required": true,
+                "verification_required": true,
+                "target_admin": false,
+                "target_mfa": false
+            },
+            "content_sha256": "2664c66c5f2a35bd947ecb4b4f9e4c5d2ce70cdf6985ad916b01902d3afe8fd9"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "user",
+            "source_id": "user-b",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "kind": "CUSTOMER",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                },
+                "email": "user-b@synthetic.example.invalid",
+                "password_format": "NONE",
+                "reset_required": true,
+                "verification_required": true,
+                "target_admin": false,
+                "target_mfa": false
+            },
+            "content_sha256": "55f5c924feb38f1af5a905479b4615a2224ee6600bbf1aa1c7df9a928e02a7fe"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "user",
+            "source_id": "staff-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "kind": "STAFF",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                },
+                "email": "staff-a@synthetic.example.invalid",
+                "password_format": "NONE",
+                "reset_required": true,
+                "verification_required": true,
+                "target_admin": false,
+                "target_mfa": false
+            },
+            "content_sha256": "db0bca70f8d551398c32a3178140ad381a33d6c4f8553bcc63aefb9fd401e851"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "membership",
+            "source_id": "membership-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "user": "user-a",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                }
+            },
+            "content_sha256": "7d4b3b48ce1e77b323a95666d41e1a9b44d6ed4a5efed2b9e4662226a9cc8595"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "membership",
+            "source_id": "membership-b",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-b",
+                "user": "user-b",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "ACTIVE"
+                }
+            },
+            "content_sha256": "fa4a5b7c53651c2c0eb1bc742040c640ab50dfff1b2be0ff62bd61c7ed91086c"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "order",
+            "source_id": "order-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "payment_state": {
+                    "state": "KNOWN",
+                    "value": "PARTIAL"
+                },
+                "total": {
+                    "minor": "10000",
+                    "currency": "TRY"
+                }
+            },
+            "content_sha256": "59bae11b6cefd3acf327c53ecbe399c0e9fe3f6af5a07dbe3f4b41d7f47389f7"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "service",
+            "source_id": "service-cpanel",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "order": "order-a",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "provider": "CPANEL",
+                "account": "account-cpanel"
+            },
+            "content_sha256": "42a33b4d033f62101d294063a959de5346788db3f4d25c0262f50880baa629dc"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "resource",
+            "source_id": "resource-cpanel",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "service": "service-cpanel",
+                "provider": "CPANEL",
+                "account": "account-cpanel",
+                "external_id": "external-cpanel",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "create_allowed": false
+            },
+            "content_sha256": "169d4982ee3686c774a92efa59e480a582c8c0ce32b32760e8b0d30ebfa2f11d"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "service",
+            "source_id": "service-voyar",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "order": "order-a",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "provider": "VOYAR",
+                "account": "account-voyar"
+            },
+            "content_sha256": "fe1036aa32b488979c1ee1a07f78c7490d76b72139139317284d056ca0252938"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "resource",
+            "source_id": "resource-voyar",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "service": "service-voyar",
+                "provider": "VOYAR",
+                "account": "account-voyar",
+                "external_id": "external-voyar",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "create_allowed": false
+            },
+            "content_sha256": "78aa863583542a843b9b2993fc8d1b3ea2f98c22dd7fc109577e272cc85847cd"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "service",
+            "source_id": "service-rc",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "order": "order-a",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "provider": "RESELLERCLUB",
+                "account": "account-rc"
+            },
+            "content_sha256": "15ae205b17ce89650f8e96578bf7e9f55028744fe8f533a9116cdeefd8d7e9e1"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "resource",
+            "source_id": "resource-rc",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "service": "service-rc",
+                "provider": "RESELLERCLUB",
+                "account": "account-rc",
+                "external_id": "external-rc",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "create_allowed": false
+            },
+            "content_sha256": "b0665edbc0700318273eaa6a40e935bdc68fd42a861dfb6654306f13d114aaff"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "service",
+            "source_id": "service-dna",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "order": "order-a",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "provider": "DOMAINNAMEAPI",
+                "account": "account-dna"
+            },
+            "content_sha256": "49f83ecfd7c434b0bfb733851142c862a6d3157fd3c3d3a621e211c120ee4655"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "resource",
+            "source_id": "resource-dna",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "service": "service-dna",
+                "provider": "DOMAINNAMEAPI",
+                "account": "account-dna",
+                "external_id": "external-dna",
+                "status": {
+                    "state": "KNOWN",
+                    "value": "SUSPENDED"
+                },
+                "origin": "IMPORTED",
+                "create_allowed": false
+            },
+            "content_sha256": "d0919ac7bb315577c167a0035f1304d788ed972dbcaa36f1eae85e8f175a567c"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "payment",
+            "source_id": "payment-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "amount": {
+                    "minor": "6000",
+                    "currency": "TRY"
+                },
+                "state": {
+                    "state": "KNOWN",
+                    "value": "CONFIRMED"
+                },
+                "external_ref": "synthetic-payment-a",
+                "evidence_sha256": "3bb7fa14e1808ec3c6e860c47ed37d05347a403b34569857fff699cfbb0dadfa",
+                "source_currency": "TRY",
+                "historical_fx": {
+                    "state": "KNOWN",
+                    "value": "1"
+                }
+            },
+            "content_sha256": "cc0200bbfe90f1b4b735c1c1b8dce9e5cace1101d2be2d33adf9e53b853975a7"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "allocation",
+            "source_id": "allocation-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "payment": "payment-a",
+                "order": "order-a",
+                "amount": {
+                    "minor": "4000",
+                    "currency": "TRY"
+                }
+            },
+            "content_sha256": "bfe98635fd4dcba9c629effc20b11505122b0b776d48e19a8e190f44c1354c69"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "wallet",
+            "source_id": "wallet-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "liability": {
+                    "minor": "2000",
+                    "currency": "TRY"
+                },
+                "evidence_sha256": "48159e7a7ea720d832224c6f9530da1cb3cc6aff6f66f9395594b9d0a30060f6",
+                "source_currency": "TRY",
+                "historical_fx": {
+                    "state": "KNOWN",
+                    "value": "1"
+                }
+            },
+            "content_sha256": "ce1cbc9e8111257e692e93efb0dc791cab535da1e631d1591691d951ee6db7fc"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "document",
+            "source_id": "proforma",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "order": "order-a",
+                "kind": "PROFORMA",
+                "number": "synthetic-PROFORMA",
+                "amount": {
+                    "minor": "10000",
+                    "currency": "TRY"
+                },
+                "created_at": "2026-10-26T09:00:00Z",
+                "sha256": "adf198ba6d1ff67232107a2cd8bff2fa49f9b1a096ac4e2e1f70e22e8f3a2545"
+            },
+            "content_sha256": "e11b7d32fa09054494c8440dd8659c1feca327e4570b01a70cb8645a81f01526"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "document",
+            "source_id": "official_pdf",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "order": "order-a",
+                "kind": "OFFICIAL_PDF",
+                "number": "synthetic-OFFICIAL_PDF",
+                "amount": {
+                    "minor": "10000",
+                    "currency": "TRY"
+                },
+                "created_at": "2026-10-26T09:00:00Z",
+                "sha256": "e800de1cf68d4fc8d6d959de98170aa8d516eb788965bccdcb351a81bbc0a6bd"
+            },
+            "content_sha256": "ef27bab059e435c3b0c94643c23591bb40281dcec0bc366b947baf1c798d2195"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "ticket",
+            "source_id": "ticket-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "requester": "user-a",
+                "created_at": "2026-10-26T09:00:00Z"
+            },
+            "content_sha256": "ca1d129fcbc7d16e402defe605c35485d55761782fff777b2b596e0eade3c6a4"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "message",
+            "source_id": "public-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "ticket": "ticket-a",
+                "author": "user-a",
+                "author_kind": "CUSTOMER",
+                "kind": "PUBLIC_REPLY",
+                "visibility": {
+                    "state": "KNOWN",
+                    "value": "PUBLIC"
+                },
+                "sequence": 1,
+                "created_at": "2026-10-26T09:01:00Z",
+                "body": "SYNTHETIC message public-a"
+            },
+            "content_sha256": "b6256e9b49ee1d319c6329f4822945b25b5fd62ce59bae0c43420407d887388f"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "attachment",
+            "source_id": "attachment-public-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "ticket": "ticket-a",
+                "message": "public-a",
+                "sha256": "211bcf7865d604a881ae8f8db8094a38827fb09b72c76497800125b86618fa5f",
+                "size": 100,
+                "mime": "application/pdf",
+                "observed_mime": "application/pdf",
+                "relative_path": "synthetic/public-a.pdf",
+                "symlink": false,
+                "file_state": {
+                    "state": "KNOWN",
+                    "value": "PRESENT"
+                }
+            },
+            "content_sha256": "d2a649e805c6e474989a1567f687980b498941eeb2cf6715638ef37074c32a73"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "message",
+            "source_id": "private-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "ticket": "ticket-a",
+                "author": "staff-a",
+                "author_kind": "STAFF",
+                "kind": "INTERNAL_NOTE",
+                "visibility": {
+                    "state": "KNOWN",
+                    "value": "PRIVATE"
+                },
+                "sequence": 2,
+                "created_at": "2026-10-26T09:01:00Z",
+                "body": "SYNTHETIC message private-a"
+            },
+            "content_sha256": "66c7bd84aa74d4e16ee50f37934f5a1bac1dc9392d9587183b8dcc68cc77c825"
+        },
+        {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.synthetic.v1",
+            "transform": "synthetic.v1",
+            "instance": "synthetic-whmcs-a",
+            "entity": "attachment",
+            "source_id": "attachment-private-a",
+            "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+            "snapshot": "synthetic-snapshot-1",
+            "extracted_at": "2026-10-27T10:00:00Z",
+            "watermark": "2026-10-27T09:59:00Z",
+            "timezone": {
+                "state": "KNOWN",
+                "value": "UTC"
+            },
+            "encoding": "UTF-8",
+            "provenance": {
+                "kind": "SYNTHETIC_GENERATOR",
+                "evidence_sha256": "0c477b15fea71ed8bc22441ae93dc54d952762ca3d844325d817ea81238ad5eb"
+            },
+            "uncertainty": [],
+            "payload": {
+                "customer": "customer-a",
+                "ticket": "ticket-a",
+                "message": "private-a",
+                "sha256": "851645dba7419e37e6a08a433fafbfdb0a0f7ef0fb7569a658a4ac5a6ae5cd81",
+                "size": 100,
+                "mime": "application/pdf",
+                "observed_mime": "application/pdf",
+                "relative_path": "synthetic/private-a.pdf",
+                "symlink": false,
+                "file_state": {
+                    "state": "KNOWN",
+                    "value": "PRESENT"
+                }
+            },
+            "content_sha256": "9c575b147df3671b19a66771d5a1af26f7f0e273128bcf94aa9384b7a3b808ae"
+        }
+    ],
+    "mapping_proposals": [
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "a88c35a59546ce0d3554baa6bc9c1ee1c2e4298db0159bef86442ac7d91c4cb0",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "customer",
+                "source_id": "customer-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "712f11976e82247d4302e3125be4a311273cca52aec8f31d1ebb0eb316acc140",
+                "envelope_sha256": "ded5d6591be53215919e126077774ed8d034e4e2723b3174c8e7a79c1e0fdd78",
+                "target_type": "customer",
+                "target_id": "synthetic-target-customer-a",
+                "evidence_sha256": "50620298c359c4e80c33b3924534f041608dbc001d8a60626b413987479982bd"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "8cf7ba8d7d613873efa0d564a5853e9c3afd7ee3395543942c4bbc5e8a720c38",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "customer",
+                "source_id": "customer-b",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "712f11976e82247d4302e3125be4a311273cca52aec8f31d1ebb0eb316acc140",
+                "envelope_sha256": "4e577d13e3fcea00c163e72a91cf8a1966e419e22a29c2c3bd6ed68c503e569b",
+                "target_type": "customer",
+                "target_id": "synthetic-target-customer-b",
+                "evidence_sha256": "03720aab4d94883548d482c3bd0c3666568bb657615c50a9f02117ac815bd167"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "b4633e8c099493a65c3f22d5bf29270be76e936449d04f9ffd565052254219ba",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "user",
+                "source_id": "user-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "2664c66c5f2a35bd947ecb4b4f9e4c5d2ce70cdf6985ad916b01902d3afe8fd9",
+                "envelope_sha256": "73997f54d50eb2137aeafbd37406b5798d0b66b3fe59c9249f7b8cd382fe0be6",
+                "target_type": "user",
+                "target_id": "synthetic-target-user-a",
+                "evidence_sha256": "ca6d5a07b79b8f10f0aaac7cd7552e32fe0f8c1ea85275692ec7208f471b85c4"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "f656130a2fb34b9d5019ebacc439b683564d82b8831039a663bc13a9172dd3c0",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "user",
+                "source_id": "user-b",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "55f5c924feb38f1af5a905479b4615a2224ee6600bbf1aa1c7df9a928e02a7fe",
+                "envelope_sha256": "524903f860906389547c7f1b972a29cd72965464fc73a444e22bd315fe6b8da9",
+                "target_type": "user",
+                "target_id": "synthetic-target-user-b",
+                "evidence_sha256": "74afafa82408268e74410985a3681fc071ac2a61c16c43c32f647bd4f59583dc"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "bd8229256149d964ce674593dc794e560b722b37c3fd84222b170ffbb6eb9de3",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "user",
+                "source_id": "staff-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "db0bca70f8d551398c32a3178140ad381a33d6c4f8553bcc63aefb9fd401e851",
+                "envelope_sha256": "e767e50405ebfbb1fae6253b3518d47dac15ce0ef7b83f92a3896d1de3068ab9",
+                "target_type": "user",
+                "target_id": "synthetic-target-staff-a",
+                "evidence_sha256": "65845febe312d620fd88a0d7238f32b8e523b1e9b1093b47223905765425d844"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "9ef588e7e3059d6ab75e1713bc8ae9499b04d46a757dbcc1827382e1eb1560af",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "membership",
+                "source_id": "membership-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "7d4b3b48ce1e77b323a95666d41e1a9b44d6ed4a5efed2b9e4662226a9cc8595",
+                "envelope_sha256": "def4acdc2f6fd9bf52d8c347053b7cca5c3236b8ea79605c52c10e01d0d4ab5f",
+                "target_type": "membership",
+                "target_id": "synthetic-target-membership-a",
+                "evidence_sha256": "b42c3a276fa4305b2d0b8c5aa3a1589c3ddc9237473585ad624ccf65a26c16bc"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "c4e0543e82c06eb3c4a2f7d93d4d2082d0014dd85964fac2a6c3b19aab28a073",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "membership",
+                "source_id": "membership-b",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "fa4a5b7c53651c2c0eb1bc742040c640ab50dfff1b2be0ff62bd61c7ed91086c",
+                "envelope_sha256": "1c25bcc48d320f02626c9e080e6d3a7a0ac388f41a7d155e3f8614a16b6ca540",
+                "target_type": "membership",
+                "target_id": "synthetic-target-membership-b",
+                "evidence_sha256": "c21b6fecc5d58999b69c23fd418e60100080fb773e4b9d407bb8f2a014c40d23"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "742a121617b791e99cd39788cad9e71d919f1f4fee97bb76722fed89ac81d198",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "order",
+                "source_id": "order-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "59bae11b6cefd3acf327c53ecbe399c0e9fe3f6af5a07dbe3f4b41d7f47389f7",
+                "envelope_sha256": "79e72293c50898bd8e72c1bd992e6f0f0a83d8f088d1a77d31eb3df9a310eeae",
+                "target_type": "order",
+                "target_id": "synthetic-target-order-a",
+                "evidence_sha256": "228cd518ca5d176e020eeaabb7e7574508f7c8e8993035db3d667f819acd10b0"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "f71bf3524a79353f86546ab0ba5d339402dd80ed26e3cb3a6897f731ab281d4a",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "service",
+                "source_id": "service-cpanel",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "42a33b4d033f62101d294063a959de5346788db3f4d25c0262f50880baa629dc",
+                "envelope_sha256": "7edee58a6780328f5b49e8d826a5bdabcb640138d398e35793bfdf60b23d69c9",
+                "target_type": "service",
+                "target_id": "synthetic-target-service-cpanel",
+                "evidence_sha256": "682817994d71b714a74bc18e35dba1a33de40175e05702bbec2be8c00cf7ebba"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "28c1f64b6ebd9192df68da255927ef2601fbec41b2a27b78de137ee1ba337e6f",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "resource",
+                "source_id": "resource-cpanel",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "169d4982ee3686c774a92efa59e480a582c8c0ce32b32760e8b0d30ebfa2f11d",
+                "envelope_sha256": "cb3be2a11d8e5f3aa5a11d8dfab67d89fe518b04cf315e08d2cff8399f2bb3fa",
+                "target_type": "resource",
+                "target_id": "synthetic-target-resource-cpanel",
+                "evidence_sha256": "9ffa043d53210bd43fdc76dddf55c3d92039d817dbc0eec5d7e6705045d4cb13"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "892d76f67abad33592f2983ef0c07c2d7a47266c702fbd53b72b5f9490a18403",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "service",
+                "source_id": "service-voyar",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "fe1036aa32b488979c1ee1a07f78c7490d76b72139139317284d056ca0252938",
+                "envelope_sha256": "c8a8c166851e4514771ecbbaa2fd5e255075213a78a4f7cc2e110961b1bd5757",
+                "target_type": "service",
+                "target_id": "synthetic-target-service-voyar",
+                "evidence_sha256": "8b4581d3f3aee6e9b118eceba76f41d8d85f9dcbf845a0f7cdef9e3da810b18c"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "27dd79858020d920b4371a6f7ecd94ead7232b8b9543bb68883d5ca38a73be0d",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "resource",
+                "source_id": "resource-voyar",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "78aa863583542a843b9b2993fc8d1b3ea2f98c22dd7fc109577e272cc85847cd",
+                "envelope_sha256": "e320345d4809febe8566dc2026cc3120ff110e9d0b396a1c54567bc1272b7f02",
+                "target_type": "resource",
+                "target_id": "synthetic-target-resource-voyar",
+                "evidence_sha256": "4d4b212312bbc4e071ca60dade4f92ed7bb743309946c6711b51cad75584df8b"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "85dc6204d0e09bbce433834c710fb63243d84145a8b50c22961aaf179ea1eb5a",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "service",
+                "source_id": "service-rc",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "15ae205b17ce89650f8e96578bf7e9f55028744fe8f533a9116cdeefd8d7e9e1",
+                "envelope_sha256": "dd95c31dabcbe0846f471925ad5dfd00587a8ea8305bb8018c24919cfbcc56a5",
+                "target_type": "service",
+                "target_id": "synthetic-target-service-rc",
+                "evidence_sha256": "e07900edcc0817b54c9fda4ca6b43c3389f46548b13451d2c78afb1292d81248"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "4bdfce91d4d2fae85012633cd36c4f6281ec9c31d8491371585c5b2ddfe5b363",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "resource",
+                "source_id": "resource-rc",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "b0665edbc0700318273eaa6a40e935bdc68fd42a861dfb6654306f13d114aaff",
+                "envelope_sha256": "219f008317bf96617fc8a0114d9fab3bccd419734aa157b55802dde241576444",
+                "target_type": "resource",
+                "target_id": "synthetic-target-resource-rc",
+                "evidence_sha256": "f58f27655a3e7ec8d88db310607a3a720a77feaaa592d495e87b39d6396d8abd"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "3ec452b4b8150cfd319ed38f078ee9412d6abca35f70a992bd42bd93964678e5",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "service",
+                "source_id": "service-dna",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "49f83ecfd7c434b0bfb733851142c862a6d3157fd3c3d3a621e211c120ee4655",
+                "envelope_sha256": "98d629e153aae7e48b7a12dccfabf904828f44356b6b3a9e5b9372d97c719d16",
+                "target_type": "service",
+                "target_id": "synthetic-target-service-dna",
+                "evidence_sha256": "f70bef08384f6c9df40a6f503c574ec147d450e57666bba9a529eb6e3f036443"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "da48541eeec24871789ad874b15913e2c223aaffe84524e06887cbe7c4e2d49a",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "resource",
+                "source_id": "resource-dna",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "d0919ac7bb315577c167a0035f1304d788ed972dbcaa36f1eae85e8f175a567c",
+                "envelope_sha256": "6775650a13461524098726d5e4cd321d698dc168978778e7a4a7f5b11c1bc501",
+                "target_type": "resource",
+                "target_id": "synthetic-target-resource-dna",
+                "evidence_sha256": "57c12e0d37551c7093d655985f14af6c8a28d876902772bd0e2d1cd0626e4318"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "09ec140cdba7c1306f598e84e64104bb47c3ebf52e72ba8d3d27a8948af5579d",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "payment",
+                "source_id": "payment-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "cc0200bbfe90f1b4b735c1c1b8dce9e5cace1101d2be2d33adf9e53b853975a7",
+                "envelope_sha256": "8e4e6cd818fe412ec734ae3d382d0cfbfbe4b5c97a3e9e5b7cf1f44259e67ff4",
+                "target_type": "payment",
+                "target_id": "synthetic-target-payment-a",
+                "evidence_sha256": "24040af5a2fe2e61811edce0416e40ea67627b0716f4269ea56344c92134d9b4"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "48ca2d1d66e552be6e2e0e32c80a08bccfde8df50d2b82017e28b24bf50e451c",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "allocation",
+                "source_id": "allocation-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "bfe98635fd4dcba9c629effc20b11505122b0b776d48e19a8e190f44c1354c69",
+                "envelope_sha256": "fbf56d0c614e8f814d5f52265c562199a4a54d04d301fd79d510366ec277dac9",
+                "target_type": "allocation",
+                "target_id": "synthetic-target-allocation-a",
+                "evidence_sha256": "0832f65b92b8881dc39cbd552789db889b96ff07a7df52f085eb9d2ea99a4778"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "3666f555513407d0c83efc2661ea7bba6019f0eb000a42d1b5769c5e3a8cdcfa",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "wallet",
+                "source_id": "wallet-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "ce1cbc9e8111257e692e93efb0dc791cab535da1e631d1591691d951ee6db7fc",
+                "envelope_sha256": "1f0b81daad7a4471360cbd4f8e4009baece4813caf2bb0d88773b89a061dff5f",
+                "target_type": "wallet",
+                "target_id": "synthetic-target-wallet-a",
+                "evidence_sha256": "1af653d3ca3689b2337ab471daeaaf6d489ebcaeb4be907cb3871aff2ab31917"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "9999c76abd1b74b19397db6344fffc9ffbc136bba4a4fc59e23d8fd4eeadabbe",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "document",
+                "source_id": "proforma",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "e11b7d32fa09054494c8440dd8659c1feca327e4570b01a70cb8645a81f01526",
+                "envelope_sha256": "c2d56f465a86fd3065d5f01a0f354aca3904b02664ddd59f41d81d1dcf57281c",
+                "target_type": "document",
+                "target_id": "synthetic-target-proforma",
+                "evidence_sha256": "a3ec3ba81f8f6178a074c7f46cdda6b53d41ad9ca70fa6cb9647ee3d885bf37d"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "b2cb9856b03fbee0ef723fd2e32586c8d96516002f7bada6d55e295b5a80718b",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "document",
+                "source_id": "official_pdf",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "ef27bab059e435c3b0c94643c23591bb40281dcec0bc366b947baf1c798d2195",
+                "envelope_sha256": "9c16ec51ac18350a38845feb18c04262fb34247e026f405b7040d3b1f6263627",
+                "target_type": "document",
+                "target_id": "synthetic-target-official_pdf",
+                "evidence_sha256": "686cdc9dc4797ae6a15b053f9c8f212f51ba91367295f9ec8b4a05ff1f898c89"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "09a59add909f212335a2eccc735bf19668813e01860aa152ad8d8c72d3eff9af",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "ticket",
+                "source_id": "ticket-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "ca1d129fcbc7d16e402defe605c35485d55761782fff777b2b596e0eade3c6a4",
+                "envelope_sha256": "cf7d85d4e73f1e2381bf8dace561d0ce98725afd75b13d568064d1f6052eef3d",
+                "target_type": "ticket",
+                "target_id": "synthetic-target-ticket-a",
+                "evidence_sha256": "d830647dec9dda2652c57cdcc84b66b5aa3c6d82d668ac211cc98089ac294719"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "994b2765af04e10d20bf871b0e75e150d70b99eeb90fa970ada8ca1a87350ae4",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "message",
+                "source_id": "public-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "b6256e9b49ee1d319c6329f4822945b25b5fd62ce59bae0c43420407d887388f",
+                "envelope_sha256": "59fbc398279ef28ed59559e728dcc9695374e2cff03ab618b49e9cdf97093824",
+                "target_type": "message",
+                "target_id": "synthetic-target-public-a",
+                "evidence_sha256": "a278a00097be19a24e6655b8acb8d37806c19870d5c4abc196384912f549e749"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "2d8da2af5902b18feee372135c9a9061df17c6c4b0237b3def5eea7220918952",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "attachment",
+                "source_id": "attachment-public-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "d2a649e805c6e474989a1567f687980b498941eeb2cf6715638ef37074c32a73",
+                "envelope_sha256": "cf074f5b2cc5b3bc1ad5f18037c82b2cc672be6e7c36d8fd77ac329f0ad5f726",
+                "target_type": "attachment",
+                "target_id": "synthetic-target-attachment-public-a",
+                "evidence_sha256": "a3dfa9fd60f5a8dcf85b041ae88642a722395fdba2fb42b35627bcbd0a88b428"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "50abf77faa538c08f7bbab7972879c2a99a3220c811454ecb0706e891dae62d8",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "message",
+                "source_id": "private-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "66c7bd84aa74d4e16ee50f37934f5a1bac1dc9392d9587183b8dcc68cc77c825",
+                "envelope_sha256": "ca481d39476f9c0f7b37872f2a4f4abbf7b06dbebece5f961e3fd05ba059ac02",
+                "target_type": "message",
+                "target_id": "synthetic-target-private-a",
+                "evidence_sha256": "eff027f54a4b5bdfeb176763891d36b1c473ecc7ca7dc4335b25214d4473e9e8"
+            },
+            "effects_allowed": false
+        },
+        {
+            "status": "PROPOSED",
+            "replay_eligible": false,
+            "manual_review_reason": null,
+            "evidence": {
+                "classification": "SYNTHETIC",
+                "contract": "hostider.synthetic.v1",
+                "identity": "5b2d053bf5b88e14cf48467b16a929e695b67c63066f0590d0965364e579fd18",
+                "source_instance": "synthetic-whmcs-a",
+                "source_entity": "attachment",
+                "source_id": "attachment-private-a",
+                "snapshot": "synthetic-snapshot-1",
+                "schema_sha256": "1cb6d7af04ca8cca0f622960940a1074aaa75d973c66a4e6176be11652ec1230",
+                "transform": "synthetic.v1",
+                "content_sha256": "9c575b147df3671b19a66771d5a1af26f7f0e273128bcf94aa9384b7a3b808ae",
+                "envelope_sha256": "2a2c9e61537dd93906203e9bfeb2bd6fd9de87f84ef6549e676b604fa66139a0",
+                "target_type": "attachment",
+                "target_id": "synthetic-target-attachment-private-a",
+                "evidence_sha256": "1dd8a5ddcef580dd959ad18946dd55ebc2bacc3e0b10c9861a5f22fdb011ccf0"
+            },
+            "effects_allowed": false
+        }
+    ],
+    "real_files_verified": false,
+    "effects_allowed": false
+}
