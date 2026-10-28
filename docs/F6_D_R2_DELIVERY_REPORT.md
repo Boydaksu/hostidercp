@@ -1,6 +1,45 @@
 # F6-D-R2 — actual restored-target read-only recovery teslimi
 
-28 Ekim2026. Development PARTIAL; independent acceptance PENDING; final FAST bekler.
+28 Ekim2026. Development PARTIAL; independent acceptance PENDING; FAST BILLING engelinde; PHP8.3/8.4 NOT RUN.
+
+## Exact source ve CI'nin açık sınırı
+
+Application SHA: `f0db545b5b5fd0e569b07e33efb85e245be16b40`.
+Application tree: `6482e0d546e9bcafbeeb7872052eda99a97d8d26`.
+GitHub Git commit API tree'si yerel tree ile eşleştirildi. Kaynak dondurulduktan sonra
+değişmedi. Old129 test dosyasının blob eşliği ve registry'de eski58 suite korunur.
+Bu source koruma kanıtıdır; current SHA'da756 eski testin CI PASS kanıtı değildir.
+
+[FAST40637188575](https://github.com/Boydaksu/hostidercp/actions/runs/40637188575),
+[attempt1](https://github.com/Boydaksu/hostidercp/actions/runs/40637188575/attempts/1)
+ve [attempt2](https://github.com/Boydaksu/hostidercp/actions/runs/40637188575/attempts/2):
+ikisi de **FAILURE — JOB NOT STARTED, BILLING/SPENDING LIMIT**.
+GitHub annotation: recent account payments have failed or spending limit needs increasing.
+İlk scope job122646752817, ikinci scope job122647590476; PHP matrix her ikisinde
+SKIPPED, ayrı8.3/8.4 job/test sonucu yoktur. Log blob'u job başlamadığından yoktur.
+Kullanıcı billing engelini giderdiğini bildirip aynı SHA için bir tekrar açıkça
+yetkilendirdi; o tek tekrar da aynı platform mesajıyla durdu. Üçüncü retry yapılmadı.
+Başarısız attempt'ler hiçbir PASS toplamına dahil edilmedi.
+
+**PHP8.3 NOT RUN; PHP8.4 NOT RUN.** Beklenen registry59 suite/780 test;
+bu sayı runtime sonucu değildir. Current CI source guard/helper/PHPStan/lint/audit
+job'ları da başlamadı. Yerel PHP8.4.24: yeni24/0, ilgili25 R1/0; PHPStan0,
+lint452/0, pattern474/0, helper6/0, Composer locked audit advisory yok.
+Npm audit/current Linux runtime CI doğrulaması yapılmış sayılmaz.
+FULL/Chromium/10/30/20 yok. Bağımsız teknik kabul ve exact-source FAST kanıtı bekler.
+
+[CI girişimleri](evidence/f6-d-r2/ci.json),
+[ilk başarısız attempt](evidence/f6-d-r2/failed-first-attempt.json),
+[source proof](evidence/f6-d-r2/source-proof.json),
+[preservation](evidence/f6-d-r2/preservation.json),
+[test adları](evidence/f6-d-r2/test-index.json),
+[recovery authority matrix](evidence/f6-d-r2/recovery-authority-matrix.json),
+[gerçek target report](evidence/f6-d-r2/example-readonly-recovery-report.json).
+Rollback application commit yalnız `f0db545b5b5fd0e569b07e33efb85e245be16b40`.
+Ayrı docs-only kapanış source/test/CI değiştirmez. Kullanıcının mevcut
+docs/F6_B_B01_REVIEW.md düzenlemesi commit dışında korunur.
+Main protected=false/rulesets=[] değişmedi; PR3 OPEN/DRAFT; bütün gerçek GATE'ler OPEN.
+R2 PARTIAL/CI BLOCKED; independent acceptance PENDING; native runtime BLOCKED. DUR.
 
 ## R1 kabul kapanışı
 

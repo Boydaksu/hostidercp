@@ -1,5 +1,27 @@
 # F6-D-R1 — recovery hardening planı
 
+## 28 Ekim 2026 — R2 read-only recovery teslimi / CI engeli
+
+R1 **LIMITED SYNTHETIC COLD VERIFICATION ACCEPTED WITH EXPLICIT EXCEPTIONS**;
+kabul docs `1bcad5f93f4d75b4af336180fe71b46d1a4c1374`.
+R2 development **PARTIAL; INDEPENDENT ACCEPTANCE PENDING; FAST BLOCKED_EXTERNAL**.
+Application `f0db545b5b5fd0e569b07e33efb85e245be16b40`, tree
+`6482e0d546e9bcafbeeb7872052eda99a97d8d26`.
+Yeni24 yerel R2 ve ilgili25 R1 test PASS; eski756 testin129 dosyası blob-equal.
+Actual restored target, source kaybı/Vault expiry sonrası SELECT-only fresh process'te
+doğrulandı. BLOCKED_IDENTITY_BOUND **PARTIAL yalnız read-only**; runtime verilmedi.
+BLOCKED_ISSUER_RECOVERY PARTIAL, ORIGINAL_ARCHIVE_BYTES OPEN; executable-object
+inventory NOT_VERIFIED_SELECT_ONLY, gerçek offsite/PITR/key custody NOT VERIFIED.
+[FAST40637188575](https://github.com/Boydaksu/hostidercp/actions/runs/40637188575):
+attempt1 ve açık kullanıcı izniyle aynı SHA attempt2 GitHub Billing & plans engeliyle
+job başlamadan FAILURE. PHP8.3/8.4 **NOT RUN**;59 suite/780 yalnız beklenen registry
+toplamıdır, başarılı CI sonucu değildir. Yeni tekrar başlatılmadı.
+Migration001–054 subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b` değişmez.
+Bütün gerçek GATE'ler OPEN; PR3 OPEN/DRAFT; main protected=false/rulesets=[] gözlendi,
+ayarlar değiştirilmedi. FULL NOT DISPATCHED; F6-E NOT AUTHORIZED; production UNCHANGED.
+[R2 planı](F6_D_R2_PLAN.md), [R2 teslimi](F6_D_R2_DELIVERY_REPORT.md), [CI kanıtı](evidence/f6-d-r2/ci.json).
+Aşağıdaki eski bekleme/kabul kayıtları tarihçedir.
+
 ## 28 Ekim 2026 — F6-D-R1 bağımsız sınırlı kabulü
 
 **F6-D-R1 LIMITED SYNTHETIC COLD VERIFICATION — ACCEPTED WITH EXPLICIT EXCEPTIONS.**

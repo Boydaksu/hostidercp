@@ -33,5 +33,5 @@
     "F6-D-R2 a caller supplied array comparison cannot claim actual database authority",
     "F6-D-R2 marker view is rejected before any definer SELECT side effect"
   ],
-  "ci_comparison": "PENDING"
+  "ci_comparison": "NOT_RUN: both attempts blocked before scope job started by GitHub billing; no runtime PASS preservation claim"
 }
