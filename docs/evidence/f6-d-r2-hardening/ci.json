@@ -1,0 +1,33 @@
+{
+  "classification": "SYNTHETIC",
+  "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+  "status": "NOT_RUN_EXTERNAL_BILLING",
+  "gate": "EXTERNAL_BILLING_BLOCKED — CI NOT RUN",
+  "billing_resolved": "NOT_CONFIRMED",
+  "explicit_new_sha_fast_permission": "NOT_CONFIRMED",
+  "new_dispatch": false,
+  "push_performed": false,
+  "new_run_id": null,
+  "new_job_ids": [],
+  "php83": "NOT_RUN",
+  "php84": "NOT_RUN",
+  "previous_external_blocker": {
+    "run_id": 40637188575,
+    "attempts": [
+      1,
+      2
+    ],
+    "application_sha": "f0db545b5b5fd0e569b07e33efb85e245be16b40",
+    "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40637188575",
+    "success_evidence": false
+  },
+  "previous_one_retry_authorization": "Already consumed; not reused for this new SHA",
+  "expected_only": {
+    "suites": 60,
+    "tests": 782
+  },
+  "full": false,
+  "chromium": false,
+  "stability_marathons": false
+}

@@ -1,0 +1,37 @@
+{
+  "classification": "SYNTHETIC",
+  "php": "8.4.24",
+  "new_integrity_tests": 2,
+  "new_failures": 0,
+  "existing_r2_tests": 24,
+  "existing_r2_failures": 0,
+  "existing_r1_final_tests": 25,
+  "existing_r1_final_failures": 0,
+  "earlier_r1_run": {
+    "tests": 25,
+    "failures": 1,
+    "reason": "F6B_TEST_SETUP_FAILED_2002",
+    "success_evidence": false,
+    "rerun": "25/0 without source or assertion changes"
+  },
+  "f6d_32_rerun": false,
+  "f6d_32_reason": "No F6-D/R1 behavior change; narrow R2 fix, relevant R2/R1 suites executed",
+  "phpstan_errors": 0,
+  "lint_files": 453,
+  "lint_violations": 0,
+  "pattern_files": 475,
+  "pattern_findings": 0,
+  "composer_locked_audit": "No security vulnerability advisories found.",
+  "ci_helper_tests": 6,
+  "ci_helper_failures": 0,
+  "negative_before": {
+    "tests": 1,
+    "failures": 1,
+    "counts_matched": true,
+    "multiset_unchanged": true,
+    "ordered_root_different": true,
+    "wrong_context_status": "MATCHED_REFERENCE",
+    "actual_db_false_pass_reproduced": false
+  },
+  "final_invariant": "PASS implies immutable_evidence MATCHED and observed_target_evidence_sha256 equals verified logical_sha256"
+}

@@ -1,0 +1,40 @@
+{
+  "classification": "SYNTHETIC",
+  "starting_head": "d62a828fc3584144d11703386a2d7752eb0b08cb",
+  "starting_head_tree": "435a2bde68e982671af60c651ca097b439948185",
+  "r2_source_sha": "f0db545b5b5fd0e569b07e33efb85e245be16b40",
+  "r2_source_tree": "6482e0d546e9bcafbeeb7872052eda99a97d8d26",
+  "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+  "changed_source": [
+    "src/Migration/Operations/RecoveryContext.php"
+  ],
+  "added_tests": [
+    "tests/migration-recovery-integrity.php"
+  ],
+  "suite_registration": [
+    "tools/ci/suites.json",
+    ".github/workflows/f0.yml"
+  ],
+  "old_780_test_files_equal": 134,
+  "original_f6abc_d_r1_sources_unchanged": true,
+  "recovery_inspector_unchanged": true,
+  "production_migration_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "branch": "codex/f5-support-center",
+  "publication": "LOCAL_ONLY_NO_PUSH",
+  "remote_head_at_verification": "d62a828fc3584144d11703386a2d7752eb0b08cb",
+  "pr": {
+    "number": 3,
+    "state": "OPEN",
+    "draft": true
+  },
+  "main": {
+    "sha": "ada37dc52b324e34380ba836ae7794cebb174ec4",
+    "protected": false,
+    "rulesets": []
+  },
+  "unrelated_unstaged_user_edit": "docs/F6_B_B01_REVIEW.md",
+  "rollback_application_commits": [
+    "53162495902b3b168c2fb8554594e99c23a34d62"
+  ]
+}
