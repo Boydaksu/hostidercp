@@ -45,3 +45,7 @@ R2 hardening hedefli testleri iki PHP sürümünde doğrulandı. Genel Docker do
 GitHub FAST **NOT_RUN_EXTERNAL_BILLING** kalır. Docker sonucu Actions sonucu olarak sunulmaz ve CI engelini kaldırmış sayılmaz. FULL veya yeni GitHub koşusu başlatılmadı. Bağımsız kabul **PENDING**; F6-E/FULL/staging/merge/deployment/production kapsam dışında. Production migration subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b` ve tüm gerçek GATE'ler aynıdır. PR/main ayarlarına bu yerel görevde yazılmadı; önceki salt okunur durum kaydı yeni platform gözlemi gibi sunulmaz.
 
 Kanıtlar yalnız yerel docs-only kapanış içindir. GitHub billing engeli sürerken yeni push/otomatik workflow döngüsü oluşturulmaz. Kullanıcının `docs/F6_B_B01_REVIEW.md` düzenlemesi korunur ve commit dışında bırakılır. Geçici Docker verileri yalnız bu görev etiketli kaynaklardan temizlenir; cleanup kanıtı ayrıca kaydedilir.
+
+## Güncel kapanış — kapasite düzeltmesi
+
+Yukarıdaki başarısız turlar tarihçedir. Kullanıcı düzeltme talimatıyla yerel MariaDB alan sınırı 768 MiB'den 4 GiB'ye çıkarıldı; kaynak ve testler değiştirilmeden PHP 8.3/8.4 tam destek paketi157/0 geçti. Önceki59 paket/625 ile aynı SHA için ayrı çalıştırmalarda60 paket/782 test yerel PASS kapsamı tamamlandı; tek broad veya GitHub CI PASS iddiası yoktur. [Tanı, düzeltme ve yeni kanıt](F6_D_R2_SUPPORT_DOCKER_FIX.md).

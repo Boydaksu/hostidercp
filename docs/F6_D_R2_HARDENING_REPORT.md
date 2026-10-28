@@ -130,3 +130,7 @@ Yetkili tek koşu billing nedeniyle başlamadı; başka deneme yok. Yerel ve pla
 ## F — Docker Desktop alternatif yerel doğrulama
 
 28 Ekim 2026 kullanıcı talimatıyla exact aday PHP 8.3.36/8.4.27 üzerinde Docker'da çalıştırıldı. Her sürümde kalite kontrolleri ve 59 paket/625 test geçti; mevcut destek paketi başarısız kaldı. R2 24, R1 25 ve yeni2 test her sürümde PASS. Genel 782-test PASS yoktur; GitHub FAST hâlâ NOT_RUN_EXTERNAL_BILLING, bağımsız kabul PENDING. [Ayrı rapor ve başarısızlık kanıtları](F6_D_R2_DOCKER_VALIDATION.md). Kaynak değişmedi; yeni GitHub koşusu/FULL/sonraki faz yoktur.
+
+## G — Yerel destek paketi engeli kapandı
+
+Aynı adayda yalnız Docker MariaDB tmpfs sınırı768 MiB→4 GiB düzeltildi. PHP8.3/8.4 tam destek paketi157/0; önceki59 paket/625 ile her sürümde ayrı çalıştırmalarda60 paket/782 test yerel PASS kapsamı tamamlandı. Kaynak/test/migration/CI değişmedi. GitHub FAST NOT_RUN_EXTERNAL_BILLING, bağımsız kabul PENDING kalır. [Düzeltme ve kanıtlar](F6_D_R2_SUPPORT_DOCKER_FIX.md).

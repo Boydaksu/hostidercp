@@ -1,0 +1,84 @@
+LOCAL_STAGE prepare PHP84
+LOCAL_PREPARED 53162495902b3b168c2fb8554594e99c23a34d62
+LOCAL_PREP_RESULT 0
+LOCAL_STAGE quality PHP84
+LOCAL_STAGE application PHP84
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+PASS F5-A native HTTP authentication MFA and method gates
+PASS F5-A client create canonical ownership and strict field allowlist
+PASS F5-A staff role without department membership cannot discover title or search metadata
+PASS F5-A membership role customer grant and department scope are jointly required
+PASS F5-A another customer cannot read reply or enumerate ticket
+PASS F5-A client cannot forge message kind visibility author or other customer binding
+PASS F5-A internal note never enters client response search or outbox notifications
+PASS F5-A note permission revoked next request also blocks cached idempotency replay
+PASS F5-A CSRF missing wrong method and missing idempotency key cannot mutate
+PASS F5-A create and message retry same key are single durable effects different payload conflicts
+PASS F5-A two different staff in independent HTTP processes conflict and explicit retry preserves both
+PASS F5-A 1 4 8 independent HTTP processes duplicate key create one message
+PASS F5-A stale state version returns explicit 409 without message or audit loss
+PASS F5-A failed audit insert rolls back message state event outbox and idempotency
+PASS F5-A HTML XSS text is JSON data under no-store CSP and no HTML renderer
+PASS F5-A closed reopen and hold obey explicit department policy allowlist
+PASS F5-A department move requires both scopes and invalidates old staff access
+PASS F5-A fresh MFA management controls mutable template policy and department membership
+PASS F5-A impersonation does not confer privileged support permission
+PASS F5-A service link uses canonical ownership and transfer never opens old conversations
+PASS F5-A messages events tenant binding and ticket ownership immutable in MariaDB
+PASS F5-A database visibility CHECK and composite customer FK independently reject forgeries
+PASS F5-A existing queue consumes held public receipts once and rejects private or forged payloads
+PASS F5-A malformed null body version identifiers and links are 422 without partial mutation
+PASS F5-A multi-account memberships do not union selected account permissions
+PASS F5-A explicit department reopen policy changes permit only canonical transition
+PASS F5-A native staff removal revokes department membership without deleting history
+PASS F5-A requester membership revocation succeeds and keeps immutable ticket history
+PASS F5-A identity version invalidation rejects next HTTP request
+PASS F5-A session revocation rejects read and cached mutation
+PASS P1-1 distinct STATE events consume only their own dispatched receipt
+PASS P1-1 event ticket message private note and extra fields cannot forge receipt
+PASS P1-1 unpublished legacy or mismatched native queue payload stays unreceived
+PASS P1-2 search beyond first 50 is explicitly unsupported for client and department staff
+PASS P1-2 unfiltered pagination covers authorized 51 once with matching client staff pages
+PASS SUP-005 Friday 17:30 plus 120 business minutes is Monday 10:30 local
+PASS SUP-005 explicit holiday pushes deadline to Tuesday and half-day is exact
+PASS SUP-005 DST spring skips nonexistent wall minutes without losing real UTC time
+PASS SUP-005 DST fold counts each real UTC minute once and interval union avoids duplicates
+PASS SUP-005 overnight shift and holiday override carry with half-open boundaries
+PASS SUP-005 microsecond precision and overlapping shifts use exact integer arithmetic
+PASS SUP-005 invalid calendars pause states and missing commercial targets fail closed
+PASS SUP-005 held acknowledgement and internal note never count as actual first response
+PASS SUP-005 each customer reply starts a next clock and genuine staff reply closes pending clocks
+PASS SUP-005 pause states are policy-specific and customer reply resumes resolution
+PASS SUP-005 paused duration is not consumed while nonpaused first response continues
+PASS SUP-005 policy revision does not rewrite historical targets calendars or completed response
+PASS SUP-005 risk breach and held receipts remain unique across repeated cron time
+PASS SUP-006 round robin is deterministic and cron does not reassign valid staff
+PASS SUP-006 weighted least load uses explicit weights and UUID tie break
+PASS SUP-006 missing shift availability priority or expiry is fail closed
+PASS SUP-006 assignment revocation rechecks native membership role active staff and MFA
+PASS SUP-006 manual assignment and unassign override auto until explicit auto command
+PASS SUP-006 transaction rollback leaves no half assignment cursor audit or outbox
+PASS SUP-005 move preserves old policy history and starts current department cycle
+PASS SUP-005 legacy unconfigured tickets require explicit confirmed enrollment without backfill
+PASS SUP-006 real 1 4 8 PHP workers assign each ticket once with consistent RR and bounded cron
+PASS SUP-005 native HTTP detail protects department customer scope and fresh confirmation rules
+PASS SUP-006 two native HTTP staff same version produce one assignment and explicit conflict
+PASS SUP-006 native HTTP permission revoke session version and stale step-up cut access
+LOCAL_ERROR_SQLSTATE HY000 DRIVER_CODE 1005
+FAIL F5-B additive 049 to 050 upgrade replay and old checksums are preserved: [details redacted]
+157 tests, 1 failures
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
