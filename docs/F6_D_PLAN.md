@@ -1,5 +1,27 @@
 # F6-D — sentetik operasyon / backup / restore planı
 
+## 28 Ekim 2026 — F6-D-R1 bağımsız sınırlı kabulü
+
+**F6-D-R1 LIMITED SYNTHETIC COLD VERIFICATION — ACCEPTED WITH EXPLICIT EXCEPTIONS.**
+Application `3773351c01164dc3e58a7c4b869ef980a5b7cf79`, tree
+`80beecd299c60ed669e4d0c52c76751ee020b692`; evidence docs
+`2a3b4d1d8ffd9a06cbabe66d10de694645971198`.
+[FAST40566808738](https://github.com/Boydaksu/hostidercp/actions/runs/40566808738):
+PHP8.3/8.4 her sürüm58 suite/756 test/0 hata; eski731+25 ve57 suite korunmuş;
+125 eski test dosyası blob-equal, PHPStan0, lint443/0, pattern465/0, locked audits temiz.
+Kabul versioned Ed25519/pinned key/trusted operator policy, exact backup/source,
+ciphertext SHA/XChaCha20-Poly1305/original issuer record digest, source schema loss
+sonrasında bağımsız salt-okunur verification, expired Vault enrollment reddi ve
+immutable evidence/negatif regresyon kapsamıdır.
+F6-D genel PARTIAL. BLOCKED_IDENTITY_BOUND OPEN; BLOCKED_ISSUER_RECOVERY PARTIAL;
+BLOCKED_ORIGINAL_ARCHIVE_BYTES OPEN. Native application restore BLOCKED;
+production cold restore/offsite/key custody/RPO/RTO/PITR NOT VERIFIED.
+Bu kabul yalnız altı belgeyi değiştirir; application/test/fixture/CI/migration aynı,
+başarılı756 test tekrar çalıştırılmaz. Rollback yalnız kabul belge commit revert.
+R2 yalnız izole sentetik read-only recovery authority geliştirme GO; runtime
+activation/F6-E/FULL/staging/production/merge/deploy/cutover yetkisi yoktur.
+PR3 OPEN/DRAFT; bütün gerçek GATE'ler korunur. Aşağıdaki eski statüler tarihsel kayıttır.
+
 ## 27 Ekim 2026 — F6-D-R1 sentetik recovery hardening teslimi
 
 F6-D **LIMITED SYNTHETIC ENCRYPTED BACKUP & RECOVERY ESCROW — ACCEPTED WITH EXPLICIT
