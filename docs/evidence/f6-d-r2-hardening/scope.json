@@ -20,5 +20,6 @@
   "f6_e": "NOT_AUTHORIZED",
   "full": "NOT_DISPATCHED",
   "production": "UNCHANGED",
-  "publication": "LOCAL_ONLY_NO_PUSH"
+  "publication": "APPLICATION_PUSHED_AFTER_OWNER_CONFIRMATION",
+  "ci_result": "BILLING_BLOCKED_BEFORE_TESTS"
 }

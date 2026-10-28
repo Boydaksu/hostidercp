@@ -34,7 +34,7 @@ Minimum app commit **53162495902b3b168c2fb8554594e99c23a34d62**, tree
 değişikliği (bir root reason kontrolü), yeni2-test dosyası ve iki suite registry kaydı.
 RecoveryInspector/TargetPolicy/ColdRecovery/Contract/CanonicalJson/Report dahil diğer
 accepted source dosyaları değişmedi. Production001–054 subtree
-**c0729c92dd143c017fdec32421bf67fe6b51e05b** değişmez. Yayın LOCAL ONLY; push yok.
+**c0729c92dd143c017fdec32421bf67fe6b51e05b** değişmez. Application yeni açık kullanıcı izniyle yayımlandı; source SHA/tree aynıdır.
 
 ## B — Gerçek karşı-örnek ve minimum düzeltme
 
@@ -83,16 +83,30 @@ beklentisidir, CI sonucu değildir. [Koruma](evidence/f6-d-r2-hardening/preserva
 [local](evidence/f6-d-r2-hardening/local.json), [yeni testler](evidence/f6-d-r2-hardening/local-targeted.txt),
 [R2 24](evidence/f6-d-r2-hardening/local-r2-24.txt).
 
-## D — CI koşulu / yayın
+## D — Açık izin sonrası tek exact-source FAST
 
-**EXTERNAL_BILLING_BLOCKED — CI NOT RUN / NOT_RUN_EXTERNAL_BILLING**.
-Bu yeni SHA için billing giderildi + açık FAST izni teyit edilmedi. Önceki tek retry
-izni tüketilmişti, yeniden kullanılmadı. Yeni dispatch veya push yapılmadı; faturalandırma
-ayarları değiştirilmedi. PHP8.3 NOT RUN, PHP8.4 GitHub FAST NOT RUN; yeni run/job URL yok.
-Eski başarılı FAST bu adayın kanıtı olarak kullanılmadı. Önceki40637188575 attempts1/2
-yalnız historical billing failure referansıdır. [CI](evidence/f6-d-r2-hardening/ci.json),
-[source proof](evidence/f6-d-r2-hardening/source-proof.json). Yeni local source SHA/tree
-donduruldu; sonrasında source/test/CI değişmedi. Kanıt kapanışı ayrı local docs-only commit.
+İlk yerel kanıt kapanışından sonra kullanıcı **Billing giderildi; tek yeni FAST izinli**
+diye açık teyit verdi. Yalnız application `53162495902b3b168c2fb8554594e99c23a34d62`
+izinli dala push edildi; GitHub Git commit API tree'si
+`e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47` ile eşleşti. Kaynak değişmedi.
+[FAST40639410631](https://github.com/Boydaksu/hostidercp/actions/runs/40639410631),
+attempt1 **FAILURE — job başlamadı**.
+[Scope job122653789237](https://github.com/Boydaksu/hostidercp/actions/runs/40639410631/job/122653789237)
+annotation: recent account payments have failed or spending limit needs increasing.
+Result job122653804161 FAILURE, PHP matrix placeholder122653805195 SKIPPED.
+
+**EXTERNAL_BILLING_BLOCKED — APP TESTS NOT RUN / NOT_RUN_EXTERNAL_BILLING**.
+Billing çözümü platformda doğrulanmadı; kullanıcı teyidine rağmen aynı mesaj geldi.
+PHP8.3 NOT RUN; PHP8.4 NOT RUN. Yeni aday için açık izin vardı ve tek koşu başlatıldı;
+retry/ikinci uygulama koşusu başlatılmadı. CI source/scope helper/PHPStan/lint/audit
+çalışmadı. Beklenen60 suite/782 test runtime sonucu değildir; eski FAST yeni adayın
+başarısı sayılmadı. Önceki40637188575 attempts1/2 ayrı historical billing kayıtlarıdır.
+
+[CI](evidence/f6-d-r2-hardening/ci.json),
+[source proof](evidence/f6-d-r2-hardening/source-proof.json). Application exact SHA/tree
+sabit; sonrasında source/test/CI değişmedi. Önceki local docs-only2f30ba8 kaydı tarihçedir;
+bu yeni gerçek girişimin kanıtı ayrıca docs-only commit ile kapanır. Financial account/
+spending-limit ayarları değiştirilmedi. FULL/Chromium/10/30/20 yok.
 
 ## E — Durum / rollback / sınırlar
 
@@ -111,4 +125,4 @@ Production UNCHANGED. Kullanıcı docs/F6_B_B01_REVIEW.md düzenlemesi commit d�
 Rollback app commit yalnız53162495902b3b168c2fb8554594e99c23a34d62; signed artifacts ve
 immutable facts korunur. Daha geniş canonical normalization ancak ayrı versioned
 contract olur. Production restore/DROP/DELETE yok; cleanup yalnız exact owned fixtures.
-CI gate teyidi olmadan başka deneme yok. Teknik yerel kanıt teslimi ve DUR.
+Yetkili tek koşu billing nedeniyle başlamadı; başka deneme yok. Yerel ve platform engeli kanıt teslimi ve DUR.

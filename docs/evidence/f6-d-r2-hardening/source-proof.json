@@ -21,8 +21,8 @@
   "recovery_inspector_unchanged": true,
   "production_migration_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
   "branch": "codex/f5-support-center",
-  "publication": "LOCAL_ONLY_NO_PUSH",
-  "remote_head_at_verification": "d62a828fc3584144d11703386a2d7752eb0b08cb",
+  "publication": "APPLICATION_PUSHED_WITH_EXPLICIT_SINGLE_FAST_AUTHORIZATION",
+  "remote_head_at_verification": "53162495902b3b168c2fb8554594e99c23a34d62",
   "pr": {
     "number": 3,
     "state": "OPEN",
@@ -36,5 +36,8 @@
   "unrelated_unstaged_user_edit": "docs/F6_B_B01_REVIEW.md",
   "rollback_application_commits": [
     "53162495902b3b168c2fb8554594e99c23a34d62"
-  ]
+  ],
+  "remote_application_tree_verified": true,
+  "ci_run": 40639410631,
+  "ci_application_tests_started": false
 }

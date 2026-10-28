@@ -3,15 +3,45 @@
   "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
   "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
   "status": "NOT_RUN_EXTERNAL_BILLING",
-  "gate": "EXTERNAL_BILLING_BLOCKED — CI NOT RUN",
-  "billing_resolved": "NOT_CONFIRMED",
-  "explicit_new_sha_fast_permission": "NOT_CONFIRMED",
-  "new_dispatch": false,
-  "push_performed": false,
-  "new_run_id": null,
-  "new_job_ids": [],
+  "gate": "EXTERNAL_BILLING_BLOCKED — APP TESTS NOT RUN",
+  "billing_resolved": "NOT_VERIFIED_PLATFORM_STILL_BLOCKS",
+  "owner_confirmation": "Billing giderildi; tek yeni FAST izinli",
+  "explicit_new_sha_fast_permission": true,
+  "new_dispatch": true,
+  "push_performed": true,
+  "new_run_id": 40639410631,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40639410631",
+  "run_attempt": 1,
+  "workflow_status": "completed",
+  "workflow_conclusion": "failure",
+  "jobs": [
+    {
+      "id": 122653789237,
+      "name": "FAST scope and documentation security",
+      "conclusion": "failure",
+      "started": false,
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40639410631/job/122653789237"
+    },
+    {
+      "id": 122653804161,
+      "name": "FAST result",
+      "conclusion": "failure",
+      "started": false
+    },
+    {
+      "id": 122653805195,
+      "name": "FAST PHP matrix placeholder",
+      "conclusion": "skipped",
+      "started": false
+    }
+  ],
+  "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
   "php83": "NOT_RUN",
   "php84": "NOT_RUN",
+  "php83_job_id": null,
+  "php84_job_id": null,
+  "ci_source_guard_executed": false,
+  "source_changed_during_run": false,
   "previous_external_blocker": {
     "run_id": 40637188575,
     "attempts": [
@@ -19,14 +49,16 @@
       2
     ],
     "application_sha": "f0db545b5b5fd0e569b07e33efb85e245be16b40",
-    "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40637188575",
     "success_evidence": false
   },
-  "previous_one_retry_authorization": "Already consumed; not reused for this new SHA",
   "expected_only": {
     "suites": 60,
     "tests": 782
   },
+  "actual_application_tests_executed": 0,
+  "success_evidence": false,
+  "retries_dispatched": 0,
+  "further_attempts": false,
   "full": false,
   "chromium": false,
   "stability_marathons": false
