@@ -126,3 +126,7 @@ Rollback app commit yalnız53162495902b3b168c2fb8554594e99c23a34d62; signed arti
 immutable facts korunur. Daha geniş canonical normalization ancak ayrı versioned
 contract olur. Production restore/DROP/DELETE yok; cleanup yalnız exact owned fixtures.
 Yetkili tek koşu billing nedeniyle başlamadı; başka deneme yok. Yerel ve platform engeli kanıt teslimi ve DUR.
+
+## F — Docker Desktop alternatif yerel doğrulama
+
+28 Ekim 2026 kullanıcı talimatıyla exact aday PHP 8.3.36/8.4.27 üzerinde Docker'da çalıştırıldı. Her sürümde kalite kontrolleri ve 59 paket/625 test geçti; mevcut destek paketi başarısız kaldı. R2 24, R1 25 ve yeni2 test her sürümde PASS. Genel 782-test PASS yoktur; GitHub FAST hâlâ NOT_RUN_EXTERNAL_BILLING, bağımsız kabul PENDING. [Ayrı rapor ve başarısızlık kanıtları](F6_D_R2_DOCKER_VALIDATION.md). Kaynak değişmedi; yeni GitHub koşusu/FULL/sonraki faz yoktur.

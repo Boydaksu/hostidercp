@@ -1,0 +1,21 @@
+{
+  "resources": [
+    {
+      "removed": true,
+      "network": "hostider-r2h-r6ae1f56f-83-net",
+      "volume": "hostider-r2h-r6ae1f56f-83-work",
+      "ownership_label_verified": true,
+      "db": "hostider-r2h-r6ae1f56f-83-db"
+    },
+    {
+      "removed": true,
+      "network": "hostider-r2h-r6ae1f56f-84-net",
+      "volume": "hostider-r2h-r6ae1f56f-84-work",
+      "ownership_label_verified": true,
+      "db": "hostider-r2h-r6ae1f56f-84-db"
+    }
+  ],
+  "cleaned_at_utc": "2026-10-28T13:33:47.6249871Z",
+  "run_id": "r6ae1f56f",
+  "user_resources_modified": false
+}

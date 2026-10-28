@@ -1,0 +1,115 @@
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+LOCAL_CONTINUATION unmodified closures from failed upgrade boundary; not full support-http PASS
+PASS F5-B additive 049 to 050 upgrade replay and old checksums are preserved
+PASS SUP-006 target eligibility follows native department revoke role revoke MFA and customer grants
+PASS SUP-006 confirmation binds roster revision and held sink rejects unpublished forged extra payload
+PASS F5-B P1 resolved staff reopen completes exactly one new FIRST and preserves old cycle
+PASS F5-B P1 permitted CLOSED staff reopen completes FIRST and replay is an exact no-op
+PASS F5-B P1 customer reopen leaves FIRST pending until a genuine staff reply
+PASS F5-B P1 parallel native HTTP reopen replies create one cycle completion and public outbox
+PASS F5-B P1 HTTP empty weekly policy is rejected without writes and client can still create
+PASS F5-B P1 HTTP exception horizon policy is rejected and previous policy stays usable
+PASS F5-B P1 future calendar failure preserves HTTP ticket message and explicit idempotent unavailable result
+PASS F5-B P1 valid HTTP create is atomic and SQL failure leaves no partial support or idempotency rows
+PASS F5-B P1 active-cycle horizon failure preserves snapshots replies and cross-department recovery
+PASS F5-B P1 additive 050 to 051 preserves all prior checksums and replays without work
+PASS F5-B P1 failed target calendar move rolls back SLA side effects and records correct policy
+PASS SUP-001 MIME strict plain text and RFC references preserve bounded canonical values
+PASS SUP-001 duplicate folded injected and oversized headers fail closed
+PASS SUP-001 body raw header-count encoded subject and nested MIME limits reject
+PASS SUP-004 traversal HTML SVG ZIP executable and MIME spoof attachments are rejected
+PASS SUP-001 HTML body alternate MIME and unknown transfer encoding are never canonical text
+PASS SUP-001 live SMTP and IMAP adapter gates deny before any network operation
+PASS SUP-001 unknown sender enters encrypted review without private ticket association
+PASS SUP-002 verified new mail creates exactly one canonical customer message and SLA cycle
+PASS SUP-002 missing Message-ID dedupes by bounded digest and never auto attaches
+PASS SUP-002 same Message-ID different bytes becomes immutable conflict review not a second reply
+PASS SUP-001 forged subject and wrong raw or foreign customer sender evidence cannot attach
+PASS SUP-001 verified own scoped reply requires token reference ownership and drives NEXT clock
+PASS SUP-001 forged expired and revoked-session reply tokens fail despite fresh sender evidence
+PASS SUP-001 mixed references or foreign ticket token never cross customer ownership
+PASS SUP-003 internal note emits no mail delivery template attachment or customer outbound
+PASS SUP-001 bounce autoresponder precedence and loop markers are blocked even with valid proof
+FAIL SUP-001 malformed MIME is encrypted bounded review and oversized raw writes nothing: [details redacted]
+FAIL SUP-004 inbound files default quarantine and exact fixture is only TEST_CLEAN not real AV: [details redacted]
+FAIL SUP-004 native HTTP upload download headers foreign customer and CSRF isolation: [details redacted]
+FAIL SUP-004 file integrity wrong token and session revocation deny download: [details redacted]
+FAIL SUP-001 native HTTP review requires fresh MFA wildcard scope and no private list metadata: [details redacted]
+FAIL SUP-001 review approval revalidates sender proof and never force-maps unknown address: [details redacted]
+FAIL SUP-002 inbound 1 4 8 independent PHP workers produce one message per raw Message-ID: [details redacted]
+FAIL SUP-002 outbound 1 4 8 independent workers accept a public delivery once without DELIVERED: [details redacted]
+FAIL SUP-002 outbound retryable and permanent mock outcomes require explicit bounded retry: [details redacted]
+FAIL SUP-002 unpublished forged extra payload and fingerprint mismatch never mint mail receipts: [details redacted]
+FAIL SUP-004 quarantined attachment prevents mock transport acceptance: [details redacted]
+FAIL SUP-002 database failure rolls back inbound canonical message outbox and source receipt: [details redacted]
+FAIL SUP-004 storage failure leaves no inbound support message or successful receipt: [details redacted]
+FAIL SUP-004 retention hold preserves evidence and purge keeps immutable metadata: [details redacted]
+FAIL SUP-001 native HTTP sender proof and adapter ingestion use current scoped session atomically: [details redacted]
+FAIL SUP-001 review confirmation payload actor stale version and idempotent replay are enforced: [details redacted]
+FAIL SUP-004 native staff department and permission revocation invalidate download and review: [details redacted]
+FAIL SUP-002 native outbound transaction failure cannot leave false transport acceptance receipt: [details redacted]
+FAIL SUP-004 missing or tampered storage prevents both download and mock acceptance: [details redacted]
+FAIL SUP-002 live flag or staging environment cannot activate adapter or mail pipeline: [details redacted]
+FAIL F5-C additive 051 to 052 upgrade protects all old migration checksums and replay: [details redacted]
+FAIL SUP-004 public file listing excludes private notes and stale department tokens after move: [details redacted]
+FAIL SUP-001 native mail settings are explicit administrative config and mail origin stays visible: [details redacted]
+FAIL SUP-002 native CLI stdin test adapter ingests without credentials or network arguments: [details redacted]
+FAIL SUP-002 adapter acknowledgement waits for DB commit and retains failed input: [details redacted]
+FAIL SUP-002 adapter ack loss after commit replays immutable Message-ID without duplicate: [details redacted]
+PASS SUP-008 allowlisted versioned AST rejects SQL PHP dynamic actions unknown nodes and depth bombs
+FAIL SUP-008 unavailable predicate stays unavailable through NOT and cannot silently match: [details redacted]
+FAIL SUP-008 simulation rolls back native last seen and produces no message audit outbox or financial mutation: [details redacted]
+FAIL SUP-008 self triggering A to A stops with immutable LOOP_BLOCKED and one tag action: [details redacted]
+FAIL SUP-008 A to B to A causation cycle converges with repeated rule blocked: [details redacted]
+FAIL SUP-008 exact event replay dedupes action and unpublished forged fingerprint jobs fail closed: [details redacted]
+FAIL SUP-008 stale rule snapshot and stale ticket source produce explicit skips: [details redacted]
+FAIL SUP-008 deterministic rule ordering preserves both changes on the same ticket: [details redacted]
+FAIL SUP-008 revoked sponsor department and customer grants cannot authorize system actions: [details redacted]
+FAIL SUP-008 atomic rule rollback prevents partial tag note and wrong success receipt: [details redacted]
+FAIL SUP-008 automated internal note stays private and HELD notification never enters customer mail: [details redacted]
+FAIL SUP-008 priority override preserves requested priority and all previous SLA history: [details redacted]
+FAIL SUP-008 closed tickets and invalid transitions cannot be mutated by rules: [details redacted]
+FAIL SUP-008 independent 1 4 8 workers dedupe one event action and receipt: [details redacted]
+FAIL SUP-008 scope cannot publish a rule for another customer or department: [details redacted]
+FAIL SUP-009 incident projection never mixes two customers private ticket message note or attachment data: [details redacted]
+FAIL SUP-009 incident public update and resolution never close tickets or response SLA clocks: [details redacted]
+FAIL SUP-009 incident wrong department link and unconfirmed publication fail closed: [details redacted]
+FAIL SUP-009 incident update transaction rollback leaves no partial public root audit or confirmation use: [details redacted]
+FAIL F5-D CSAT requires explicit policy resolved state and integer score 1 to 5: [details redacted]
+FAIL F5-D CSAT ownership version revision replay and HTML comment remain scoped without SLA effect: [details redacted]
+FAIL F5-D CSAT expiry policy is server measured and rollback leaves no half rating: [details redacted]
+FAIL F5-D reports enforce SQL customer department grants and redact all private content: [details redacted]
+FAIL F5-D unavailable SLA never contributes to success numerator or denominator: [details redacted]
+FAIL F5-D report UTC IANA range validation and deterministic pagination do not repeat tickets: [details redacted]
+FAIL F5-D native HTTP CSRF MFA confirmation incident public and customer CSAT boundaries: [details redacted]
+FAIL F5-D additive 052 to 053 upgrade preserves checksums and replay: [details redacted]
+FAIL SUP-008 real A to B to A priority cycle is stopped by immutable repeated rule detection: [details redacted]
+FAIL SUP-008 four distinct rule chain reaches depth four and blocks the next action: [details redacted]
+FAIL SUP-008 native source adapter seed selects matching triggers without old-event starvation: [details redacted]
+FAIL SUP-008 automation assignment uses canonical native eligibility and then assigned adapter: [details redacted]
+FAIL SUP-008 rule incident link and public update adapter preserve customer isolation and SLA: [details redacted]
+FAIL SUP-008 two rules under concurrent event workers retain both canonical effects without finance or provider writes: [details redacted]
+FAIL SUP-008 expired native step up or revoked sponsor session cannot be bypassed by rule publication: [details redacted]
+FAIL F5-D stale confirmation and rule publication rollback leave no half revision or idempotent success: [details redacted]
+FAIL F5-D native HTTP resolved customer CSAT submission replay and membership revocation are enforced: [details redacted]
+FAIL F5-D live mail flag and non-test environments deny advanced automation before mutation: [details redacted]
+FAIL SUP-009 immutable encrypted root revisions never enter public projection and incident rules cannot resolve tickets: [details redacted]
+FAIL SUP-008 native staff HELD receipt binds its own immutable execution and never means delivery: [details redacted]
+FAIL SUP-008 native rules and execution views redact templates and enforce current department access: [details redacted]
+FAIL F5-D native HTTP CSAT comment may be omitted and normalizes to empty on replay: [details redacted]
+97 tests, 66 failures
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
