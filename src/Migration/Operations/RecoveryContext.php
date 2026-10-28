@@ -35,7 +35,8 @@ final readonly class RecoveryContext
             $actual=Finance::totals($facts);$source=$this->reference['report']['finance']['source'];$finance=['source'=>$source,'target'=>$actual,'equal'=>Contract::hash($source)===Contract::hash($actual),'differences_by_currency'=>Finance::differences($source,$actual)];if(!$finance['equal']){$reasons[]='FINANCE_MISMATCH';}}
         catch(\Throwable){$reasons[]='FINANCE_UNVERIFIABLE';}
         if($ownership){$reasons[]='CUSTOMER_OR_ATTACHMENT_OWNERSHIP_MISMATCH';}if($privacy){$reasons[]='PRIVATE_VISIBILITY_MISMATCH';}
-        sort($reasons);$status=($ownership||$privacy)?'BLOCKED':($reasons===[]?'PASS':'REVIEW_REQUIRED');$root=Contract::hash($tables);$public=0;$private=0;$attachments=0;
+        $root=Contract::hash($tables);if($root!==$this->verified['logical_sha256']){$reasons[]='EVIDENCE_ROOT_MISMATCH';}
+        sort($reasons);$status=($ownership||$privacy)?'BLOCKED':($reasons===[]?'PASS':'REVIEW_REQUIRED');$public=0;$private=0;$attachments=0;
         foreach($facts as $f){if($f['type']==='message'){if(($f['payload']['kind']??null)==='PUBLIC_REPLY'&&($f['payload']['visibility']??null)===['state'=>'KNOWN','value'=>'PUBLIC']){++$public;}else{++$private;}}if($f['type']==='attachment'){++$attachments;}}
         return ['classification'=>'SYNTHETIC','contract'=>'hostider.readonly-recovery.v1','status'=>$status==='PASS'?'MATCHED_REFERENCE':($status==='REVIEW_REQUIRED'?'REFERENCE_DIFFERENCES':'BLOCKED'),'verification_scope'=>'REFERENCE_COMPARISON_ONLY_NO_DB_AUTHORITY','backup_id'=>$this->verified['backup_id'],
             'recovery_attestation_sha256'=>$this->attestationFingerprint,'source_roots_sha256'=>$this->verified['source_roots_sha256'],'original_target_snapshot'=>$this->verified['original_target_snapshot'],
