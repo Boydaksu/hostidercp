@@ -1,0 +1,136 @@
+{
+  "classification": "SYNTHETIC",
+  "original_authority": "UNMODIFIED_SANDBOX_NOT_VALID_FOR_NEW_TARGET",
+  "recovery_authority": "R1_TRUSTED_CAPSULE_PLUS_PINNED_SELECT_ONLY_TARGET",
+  "runtime_authority": "NOT_GRANTED",
+  "identity_bound": "PARTIAL_READONLY_CHAIN_VERIFIED_RUNTIME_OPEN",
+  "issuer_recovery": "PARTIAL",
+  "original_archive_bytes": "OPEN",
+  "actual_test_cases": [
+    {
+      "test": "F6-D-R2 actual restored target reconciles in a fresh process after source loss and Vault expiry",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 wrong schema and account cannot reuse the target policy",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 source backup snapshot and encryption key mismatches are blocked",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 revoked or forged recovery issuer cannot establish a context",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 wrong purpose stale epoch and revoked target policy are denied",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 expired authorization is checked again before reporting",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 stale or expired restore marker blocks verification",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 restored payload tamper changes actual evidence despite unchanged aggregate counts",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 mapping provenance history and checkpoint mismatches cannot pass",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 customer and private attachment ownership changes are blocked",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 private message visibility cannot become public in recovery",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 finance amount and currency mutations require review without ledger writes",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 changed schema or unique index and missing migration are blocked",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 unexpected and missing target rows are detected by actual queries",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 partial restore and corrupt marker cannot claim PASS",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 SELECT-only reader denies DML DDL native and sibling schema reads",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 added write execute or trigger privilege blocks reader authority",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 views are denied and ungranted triggers routines are never executed",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 1 4 8 independent processes reconcile deterministically without writes",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 real process crashes never publish a verified report or alter target evidence",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 reports redact credentials bodies identifiers paths signatures and ciphertext",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 oversized row and disconnected target cannot produce PASS",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 a caller supplied array comparison cannot claim actual database authority",
+      "local": "PASS",
+      "ci": "PENDING"
+    },
+    {
+      "test": "F6-D-R2 marker view is rejected before any definer SELECT side effect",
+      "local": "PASS",
+      "ci": "PENDING"
+    }
+  ],
+  "metadata_inventory": "TRIGGERS_ROUTINES_NOT_VERIFIED_SELECT_ONLY_NOT_CALLED",
+  "privileged_ddl_boundary": "TRUSTED_TEST_HOST_SETUP",
+  "durable_replay_revocation_policy_rollback": "NOT_IMPLEMENTED_NO_RUNTIME_ACTIVATION",
+  "original_hmac": "PRESERVED_ENROLMENT_EVIDENCE_NOT_RECOMPUTED",
+  "native_production_restore": "NOT_VERIFIED"
+}

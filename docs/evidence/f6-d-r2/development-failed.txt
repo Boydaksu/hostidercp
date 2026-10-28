@@ -1,0 +1,23 @@
+PASS F6-D-R2 actual restored target reconciles in a fresh process after source loss and Vault expiry
+PASS F6-D-R2 wrong schema and account cannot reuse the target policy
+PASS F6-D-R2 source backup snapshot and encryption key mismatches are blocked
+PASS F6-D-R2 revoked or forged recovery issuer cannot establish a context
+PASS F6-D-R2 wrong purpose stale epoch and revoked target policy are denied
+PASS F6-D-R2 expired authorization is checked again before reporting
+PASS F6-D-R2 stale or expired restore marker blocks verification
+PASS F6-D-R2 restored payload tamper changes actual evidence despite unchanged aggregate counts
+PASS F6-D-R2 mapping provenance history and checkpoint mismatches cannot pass
+PASS F6-D-R2 customer and private attachment ownership changes are blocked
+PASS F6-D-R2 private message visibility cannot become public in recovery
+PASS F6-D-R2 finance amount and currency mutations require review without ledger writes
+PASS F6-D-R2 changed schema or unique index and missing migration are blocked
+FAIL F6-D-R2 unexpected and missing target rows are detected by actual queries: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`<owned-target>`.`f6b_mappings`, CONSTRAINT `f6b_mappings_ibfk_1` FOREIGN KEY (`target_id`) REFERENCES `f6b_entities` (`target_id`))
+PASS F6-D-R2 partial restore and corrupt marker cannot claim PASS
+PASS F6-D-R2 SELECT-only reader denies DML DDL native and sibling schema reads
+PASS F6-D-R2 added write execute or trigger privilege blocks reader authority
+PASS F6-D-R2 views are denied and ungranted triggers routines are never executed
+PASS F6-D-R2 1 4 8 independent processes reconcile deterministically without writes
+PASS F6-D-R2 real process crashes never publish a verified report or alter target evidence
+PASS F6-D-R2 reports redact credentials bodies identifiers paths signatures and ciphertext
+PASS F6-D-R2 oversized row and disconnected target cannot produce PASS
+22 tests, 1 failures
