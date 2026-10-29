@@ -1,0 +1,246 @@
+{
+  "classification": "P2_LOCAL_DOCKER_DEVELOPMENT_EVIDENCE_RECORDED_BEFORE_PUBLICATION",
+  "base_sha": "06de312796f19485aabb830f6e2cf531238f9975",
+  "source_commit_at_execution": null,
+  "source_manifest_sha256": "0b0b4d99c33ff565e4576ba0c2989775f9389933d5a7afbd1fbdfbbfe2e5a999",
+  "source_files": 484,
+  "new_source_manifest_sha256": "ddf3b38fae3638d996fa5d48bdeafa24b939666014f893c84b721b6c4b0c4885",
+  "new_source_files": 4,
+  "runs": [
+    {
+      "file": "php83-hostider-p2-056e249129f3-83.json",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites": [
+        {
+          "path": "tests/migration-discovery.php",
+          "passed": 33,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-contract.php",
+          "passed": 31,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-visibility.php",
+          "passed": 8,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-import.php",
+          "passed": 43,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-reconciliation.php",
+          "passed": 35,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/hardening-unit.php",
+          "passed": 7,
+          "failed": 0,
+          "exit": 0
+        }
+      ],
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "source_manifest_sha256": "0b0b4d99c33ff565e4576ba0c2989775f9389933d5a7afbd1fbdfbbfe2e5a999",
+      "host_source_unchanged": true,
+      "cleanup": [
+        {
+          "name": "hostider-p2-056e249129f3-83-app",
+          "already_absent": true
+        },
+        {
+          "name": "hostider-p2-056e249129f3-83-db",
+          "ownership_verified": true,
+          "removed": true
+        },
+        {
+          "name": "hostider-p2-056e249129f3-83-net",
+          "ownership_verified": true,
+          "removed": true
+        }
+      ]
+    },
+    {
+      "file": "php83-hostider-p2-38410cb43a1f-83.json",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites": [
+        {
+          "path": "tests/migration-discovery.php",
+          "passed": 31,
+          "failed": 1,
+          "exit": 1
+        }
+      ],
+      "quality": {},
+      "source_manifest_sha256": "b478f0690c0359230149cbf917dac575949230c22a20d8d45d51f48c9bc0f821",
+      "host_source_unchanged": true,
+      "cleanup": [
+        {
+          "name": "hostider-p2-38410cb43a1f-83-app",
+          "already_absent": true
+        },
+        {
+          "name": "hostider-p2-38410cb43a1f-83-db",
+          "ownership_verified": true,
+          "removed": true
+        },
+        {
+          "name": "hostider-p2-38410cb43a1f-83-net",
+          "ownership_verified": true,
+          "removed": true
+        }
+      ]
+    },
+    {
+      "file": "php83-hostider-p2-bbfcb7e64e51-83.json",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites": [
+        {
+          "path": "tests/migration-discovery.php",
+          "passed": 30,
+          "failed": 2,
+          "exit": 1
+        }
+      ],
+      "quality": {},
+      "source_manifest_sha256": "7f5c28c5efe811b25ec815eb2dabd6d39e6c9bd107042222cec58333e2a2360f",
+      "host_source_unchanged": true,
+      "cleanup": [
+        {
+          "name": "hostider-p2-bbfcb7e64e51-83-app",
+          "already_absent": true
+        },
+        {
+          "name": "hostider-p2-bbfcb7e64e51-83-db",
+          "ownership_verified": true,
+          "removed": true
+        },
+        {
+          "name": "hostider-p2-bbfcb7e64e51-83-net",
+          "ownership_verified": true,
+          "removed": true
+        }
+      ]
+    },
+    {
+      "file": "php84-hostider-p2-543efaa0f3db-84.json",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites": [
+        {
+          "path": "tests/migration-discovery.php",
+          "passed": 33,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-contract.php",
+          "passed": 31,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-visibility.php",
+          "passed": 8,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-import.php",
+          "passed": 43,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-reconciliation.php",
+          "passed": 35,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/hardening-unit.php",
+          "passed": 7,
+          "failed": 0,
+          "exit": 0
+        }
+      ],
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "source_manifest_sha256": "0b0b4d99c33ff565e4576ba0c2989775f9389933d5a7afbd1fbdfbbfe2e5a999",
+      "host_source_unchanged": true,
+      "cleanup": [
+        {
+          "name": "hostider-p2-543efaa0f3db-84-app",
+          "already_absent": true
+        },
+        {
+          "name": "hostider-p2-543efaa0f3db-84-db",
+          "ownership_verified": true,
+          "removed": true
+        },
+        {
+          "name": "hostider-p2-543efaa0f3db-84-net",
+          "ownership_verified": true,
+          "removed": true
+        }
+      ]
+    }
+  ],
+  "successful_runtime_totals": {
+    "php83": "8.3.36",
+    "php84": "8.4.27",
+    "suites": 6,
+    "passed": 157,
+    "failed": 0,
+    "new_cases": 33,
+    "cases_with_negative_assertions": 31,
+    "related_regressions": 124
+  },
+  "prior_failures": [
+    {
+      "run": "php83-hostider-p2-bbfcb7e64e51-83",
+      "passed": 30,
+      "failed": 2,
+      "cause": "test input incorrectly classified allowed zero size; malformed escaped duplicate-key fixture; float fixture also hashed before validator"
+    },
+    {
+      "run": "php83-hostider-p2-38410cb43a1f-83",
+      "passed": 31,
+      "failed": 1,
+      "cause": "remaining float test input failed in fixture canonical hashing before reaching validator"
+    }
+  ],
+  "final_revision_note": "Raw float JSON test reaches validator; valid escaped duplicate fixture; separate column charset/collation validation and test added before final 33-case runs",
+  "registry_suites": 63,
+  "expected_total_tests_not_full_execution": 868,
+  "full_acceptance": false,
+  "chromium": false,
+  "github_actions": false,
+  "composer_npm_audit_current": false,
+  "r2_method_exception_inherited": false,
+  "independent_code_review": "PENDING",
+  "G-O03": "OPEN",
+  "cutover_allowed": false,
+  "effects_allowed": false,
+  "real_gate_status": "BLOCKED"
+}
