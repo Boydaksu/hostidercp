@@ -1,0 +1,7 @@
+{
+  "executed_runner_sha256": "a0931d7fd23d091ab92d8f45ea65c26625945896cb511631755d274a02197ff8",
+  "review_copy_sha256": "521ac06b0c19232a68dae5910407bf477b9cf1fa929e57b3dedf8546819bd0b8",
+  "review_copy_redaction": "Only fixed disposable synthetic DB password literal replaced; review copy not executed",
+  "run_tests_sha256": "90a764fe8f5cc16703273a01b970efe73ff21a33ba526d8e76b98e471ad826c4",
+  "source_manifest_sha256": "e47f38315314b08d501be5c0d3b71127d4bb2110a61548b27723ff5fa48909cc"
+}

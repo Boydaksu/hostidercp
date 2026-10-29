@@ -133,6 +133,7 @@ jobs:
       - run: php tests/migration-recovery-target.php
       - run: php tests/migration-recovery-integrity.php
       - run: php tests/migration-cutover-preflight.php
+      - run: php tests/migration-cutover-rehearsal.php
       - run: node --check public/assets/support.js
       - run: node tests/support-e-state.cjs
       - name: Locked development-only Chromium checks

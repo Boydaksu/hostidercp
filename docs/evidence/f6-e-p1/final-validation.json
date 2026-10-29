@@ -1,0 +1,15 @@
+{
+  "git_diff_check": 0,
+  "staged_changes": false,
+  "new_commit": false,
+  "final_documentation_check": {
+    "runtime": "PHP 8.3.36",
+    "files": 610,
+    "exit": 0,
+    "network": "none"
+  },
+  "remote_head": "25d916ad0c3ef1002b6ba7f25df0029136dbf145",
+  "pr_state": "OPEN/DRAFT",
+  "task_docker_resources_remaining": 0,
+  "independent_review": "PENDING"
+}
