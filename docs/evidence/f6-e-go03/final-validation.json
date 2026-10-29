@@ -1,0 +1,17 @@
+{
+  "base_sha": "f0b1db72c5fae63294e8d01b79136d9d089ffb87",
+  "final_documentation_check": {
+    "runtime": "PHP8.3.36",
+    "files": 673,
+    "exit": 0,
+    "network": "none"
+  },
+  "git_diff_check": 0,
+  "relative_links": "PASS",
+  "utf8_credential_patterns": "PASS_NOT_COMPLETE_SECRET_AUDIT",
+  "runtime_name_and_row_canaries_absent": true,
+  "real_source_credentials_used": false,
+  "operator_key_persisted": false,
+  "task_docker_resources_remaining": 0,
+  "independent_review": "PENDING"
+}

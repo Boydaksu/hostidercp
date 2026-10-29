@@ -1,0 +1,527 @@
+diff --git a/.github/workflows/f0.yml b/.github/workflows/f0.yml
+index c3b5021..18f0604 100644
+--- a/.github/workflows/f0.yml
++++ b/.github/workflows/f0.yml
+@@ -136,6 +136,7 @@ jobs:
+       - run: php tests/migration-cutover-rehearsal.php
+       - run: php tests/migration-discovery.php
+       - run: php tests/migration-inventory.php
++      - run: php tests/migration-discovery-collector.php
+       - run: node --check public/assets/support.js
+       - run: node tests/support-e-state.cjs
+       - name: Locked development-only Chromium checks
+diff --git a/tools/ci/suites.json b/tools/ci/suites.json
+index 5afbcbb..73e96c5 100644
+--- a/tools/ci/suites.json
++++ b/tools/ci/suites.json
+@@ -62,5 +62,6 @@
+   "tests/migration-cutover-preflight.php",
+   "tests/migration-cutover-rehearsal.php",
+   "tests/migration-discovery.php",
+-  "tests/migration-inventory.php"
++  "tests/migration-inventory.php",
++  "tests/migration-discovery-collector.php"
+ ]
+--- /dev/null
++++ b/src/Migration/Discovery/MetadataSession.php
+@@ -0,0 +1,74 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\Migration\Discovery;
++use Hostider\Migration\Contract;
++
++/** Fresh loopback MariaDB session; only named, fixed information_schema reads exist. */
++final class MetadataSession
++{
++    public const PURPOSE = 'OWNER_APPROVED_MANUAL_READ_ONLY_DISCOVERY';
++    public const SQL = [
++        'schema' => 'SELECT CURRENT_USER() AS account,SCHEMA_NAME,DEFAULT_CHARACTER_SET_NAME,DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME=:schema LIMIT 2',
++        'global' => 'SELECT GRANTEE,PRIVILEGE_TYPE,IS_GRANTABLE FROM information_schema.USER_PRIVILEGES LIMIT 65',
++        'grants' => 'SELECT GRANTEE,TABLE_SCHEMA,PRIVILEGE_TYPE,IS_GRANTABLE FROM information_schema.SCHEMA_PRIVILEGES LIMIT 65',
++        'table_grants' => 'SELECT GRANTEE FROM information_schema.TABLE_PRIVILEGES LIMIT 1',
++        'column_grants' => 'SELECT GRANTEE FROM information_schema.COLUMN_PRIVILEGES LIMIT 1',
++        'roles' => 'SELECT ROLE_NAME FROM information_schema.APPLICABLE_ROLES LIMIT 1',
++        'enabled' => 'SELECT ROLE_NAME FROM information_schema.ENABLED_ROLES WHERE ROLE_NAME IS NOT NULL LIMIT 1',
++        'routines' => 'SELECT ROUTINE_SCHEMA FROM information_schema.ROUTINES LIMIT 1',
++        'tables' => 'SELECT TABLE_NAME,TABLE_TYPE,TABLE_COLLATION FROM information_schema.TABLES WHERE TABLE_SCHEMA=:schema ORDER BY TABLE_NAME LIMIT 65',
++        'columns' => 'SELECT COLUMN_NAME,ORDINAL_POSITION,DATA_TYPE,IS_NULLABLE,CHARACTER_SET_NAME,COLLATION_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=:schema AND TABLE_NAME=:table ORDER BY ORDINAL_POSITION LIMIT 65',
++        'indexes' => 'SELECT INDEX_NAME,NON_UNIQUE,SEQ_IN_INDEX,COLUMN_NAME,SUB_PART,INDEX_TYPE,COLLATION,IGNORED FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=:schema AND TABLE_NAME=:table ORDER BY INDEX_NAME,SEQ_IN_INDEX LIMIT 65',
++    ];
++    private int $queries = 0;
++    private readonly int $started;
++    private function __construct(private readonly \PDO $pdo, private readonly string $account)
++    { $this->started = hrtime(true); }
++    public static function connect(int $port, string $account, #[\SensitiveParameter] string $password, string $purpose): self
++    {
++        Contract::require($purpose === self::PURPOSE, 'GO_MANUAL_GATE');
++        Contract::require($port > 0 && $port <= 65535 && preg_match('/^[A-Za-z0-9_]{1,64}$/D', $account) === 1, 'GO_CONNECTION_INPUT');
++        try {
++            $pdo = new \PDO('mysql:host=127.0.0.1;port='.$port.';dbname=information_schema;charset=utf8mb4', $account, $password, [
++                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION, \PDO::ATTR_EMULATE_PREPARES => false,
++                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC, \PDO::ATTR_TIMEOUT => 3,
++                \PDO::MYSQL_ATTR_MULTI_STATEMENTS => false, \PDO::ATTR_PERSISTENT => false,
++            ]);
++            return new self($pdo, $account);
++        } catch (\Throwable) { throw new \RuntimeException('GO_CONNECTION_DENIED'); }
++    }
++    public function __debugInfo(): array { return ['scope' => 'FIXED_INFORMATION_SCHEMA_ONLY']; }
++    public function __serialize(): array { throw new \RuntimeException('GO_SESSION_SERIALIZE_DENIED'); }
++    public function count(): int { return $this->queries; }
++    public function read(string $name, #[\SensitiveParameter] array $params = []): array
++    {
++        Contract::require(isset(self::SQL[$name]), 'GO_QUERY_DENIED');
++        Contract::require(++$this->queries <= 512 && hrtime(true)-$this->started < 30000000000, 'GO_QUERY_BUDGET');
++        $expected = match ($name) { 'schema', 'tables' => ['schema'], 'columns', 'indexes' => ['schema', 'table'], default => [] };
++        Contract::fields($params, $expected);
++        $s = $this->pdo->prepare(self::SQL[$name]); $s->execute($params); $rows = $s->fetchAll(); $s->closeCursor();
++        Contract::require(count($rows) <= 64 && hrtime(true)-$this->started < 30000000000, 'GO_METADATA_LIMIT');
++        return $rows;
++    }
++    public function fence(#[\SensitiveParameter] string $schema): array
++    {
++        Contract::require(preg_match('/^[A-Za-z][A-Za-z0-9_]{0,63}$/D', $schema) === 1, 'GO_SCHEMA_IDENTIFIER');
++        $r = $this->read('schema', ['schema' => $schema]);
++        Contract::require(count($r) === 1 && $r[0]['SCHEMA_NAME'] === $schema, 'GO_SCHEMA_UNAVAILABLE');
++        $current = $r[0]['account'];
++        Contract::require(is_string($current) && preg_match('/^([A-Za-z0-9_]+)@([A-Za-z0-9_.:%-]+)$/D', $current, $m) === 1
++            && $m[1] === $this->account, 'GO_ACCOUNT_IDENTITY');
++        $grantee = "'".$m[1]."'@'".$m[2]."'";
++        foreach ($this->read('global') as $g) {
++            Contract::require($g['GRANTEE'] === $grantee && $g['PRIVILEGE_TYPE'] === 'USAGE' && $g['IS_GRANTABLE'] === 'NO', 'GO_GLOBAL_PRIVILEGE');
++        }
++        $grants = $this->read('grants'); $expected = str_replace(['_', '%'], ['\\_', '\\%'], $schema);
++        Contract::require(count($grants) === 1 && $grants[0]['GRANTEE'] === $grantee
++            && $grants[0]['TABLE_SCHEMA'] === $expected && $grants[0]['PRIVILEGE_TYPE'] === 'SELECT'
++            && $grants[0]['IS_GRANTABLE'] === 'NO', 'GO_READ_ONLY_SCOPE');
++        foreach (['table_grants', 'column_grants', 'roles', 'enabled', 'routines'] as $kind) {
++            Contract::require($this->read($kind) === [], 'GO_EXTRA_AUTHORITY');
++        }
++        unset($r[0]['account']); return $r[0];
++    }
++}
+--- /dev/null
++++ b/src/Migration/Discovery/PrivateExport.php
+@@ -0,0 +1,49 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\Migration\Discovery;
++use Hostider\Migration\Contract;
++
++/** Narrow POSIX local temporary handoff. Raw bytes are unlinked before any write. */
++final class PrivateExport
++{
++    public static function assertRoot(string $root): void
++    {
++        Contract::require(function_exists('posix_geteuid') && str_starts_with($root, '/') && realpath($root) === $root, 'GO_PRIVATE_DIRECTORY');
++        $part = $root;
++        while (true) {
++            clearstatcache(true, $part); $s = lstat($part);
++            Contract::require($s !== false && ($s['mode'] & 0170000) === 0040000, 'GO_DIRECTORY_LINK');
++            if ($part === $root) {
++                Contract::require(($s['mode'] & 0777) === 0700 && $s['uid'] === posix_geteuid(), 'GO_DIRECTORY_PERMISSIONS');
++            }
++            if ($part === '/') { break; } $part = dirname($part);
++        }
++    }
++    public static function adapt(
++        string $root, #[\SensitiveParameter] string $json, string $source, string $snapshot,
++        string $pin, #[\SensitiveParameter] string $key,
++    ): array {
++        self::assertRoot($root);
++        Contract::require(strlen($json) <= StrictJson::MAX_BYTES, 'GO_EXPORT_SIZE');
++        $directory = $root.'/go03-'.bin2hex(random_bytes(16)); $path = $directory.'/inventory';
++        $handle = null; $made = false; $linked = false; $mode = umask(0077);
++        try {
++            Contract::require(@mkdir($directory, 0700), 'GO_TEMP_DIRECTORY'); $made = true;
++            self::assertRoot($directory);
++            $handle = @fopen($path, 'x+b'); Contract::require(is_resource($handle), 'GO_TEMP_FILE'); $linked = true;
++            $stat = fstat($handle); $named = lstat($path);
++            Contract::require($stat !== false && $named !== false && $stat['ino'] === $named['ino'] && $stat['dev'] === $named['dev']
++                && ($stat['mode'] & 0170000) === 0100000 && ($stat['mode'] & 0777) === 0600
++                && $stat['uid'] === posix_geteuid(), 'GO_TEMP_PERMISSIONS');
++            Contract::require(unlink($path), 'GO_TEMP_UNLINK'); $linked = false;
++            Contract::require(fwrite($handle, $json) === strlen($json) && fflush($handle) && rewind($handle), 'GO_TEMP_WRITE');
++            return (new InventoryAdapter())->convert($handle, $source, $snapshot, $pin, $key);
++        } finally {
++            if (is_resource($handle)) { fclose($handle); }
++            $clean = true;
++            if ($linked) { $clean = @unlink($path); }
++            if ($made) { $clean = @rmdir($directory) && $clean; }
++            umask($mode); Contract::require($clean, 'GO_CLEANUP_FAILED');
++        }
++    }
++}
+--- /dev/null
++++ b/src/Migration/Discovery/Collector.php
+@@ -0,0 +1,120 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\Migration\Discovery;
++use Hostider\Core\CanonicalJson;
++use Hostider\Migration\Contract;
++
++final class Collector
++{
++    public static function blocked(string $reason): array
++    {
++        return ['status' => 'BLOCKED', 'reasons' => [$reason], ...self::gates()];
++    }
++    private static function gates(): array
++    {
++        return ['G-O03' => 'OPEN', 'source_truth' => 'UNVERIFIED', 'operator_authority' => 'UNVERIFIED',
++            'cutover_allowed' => false, 'effects_allowed' => false, 'real_gate_status' => 'BLOCKED'];
++    }
++    private static function name(#[\SensitiveParameter] mixed $v): string
++    {
++        Contract::require(is_string($v) && preg_match('/^[A-Za-z_][A-Za-z0-9_]{0,63}$/D', $v) === 1, 'GO_IDENTIFIER');
++        return $v;
++    }
++    private static function capture(MetadataSession $s, #[\SensitiveParameter] string $schema): array
++    {
++        $out = ['schema' => $s->read('schema', ['schema' => $schema]), 'tables' => []];
++        foreach ($s->read('tables', ['schema' => $schema]) as $t) {
++            Contract::require($t['TABLE_TYPE'] === 'BASE TABLE', 'GO_UNSUPPORTED_TABLE_KIND');
++            $name = self::name($t['TABLE_NAME']);
++            $t['columns'] = $s->read('columns', ['schema' => $schema, 'table' => $name]);
++            $t['indexes'] = $s->read('indexes', ['schema' => $schema, 'table' => $name]);
++            Contract::require($t['columns'] !== [], 'GO_PARTIAL_METADATA'); $out['tables'][] = $t;
++        }
++        Contract::require($out['tables'] !== [], 'GO_EMPTY_INVENTORY'); return $out;
++    }
++    private static function charset(mixed $v): string
++    {
++        if ($v === null) { return 'NONE'; }
++        return match ($v) { 'utf8mb4' => 'UTF8MB4', 'ascii' => 'ASCII', 'latin1' => 'LATIN1', default => 'UNKNOWN' };
++    }
++    private static function collation(mixed $v): string
++    {
++        if ($v === null) { return 'NONE'; }
++        return match ($v) { 'utf8mb4_bin' => 'UTF8MB4_BIN', 'utf8mb4_unicode_ci' => 'UTF8MB4_UNICODE_CI',
++            'ascii_bin' => 'ASCII_BIN', 'latin1_bin' => 'LATIN1_BIN', default => 'UNKNOWN' };
++    }
++    private static function export(#[\SensitiveParameter] array $raw, string $source, string $snapshot, string $at): array
++    {
++        Contract::require(count($raw['schema']) === 1, 'GO_SCHEMA_UNAVAILABLE');
++        $schema = self::name($raw['schema'][0]['SCHEMA_NAME']); $b = ['source_id' => $source, 'snapshot_id' => $snapshot];
++        $tables = [];
++        foreach ($raw['tables'] as $t) {
++            Contract::require($t['columns'] !== [] && count($t['columns']) <= 64, 'GO_PARTIAL_METADATA');
++            $columns = []; $indexes = []; $position = 0;
++            foreach ($t['columns'] as $c) {
++                Contract::require((string)$c['ORDINAL_POSITION'] === (string)++$position && in_array($c['IS_NULLABLE'], ['YES', 'NO'], true), 'GO_COLUMN_ORDER');
++                $type = match ($c['DATA_TYPE']) {
++                    'tinyint', 'smallint', 'mediumint', 'int', 'bigint' => 'INTEGER',
++                    'decimal' => 'DECIMAL', 'char', 'varchar' => 'STRING',
++                    'tinytext', 'text', 'mediumtext', 'longtext' => 'TEXT',
++                    'binary', 'varbinary', 'tinyblob', 'blob', 'mediumblob', 'longblob' => 'BINARY',
++                    'date', 'datetime', 'timestamp' => 'DATETIME', default => 'UNKNOWN',
++                };
++                $columns[] = [...$b, 'name' => self::name($c['COLUMN_NAME']), 'type' => $type,
++                    'nullable' => $c['IS_NULLABLE'] === 'YES', 'charset' => self::charset($c['CHARACTER_SET_NAME']), 'collation' => self::collation($c['COLLATION_NAME'])];
++            }
++            foreach ($t['indexes'] as $i) {
++                Contract::require($i['SUB_PART'] === null && $i['INDEX_TYPE'] === 'BTREE' && $i['COLLATION'] === 'A'
++                    && $i['IGNORED'] === 'NO' && in_array((string)$i['NON_UNIQUE'], ['0', '1'], true), 'GO_UNSUPPORTED_INDEX');
++                $name = self::name($i['INDEX_NAME']); $kind = $name === 'PRIMARY' ? 'PRIMARY' : ((string)$i['NON_UNIQUE'] === '0' ? 'UNIQUE' : 'INDEX');
++                $indexes[$name] ??= [...$b, 'name' => $name, 'kind' => $kind, 'columns' => []];
++                Contract::require($indexes[$name]['kind'] === $kind && (string)$i['SEQ_IN_INDEX'] === (string)(count($indexes[$name]['columns'])+1), 'GO_INDEX_ORDER');
++                $indexes[$name]['columns'][] = self::name($i['COLUMN_NAME']);
++            }
++            $collation = self::collation($t['TABLE_COLLATION']);
++            $charset = match ($collation) { 'UTF8MB4_BIN', 'UTF8MB4_UNICODE_CI' => 'UTF8MB4', 'ASCII_BIN' => 'ASCII', 'LATIN1_BIN' => 'LATIN1', default => 'UNKNOWN' };
++            $tables[] = [...$b, 'name' => self::name($t['TABLE_NAME']), 'charset' => $charset, 'collation' => $collation,
++                'columns_state' => 'KNOWN', 'columns' => $columns, 'indexes_state' => 'KNOWN', 'indexes' => array_values($indexes)];
++        }
++        return [...$b, 'contract' => InventoryAdapter::EXPORT_VERSION, 'classification' => 'OPERATOR_PREPARED_EXPORT',
++            'encoding' => 'UTF-8', 'system' => 'WHMCS', 'extracted_at' => $at, 'watermark' => $at, 'schema_state' => 'KNOWN',
++            'schemas' => [[...$b, 'name' => $schema, 'tables_state' => 'KNOWN', 'tables' => $tables]]];
++    }
++    private static function consistent(array $before, array $after, #[\SensitiveParameter] array $a, #[\SensitiveParameter] array $b): void
++    { Contract::require($before === $after && hash_equals(Contract::hash($a), Contract::hash($b)), 'GO_METADATA_CHANGED'); }
++    public function collect(
++        MetadataSession $s, #[\SensitiveParameter] string $schema, string $source, string $snapshot,
++        string $privateDirectory, #[\SensitiveParameter] string $key,
++    ): array {
++        try {
++            PrivateExport::assertRoot($privateDirectory);
++            Contract::require(preg_match('/^source-[a-f0-9]{64}$/D', $source) === 1
++                && preg_match('/^snapshot-[a-f0-9]{64}$/D', $snapshot) === 1 && strlen($key) === 32, 'GO_CONTEXT');
++            $at = gmdate('Y-m-d\TH:i:s\Z'); $before = $s->fence($schema); $a = self::capture($s, $schema);
++            $b = self::capture($s, $schema); $after = $s->fence($schema);
++            self::consistent($before, $after, $a, $b);
++            $json = CanonicalJson::encode(self::export($a, $source, $snapshot, $at));
++            $p3 = PrivateExport::adapt($privateDirectory, $json, $source, $snapshot, hash('sha256', $json), $key);
++            Contract::require($p3['status'] === 'OFFLINE_INVENTORY_ADAPTED', 'GO_ADAPTER_BLOCKED');
++            $m = $p3['manifest']; $tables = $m['schema']['schemas'][0]['tables']; $columns = 0; $indexes = 0;
++            foreach ($tables as $t) { $columns += count($t['columns']); $indexes += count($t['indexes']); }
++            $complete = $p3['category_coverage']['schema'] === 'KNOWN_METADATA';
++            return [
++                'status' => $complete ? 'METADATA_CAPTURE_COMPLETE_WITHIN_LIMITS' : 'METADATA_CAPTURE_PARTIAL',
++                'source_fingerprint' => hash_hmac('sha256', CanonicalJson::encode(['go03.source.v1', $source, $schema]), $key),
++                'snapshot_fingerprint' => hash_hmac('sha256', CanonicalJson::encode(['go03.snapshot.v1', $source, $snapshot]), $key),
++                'metadata_fingerprint' => $p3['p2_report']['metadata_fingerprint'], 'captured_at' => $at,
++                'inventory' => ['schemas' => 1, 'tables' => count($tables), 'columns' => $columns, 'indexes' => $indexes],
++                'observed_consistency' => 'MATCHED_TWO_READS', 'global_snapshot_atomicity' => 'NOT_VERIFIED',
++                'index_column_integrity' => 'VALIDATED_BY_P2_P3', 'metadata_compatibility' => $p3['category_coverage'],
++                'p2_status' => $p3['p2_report']['status'], 'p3_status' => $p3['status'], 'query_count' => $s->count(),
++                'missing_information' => ['WHMCS_APPLICATION_VERSION', 'CUSTOM_FIELDS', 'PASSWORD_ALGORITHM',
++                    'ATTACHMENT_LOCATIONS', 'FILE_INVENTORY', 'TYPE_PRECISION_AND_DEFAULTS', 'SOURCE_ROW_INTEGRITY', 'OPERATOR_AUTHORITY'],
++                'privilege_scope' => 'OBSERVED_DEDICATED_SCHEMA_SELECT_ONLY_NO_VISIBLE_ROLES_OR_ROUTINES',
++                'reasons' => [], ...self::gates(),
++            ];
++        } catch (\Throwable $e) {
++            return self::blocked(preg_match('/^GO_[A-Z_]+$/D', $e->getMessage()) === 1 ? $e->getMessage() : 'GO_DISCOVERY_UNAVAILABLE');
++        }
++    }
++}
+--- /dev/null
++++ b/src/Migration/Discovery/DiscoveryCli.php
+@@ -0,0 +1,46 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\Migration\Discovery;
++use Hostider\Migration\Contract;
++
++final class DiscoveryCli
++{
++    private static function descriptor(int $fd, bool $key): string
++    {
++        Contract::require($fd >= 3 && $fd <= 64 && function_exists('posix_geteuid'), 'GO_DESCRIPTOR');
++        $h = @fopen('php://fd/'.$fd, 'rb'); Contract::require(is_resource($h), 'GO_DESCRIPTOR');
++        try {
++            $s = fstat($h); $max = $key ? 32 : 4096;
++            Contract::require($s !== false && ($s['mode'] & 0170000) === 0100000 && ($s['mode'] & 0777) === 0600
++                && $s['uid'] === posix_geteuid() && $s['size'] > 0 && $s['size'] <= $max && ftell($h) === 0, 'GO_DESCRIPTOR_PERMISSIONS');
++            $data = stream_get_contents($h, $max+1);
++            Contract::require(is_string($data) && strlen($data) === $s['size'] && (!$key || strlen($data) === 32), 'GO_DESCRIPTOR_SIZE'); return $data;
++        } finally { fclose($h); }
++    }
++    public static function main(array $argv): int
++    {
++        try {
++            Contract::require(PHP_SAPI === 'cli', 'GO_CLI_ONLY');
++            $o = [];
++            foreach (array_slice($argv, 1) as $arg) {
++                Contract::require(is_string($arg) && preg_match('/^--(ack-owner-approved-read-only-discovery|config-fd|key-fd|private-dir)(?:=(.+))?$/D', $arg, $m) === 1
++                    && !isset($o[$m[1]]), 'GO_ARGUMENTS');
++                $o[$m[1]] = $m[2] ?? true;
++            }
++            Contract::fields($o, ['ack-owner-approved-read-only-discovery', 'config-fd', 'key-fd', 'private-dir']);
++            Contract::require($o['ack-owner-approved-read-only-discovery'] === true, 'GO_MANUAL_GATE');
++            Contract::require(is_string($o['config-fd']) && ctype_digit($o['config-fd']) && is_string($o['key-fd']) && ctype_digit($o['key-fd'])
++                && $o['config-fd'] !== $o['key-fd'] && is_string($o['private-dir']), 'GO_ARGUMENTS');
++            PrivateExport::assertRoot($o['private-dir']);
++            $config = get_object_vars(StrictJson::decode(self::descriptor((int)$o['config-fd'], false)));
++            Contract::fields($config, ['port', 'account', 'password', 'schema', 'source_id', 'snapshot_id']);
++            Contract::require(is_int($config['port']) && is_string($config['account']) && is_string($config['password'])
++                && is_string($config['schema']) && is_string($config['source_id']) && is_string($config['snapshot_id']), 'GO_CONFIG');
++            $key = self::descriptor((int)$o['key-fd'], true);
++            $s = MetadataSession::connect($config['port'], $config['account'], $config['password'], MetadataSession::PURPOSE);
++            $report = (new Collector())->collect($s, $config['schema'], $config['source_id'], $config['snapshot_id'], $o['private-dir'], $key);
++        } catch (\Throwable) { $report = Collector::blocked('GO_CLI_DENIED'); }
++        echo json_encode($report, JSON_THROW_ON_ERROR).PHP_EOL;
++        return $report['status'] === 'BLOCKED' ? 1 : 0;
++    }
++}
+--- /dev/null
++++ b/bin/discovery-whmcs.php
+@@ -0,0 +1,9 @@
++<?php
++declare(strict_types=1);
++// Manual operator CLI only. No autoload-side connection or background execution.
++require dirname(__DIR__).'/bootstrap/autoload.php';
++ini_set('display_errors', '0');
++ini_set('log_errors', '0');
++ini_set('zend.exception_ignore_args', '1');
++set_error_handler(static function (): never { throw new RuntimeException('GO_RUNTIME_DENIED'); });
++exit(Hostider\Migration\Discovery\DiscoveryCli::main($argv));
+--- /dev/null
++++ b/tests/migration-discovery-collector-fixture.php
+@@ -0,0 +1,70 @@
++<?php
++declare(strict_types=1);
++require_once __DIR__.'/migration-import-fixture.php';
++require_once __DIR__.'/migration-inventory-fixture.php';
++use Hostider\Migration\Discovery\{Collector,MetadataSession};
++
++function goFixture(string $mode='reader'):array
++{
++    $admin=importAdmin();$root=$admin['root'];$schema='go03'.bin2hex(random_bytes(8));
++    if($mode==='underscore'){$schema='go03_'.bin2hex(random_bytes(8));}
++    $user='go03'.bin2hex(random_bytes(8));$password=bin2hex(random_bytes(32));
++    $host=(string)$root->execute("SELECT SUBSTRING_INDEX(USER(),'@',-1)")->fetchColumn();
++    if($host!=='localhost'&&filter_var($host,FILTER_VALIDATE_IP)===false){throw new RuntimeException('GO_TEST_HOST');}
++    $role='go03'.bin2hex(random_bytes(8));$GLOBALS['go_owned'][]=[$root,$schema,$user,$host,$role];
++    $root->execute('CREATE DATABASE `'.$schema.'` CHARACTER SET utf8mb4 COLLATE utf8mb4_bin');
++    $root->execute("CREATE USER '".$user."'@'".$host."' IDENTIFIED BY '".$password."'");
++    $scope=str_replace('_','\\_',$schema);
++    if($mode!=='none'){$root->execute("GRANT SELECT ON `".$scope."`.* TO '".$user."'@'".$host."'".($mode==='grant_option'?' WITH GRANT OPTION':''));}
++    $root->execute('CREATE TABLE `'.$schema.'`.synthetic_inventory (id BIGINT NOT NULL,code VARCHAR(32) NOT NULL,value VARCHAR(64) NULL,PRIMARY KEY(id),UNIQUE KEY synthetic_unique(code),KEY synthetic_composite(value,code)) ENGINE=InnoDB CHARACTER SET utf8mb4 COLLATE utf8mb4_bin');
++    $root->execute('INSERT INTO `'.$schema.'`.synthetic_inventory VALUES (1,?,?)',['SYNTHETIC_CODE_ONLY','SYNTHETIC_ROW_CANARY_NOT_REAL_PII']);
++    if($mode==='writer'){$root->execute("GRANT UPDATE ON `".$scope."`.* TO '".$user."'@'".$host."'");}
++    if($mode==='global'){$root->execute("GRANT SELECT ON *.* TO '".$user."'@'".$host."'");}
++    if($mode==='table_writer'){$root->execute("GRANT INSERT ON `".$schema."`.synthetic_inventory TO '".$user."'@'".$host."'");}
++    if($mode==='role'){$root->execute('CREATE ROLE '.$role);$root->execute("GRANT ".$role." TO '".$user."'@'".$host."'");}
++    if($mode==='routine'){$root->execute('CREATE PROCEDURE `'.$schema.'`.synthetic_routine() SELECT 1');$root->execute("GRANT EXECUTE ON PROCEDURE `".$schema."`.synthetic_routine TO '".$user."'@'".$host."'");}
++    $directory=sys_get_temp_dir().'/go03-test-'.bin2hex(random_bytes(12));
++    if(!mkdir($directory,0700)){throw new RuntimeException('GO_TEST_DIRECTORY');}
++    $GLOBALS['go_directories'][]=$directory;
++    return ['root'=>$root,'schema'=>$schema,'user'=>$user,'password'=>$password,'host'=>$host,'port'=>$admin['port'],
++        'directory'=>$directory,'key'=>random_bytes(32),'source'=>'source-'.inventoryId('go-source'),
++        'snapshot'=>'snapshot-'.inventoryId('go-snapshot')];
++}
++function goCleanup():void
++{
++    foreach(array_reverse($GLOBALS['go_owned']??[]) as [$db,$schema,$user,$host,$role]){
++        if(preg_match('/^go03_?[a-f0-9]{16}$/D',$schema)!==1||preg_match('/^go03[a-f0-9]{16}$/D',$user)!==1||preg_match('/^go03[a-f0-9]{16}$/D',$role)!==1){throw new RuntimeException('GO_TEST_OWNERSHIP');}
++        $db->execute('DROP DATABASE IF EXISTS `'.$schema.'`');$db->execute("DROP USER IF EXISTS '".$user."'@'".$host."'");$db->execute('DROP ROLE IF EXISTS '.$role);
++    }$GLOBALS['go_owned']=[];
++    foreach($GLOBALS['go_directories']??[] as $d){if(preg_match('~/go03-test-[a-f0-9]{24}$~D',$d)!==1){throw new RuntimeException('GO_TEST_DIRECTORY_OWNERSHIP');}rmdir($d);}$GLOBALS['go_directories']=[];
++}
++function goCase(callable $body,string $mode='reader'):void {try{$body(goFixture($mode));}finally{goCleanup();}}
++function goSession(array $f):MetadataSession {return MetadataSession::connect($f['port'],$f['user'],$f['password'],MetadataSession::PURPOSE);}
++function goRun(array $f,?MetadataSession $s=null):array {return (new Collector())->collect($s??goSession($f),$f['schema'],$f['source'],$f['snapshot'],$f['directory'],$f['key']);}
++function goRaw(array $f,MetadataSession $s):array
++{
++    $r=['schema'=>$s->read('schema',['schema'=>$f['schema']]),'tables'=>[]];
++    foreach($s->read('tables',['schema'=>$f['schema']]) as $t){
++        $t['columns']=$s->read('columns',['schema'=>$f['schema'],'table'=>$t['TABLE_NAME']]);
++        $t['indexes']=$s->read('indexes',['schema'=>$f['schema'],'table'=>$t['TABLE_NAME']]);$r['tables'][]=$t;
++    }return $r;
++}
++function goExport(array $f,array $raw):array
++{
++    return (new ReflectionMethod(Collector::class,'export'))->invoke(null,$raw,$f['source'],$f['snapshot'],'2026-10-29T00:00:00Z');
++}
++function goChild(array $f,array $extra=[],bool $ack=true,bool $badPermissions=false):array
++{
++    $config=tmpfile();$key=tmpfile();
++    try{
++        $data=['port'=>$f['port'],'account'=>$f['user'],'password'=>$f['password'],'schema'=>$f['schema'],'source_id'=>$f['source'],'snapshot_id'=>$f['snapshot']];
++        fwrite($config,json_encode($data,JSON_THROW_ON_ERROR));fwrite($key,$f['key']);rewind($config);rewind($key);
++        if($badPermissions){chmod(stream_get_meta_data($config)['uri'],0644);}
++        $cmd=[PHP_BINARY,dirname(__DIR__).'/bin/discovery-whmcs.php','--config-fd=3','--key-fd=4','--private-dir='.$f['directory']];
++        if($ack){$cmd[]='--ack-owner-approved-read-only-discovery';}array_push($cmd,...$extra);
++        $proc=proc_open($cmd,[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w'],3=>$config,4=>$key],$pipes,dirname(__DIR__));
++        if(!is_resource($proc)){throw new RuntimeException('GO_TEST_CHILD');}
++        fclose($pipes[0]);$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);$exit=proc_close($proc);
++        return ['exit'=>$exit,'stderr'=>$err,'out'=>$out,'report'=>json_decode($out,true,32,JSON_THROW_ON_ERROR)];
++    }finally{fclose($config);fclose($key);}
++}
+--- /dev/null
++++ b/tests/migration-discovery-collector.php
+@@ -0,0 +1,114 @@
++<?php
++declare(strict_types=1);
++require __DIR__.'/harness.php';
++require __DIR__.'/migration-discovery-collector-fixture.php';
++use Hostider\Core\CanonicalJson;
++use Hostider\Migration\Discovery\{Collector,MetadataSession,PrivateExport,InventoryAdapter,Validator,StrictJson};
++function goFlags(array $r):void {
++    same('OPEN',$r['G-O03']);same('UNVERIFIED',$r['source_truth']);same('UNVERIFIED',$r['operator_authority']);
++    same(false,$r['cutover_allowed']);same(false,$r['effects_allowed']);same('BLOCKED',$r['real_gate_status']);
++}
++test('GO03 01 actual read only schema collection and exact synthetic counts',function():void{
++    goCase(function(array $f):void{$r=goRun($f);goFlags($r);same('METADATA_CAPTURE_COMPLETE_WITHIN_LIMITS',$r['status']);
++        same(['schemas'=>1,'tables'=>1,'columns'=>3,'indexes'=>3],$r['inventory']);same('MATCHED_TWO_READS',$r['observed_consistency']);same('NOT_VERIFIED',$r['global_snapshot_atomicity']);same(['.','..'],scandir($f['directory']));});
++});
++test('GO03 02 actual column and composite index metadata preserved through P3',function():void{
++    goCase(function(array $f):void{$s=goSession($f);$raw=goRaw($f,$s);$e=goExport($f,$raw);$indexes=$e['schemas'][0]['tables'][0]['indexes'];
++        $composite=array_values(array_filter($indexes,fn($x)=>$x['name']==='synthetic_composite'))[0];same(['value','code'],$composite['columns']);
++        $j=CanonicalJson::encode($e);$r=PrivateExport::adapt($f['directory'],$j,$f['source'],$f['snapshot'],hash('sha256',$j),$f['key']);
++        same('OFFLINE_INVENTORY_ADAPTED',$r['status']);$m=$r['manifest'];same($r['p2_report'],(new Validator())->validate(CanonicalJson::encode($m),$f['source'],$f['snapshot']));
++        same('KNOWN_METADATA',$r['p2_report']['assessment']['schema']);});
++});
++test('GO03 03 HMAC hides schema account table column credentials and row canary',function():void{
++    goCase(function(array $f):void{$r=goRun($f);goFlags($r);$j=json_encode($r);
++        foreach([$f['schema'],$f['user'],$f['password'],bin2hex($f['key']),base64_encode($f['key']),'synthetic_inventory','synthetic_unique','synthetic_composite','SYNTHETIC_ROW_CANARY_NOT_REAL_PII'] as $secret){same(false,str_contains($j,$secret));}
++        same(false,array_key_exists('manifest',$r));});
++});
++test('GO03 04 source snapshot and key fingerprints are separated',function():void{
++    goCase(function(array $f):void{$a=goRun($f);$g=$f;$g['snapshot']='snapshot-'.inventoryId('other');$b=goRun($g);
++        same($a['source_fingerprint'],$b['source_fingerprint']);same(false,$a['snapshot_fingerprint']===$b['snapshot_fingerprint']);
++        $g=$f;$g['source']='source-'.inventoryId('other');$b=goRun($g);same(false,$a['source_fingerprint']===$b['source_fingerprint']);
++        $g=$f;$g['key']=random_bytes(32);$b=goRun($g);same(false,$a['source_fingerprint']===$b['source_fingerprint']);});
++});
++test('GO03 05 duplicate column and inconsistent index observations blocked',function():void{
++    goCase(function(array $f):void{$raw=goRaw($f,goSession($f));$x=$raw;$x['tables'][0]['columns'][1]['ORDINAL_POSITION']=1;
++        same('GO_COLUMN_ORDER',raises(InvalidArgumentException::class,fn()=>goExport($f,$x))->getMessage());
++        $x=$raw;$x['tables'][0]['indexes'][1]['SEQ_IN_INDEX']=99;same('GO_INDEX_ORDER',raises(InvalidArgumentException::class,fn()=>goExport($f,$x))->getMessage());
++        $x=$raw;$x['tables'][0]['columns'][1]['COLUMN_NAME']=$x['tables'][0]['columns'][0]['COLUMN_NAME'];
++        $j=CanonicalJson::encode(goExport($f,$x));$r=PrivateExport::adapt($f['directory'],$j,$f['source'],$f['snapshot'],hash('sha256',$j),$f['key']);same('BLOCKED',$r['status']);});
++});
++test('GO03 06 unknown collation becomes partial without fake compatibility',function():void{
++    goCase(function(array $f):void{$f['root']->execute('ALTER TABLE `'.$f['schema'].'`.synthetic_inventory CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci');
++        $r=goRun($f);goFlags($r);same('METADATA_CAPTURE_PARTIAL',$r['status']);same('UNKNOWN',$r['metadata_compatibility']['schema']);});
++});
++test('GO03 07 insufficient read scope is blocked',function():void{goCase(function(array $f):void{$r=goRun($f);goFlags($r);same('BLOCKED',$r['status']);},'none');});
++test('GO03 08 schema writer and grant option accounts are rejected',function():void{
++    foreach(['writer','grant_option'] as $mode){goCase(function(array $f):void{$r=goRun($f);same('BLOCKED',$r['status']);same(['GO_READ_ONLY_SCOPE'],$r['reasons']);},$mode);}
++});
++test('GO03 09 global and table write authority are rejected',function():void{
++    foreach(['global','table_writer'] as $mode){goCase(function(array $f):void{$r=goRun($f);same('BLOCKED',$r['status']);goFlags($r);},$mode);}
++});
++test('GO03 10 available role and executable routine authority are rejected',function():void{
++    foreach(['role','routine'] as $mode){goCase(function(array $f):void{$r=goRun($f);same('BLOCKED',$r['status']);same(['GO_EXTRA_AUTHORITY'],$r['reasons']);},$mode);}
++});
++test('GO03 11 arbitrary SQL names cannot reach PDO',function():void{
++    goCase(function(array $f):void{$s=goSession($f);$count=$s->count();
++        foreach(['DELETE FROM synthetic_inventory','CALL unsafe','SELECT * FROM synthetic_inventory','LOAD DATA','SET ROLE anything','INTO OUTFILE'] as $sql){same('GO_QUERY_DENIED',raises(InvalidArgumentException::class,fn()=>$s->read($sql))->getMessage());}
++        same($count,$s->count());foreach(MetadataSession::SQL as $sql){same(true,str_starts_with($sql,'SELECT '));same(true,str_contains($sql,' FROM information_schema.'));same(true,preg_match('/ LIMIT [0-9]+$/D',$sql)===1);}});
++});
++test('GO03 12 read only collection does not change actual synthetic source rows',function():void{
++    goCase(function(array $f):void{$before=$f['root']->execute('SELECT * FROM `'.$f['schema'].'`.synthetic_inventory ORDER BY id')->fetchAll();
++        same('METADATA_CAPTURE_COMPLETE_WITHIN_LIMITS',goRun($f)['status']);
++        same($before,$f['root']->execute('SELECT * FROM `'.$f['schema'].'`.synthetic_inventory ORDER BY id')->fetchAll());});
++});
++test('GO03 13 missing and changed observations cannot be called complete',function():void{
++    goCase(function(array $f):void{$raw=goRaw($f,goSession($f));$x=$raw;$x['tables'][0]['columns']=[];
++        same('GO_PARTIAL_METADATA',raises(InvalidArgumentException::class,fn()=>goExport($f,$x))->getMessage());
++        $m=new ReflectionMethod(Collector::class,'consistent');$x=$raw;$x['tables'][0]['TABLE_COLLATION']='ascii_bin';
++        same('GO_METADATA_CHANGED',raises(InvalidArgumentException::class,fn()=>$m->invoke(null,[],[],$raw,$x))->getMessage());
++        same('GO_METADATA_CHANGED',raises(InvalidArgumentException::class,fn()=>$m->invoke(null,['a'],['b'],$raw,$raw))->getMessage());});
++});
++test('GO03 14 excessive table inventory never silently truncates',function():void{
++    goCase(function(array $f):void{for($i=0;$i<64;++$i){$f['root']->execute('CREATE TABLE `'.$f['schema'].'`.synthetic_extra_'.$i.' (id INT NOT NULL PRIMARY KEY)');}
++        $r=goRun($f);same('BLOCKED',$r['status']);same(['GO_METADATA_LIMIT'],$r['reasons']);});
++});
++test('GO03 15 prefix index and views fail closed rather than lose metadata',function():void{
++    goCase(function(array $f):void{$f['root']->execute('CREATE INDEX synthetic_prefix ON `'.$f['schema'].'`.synthetic_inventory(value(4))');$r=goRun($f);same('BLOCKED',$r['status']);same(['GO_UNSUPPORTED_INDEX'],$r['reasons']);});
++    goCase(function(array $f):void{$f['root']->execute('CREATE VIEW `'.$f['schema'].'`.synthetic_view AS SELECT 1 AS id');$r=goRun($f);same('BLOCKED',$r['status']);same(['GO_UNSUPPORTED_TABLE_KIND'],$r['reasons']);});
++});
++test('GO03 16 private directory symlink permissions and file types rejected',function():void{
++    goCase(function(array $f):void{$link=$f['directory'].'-link';symlink($f['directory'],$link);
++        try{raises(InvalidArgumentException::class,fn()=>PrivateExport::assertRoot($link));}finally{unlink($link);}
++        chmod($f['directory'],0755);try{raises(InvalidArgumentException::class,fn()=>PrivateExport::assertRoot($f['directory']));}finally{chmod($f['directory'],0700);}
++        $path=$f['directory'].'/file';file_put_contents($path,'SYNTHETIC_ONLY');try{raises(InvalidArgumentException::class,fn()=>PrivateExport::assertRoot($path));}finally{unlink($path);}
++        same(['.','..'],scandir($f['directory']));});
++});
++test('GO03 17 private transfer mismatch malformed and oversized export clean up',function():void{
++    goCase(function(array $f):void{$j=CanonicalJson::encode(inventoryFixture());
++        $r=PrivateExport::adapt($f['directory'],$j,inventoryFixture()['source_id'],inventoryFixture()['snapshot_id'],str_repeat('a',64),$f['key']);
++        same('BLOCKED',$r['status']);same(['.','..'],scandir($f['directory']));
++        $r=PrivateExport::adapt($f['directory'],'{',$f['source'],$f['snapshot'],hash('sha256','{'),$f['key']);same('BLOCKED',$r['status']);same(['.','..'],scandir($f['directory']));
++        raises(InvalidArgumentException::class,fn()=>PrivateExport::adapt($f['directory'],str_repeat(' ',StrictJson::MAX_BYTES+1),$f['source'],$f['snapshot'],str_repeat('a',64),$f['key']));
++        same(['.','..'],scandir($f['directory']));});
++});
++test('GO03 18 exact underscore schema grant remains bounded',function():void{
++    goCase(function(array $f):void{same('METADATA_CAPTURE_COMPLETE_WITHIN_LIMITS',goRun($f)['status']);},'underscore');
++});
++test('GO03 19 actual standalone CLI uses private descriptors and emits sanitized JSON',function():void{
++    goCase(function(array $f):void{$c=goChild($f);same(0,$c['exit']);same('',$c['stderr']);goFlags($c['report']);same('METADATA_CAPTURE_COMPLETE_WITHIN_LIMITS',$c['report']['status']);
++        foreach([$f['schema'],$f['user'],$f['password'],bin2hex($f['key']),'synthetic_inventory','SYNTHETIC_ROW_CANARY_NOT_REAL_PII'] as $secret){same(false,str_contains($c['out'],$secret));}
++        same(['.','..'],scandir($f['directory']));});
++});
++test('GO03 20 CLI missing ack unknown authority argument and insecure descriptor blocked',function():void{
++    goCase(function(array $f):void{foreach([goChild($f,[],false),goChild($f,['--G-O03=CLOSED']),goChild($f,[],true,true)] as $c){
++        same(1,$c['exit']);same('',$c['stderr']);same('BLOCKED',$c['report']['status']);goFlags($c['report']);}same(['.','..'],scandir($f['directory']));});
++});
++test('GO03 21 no fallback fake source on missing credentials and intentional gate enforced',function():void{
++    same('GO_MANUAL_GATE',raises(InvalidArgumentException::class,fn()=>MetadataSession::connect(1,'unused','SYNTHETIC_ONLY','NOT_APPROVED'))->getMessage());
++    goCase(function(array $f):void{$f['password']='SYNTHETIC_WRONG_PASSWORD';$c=goChild($f);same(1,$c['exit']);same('BLOCKED',$c['report']['status']);same('',$c['stderr']);same(false,str_contains($c['out'],$f['password']));goFlags($c['report']);});
++});
++test('GO03 22 unknown non-schema categories and real gate cannot be inferred',function():void{
++    goCase(function(array $f):void{$r=goRun($f);foreach(['version','temporal','password','custom_fields','files'] as $k){same('UNKNOWN',$r['metadata_compatibility'][$k]);}
++        same(true,in_array('WHMCS_APPLICATION_VERSION',$r['missing_information'],true));goFlags($r);});
++});
++exit(executeTests());

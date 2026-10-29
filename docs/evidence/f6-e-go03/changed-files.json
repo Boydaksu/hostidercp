@@ -1,0 +1,113 @@
+{
+  "base_sha": "f0b1db72c5fae63294e8d01b79136d9d089ffb87",
+  "files": [
+    {
+      "path": "src/Migration/Discovery/MetadataSession.php",
+      "sha256": "0d3b6ce11aafee3c299f7fd4e317b2d9f4ed294d5ba6abd1ce7acf49e8988f04"
+    },
+    {
+      "path": "src/Migration/Discovery/PrivateExport.php",
+      "sha256": "0c8cae184ffe8ee4c3fa7f7b6c7e69fd22a202c314b95e4053faf260d5610c6b"
+    },
+    {
+      "path": "src/Migration/Discovery/Collector.php",
+      "sha256": "9c42c4f1bf423d8868c079530c1706194d39e698535c2a298341f70f010bce5e"
+    },
+    {
+      "path": "src/Migration/Discovery/DiscoveryCli.php",
+      "sha256": "403bd4a47abeeb300b0445f219266264ae89e66aa9d9362f86aabdb52c9a3d17"
+    },
+    {
+      "path": "bin/discovery-whmcs.php",
+      "sha256": "9c28594249805fe154152b572526c8b57ed959579b80b75bd7f2757069f7c538"
+    },
+    {
+      "path": "tests/migration-discovery-collector-fixture.php",
+      "sha256": "f4932160d0832f93d0ef96ec8baf19e6724c6aa8bf4c26942c7ac3ab5487f773"
+    },
+    {
+      "path": "tests/migration-discovery-collector.php",
+      "sha256": "05cff4893e69b11417dd50cea2d7ae47bce8e0563fbe894a4c183b1f0c69580e"
+    },
+    {
+      "path": ".github/workflows/f0.yml",
+      "sha256": "db182935af508c33dbed2d34062bb42628c8e9f9a142a7f9c6cd57d9fec2281d"
+    },
+    {
+      "path": "tools/ci/suites.json",
+      "sha256": "5f16da29be475054734c541d0a29daa787315e10a00bc8a05fbf844c71ebe42c"
+    },
+    {
+      "path": "docs/F6_E_GO03_PLAN_DELIVERY.md",
+      "sha256": "c18d7897690ee5c0f43b1fec2a6c18493ff45818bf5c7ec818006e1b71a6600b"
+    },
+    {
+      "path": "docs/F6_E_GO03_OPERATOR_GUIDE.md",
+      "sha256": "1559640116d2885c0a966583b2649fc0c44d91fe78d69bb31d60a4eeb2240182"
+    },
+    {
+      "path": "docs/adr/ADR-035-manual-readonly-discovery-collector.md",
+      "sha256": "3b2a8bf969df693b3829e421d9ea200fc5cffbac4f356112cde9d9ca56fbf7cd"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/candidate-source-manifest.json",
+      "sha256": "5fce854aee56cd7a2e27cf3c327d68f93e29fded2da7e77a914c6d76834001ef"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/final-validation.json",
+      "sha256": "c1350b497717aa52b999945e2178865e3146f817a7b5c7f3a7d7e36337403965"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/new-source-manifest.json",
+      "sha256": "bcb2b5ef40386bb2a22cc600f6c402f12dbc423f0aba64efab13c725a640d40e"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/php83-hostider-go03-967129c185fa-83-source.json",
+      "sha256": "1f2f0b5d2d372c71d85f9b89776b803639b394b30fcb74561d0fac3b7eb50093"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/php83-hostider-go03-967129c185fa-83.json",
+      "sha256": "a135046bc4e014b4d074c8be6dd7a1ccf8376d7c5f406e424cc866cca3e43673"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/php83-hostider-go03-967129c185fa-83.txt",
+      "sha256": "c74e7acee2577af0edf234e3a474a6245a2306cd783aba1e0653ea199bccf669"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/php84-hostider-go03-a55ce88cdf88-84-source.json",
+      "sha256": "1f2f0b5d2d372c71d85f9b89776b803639b394b30fcb74561d0fac3b7eb50093"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/php84-hostider-go03-a55ce88cdf88-84.json",
+      "sha256": "dae3f0bdf8874da15090a1d2db12ef57d79198276ad0f7ef61c041d1e9a0f151"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/php84-hostider-go03-a55ce88cdf88-84.txt",
+      "sha256": "f85ef477c4ac0090e3d141297eada33e3deb1c50b6101737da4933ddbf45fb7d"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/preservation.json",
+      "sha256": "173a18c2028408239d51ad5144efee4b537fec1cf40cfe0c887dd46bf7c510d8"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/run-tests.sh",
+      "sha256": "f1388bf6ad7bc9a439086de4c5a4a083060e4f8a1f7944c552eceff375d70943"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/runner-source-proof.json",
+      "sha256": "4707b87d55657419c294fda13bc8dfecc9c060febb34bd66e2d12d52017cc56b"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/runner.py.txt",
+      "sha256": "c017b651fc323c559b2c42333b019631be4e6d0fc7dc34c7a4d205bcc68995a6"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/source.diff",
+      "sha256": "7de8b5058f62d549726e662f9c64e546949ba48352730a429d63d5dea3600d9f"
+    },
+    {
+      "path": "docs/evidence/f6-e-go03/summary.json",
+      "sha256": "b5310de6a0b1cdda30a7851645eae5d0f536a9762b882e44117f311647b53a4c"
+    }
+  ]
+}
