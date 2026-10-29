@@ -1,0 +1,59 @@
+{
+  "tracked_modified": [
+    ".github/workflows/f0.yml",
+    "docs/F6_D_R2_DELIVERY_REPORT.md",
+    "docs/F6_D_R2_PLAN.md",
+    "docs/F6_PLAN.md",
+    "tools/ci/suites.json"
+  ],
+  "task_delivery_files": [
+    ".github/workflows/f0.yml",
+    "docs/F6_D_R2_ACCEPTANCE_RECORD.md",
+    "docs/F6_D_R2_DELIVERY_REPORT.md",
+    "docs/F6_D_R2_PLAN.md",
+    "docs/F6_E_P0_DELIVERY_REPORT.md",
+    "docs/F6_E_P0_PLAN.md",
+    "docs/F6_PLAN.md",
+    "docs/adr/ADR-030-f6-d-r2-local-docker-ci-method-exception.md",
+    "docs/adr/ADR-031-offline-synthetic-cutover-preflight.md",
+    "docs/evidence/f6-e-p0/candidate-source-manifest.json",
+    "docs/evidence/f6-e-p0/changed-files.json",
+    "docs/evidence/f6-e-p0/manifest.json",
+    "docs/evidence/f6-e-p0/php83-hostider-p0-78079cb1d08b-83-source.json",
+    "docs/evidence/f6-e-p0/php83-hostider-p0-78079cb1d08b-83.json",
+    "docs/evidence/f6-e-p0/php83-hostider-p0-78079cb1d08b-83.txt",
+    "docs/evidence/f6-e-p0/php83-hostider-p0-dd018e81261b-83-source.json",
+    "docs/evidence/f6-e-p0/php83-hostider-p0-dd018e81261b-83.json",
+    "docs/evidence/f6-e-p0/php83-hostider-p0-dd018e81261b-83.txt",
+    "docs/evidence/f6-e-p0/php84-hostider-p0-2dbd9c0f3d68-84-source.json",
+    "docs/evidence/f6-e-p0/php84-hostider-p0-2dbd9c0f3d68-84.json",
+    "docs/evidence/f6-e-p0/php84-hostider-p0-2dbd9c0f3d68-84.txt",
+    "docs/evidence/f6-e-p0/preservation.json",
+    "docs/evidence/f6-e-p0/r2-closure.diff",
+    "docs/evidence/f6-e-p0/run-tests.sh",
+    "docs/evidence/f6-e-p0/runner-source-proof.json",
+    "docs/evidence/f6-e-p0/runner.py.txt",
+    "docs/evidence/f6-e-p0/source.diff",
+    "docs/evidence/f6-e-p0/summary.json",
+    "src/Migration/Cutover/Preflight.php",
+    "src/Migration/Cutover/Simulation.php",
+    "tests/migration-cutover-preflight.php",
+    "tools/ci/suites.json"
+  ],
+  "inherited_published_local_untracked_copies": [
+    "docs/F6_D_R2_LOCAL_DOCKER_CI_EXCEPTION_PROPOSAL.md",
+    "docs/F6_D_R2_INDEPENDENT_ACCEPTANCE_REVIEW.md",
+    "docs/F6_D_R2_LOCAL_CI_EXCEPTION_DECISION_DRAFT.md"
+  ],
+  "inherited_owner_method_preparation": [
+    "docs/adr/ADR-030-f6-d-r2-local-docker-ci-method-exception.md",
+    "docs/F6_D_R2_PLAN.md",
+    "docs/F6_D_R2_DELIVERY_REPORT.md"
+  ],
+  "new_code_files": [
+    "src/Migration/Cutover/Preflight.php",
+    "src/Migration/Cutover/Simulation.php",
+    "tests/migration-cutover-preflight.php"
+  ],
+  "ignored_runner": "tools/local/f6-e-p0-runner.py; tools/local/f6-e-p0/ (not staged)"
+}

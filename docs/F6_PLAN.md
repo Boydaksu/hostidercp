@@ -1,5 +1,17 @@
 # F6 — Aktarım ve operasyon teknik planı
 
+## 28 Ekim 2026 — R2 sınırlı kabul / F6-E-P0 offline geliştirme
+
+[R2 kabul kaydı](F6_D_R2_ACCEPTANCE_RECORD.md): LIMITED SYNTHETIC READ-ONLY RECOVERY
+RECONCILIATION — ACCEPTED WITH EXPLICIT EXCEPTIONS; exact application53162495902b3b168c2fb8554594e99c23a34d62,
+evidencecc94f662454cb3f030addd2db0785a09900c0ed2. ADR-030 yöntem onayı ayrı; FAST NOT_RUN_EXTERNAL_BILLING.
+Yalnız [F6-E-P0 planı](F6_E_P0_PLAN.md) kapsamında offline/sentetik evaluator ve negatif test geliştirme GO.
+Gerçek F6-E/cutover/WHMCS/provider/payment/mail/FULL/merge/staging/production yetkisi yoktur.
+Yeni aday için R2'nin CI istisnası/teknik kabulü otomatik geçerli değildir. Native recovery BLOCKED;
+original bytes/issuer/custody/offsite/PITR/RPO/RTO açık; genel F6-D PARTIAL.
+Aşağıdaki eski faz yetki/PENDING metinleri tarihçedir; P0 yeni bağımsız kod incelemesi bekler.
+
+
 ## 28 Ekim 2026 — R2 read-only recovery teslimi / CI engeli
 
 R1 **LIMITED SYNTHETIC COLD VERIFICATION ACCEPTED WITH EXPLICIT EXCEPTIONS**;

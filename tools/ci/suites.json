@@ -58,5 +58,6 @@
   "tests/migration-operations.php",
   "tests/migration-recovery.php",
   "tests/migration-recovery-target.php",
-  "tests/migration-recovery-integrity.php"
+  "tests/migration-recovery-integrity.php",
+  "tests/migration-cutover-preflight.php"
 ]

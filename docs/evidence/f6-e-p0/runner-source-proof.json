@@ -1,0 +1,7 @@
+{
+  "executed_runner_sha256": "3d7ba2a43fcaa648b56be399bb6758f2df81043af018fba9698bd072173a0b2b",
+  "review_copy_sha256": "c236b98bcfdbdf39b754fbb3bcbb2770636777379de560820bdf46774780ba94",
+  "review_copy_is_executable_original": false,
+  "redaction": "Only fixed synthetic fixture password literal replaced; no real credential. Original remains ignored tools/local runner.",
+  "run_tests_sh_sha256": "e30b4cba4cf7fdd25280d4f77522fe8c090183a7c3fe0cbc1b35cf62c61e371a"
+}
