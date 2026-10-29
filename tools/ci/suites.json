@@ -61,5 +61,6 @@
   "tests/migration-recovery-integrity.php",
   "tests/migration-cutover-preflight.php",
   "tests/migration-cutover-rehearsal.php",
-  "tests/migration-discovery.php"
+  "tests/migration-discovery.php",
+  "tests/migration-inventory.php"
 ]
