@@ -1,5 +1,52 @@
 # F6-D-R2 — actual restored-target read-only recovery teslimi
 
+## 28 Ekim 2026 — sonraki bağımsız sınırlı teknik kabul
+
+**F6-D-R2 LIMITED SYNTHETIC READ-ONLY RECOVERY RECONCILIATION — ACCEPTED WITH EXPLICIT EXCEPTIONS.**
+Proje sahibinin ilettiği ayrı incelemeci kararı [kabul kaydında](F6_D_R2_ACCEPTANCE_RECORD.md) belgelenmiştir.
+Exact application53162495902b3b168c2fb8554594e99c23a34d62 / treee5a4dc3c8daff38e09ed8f1fb1f8225366a91f47;
+evidencecc94f662454cb3f030addd2db0785a09900c0ed2. Her PHP8.3/8.4 için ayrı60 paket/782 test;
+40/40 hash, önceki kalite ve negatif kanıtlar; tek broad veya GitHub FAST PASS yoktur.
+Aşağıdaki yöntem onayı/bağımsız PENDING kayıtları tarihçedir; ayrı kararların sırası korunur.
+FAST NOT_RUN_EXTERNAL_BILLING, native runtime recovery BLOCKED, genel F6-D PARTIAL ve tüm açık istisnalar sürer.
+Son support kalite tekrarı yapılmadı; placeholder/historical runtime/ENOSPC açıkları kapanmış sayılmaz.
+F6-E-P0 yalnız offline/sentetik geliştirme yetkilidir; yeni aday R2 kabulünü veya CI istisnasını devralmaz.
+FULL, gerçek F6-E/cutover, merge/staging/production yetkisi yoktur; önceki başarısız koşular korunur.
+
+
+## 28 Ekim 2026 — güncel owner yöntem kararı / bağımsız kabul bekleniyor
+
+**LOCAL DOCKER CI METHOD EXCEPTION: OWNER APPROVED — EXACT SHA LIMITED.**
+[F6-D-R2 yöntem kararı ADR-030](adr/ADR-030-f6-d-r2-local-docker-ci-method-exception.md),
+proje sahibinin açık onayını yalnız sentetik restored-target SELECT-only reconciliation için kaydeder.
+Exact application `53162495902b3b168c2fb8554594e99c23a34d62`,
+tree `e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47`;
+immutable Docker evidence `cc94f662454cb3f030addd2db0785a09900c0ed2`.
+Production migration 001–054 subtree `c0729c92dd143c017fdec32421bf67fe6b51e05b` korunur.
+
+GitHub FAST **NOT RUN / NOT_RUN_EXTERNAL_BILLING** kalır; eski başarısız girişimler aşağıda korunur.
+Owner onayı yalnız bu exact adayın sınırlı bağımsız değerlendirmesinde parçalı yerel yöntemin
+FAST yerine kullanılmasına ilişkindir; GitHub Actions PASS veya teknik kabul değildir.
+PHP 8.3.36 ve 8.4.27 her biri için 50 paket/398 + 9 paket/227 + ayrı tam support 157:
+**LOCAL SEGMENTED COVERAGE: 60 paket/782 test per PHP**; tek uninterrupted broad PASS yoktur.
+40/40 immutable manifest hash'i ve önceki exact-SHA kalite/negatif test kayıtları değerlendirme setidir.
+Son support kalite kontrolleri yeniden çalıştırılmadı; quality_exit:0 placeholder'dır.
+MariaDB 10.11.18 yalnız tam image ID'ye bağlı yerel image inspect metadata'sıyla doğrulandı;
+tarihsel runtime SELECT VERSION() ve bağımsız kriptografik execution attestasyonu yoktur.
+Eski 768 MiB hatasının kesin ENOSPC nedeni kanıtlanmadı; eksik tarihsel kapasite örnekleri
+yalnız bu dar inceleme için non-blocking diagnostic gap'tir, varmış gibi gösterilmez.
+PASS/root/immutable evidence güvenlik invariant'ı ve SELECT-only sınırları gevşetilmez.
+
+**F6-D-R2 INDEPENDENT ACCEPTANCE: PENDING.** Ayrı teknik incelemeci kararı verilmedi.
+Native runtime recovery **BLOCKED**; genel F6-D **PARTIAL**; önceki F6-A/B/C/D/R1 sınırlı kabulleri değişmez.
+Original archive bytes OPEN; issuer recovery PARTIAL/OPEN; offsite/key custody/PITR/RPO/RTO NOT VERIFIED.
+Executable-object inventory NOT_VERIFIED_SELECT_ONLY; gerçek GATE'ler açık kalır.
+**FULL / F6-E / MERGE / STAGING / PRODUCTION: NOT AUTHORIZED.**
+Bu görev yalnız ADR/plan/delivery belge kaydıdır; migration, uygulama testi, commit veya push yapılmaz.
+Aşağıdaki eski SHA/FAST/bekleme ifadeleri tarihsel teslim kayıtlarıdır; bu güncel yöntem kararı
+yalnız açık exact kapsamda FAST yöntem engeline ilişkindir, bağımsız kabulü veya diğer kapıları kapatmaz.
+
+
 28 Ekim2026. Development PARTIAL; independent acceptance PENDING; FAST BILLING engelinde; PHP8.3/8.4 NOT RUN.
 
 ## Exact source ve CI'nin açık sınırı

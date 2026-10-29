@@ -70,6 +70,34 @@ gerçek güvenlik karşı-örneği bulunursa önce FAIL/sonra PASS yapılır, uy
 
 Önce yeni hedefli suite ve ilgili25 R1 regresyonu, PHPStan/lint/pattern/locked audit;
 son exact application'da tek geniş FAST8.3/8.4. FULL/Chromium/10/30/20 yok.
+
+### 28 Ekim 2026 — exact-SHA owner yöntem istisnası
+
+Yukarıdaki exact-source FAST gerekliliği tarihsel ve genel kural olarak korunur.
+Proje sahibinin açık onayıyla [ADR-030](adr/ADR-030-f6-d-r2-local-docker-ci-method-exception.md)
+yalnız application `53162495902b3b168c2fb8554594e99c23a34d62`,
+tree `e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47` ve immutable evidence
+`cc94f662454cb3f030addd2db0785a09900c0ed2` için parçalı LOCAL DOCKER CI
+kanıtlarının exact-source FAST yerine sınırlı bağımsız değerlendirmede kullanımını kaydeder.
+Her PHP 8.3.36 / 8.4.27 için 50/398 + 9/227 + ayrı support 157 = 60 paket/782 test;
+tek uninterrupted broad PASS yoktur. FAST NOT_RUN_EXTERNAL_BILLING kalır.
+Önceki exact-SHA kalite kayıtları kullanılır; son support quality_exit:0 placeholder'dır.
+MariaDB metadata/runtime ve tarihsel ENOSPC/kapasite sınırlamaları ADR-030'da açık kalır.
+Genel FAST/FULL kuralları, diğer fazlar ve yeni application commit'leri için muafiyet yoktur.
+LOCAL DOCKER CI METHOD EXCEPTION: OWNER APPROVED — EXACT SHA LIMITED.
+F6-D-R2 INDEPENDENT ACCEPTANCE: PENDING; native runtime recovery BLOCKED; genel F6-D PARTIAL.
+FULL / F6-E / MERGE / STAGING / PRODUCTION: NOT AUTHORIZED.
+
 Rollback yalnız R2 app commit revert + exact owned fixture teardown. Original artifact
 ve R1 certificate değişmez; forward-fix yeni contract version ister. Genel F6-D PARTIAL;
 R2 bağımsız kabul PENDING, native production restore NOT VERIFIED, gerçek GATE'ler OPEN.
+
+## 28 Ekim 2026 — sonraki sınırlı teknik kapanış ve P0 geliştirme yetkisi
+
+[R2 bağımsız kabul kaydı](F6_D_R2_ACCEPTANCE_RECORD.md) proje sahibinin ilettiği ayrı
+incelemeci kararını exact application53162495902b3b168c2fb8554594e99c23a34d62 / evidence
+cc94f662454cb3f030addd2db0785a09900c0ed2 için ACCEPTED WITH EXPLICIT EXCEPTIONS kaydeder.
+Önceki PENDING/FAST kayıtları tarihçedir; FAST hâlâ NOT_RUN_EXTERNAL_BILLING.
+Native runtime recovery BLOCKED; genel F6-D PARTIAL; FULL/canlı cutover/merge/staging/production yetkisiz.
+Yeni [F6-E-P0](F6_E_P0_PLAN.md) yalnız offline/sentetik kod ve test geliştirmesidir;
+R2 yöntem istisnası/kabulü yeni adayın doğrulaması yerine kullanılamaz.
