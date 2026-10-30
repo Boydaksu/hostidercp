@@ -1,0 +1,14 @@
+{
+  "dedicated_internal_network": true,
+  "executed_runner_sha256": "a74db918125b379bcafa97b921fac7d91c73e11e64e3c73b1fea4cd8a5f41c60",
+  "host_ports_published": false,
+  "initial_runner_proof": "runner-initial-proof.json",
+  "parallel_runtime_isolation": true,
+  "redaction": "Only fixed synthetic isolated database fixture password is replaced; hashes distinguish executed and review bytes. Real credentials are never used.",
+  "review_copy_sha256": "f7c5a28368c23a125c59548f9597dcf229b483a607e68183b0360250efdf72a3",
+  "run_tests_sha256": "bb85675c864f44b29d4341a55727478cb023d44a042aa10316a3f6e9d2074519",
+  "runs": [
+    "php83-hostider-f5f-e648223206bb-83",
+    "php84-hostider-f5f-bdada3ab44e0-84"
+  ]
+}

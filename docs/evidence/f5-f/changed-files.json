@@ -1,0 +1,240 @@
+{
+  "excludes_self_and_evidence_manifest_to_avoid_circularity": true,
+  "files": [
+    {
+      "bytes": 8069,
+      "path": ".github/workflows/f0.yml",
+      "sha256": "91143e8638707f2671cb031e832957e1467a5ce014acb5a86c41c21f24465027"
+    },
+    {
+      "bytes": 12408,
+      "path": "bin/console.php",
+      "sha256": "add9789b6048d02ee4a41d5b2f8662ee797323d7bd36fa8dad9a4d33bd373ada"
+    },
+    {
+      "bytes": 4130,
+      "path": "bootstrap/app.php",
+      "sha256": "c57d395daced552d31bedee68babce21aa5443c993ba57d013e9b60f8303c99c"
+    },
+    {
+      "bytes": 10191,
+      "path": "docs/F5_F_PLAN_DELIVERY.md",
+      "sha256": "fafc7a46c6d4180bd81d3d199ad3c06c5ce95e5138f5d6e9f9237361c29cf4c3"
+    },
+    {
+      "bytes": 8364,
+      "path": "docs/F5_PLAN.md",
+      "sha256": "7f5414f37d45920c14c806e0276398e14d5e761e0dff8d88c629a6d69b419686"
+    },
+    {
+      "bytes": 29963,
+      "path": "docs/F6_PLAN.md",
+      "sha256": "408d9e3f8b8c769140f9f71d77c533faa268b5d2e20d9f3f4128400fb6254276"
+    },
+    {
+      "bytes": 2500,
+      "path": "docs/adr/ADR-036-opt-in-support-system-auto-close.md",
+      "sha256": "a1977dbd83890f3d306cb3513e8373b40367e3e52b06436d46628d4b0bceb08d"
+    },
+    {
+      "bytes": 51032,
+      "path": "docs/evidence/f5-f/candidate-source-manifest.json",
+      "sha256": "926df6d77291ad3c398464d0d0a69fa2cd1c184281206bc2aff7ac9b7662dce7"
+    },
+    {
+      "bytes": 1078,
+      "path": "docs/evidence/f5-f/final-validation.json",
+      "sha256": "f036f43f03c3fc6b3de59eb19b91b07aa6ebe9f625ffa56e019857adb0159d0e"
+    },
+    {
+      "bytes": 833,
+      "path": "docs/evidence/f5-f/new-source-manifest.json",
+      "sha256": "4e12ea579e25efa9daff9a054299e722988ee9dd48c4b235d33d380593de8cd5"
+    },
+    {
+      "bytes": 52543,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-5278f725620a-83-source.json",
+      "sha256": "03d3dd9fd46e8325ff9bd6c012b5d140e0c8e2a189322320c5ae0d7b83932a9a"
+    },
+    {
+      "bytes": 2434,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-5278f725620a-83.json",
+      "sha256": "212dc9c5ad1dd1055819992a83815be2e68eecd1cbb185119792b32e48a25f6b"
+    },
+    {
+      "bytes": 31945,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-5278f725620a-83.txt",
+      "sha256": "1079a108477ebb8f1f73274daaeb508bd6c1279a896d167fb05634260baaae4f"
+    },
+    {
+      "bytes": 52543,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-9592b5c74f87-83-source.json",
+      "sha256": "f9e18b1d42a283e9f489e3e8bdeaaf01c3c250cd94f3f834537e34b4286998c8"
+    },
+    {
+      "bytes": 1347,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-9592b5c74f87-83.json",
+      "sha256": "591cbb071f57d571bdbf1372fe76e6cbc93cb31075805cd774b24784c253e3a0"
+    },
+    {
+      "bytes": 1391,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-9592b5c74f87-83.txt",
+      "sha256": "3cfc565355cb103c6ef22e18466eda0e99d6983a2ba63ff355ffc26a2121002a"
+    },
+    {
+      "bytes": 52543,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-e648223206bb-83-source.json",
+      "sha256": "dc9db76f75b7cc174ad1278d360d525f428951629806595debbfa0ce29b16b9d"
+    },
+    {
+      "bytes": 2434,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-e648223206bb-83.json",
+      "sha256": "5b335350edafd9648d20fff364161a7a8c481cc62956e927a3203776289bad79"
+    },
+    {
+      "bytes": 32034,
+      "path": "docs/evidence/f5-f/php83-hostider-f5f-e648223206bb-83.txt",
+      "sha256": "95069aac78970e60c447f0179af54b44385c8860d8c7694170e2414b70674446"
+    },
+    {
+      "bytes": 52543,
+      "path": "docs/evidence/f5-f/php84-hostider-f5f-bdada3ab44e0-84-source.json",
+      "sha256": "dc9db76f75b7cc174ad1278d360d525f428951629806595debbfa0ce29b16b9d"
+    },
+    {
+      "bytes": 2434,
+      "path": "docs/evidence/f5-f/php84-hostider-f5f-bdada3ab44e0-84.json",
+      "sha256": "ea6b01992c6638c19c93f3c2f3ba8b55e63620f70cf7ab23e980f9c54151c9c8"
+    },
+    {
+      "bytes": 32034,
+      "path": "docs/evidence/f5-f/php84-hostider-f5f-bdada3ab44e0-84.txt",
+      "sha256": "98e4e1811fe98a93a580405bebb99a0557cb129dba865fd9a86b0bebd48c9fdb"
+    },
+    {
+      "bytes": 7289,
+      "path": "docs/evidence/f5-f/preservation.json",
+      "sha256": "d387ebd780cfb12878ada92198f932b9a7a2831e361b85798304a95577e9f2c4"
+    },
+    {
+      "bytes": 1866,
+      "path": "docs/evidence/f5-f/run-tests.sh",
+      "sha256": "bb85675c864f44b29d4341a55727478cb023d44a042aa10316a3f6e9d2074519"
+    },
+    {
+      "bytes": 365,
+      "path": "docs/evidence/f5-f/runner-initial-proof.json",
+      "sha256": "24c0ab9a696382415241fb0d3799113d1b93651d872d6befbcb28384c60b7853"
+    },
+    {
+      "bytes": 7035,
+      "path": "docs/evidence/f5-f/runner-initial.py.txt",
+      "sha256": "79ed85bea9b5b2f46ffa0e1f81008eed204f2dc39e8d83465b552e82bec8670b"
+    },
+    {
+      "bytes": 725,
+      "path": "docs/evidence/f5-f/runner-source-proof.json",
+      "sha256": "9d1ed43ce3c53ce797f0bbcebf1ae53323982349608cc30012985aaa616aec97"
+    },
+    {
+      "bytes": 7191,
+      "path": "docs/evidence/f5-f/runner.py.txt",
+      "sha256": "f7c5a28368c23a125c59548f9597dcf229b483a607e68183b0360250efdf72a3"
+    },
+    {
+      "bytes": 128839,
+      "path": "docs/evidence/f5-f/source.diff",
+      "sha256": "ad07593ab8dc5f4f0a3c4e835b74d9b51f3ca5378ece45cd1e3c73cce5201ea7"
+    },
+    {
+      "bytes": 3395,
+      "path": "docs/evidence/f5-f/summary.json",
+      "sha256": "33ee8d7d5366aa8e561c78e05a7ed18bde73efc195ea416e9424decf44b8df32"
+    },
+    {
+      "bytes": 2286,
+      "path": "migrations/055_support_auto_close.php",
+      "sha256": "422b0b0d063007c695a70daa8f20784767a33b2cc730eba9a3bded9cddd341dd"
+    },
+    {
+      "bytes": 43515,
+      "path": "public/assets/support.js",
+      "sha256": "41e4a99f06eab0cd62f82f49424011d809ca80f893bc6ef7df2478504f38043f"
+    },
+    {
+      "bytes": 1530,
+      "path": "src/Support/AutoClose/Controller.php",
+      "sha256": "52b887403718221f95a1214abb6db544d76b6256248c9d6d271c25970df427c8"
+    },
+    {
+      "bytes": 4503,
+      "path": "src/Support/AutoClose/Eligibility.php",
+      "sha256": "948a4c88b3a0fb4c68342cfb54848602ad03e74c7316128047d896e67562d4bb"
+    },
+    {
+      "bytes": 4690,
+      "path": "src/Support/AutoClose/Engine.php",
+      "sha256": "4bf8812196c9fa5c27615c778be4611234146fc6a272e3d59e533af7252c35b8"
+    },
+    {
+      "bytes": 7138,
+      "path": "src/Support/AutoClose/Policy.php",
+      "sha256": "e47d07f145fd5495e44c7d5457001256d4a3269d0e6a1adecd8c1bf0b072893b"
+    },
+    {
+      "bytes": 22164,
+      "path": "src/Support/Service.php",
+      "sha256": "3f6814fd5d8ffa624d49b0bf5d66580121be27b8effdce12a5ae15e8b642c484"
+    },
+    {
+      "bytes": 1344,
+      "path": "tests/support-auto-close-child.php",
+      "sha256": "ada080dedfa811b76cd6fe874342406a6e519b788fb1a400e52a3e51e9486239"
+    },
+    {
+      "bytes": 3552,
+      "path": "tests/support-auto-close-fixture.php",
+      "sha256": "ff223553ba80f7f130e802ee4394650036fccf95f10360796ba49bb8adee4593"
+    },
+    {
+      "bytes": 21726,
+      "path": "tests/support-auto-close.php",
+      "sha256": "cc6049e89206334647ff1f51edbf379c7927a8e4ef07c395856810c2e2644ecd"
+    },
+    {
+      "bytes": 15853,
+      "path": "tests/support-b-post-audit.php",
+      "sha256": "a127d7f9e7e349c9969dc9cb4d7c55f6924abdf9f71e63609d6dd605f41cf5ed"
+    },
+    {
+      "bytes": 25322,
+      "path": "tests/support-b.php",
+      "sha256": "b8c7336fc57a0c284e3107902e50c72ce46f1c06147a29d8664cbf191cdc06ea"
+    },
+    {
+      "bytes": 31963,
+      "path": "tests/support-c.php",
+      "sha256": "653b34948eb3419f69f34b0d71737e830186b98c3b6d8529db2256dca732cc14"
+    },
+    {
+      "bytes": 35337,
+      "path": "tests/support-d.php",
+      "sha256": "a58f57063fc618917fdea14862954d61c79e33e8c2712fd38991423d348e449d"
+    },
+    {
+      "bytes": 22127,
+      "path": "tests/support-e.php",
+      "sha256": "9bb6fb2babdb713e6a5fa764518df0f8e4237bed3d03eb6892f612e783b3d891"
+    },
+    {
+      "bytes": 4055,
+      "path": "tests/support-migrations.php",
+      "sha256": "e9a54f67caad435396d1f2f7007002102b7fd0f78f4495efc7b43ad20fcf7fdc"
+    },
+    {
+      "bytes": 2012,
+      "path": "tools/ci/suites.json",
+      "sha256": "22750625241dd55885e91b66dd7f4846e8b34cbac653d3dba13249f6903393f1"
+    }
+  ]
+}

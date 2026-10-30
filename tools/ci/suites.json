@@ -63,5 +63,6 @@
   "tests/migration-cutover-rehearsal.php",
   "tests/migration-discovery.php",
   "tests/migration-inventory.php",
-  "tests/migration-discovery-collector.php"
+  "tests/migration-discovery-collector.php",
+  "tests/support-auto-close.php"
 ]

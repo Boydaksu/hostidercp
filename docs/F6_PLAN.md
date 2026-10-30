@@ -1,3 +1,5 @@
+> 30 Ekim 2026 — WHMCS migration/discovery DEFERRED; G-O03 OPEN. F5-F opt-in support auto-close geliştirmesi ayrı kapsamdır; gerçek kaynak/cutover yetkisi verilmez.
+
 # F6 — Aktarım ve operasyon teknik planı
 
 ## 28 Ekim 2026 — R2 sınırlı kabul / F6-E-P0 offline geliştirme

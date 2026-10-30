@@ -1,0 +1,104 @@
+{
+  "G-O03": "OPEN",
+  "base_commit": "eba5694b0c73ac126822e95baabd0ed94e591ae1",
+  "chromium": false,
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_CANDIDATE",
+  "current_composer_npm_audit": false,
+  "effects_allowed": false,
+  "final_per_runtime": {
+    "failed": 0,
+    "new_suite_passed": 31,
+    "passed": 345,
+    "related_regressions_passed": 314,
+    "suites": 9
+  },
+  "formal_ci_acceptance_claimed": false,
+  "full_acceptance": false,
+  "github_actions": false,
+  "initial_failure": {
+    "cause": "Fixture called native Identity invalidation outside required transaction. Test fixture corrected; failure preserved. Native CSRF expectation403 also aligned with existing contract.",
+    "failed": 1,
+    "passed": 15,
+    "related_and_quality": "NOT_RUN",
+    "unexecuted_new_tests": 14
+  },
+  "intermediate_pass": "344/0 applies only to its own earlier source hash; final source adds lock-wait bound, UI stale-result guards and contention test31.",
+  "live_auto_close_allowed": false,
+  "new_source_files": 8,
+  "new_source_manifest_sha256": "4e12ea579e25efa9daff9a054299e722988ee9dd48c4b235d33d380593de8cd5",
+  "quality": {
+    "both_runtimes": "PASS",
+    "documentation_scope": "Run snapshots; final documentation checked separately",
+    "pattern_files": 502,
+    "php_lint_files": 480,
+    "phpstan_level": 5
+  },
+  "real_cron_installed": false,
+  "real_gate_status": "BLOCKED",
+  "registry_inventory_only": {
+    "expected_tests": 948,
+    "full_pass_claimed": false,
+    "php_suites": 66
+  },
+  "runs": [
+    {
+      "failed": 1,
+      "final_candidate": false,
+      "passed": 15,
+      "php": "8.3.36",
+      "quality": {},
+      "record": "php83-hostider-f5f-9592b5c74f87-83.json",
+      "source_manifest_sha256": "a944c3cda65de64fe1cfd802206e956845ab84194fe991dd16023551338340de",
+      "status": "FAILED"
+    },
+    {
+      "failed": 0,
+      "final_candidate": false,
+      "passed": 344,
+      "php": "8.3.36",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php83-hostider-f5f-5278f725620a-83.json",
+      "source_manifest_sha256": "0b58e2c521e71e0b51448240b57862cacd9efc05fae2f6bed02377e0bd58e25e",
+      "status": "PASS"
+    },
+    {
+      "failed": 0,
+      "final_candidate": true,
+      "passed": 345,
+      "php": "8.3.36",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php83-hostider-f5f-e648223206bb-83.json",
+      "source_manifest_sha256": "926df6d77291ad3c398464d0d0a69fa2cd1c184281206bc2aff7ac9b7662dce7",
+      "status": "PASS"
+    },
+    {
+      "failed": 0,
+      "final_candidate": true,
+      "passed": 345,
+      "php": "8.4.27",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php84-hostider-f5f-bdada3ab44e0-84.json",
+      "source_manifest_sha256": "926df6d77291ad3c398464d0d0a69fa2cd1c184281206bc2aff7ac9b7662dce7",
+      "status": "PASS"
+    }
+  ],
+  "source_files": 502,
+  "source_manifest_sha256": "926df6d77291ad3c398464d0d0a69fa2cd1c184281206bc2aff7ac9b7662dce7",
+  "status": "DEVELOPMENT_VALIDATED_INDEPENDENT_CODE_REVIEW_PENDING",
+  "whmcs_migration": "DEFERRED"
+}

@@ -147,6 +147,24 @@ final readonly class Service
         (new \Hostider\Support\Work\Engine($this->c))->observe($row,$kind,$id);
         if($public&&$kind==='STAFF_REPLY'){(new \Hostider\Support\Mail\Outbound(new \Hostider\Support\Mail\Common($this->c)))->stage($row,$message,$id,$trace);}
     }
+
+    /** Fixed system-policy action. No staff/session identity or arbitrary state is accepted. */
+    public function autoClose(array $candidate,string $trace): bool
+    {
+        $this->gate();$this->c->db->requireTransaction();
+        $proof=(new \Hostider\Support\AutoClose\Eligibility($this->c))->locked($candidate);
+        if($proof===null){return false;}
+        $row=$proof['ticket'];State::transition($row['status'],'CLOSED',$proof['department']);
+        $next=$this->update($row,'CLOSED',$row['department_id']);
+        $actor=new \Hostider\Core\Security\Principal('SYSTEM_AUTO_CLOSE',[],customerId:$row['customer_id']);
+        $event=(new \Hostider\Support\Work\Store($this->c))->event($next,$row['department_id'],'AUTO_CLOSED',$actor,$trace,
+            ['policy_id'=>$proof['policy']['id'],'policy_version'=>(int)$proof['policy']['revision'],'resolution_event'=>$proof['resolution']['id']],
+            source:$proof['resolution']['id']);
+        $this->c->db->execute("INSERT INTO support_auto_close_events(id,ticket_id,customer_id,department_id,policy_id,policy_version,resolution_event,from_version,to_version,actor_kind) VALUES (?,?,?,?,?,?,?,?,?,'SYSTEM_AUTO_CLOSE')",
+            [$event,$row['id'],$row['customer_id'],$row['department_id'],$proof['policy']['id'],$proof['policy']['revision'],$proof['resolution']['id'],$row['version'],$next['version']]);
+        return true;
+    }
+
     public function view(string $reference,string $context,string $view,array $p): array
     {
         $this->gate();Validation::fields($p,$view==='detail'?['id']:($view==='list'?['offset','q']:[]),$view==='detail'?['id']:[]);

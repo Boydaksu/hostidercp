@@ -1,5 +1,7 @@
 # F5 — Gelişmiş Destek Merkezi planı
 
+30 Ekim 2026 — F5-F opt-in auto-close yeni geliştirme adayıdır; önceki kabul kapsamına dahil değildir. [Plan ve teslim](F5_F_PLAN_DELIVERY.md). WHMCS MIGRATION DEFERRED; G-O03 OPEN. Canlı auto-close NOT AUTHORIZED.
+
 ## Son bağımsız teknik kabul kaydı
 
 **F5-E LIMITED MOCK TECHNICAL BASELINE — ACCEPTED.**
