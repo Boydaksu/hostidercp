@@ -1,0 +1,15 @@
+{
+  "chromium": "NOT_RUN",
+  "existing_F5E_state": {
+    "failed": 0,
+    "passed": 3
+  },
+  "native_node_syntax": "PASS",
+  "new_F5G_state": {
+    "failed": 0,
+    "passed": 3
+  },
+  "new_state_scope": "Native Fence late source/selected target, stale target version, revoked scope epoch",
+  "source_manifest_sha256": "c08dd224b714936e02a8c398ff82677941ab181cb88ba840d988ae4777cda30e",
+  "visual_acceptance_claimed": false
+}

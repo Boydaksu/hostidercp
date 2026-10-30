@@ -29,6 +29,7 @@ $container->bind(RateLimiter::class, static fn(Container $c): RateLimiter => new
 $router = new Router();
 $identityConfig=$container->get(Config::class);
 (new \Hostider\Support\AutoClose\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
+(new \Hostider\Support\Merge\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 (new \Hostider\Support\UI\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 (new \Hostider\Support\Advanced\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);
 (new \Hostider\Support\Mail\Controller(static fn(): \Hostider\Commerce\Services=>new \Hostider\Commerce\Services($container->get(Database::class),$identityConfig),$identityConfig))->routes($router);

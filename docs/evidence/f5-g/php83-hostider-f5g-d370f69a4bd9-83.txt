@@ -1,0 +1,13 @@
+F5G_SOURCE_MANIFEST_MATCH 509
+F5G_PHP 8.3.36
+F5G_SUITE_BEGIN tests/support-merge.php
+PASS F5-G 01 scoped merge preserves tickets and messages with immutable directed alias
+PASS F5-G 02 same ticket and unknown payload scope assertions are rejected
+PASS F5-G 03 cross customer merge rejected using real locked DB owners
+PASS F5-G 04 cross department merge denied even with both explicit grants
+PASS F5-G 05 customer and administrator without explicit merge grant cannot prepare
+PASS F5-G 06 session revocation invalidates prepared merge atomically
+FAIL F5-G 07 disabled MFA cannot execute prepared merge: [details redacted]
+23 dependent tests BLOCKED after first failure; not counted as passed
+30 tests, 1 failures
+F5G_SUITE_RESULT tests/support-merge.php 1

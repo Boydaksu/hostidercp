@@ -164,15 +164,17 @@ test('F5-F 27 production gates and bounds reject actual mutation',function():voi
     same(503,raises(HttpError::class,fn()=>(new AutoEngine($prod))->run())->status);
     raises(HttpError::class,fn()=>$f['auto']->run(26));raises(HttpError::class,fn()=>$f['auto']->run(seconds:21));
 });
+function fMigration055Path():string { $dir=dirname(__DIR__).'/storage/f5f-exact055-'.bin2hex(random_bytes(5));mkdir($dir,0700);foreach(glob(dirname(__DIR__).'/migrations/*.php') as $file){if(basename($file)<'056'){copy($file,$dir.'/'.basename($file));}}return $dir;}
+
 test('F5-F 28 migration fresh 055 replay and immutable original checksums',function():void{
-    $db=isolatedDomainDb();$root=dirname(__DIR__);$m=new Migrator($db,$root.'/migrations');same(55,count($m->migrate()));same([],$m->migrate());$m->assertReady();
+    $db=isolatedDomainDb();$root=dirname(__DIR__);$m=new Migrator($db,fMigration055Path());same(55,count($m->migrate()));same([],$m->migrate());$m->assertReady();
     foreach($db->execute('SELECT * FROM schema_migrations ORDER BY version')->fetchAll() as $r){same(hash_file('sha256',$root.'/migrations/'.$r['version']),$r['checksum']);same('APPLIED',$r['status']);}
     same(0,(int)$db->execute('SELECT COUNT(*) FROM support_auto_close_heads')->fetchColumn());
 });
 test('F5-F 29 installed 054 upgrade applies only 055 preserves previous rows',function():void{
     $db=isolatedDomainDb();$root=dirname(__DIR__);$dir=$root.'/storage/f5f-prefix-'.bin2hex(random_bytes(5));mkdir($dir,0700);$files=[];
     try{foreach(glob($root.'/migrations/*.php') as $file){if(basename($file)<'055'){$copy=$dir.'/'.basename($file);copy($file,$copy);$files[]=$copy;}}
-        same(54,count((new Migrator($db,$dir))->migrate()));$old=$db->execute('SELECT * FROM schema_migrations ORDER BY version')->fetchAll();$m=new Migrator($db,$root.'/migrations');same(['055_support_auto_close.php'],$m->migrate());same([],$m->migrate());$m->assertReady();
+        same(54,count((new Migrator($db,$dir))->migrate()));$old=$db->execute('SELECT * FROM schema_migrations ORDER BY version')->fetchAll();$m=new Migrator($db,fMigration055Path());same(['055_support_auto_close.php'],$m->migrate());same([],$m->migrate());$m->assertReady();
         same($old,$db->execute("SELECT * FROM schema_migrations WHERE version<'055' ORDER BY version")->fetchAll());
     }finally{foreach($files as $file){unlink($file);}rmdir($dir);}
 });
@@ -180,7 +182,7 @@ test('F5-F 30 partial 055 blocks runtime until reviewed isolated forward complet
     $db=isolatedDomainDb();$root=dirname(__DIR__);$dir=$root.'/storage/f5f-failure-'.bin2hex(random_bytes(5));mkdir($dir,0700);$files=[];
     try{foreach(glob($root.'/migrations/*.php') as $file){if(basename($file)<'055'){$copy=$dir.'/'.basename($file);copy($file,$copy);$files[]=$copy;}}
         (new Migrator($db,$dir))->migrate();$old=$db->execute('SELECT * FROM schema_migrations ORDER BY version')->fetchAll();$db->execute('CREATE TABLE support_auto_close_heads (synthetic_collision INT) ENGINE=InnoDB');
-        $m=new Migrator($db,$root.'/migrations');raises(PDOException::class,fn()=>$m->migrate());same('APPLYING',$db->execute("SELECT status FROM schema_migrations WHERE version='055_support_auto_close.php'")->fetchColumn());raises(RuntimeException::class,fn()=>$m->assertReady());raises(RuntimeException::class,fn()=>$m->migrate());
+        $m=new Migrator($db,fMigration055Path());raises(PDOException::class,fn()=>$m->migrate());same('APPLYING',$db->execute("SELECT status FROM schema_migrations WHERE version='055_support_auto_close.php'")->fetchColumn());raises(RuntimeException::class,fn()=>$m->assertReady());raises(RuntimeException::class,fn()=>$m->migrate());
         // Explicit isolated operator forward-completion exercise; never an automatic runtime repair.
         $db->execute('RENAME TABLE support_auto_close_heads TO synthetic_quarantined_collision');
         $sql=require $root.'/migrations/055_support_auto_close.php';foreach(array_slice($sql,1) as $statement){$db->execute($statement);}

@@ -39,6 +39,7 @@ final readonly class Eligibility
         $policy=$db->execute('SELECT * FROM support_auto_close_policies WHERE id=? AND department_id=? AND revision=? FOR UPDATE',[$p['policy_id'],$d['id'],$p['policy_version']])->fetch();
         if(!$policy||!$policy['enabled']){return null;}
         $t=$db->execute('SELECT * FROM support_tickets WHERE id=? FOR UPDATE',[$p['ticket_id']])->fetch();
+        if($t&&$db->execute("SELECT 1 FROM support_merge_members WHERE ticket_id=? AND side='SOURCE'",[$t['id']])->fetchColumn()){return null;}
         if(!$t||$t['department_id']!==$d['id']||$t['status']!=='RESOLVED'||(int)$t['version']!==$p['ticket_version']){return null;}
         $e=$db->execute("SELECT id,created_at,ticket_version,to_department FROM support_events WHERE ticket_id=? AND customer_id=? AND to_state='RESOLVED' AND (from_state IS NULL OR from_state<>'RESOLVED') ORDER BY ticket_version DESC,id DESC LIMIT 1 FOR UPDATE",[$t['id'],$t['customer_id']])->fetch();
         if(!$e||$e['id']!==$p['resolution_event']||$e['to_department']!==$d['id']||(int)$e['ticket_version']>(int)$t['version']

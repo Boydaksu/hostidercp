@@ -11,7 +11,7 @@ final readonly class Operations
     public function __construct(private Common $m){}
     public function preflight(array $u,array $s,array $t,array $a): void
     {
-        Ast::action($a);if(in_array($t['status'],['CLOSED','RESOLVED'],true)){throw new HttpError(409,'ACTIVE_TICKET_REQUIRED');}
+        Ast::action($a);(new \Hostider\Support\Merge\Projection($this->m->c))->writable($u,$s,$t);if(in_array($t['status'],['CLOSED','RESOLVED'],true)){throw new HttpError(409,'ACTIVE_TICKET_REQUIRED');}
         $permission=match($a['kind']){'assign'=>'support.ticket.assign','note'=>'support.ticket.internal_note','incident'=>'support.incident.manage',default=>'support.ticket.manage'};$this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],$permission);
         if($a['kind']==='state'){State::transition($t['status'],$a['value'],$this->m->access->department($t['department_id']));}
         if($a['kind']==='assign'){$w=$this->m->c->db->execute('SELECT policy_id FROM support_work_tickets WHERE ticket_id=?',[$t['id']])->fetchColumn();if(!$w||($a['value']!==null&&!(new Eligibility($this->m->c))->eligible($t,$a['value'],Time::now($this->m->c->db)))){throw new HttpError(409,'ASSIGNEE_INELIGIBLE');}}

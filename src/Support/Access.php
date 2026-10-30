@@ -37,7 +37,7 @@ final readonly class Access
         $this->actor($u,$s);
         $candidate=$this->c->db->execute('SELECT department_id FROM support_tickets WHERE id=?',[$id])->fetchColumn();if(!$candidate){throw new HttpError(404,'SUPPORT_NOT_FOUND');}
         $this->department($candidate);$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=? FOR UPDATE',[$id])->fetch();if(!$row||$row['department_id']!==$candidate){throw new HttpError(404,'SUPPORT_NOT_FOUND');}
-        $this->require($u,$s,$row['customer_id'],$row['department_id'],$permission);return $row;
+        $this->require($u,$s,$row['customer_id'],$row['department_id'],$permission);if($permission!=='support.ticket.view'){(new \Hostider\Support\Merge\Projection($this->c))->writable($u,$s,$row);}return $row;
     }
     public function management(array $u,array $s): Principal
     {

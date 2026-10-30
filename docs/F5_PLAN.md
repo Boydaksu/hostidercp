@@ -1,5 +1,7 @@
 # F5 — Gelişmiş Destek Merkezi planı
 
+30 Ekim 2026 — F5-F LIMITED SYNTHETIC CODE REVIEW PASSED (proje sahibinin F5-G görev beyanı); formal CI kabulü değildir. F5-G merge yeni bağımsız geliştirme adayıdır; [tek teslim raporu](F5_G_DELIVERY_REPORT.md). WHMCS DEFERRED / G-O03 OPEN; LIVE MERGE/AUTO-CLOSE NOT AUTHORIZED.
+
 30 Ekim 2026 — F5-F opt-in auto-close yeni geliştirme adayıdır; önceki kabul kapsamına dahil değildir. [Plan ve teslim](F5_F_PLAN_DELIVERY.md). WHMCS MIGRATION DEFERRED; G-O03 OPEN. Canlı auto-close NOT AUTHORIZED.
 
 ## Son bağımsız teknik kabul kaydı

@@ -51,7 +51,7 @@ final readonly class Engine
     {
         if($this->c->config->environment!=='test'){throw new HttpError(503,'F5_TEST_ONLY_GATE');}
         try{return $this->c->db->transaction(function()use($ticket,$at): bool{
-            (new Eligibility($this->c))->fence();$dep=$this->c->db->execute('SELECT department_id FROM support_tickets WHERE id=?',[$ticket])->fetchColumn();if(!$dep){return false;}(new \Hostider\Support\Access($this->c))->department($dep);$t=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=? FOR UPDATE',[$ticket])->fetch();if(!$t||$t['department_id']!==$dep){return false;}$w=$this->store->work($t);$at??=Time::now($this->c->db);$actor=new Principal('support-cron',[],customerId:$t['customer_id']);$trace=Id::uuid();
+            (new Eligibility($this->c))->fence();$dep=$this->c->db->execute('SELECT department_id FROM support_tickets WHERE id=?',[$ticket])->fetchColumn();if(!$dep){return false;}(new \Hostider\Support\Access($this->c))->department($dep);$t=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=? FOR UPDATE',[$ticket])->fetch();if(!$t||$t['department_id']!==$dep){return false;}if($this->c->db->execute("SELECT 1 FROM support_merge_members WHERE ticket_id=? AND side='SOURCE'",[$t['id']])->fetchColumn()){return false;}$w=$this->store->work($t);$at??=Time::now($this->c->db);$actor=new Principal('support-cron',[],customerId:$t['customer_id']);$trace=Id::uuid();
             if(!in_array($t['status'],['CLOSED','RESOLVED'],true)){if($w['sla_status']!=='UNAVAILABLE'){$this->calendarWork($t,fn()=>(new Clocks($this->store))->advance($t,$w['cycle_id'],$at,$actor,$trace),$actor,$trace);}(new Assignments($this->store))->evaluate($t,$w,$at,$actor,$trace);}
             $this->c->db->execute('UPDATE support_work_tickets SET checked_at=? WHERE ticket_id=?',[Time::format($at),$ticket]);return true;
         });}catch(HttpError $e){if($e->errorCode==='SUPPORT_WORK_BUSY'){return false;}throw $e;}
@@ -59,6 +59,6 @@ final readonly class Engine
     public function run(int $max=25,int $seconds=20): array
     {
         Policy::integer($max,1,25);Policy::integer($seconds,1,20);if($this->c->config->environment!=='test'){throw new HttpError(503,'F5_TEST_ONLY_GATE');}$deadline=hrtime(true)+$seconds*1_000_000_000;$count=0;
-        $ids=$this->c->db->execute("SELECT w.ticket_id FROM support_work_tickets w JOIN support_tickets t ON t.id=w.ticket_id WHERE t.status NOT IN ('RESOLVED','CLOSED') ORDER BY w.checked_at,w.ticket_id LIMIT ".$max)->fetchAll();foreach($ids as $r){if(hrtime(true)>=$deadline||memory_get_usage(true)>64*1024*1024){break;}if($this->tick($r['ticket_id'])){++$count;}}return ['checked'=>$count,'limit'=>$max,'test_only'=>true];
+        $ids=$this->c->db->execute("SELECT w.ticket_id FROM support_work_tickets w JOIN support_tickets t ON t.id=w.ticket_id WHERE NOT EXISTS(SELECT 1 FROM support_merge_members mm WHERE mm.ticket_id=t.id AND mm.side='SOURCE') AND t.status NOT IN ('RESOLVED','CLOSED') ORDER BY w.checked_at,w.ticket_id LIMIT ".$max)->fetchAll();foreach($ids as $r){if(hrtime(true)>=$deadline||memory_get_usage(true)>64*1024*1024){break;}if($this->tick($r['ticket_id'])){++$count;}}return ['checked'=>$count,'limit'=>$max,'test_only'=>true];
     }
 }
