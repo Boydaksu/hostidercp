@@ -32,6 +32,7 @@ final readonly class Commands
     private function ready(array $a,array $b,array $p):array
     {
         $db=$this->c->db;
+        foreach([$a['id'],$b['id']] as $id){if((new \Hostider\Support\Split\Projection($this->c))->edge($id,true)!==null){throw new HttpError(409,'MERGE_SPLIT_COMBINATION_BLOCKED');}}
         if((int)$a['version']!==$p['source_version']||(int)$b['version']!==$p['target_version']){throw new HttpError(409,'MERGE_VERSION_CONFLICT');}
         if($db->execute('SELECT 1 FROM support_merge_members WHERE ticket_id IN (?,?) LIMIT 1 FOR UPDATE',[$a['id'],$b['id']])->fetchColumn()){throw new HttpError(409,'MERGE_CHAIN_BLOCKED');}
         if($db->execute("SELECT 1 FROM schema_migrations WHERE status<>'APPLIED' LIMIT 1 FOR UPDATE")->fetchColumn()

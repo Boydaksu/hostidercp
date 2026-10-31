@@ -1,0 +1,47 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "all",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "387ff3e20c60026bfdef1a35b3db9aa523755854878168dcbb5a65c507da1627",
+  "source_files": 520,
+  "run_id": "hostider-f5h-69b3439d77b3-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-31T07:24:26Z",
+  "suites": [
+    {
+      "path": "tests/support-split.php",
+      "passed": 30,
+      "failed": 1,
+      "exit": 1
+    }
+  ],
+  "quality": {},
+  "safe_output_lines": 37,
+  "php": "8.3.36",
+  "exit": 1,
+  "status": "FAILED",
+  "cleanup": [
+    {
+      "name": "hostider-f5h-69b3439d77b3-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f5h-69b3439d77b3-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f5h-69b3439d77b3-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-31T07:25:36Z"
+}

@@ -40,7 +40,7 @@ final readonly class Engine
             if($w['assignee_id']!==null){$this->store->event($t,$t['department_id'],'UNASSIGNED',$actor,$e['trace_id'],['reason'=>'DEPARTMENT_CHANGED','previous_department'=>$w['department_id']],target:$w['assignee_id'],source:$source);}
             $this->c->db->execute("UPDATE support_work_tickets SET department_id=?,cycle_id=NULL,policy_id=NULL,assignee_id=NULL,manual_override=FALSE,weight=0,sla_status='UNCONFIGURED',reason='AWAITING_CRON',assignment_version=assignment_version+1,version=version+1 WHERE ticket_id=?",[$t['department_id'],$t['id']]);$w=$this->store->work($t);
         }
-        $start=$kind==='CREATED'||$kind==='MOVE'||($closedCycle!==null&&$closedCycle!==false&&!in_array($t['status'],['CLOSED','RESOLVED'],true));
+        $start=$kind==='CREATED'||$kind==='SPLIT_CREATED'||$kind==='MOVE'||($closedCycle!==null&&$closedCycle!==false&&!in_array($t['status'],['CLOSED','RESOLVED'],true));
         $reply=false;if($kind==='STAFF_REPLY'){$reply=(bool)$this->c->db->execute("SELECT 1 FROM support_messages WHERE id=? AND ticket_id=? AND author_id=? AND type='staff_reply' AND customer_visible=TRUE",[$e['subject_id'],$t['id'],$e['actor_id']])->fetchColumn();}
         if($start){if(in_array($t['status'],['CLOSED','RESOLVED'],true)){return;}$head=$this->store->head($t['department_id']);if($head['policy_id']!==null){$clocks->start($t,$head['policy_id'],$source,$at,$reply);}return;}
         $end=in_array($t['status'],['CLOSED','RESOLVED'],true)?$t['status']:null;$clocks->advance($t,$w['cycle_id'],$at,$actor,$e['trace_id'],$source,$end,$reply);

@@ -119,6 +119,7 @@ final readonly class Service
     private function change(array $u,array $s,array $p,string $action,string $trace): array
     {
         $row=$this->access->ticket($u,$s,$p['id'],'support.ticket.manage');$this->expected($row,$p['version']);$status=$row['status'];$dep=$row['department_id'];
+        if($action==='move'&&(new \Hostider\Support\Split\Projection($this->c))->edge($row['id'],true)!==null){throw new HttpError(409,'SPLIT_DEPARTMENT_PINNED');}
         if($action==='move'&&(new \Hostider\Support\Merge\Projection($this->c))->edge($row['id'],true)!==null){throw new HttpError(409,'MERGE_DEPARTMENT_PINNED');}
         if($action==='state'){State::transition($status,$p['status'],$this->access->department($dep));$status=$p['status'];}else{$dep=$p['department_id'];if($dep===$row['department_id']){throw new HttpError(409,'SUPPORT_DEPARTMENT_UNCHANGED');}}
         $next=$this->update($row,$status,$dep);$this->event($u,$s,$next,strtoupper($action),$trace,true,$row);return $this->slaResult(['id'=>$row['id'],'version'=>$next['version']]);
@@ -147,6 +148,15 @@ final readonly class Service
         if($public){(new Outbox($this->c->db,new Queue($this->c->db)))->append($id,'support.changed',$row['id'],['event_uuid'=>$id,'ticket_id'=>$row['id'],'message_id'=>$message],$trace);}
         (new \Hostider\Support\Work\Engine($this->c))->observe($row,$kind,$id);
         if($public&&$kind==='STAFF_REPLY'){(new \Hostider\Support\Mail\Outbound(new \Hostider\Support\Mail\Common($this->c)))->stage($row,$message,$id,$trace);}
+    }
+
+
+    /** Confirmed native staff-only creation seam. No customer/staff reply is fabricated. */
+    public function createSplit(array $u,array $s,array $source,string $subject,string $trace):array
+    {
+        (new \Hostider\Support\Advanced\Common($this->c))->gate();$this->c->db->requireTransaction();$row=$this->access->ticket($u,$s,$source['id'],'support.ticket.split');$this->access->require($u,$s,$row['customer_id'],$row['department_id'],'support.ticket.manage');$this->expected($row,(int)$source['version']);if(!$this->access->actor($u,$s)->staff){throw new HttpError(403,'STAFF_REQUIRED');}\Hostider\Support\Advanced\Common::text($subject,191);
+        $person=$this->c->identity->repository->user($row['requester_id'],true);if($person['status']!=='ACTIVE'||!$person['verified_at']||!$this->c->db->execute('SELECT 1 FROM identity_memberships WHERE user_id=? AND customer_id=? FOR UPDATE',[$row['requester_id'],$row['customer_id']])->fetchColumn()){throw new HttpError(409,'SPLIT_REQUESTER_UNAVAILABLE');}
+        $id=Id::uuid();$number='HD-'.strtoupper(bin2hex(random_bytes(12)));$this->c->db->execute("INSERT INTO support_tickets(id,number,customer_id,requester_id,department_id,subject_encrypted,requested_priority,effective_priority,channel,status,opened_by,session_id,provenance) VALUES (?,?,?,?,?,?,?,?,'PANEL','NEW',?,?,'TEST_PANEL')",[$id,$number,$row['customer_id'],$row['requester_id'],$row['department_id'],$this->crypto->encrypt($subject,'support-subject:'.$id),$row['requested_priority'],$row['effective_priority'],$u['id'],$s['id']]);$child=$this->access->ticket($u,$s,$id);$this->event($u,$s,$child,'SPLIT_CREATED',$trace,false);return $child;
     }
 
     /** Fixed system-policy action. No staff/session identity or arbitrary state is accepted. */
@@ -193,6 +203,6 @@ final readonly class Service
         $out=$this->summary($row);$messages=$this->c->db->execute('SELECT id,type,customer_visible,author_id,created_at,body_encrypted FROM support_messages WHERE ticket_id=? AND customer_id=?'.($notes?'':" AND type<>'internal_note' AND customer_visible=TRUE").' ORDER BY created_at,id',[$row['id'],$row['customer_id']])->fetchAll();
         foreach($messages as &$m){$m['body']=$this->crypto->decrypt($m['body_encrypted'],'support-message:'.$m['id']);unset($m['body_encrypted']);$origin=$this->c->db->execute('SELECT origin FROM support_mail_sources WHERE message_id=? AND customer_id=?',[$m['id'],$row['customer_id']])->fetchColumn();if($origin){$m['mail_origin']=$origin;}$m['customer_visible']=(bool)$m['customer_visible'];$m['can_attach']=$canAttach&&$m['customer_visible']&&$m['type']!=='internal_note'&&$m['author_id']===$u['id'];if(!$a->staff){unset($m['author_id']);}}unset($m);$out['messages']=$messages;$out['service_ids']=[];
         if($notes){foreach($out['messages'] as &$item){if($item['type']==='internal_note'){$origin=$this->c->db->execute("SELECT execution_id,sponsor_id FROM support_advanced_events WHERE ticket_id=? AND customer_id=? AND kind='ACTION_note' AND execution_id IS NOT NULL AND JSON_UNQUOTE(JSON_EXTRACT(details,'$.canonical_effect'))=? LIMIT 1",[$row['id'],$row['customer_id'],$item['id']])->fetch();if($origin){$item['system_origin']=['actor_kind'=>'SYSTEM_RULE','execution_id'=>$origin['execution_id'],'sponsor_id'=>$origin['sponsor_id']];}}}unset($item);}
-        foreach($this->c->db->execute('SELECT service_id FROM support_ticket_links WHERE ticket_id=? AND customer_id=?',[$row['id'],$row['customer_id']])->fetchAll() as $link){try{$out['service_ids'][]=(new SupportLinks($this->c))->owned($u,$s,$row['customer_id'],$link['service_id']);}catch(HttpError $e){if(!in_array($e->status,[403,404],true)){throw $e;}}}return (new \Hostider\Support\Merge\Projection($this->c))->augment($u,$s,$row,$out);
+        foreach($this->c->db->execute('SELECT service_id FROM support_ticket_links WHERE ticket_id=? AND customer_id=?',[$row['id'],$row['customer_id']])->fetchAll() as $link){try{$out['service_ids'][]=(new SupportLinks($this->c))->owned($u,$s,$row['customer_id'],$link['service_id']);}catch(HttpError $e){if(!in_array($e->status,[403,404],true)){throw $e;}}}return (new \Hostider\Support\Split\Projection($this->c))->augment($u,$s,$row,(new \Hostider\Support\Merge\Projection($this->c))->augment($u,$s,$row,$out));
     }
 }
