@@ -1,0 +1,3 @@
+PASS SUP-002 adapter acknowledgement waits for DB commit and retains failed input
+PASS SUP-002 adapter ack loss after commit replays immutable Message-ID without duplicate
+2 tests, 0 failures

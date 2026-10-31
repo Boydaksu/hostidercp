@@ -1,0 +1,722 @@
+{
+  "classification": "SYNTHETIC",
+  "application_sha": "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa",
+  "application_tree": "0c5f1729089dafb07dec2e374e1079efa75fcbba",
+  "run_id": 40555003177,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40555003177",
+  "event": "push",
+  "profile": "broad",
+  "status": "completed",
+  "conclusion": "success",
+  "workflow_attempts": 1,
+  "source_changed_during_run": false,
+  "jobs": [
+    {
+      "php": "8.3",
+      "job_id": 122368732702,
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40555003177/job/122368732702",
+      "conclusion": "success",
+      "total_tests": 731,
+      "suite_count": 57,
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-costs.php",
+          "tests": 25,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/provider-panel-http.php",
+          "tests": 39,
+          "failures": 0
+        },
+        {
+          "suite": "tests/support-migrations.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/support-http.php",
+          "tests": 157,
+          "failures": 0
+        },
+        {
+          "suite": "tests/support-e.php",
+          "tests": 27,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-contract.php",
+          "tests": 31,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-visibility.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-import.php",
+          "tests": 43,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-reconciliation.php",
+          "tests": 35,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-operations.php",
+          "tests": 32,
+          "failures": 0
+        }
+      ],
+      "old_tests_preserved": true,
+      "missing_old_tests": [],
+      "old_suite_counts_preserved": true,
+      "new_tests": [
+        "F6-D actual encrypted backup verifies bounded DB and private sample files",
+        "F6-D backup identity is deterministic while native crypto uses fresh nonces",
+        "F6-D reports contain no keys tokens paths private bodies or ciphertext",
+        "F6-D wrong rotated missing revoked and mismatched key identities fail closed",
+        "F6-D ciphertext tag truncation and missing package cannot verify",
+        "F6-D source file missing corrupt size or snapshot mismatch prevents complete backup",
+        "F6-D traversal absolute sibling Unicode case and unknown file types are rejected",
+        "F6-D foreign owner checksum and inventory loss block authenticated malformed packages",
+        "F6-D physical source symlink is denied where platform capability exists",
+        "F6-D environment explicit authority wrong vault and expired lease fail closed",
+        "F6-D 1 4 8 independent backup processes publish one immutable artifact",
+        "F6-D real process crashes at capture encryption manifest and publish never expose final",
+        "F6-D controlled short write disk budget and stale operation do not verify partial files",
+        "F6-D escrow restore preserves exact DB evidence finance and sample file bytes",
+        "F6-D wrong target marker ownership lease grants and schema are denied",
+        "F6-D corrupted backup and wrong key leave owned destination empty",
+        "F6-D restore exception and real crashes rollback or re-read exact durable outcome",
+        "F6-D existing conflicting restore rows are never overwritten or rebound",
+        "F6-D source readiness lost migration checksum partial schema or evidence cannot back up",
+        "F6-D actual source connection loss prevents publication and fresh reconnect recovers",
+        "F6-D dry retention uses tier union and protects the last recoverable verified copy",
+        "F6-D retention clock key loss incomplete chain quota and timezone produce review not deletion",
+        "F6-D native Queue expiry keeps unsafe outcome UNKNOWN and rejects stale owner finish",
+        "F6-D native retry-safe poison work reaches DLQ without dispatching other engines",
+        "F6-D destination least privilege denies UPDATE DELETE DDL and cross-schema reads",
+        "F6-D compression version duplicate archive key and partial manifest cannot authenticate",
+        "F6-D dry retention rejects duplicate identities and never performs filesystem deletion",
+        "F6-D native Worker executes only an explicitly registered synthetic backup handler",
+        "F6-D operations module has no provider finance mail transport or public endpoint dependency",
+        "F6-D authenticated duplicate JSON archive keys are rejected before restore",
+        "F6-D encryption key alone cannot issue a forged source ownership backup",
+        "F6-D unapproved target definer trigger blocks restore before any insert"
+      ],
+      "new_test_count": 32,
+      "failed_names": [],
+      "checkout_sha_in_log": true,
+      "checkout_tree_in_log": false,
+      "quality": [
+        "No security vulnerability advisories found.",
+        "[OK] No errors",
+        "435 PHP files checked; 0 violations",
+        "457 source/config/test files scanned; 0 findings",
+        "3 state checks, 0 failures",
+        "found 0 vulnerabilities"
+      ],
+      "source_guard": {
+        "calls": 58,
+        "behavior": "Silent ciSourceProof(GITHUB_SHA) before each suite and after final suite; exact SHA/tree and clean tracked checkout enforced",
+        "tree_printed_in_log": false,
+        "tree_verified_via_github_git_commit": "0c5f1729089dafb07dec2e374e1079efa75fcbba"
+      }
+    },
+    {
+      "php": "8.4",
+      "job_id": 122368732856,
+      "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40555003177/job/122368732856",
+      "conclusion": "success",
+      "total_tests": 731,
+      "suite_count": 57,
+      "suites": [
+        {
+          "suite": "tests/run.php",
+          "tests": 19,
+          "failures": 0
+        },
+        {
+          "suite": "tests/hardening-unit.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-concurrency.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/session-http.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/integration.php",
+          "tests": 26,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity.php",
+          "tests": 16,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-security.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/identity-http.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance-unit.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/finance.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/catalog.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/pricing.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/addons.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/orders.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/payments.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/billing-cash.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/paid-refunds.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/currency-change.php",
+          "tests": 2,
+          "failures": 0
+        },
+        {
+          "suite": "tests/commerce-events.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/post-delivery.php",
+          "tests": 9,
+          "failures": 0
+        },
+        {
+          "suite": "tests/http-harness.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-model.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-engine.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-hosting.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-reconciliation.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-lifecycle.php",
+          "tests": 13,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-transfer.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-package.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-http.php",
+          "tests": 10,
+          "failures": 0
+        },
+        {
+          "suite": "tests/services-runner.php",
+          "tests": 6,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-unit.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-model.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-provider.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/voyar-sdk.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-boundaries.php",
+          "tests": 3,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-operations.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/domains-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-races.php",
+          "tests": 7,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-sdk.php",
+          "tests": 1,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-audit.php",
+          "tests": 15,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-final-audit.php",
+          "tests": 12,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-costs.php",
+          "tests": 25,
+          "failures": 0
+        },
+        {
+          "suite": "tests/cloud-cost-races.php",
+          "tests": 5,
+          "failures": 0
+        },
+        {
+          "suite": "tests/provider-panel-http.php",
+          "tests": 39,
+          "failures": 0
+        },
+        {
+          "suite": "tests/support-migrations.php",
+          "tests": 4,
+          "failures": 0
+        },
+        {
+          "suite": "tests/support-http.php",
+          "tests": 157,
+          "failures": 0
+        },
+        {
+          "suite": "tests/support-e.php",
+          "tests": 27,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-contract.php",
+          "tests": 31,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-visibility.php",
+          "tests": 8,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-import.php",
+          "tests": 43,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-reconciliation.php",
+          "tests": 35,
+          "failures": 0
+        },
+        {
+          "suite": "tests/migration-operations.php",
+          "tests": 32,
+          "failures": 0
+        }
+      ],
+      "old_tests_preserved": true,
+      "missing_old_tests": [],
+      "old_suite_counts_preserved": true,
+      "new_tests": [
+        "F6-D actual encrypted backup verifies bounded DB and private sample files",
+        "F6-D backup identity is deterministic while native crypto uses fresh nonces",
+        "F6-D reports contain no keys tokens paths private bodies or ciphertext",
+        "F6-D wrong rotated missing revoked and mismatched key identities fail closed",
+        "F6-D ciphertext tag truncation and missing package cannot verify",
+        "F6-D source file missing corrupt size or snapshot mismatch prevents complete backup",
+        "F6-D traversal absolute sibling Unicode case and unknown file types are rejected",
+        "F6-D foreign owner checksum and inventory loss block authenticated malformed packages",
+        "F6-D physical source symlink is denied where platform capability exists",
+        "F6-D environment explicit authority wrong vault and expired lease fail closed",
+        "F6-D 1 4 8 independent backup processes publish one immutable artifact",
+        "F6-D real process crashes at capture encryption manifest and publish never expose final",
+        "F6-D controlled short write disk budget and stale operation do not verify partial files",
+        "F6-D escrow restore preserves exact DB evidence finance and sample file bytes",
+        "F6-D wrong target marker ownership lease grants and schema are denied",
+        "F6-D corrupted backup and wrong key leave owned destination empty",
+        "F6-D restore exception and real crashes rollback or re-read exact durable outcome",
+        "F6-D existing conflicting restore rows are never overwritten or rebound",
+        "F6-D source readiness lost migration checksum partial schema or evidence cannot back up",
+        "F6-D actual source connection loss prevents publication and fresh reconnect recovers",
+        "F6-D dry retention uses tier union and protects the last recoverable verified copy",
+        "F6-D retention clock key loss incomplete chain quota and timezone produce review not deletion",
+        "F6-D native Queue expiry keeps unsafe outcome UNKNOWN and rejects stale owner finish",
+        "F6-D native retry-safe poison work reaches DLQ without dispatching other engines",
+        "F6-D destination least privilege denies UPDATE DELETE DDL and cross-schema reads",
+        "F6-D compression version duplicate archive key and partial manifest cannot authenticate",
+        "F6-D dry retention rejects duplicate identities and never performs filesystem deletion",
+        "F6-D native Worker executes only an explicitly registered synthetic backup handler",
+        "F6-D operations module has no provider finance mail transport or public endpoint dependency",
+        "F6-D authenticated duplicate JSON archive keys are rejected before restore",
+        "F6-D encryption key alone cannot issue a forged source ownership backup",
+        "F6-D unapproved target definer trigger blocks restore before any insert"
+      ],
+      "new_test_count": 32,
+      "failed_names": [],
+      "checkout_sha_in_log": true,
+      "checkout_tree_in_log": false,
+      "quality": [
+        "No security vulnerability advisories found.",
+        "[OK] No errors",
+        "435 PHP files checked; 0 violations",
+        "457 source/config/test files scanned; 0 findings",
+        "3 state checks, 0 failures",
+        "found 0 vulnerabilities"
+      ],
+      "source_guard": {
+        "calls": 58,
+        "behavior": "Silent ciSourceProof(GITHUB_SHA) before each suite and after final suite; exact SHA/tree and clean tracked checkout enforced",
+        "tree_printed_in_log": false,
+        "tree_verified_via_github_git_commit": "0c5f1729089dafb07dec2e374e1079efa75fcbba"
+      }
+    }
+  ],
+  "scope_helper_tests": 6,
+  "documentation_files_checked": 487,
+  "raw_logs_committed": false,
+  "full_dispatched": false,
+  "chromium_executed": false,
+  "stability_marathons_executed": false,
+  "production_effects": false
+}

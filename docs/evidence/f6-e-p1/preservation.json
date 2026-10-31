@@ -1,0 +1,19 @@
+{
+  "base_sha": "25d916ad0c3ef1002b6ba7f25df0029136dbf145",
+  "base_tree": "ba5cc43046168cc3b5e9ff8384cd43c3ff703e9d",
+  "production_migration_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "raw_blob_comparisons": {
+    "source_tests": 379,
+    "migrations": 54,
+    "historical_evidence": 468
+  },
+  "mismatches": [],
+  "user_review_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7",
+  "remote_final_observation": {
+    "pr": 3,
+    "head_sha": "25d916ad0c3ef1002b6ba7f25df0029136dbf145",
+    "state": "OPEN",
+    "draft": true
+  },
+  "existing_p0_r2_source_tests_unchanged": true
+}

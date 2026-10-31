@@ -1,0 +1,5 @@
+<?php
+declare(strict_types=1);
+require __DIR__.'/harness.php';require __DIR__.'/database.php';require __DIR__.'/support-split-fixture.php';
+$f=hFixture(true);$t=hSource($f);bReply($f,$t,'note');$server=new HttpTestServer(dirname(__DIR__),bEnvironment($f),__DIR__.'/support-e-router.php');
+try{$pipes=[];$p=proc_open([getenv('F5_E_NODE')?:'node',__DIR__.'/support-integration-browser.cjs'],[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes,null,getenv());if(!is_resource($p)){throw new RuntimeException('Browser unavailable');}fwrite($pipes[0],json_encode(['url'=>'http://127.0.0.1:'.$server->diagnostics()['port'],'client'=>$f['client'],'admin'=>$f['admin'],'ticket'=>$t,'messages'=>$f['db']->execute('SELECT id,created_at FROM support_messages WHERE ticket_id=? AND customer_visible=TRUE ORDER BY created_at,id',[$t['id']])->fetchAll()],JSON_THROW_ON_ERROR));fclose($pipes[0]);$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);$exit=proc_close($p);echo $out;if($exit!==0){echo 'Browser check failed: '.$err.PHP_EOL;}exit($exit);}finally{$server->stop();}

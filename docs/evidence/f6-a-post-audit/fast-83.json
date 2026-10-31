@@ -1,0 +1,627 @@
+{
+  "application_sha": "063e846999e4bda513f3563de0c4f13ac8858b97",
+  "application_tree": "fb238efc3aa70cbbd022652d192d9e89c089f211",
+  "run_id": 40470409239,
+  "job_id": 122075976024,
+  "php": "8.3",
+  "runtime": "PHP 8.3.36",
+  "profile": "broad",
+  "conclusion": "success",
+  "suites": 54,
+  "tests": 621,
+  "failures": 0,
+  "original_test_count": 613,
+  "missing_original_names": [],
+  "new_tests": [
+    "F6-A P1 public reply with known PRIVATE is an explicit visibility conflict",
+    "F6-A P1 public reply with known PUBLIC remains valid and unchanged",
+    "F6-A P1 private internal note with verified source STAFF remains archive only",
+    "F6-A P1 internal note with PUBLIC remains rejected",
+    "F6-A P1 all four uncertain internal note visibility states are rejected",
+    "F6-A P1 all four uncertain public reply states remain review without normalization",
+    "F6-A P1 declared STAFF does not verify a customer source author for internal notes",
+    "F6-A P1 attachment to inconsistent message never makes snapshot public eligible in any order"
+  ],
+  "new_suite_executed": true,
+  "final_source_guard_completed": true,
+  "original_suite_matrix": [
+    {
+      "suite": "tests/run.php",
+      "original_tests": 19,
+      "current_tests": 19,
+      "retained": true
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "original_tests": 7,
+      "current_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/session.php",
+      "original_tests": 1,
+      "current_tests": 1,
+      "retained": true
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "original_tests": 7,
+      "current_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/session-http.php",
+      "original_tests": 1,
+      "current_tests": 1,
+      "retained": true
+    },
+    {
+      "suite": "tests/integration.php",
+      "original_tests": 26,
+      "current_tests": 26,
+      "retained": true
+    },
+    {
+      "suite": "tests/identity.php",
+      "original_tests": 16,
+      "current_tests": 16,
+      "retained": true
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "original_tests": 8,
+      "current_tests": 8,
+      "retained": true
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "original_tests": 6,
+      "current_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/http.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "original_tests": 4,
+      "current_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/finance.php",
+      "original_tests": 10,
+      "current_tests": 10,
+      "retained": true
+    },
+    {
+      "suite": "tests/catalog.php",
+      "original_tests": 7,
+      "current_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/pricing.php",
+      "original_tests": 9,
+      "current_tests": 9,
+      "retained": true
+    },
+    {
+      "suite": "tests/addons.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/orders.php",
+      "original_tests": 6,
+      "current_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/payments.php",
+      "original_tests": 6,
+      "current_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "original_tests": 4,
+      "current_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/commerce.php",
+      "original_tests": 5,
+      "current_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "original_tests": 10,
+      "current_tests": 10,
+      "retained": true
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "original_tests": 2,
+      "current_tests": 2,
+      "retained": true
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "original_tests": 9,
+      "current_tests": 9,
+      "retained": true
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "original_tests": 5,
+      "current_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-model.php",
+      "original_tests": 6,
+      "current_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "original_tests": 5,
+      "current_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "original_tests": 7,
+      "current_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "original_tests": 4,
+      "current_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "original_tests": 13,
+      "current_tests": 13,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-package.php",
+      "original_tests": 4,
+      "current_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-http.php",
+      "original_tests": 10,
+      "current_tests": 10,
+      "retained": true
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "original_tests": 6,
+      "current_tests": 6,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "original_tests": 4,
+      "current_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "original_tests": 3,
+      "current_tests": 3,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "original_tests": 12,
+      "current_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "original_tests": 12,
+      "current_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud.php",
+      "original_tests": 12,
+      "current_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "original_tests": 7,
+      "current_tests": 7,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "original_tests": 1,
+      "current_tests": 1,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-audit.php",
+      "original_tests": 15,
+      "current_tests": 15,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-final-audit.php",
+      "original_tests": 12,
+      "current_tests": 12,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-costs.php",
+      "original_tests": 25,
+      "current_tests": 25,
+      "retained": true
+    },
+    {
+      "suite": "tests/cloud-cost-races.php",
+      "original_tests": 5,
+      "current_tests": 5,
+      "retained": true
+    },
+    {
+      "suite": "tests/provider-panel-http.php",
+      "original_tests": 39,
+      "current_tests": 39,
+      "retained": true
+    },
+    {
+      "suite": "tests/support-migrations.php",
+      "original_tests": 4,
+      "current_tests": 4,
+      "retained": true
+    },
+    {
+      "suite": "tests/support-http.php",
+      "original_tests": 157,
+      "current_tests": 157,
+      "retained": true
+    },
+    {
+      "suite": "tests/support-e.php",
+      "original_tests": 27,
+      "current_tests": 27,
+      "retained": true
+    },
+    {
+      "suite": "tests/migration-contract.php",
+      "original_tests": 31,
+      "current_tests": 31,
+      "retained": true
+    }
+  ],
+  "results": [
+    {
+      "suite": "tests/run.php",
+      "tests": 19,
+      "failures": 0
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-http.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/integration.php",
+      "tests": 26,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity.php",
+      "tests": 16,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/catalog.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/pricing.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/addons.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/orders.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/payments.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-model.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-package.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-audit.php",
+      "tests": 15,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-final-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-costs.php",
+      "tests": 25,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-cost-races.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/provider-panel-http.php",
+      "tests": 39,
+      "failures": 0
+    },
+    {
+      "suite": "tests/support-migrations.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/support-http.php",
+      "tests": 157,
+      "failures": 0
+    },
+    {
+      "suite": "tests/support-e.php",
+      "tests": 27,
+      "failures": 0
+    },
+    {
+      "suite": "tests/migration-contract.php",
+      "tests": 31,
+      "failures": 0
+    },
+    {
+      "suite": "tests/migration-visibility.php",
+      "tests": 8,
+      "failures": 0
+    }
+  ],
+  "quality_lines": [
+    "No security vulnerability advisories found.",
+    "[OK] No errors",
+    "403 PHP files checked; 0 violations",
+    "425 source/config/test files scanned; 0 findings",
+    "3 state checks, 0 failures",
+    "found 0 vulnerabilities"
+  ]
+}

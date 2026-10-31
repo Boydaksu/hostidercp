@@ -1,0 +1,45 @@
+{
+  "application_sha": "063e846999e4bda513f3563de0c4f13ac8858b97",
+  "cases": [
+    {
+      "name": "F6-A P1 public reply with known PRIVATE is an explicit visibility conflict",
+      "file": "tests/migration-visibility.php",
+      "line": 12
+    },
+    {
+      "name": "F6-A P1 public reply with known PUBLIC remains valid and unchanged",
+      "file": "tests/migration-visibility.php",
+      "line": 16
+    },
+    {
+      "name": "F6-A P1 private internal note with verified source STAFF remains archive only",
+      "file": "tests/migration-visibility.php",
+      "line": 20
+    },
+    {
+      "name": "F6-A P1 internal note with PUBLIC remains rejected",
+      "file": "tests/migration-visibility.php",
+      "line": 26
+    },
+    {
+      "name": "F6-A P1 all four uncertain internal note visibility states are rejected",
+      "file": "tests/migration-visibility.php",
+      "line": 29
+    },
+    {
+      "name": "F6-A P1 all four uncertain public reply states remain review without normalization",
+      "file": "tests/migration-visibility.php",
+      "line": 34
+    },
+    {
+      "name": "F6-A P1 declared STAFF does not verify a customer source author for internal notes",
+      "file": "tests/migration-visibility.php",
+      "line": 42
+    },
+    {
+      "name": "F6-A P1 attachment to inconsistent message never makes snapshot public eligible in any order",
+      "file": "tests/migration-visibility.php",
+      "line": 46
+    }
+  ]
+}

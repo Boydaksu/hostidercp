@@ -1,0 +1,20 @@
+{
+  "classification": "SYNTHETIC",
+  "r2_development": "PARTIAL",
+  "independent_acceptance": "PENDING",
+  "identity_bound": "PARTIAL_READONLY_TARGET_VERIFIED_RUNTIME_BLOCKED",
+  "issuer_recovery": "PARTIAL",
+  "original_archive_bytes": "OPEN",
+  "native_runtime": "NOT_GRANTED",
+  "production_restore": "NOT_VERIFIED",
+  "real_offsite_pitr_key_custody": "NOT_VERIFIED",
+  "full": "NOT_DISPATCHED",
+  "f6_e": "NOT_AUTHORIZED",
+  "production": "UNCHANGED",
+  "metadata_inventory": "NOT_VERIFIED_SELECT_ONLY",
+  "target_policy_max_seconds": 300,
+  "original_authorization_max_seconds": 900,
+  "trusted_config_anti_rollback": "NOT_VERIFIED",
+  "main_protected": false,
+  "rulesets": []
+}

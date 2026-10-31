@@ -1,0 +1,31 @@
+{
+  "final_runners": [
+    {
+      "executed_path": "tools/local/f5-i-runner.py",
+      "executed_sha256": "5766e7f1d944d8cf1b6e255fa22fc88d52c49be14da43cd633c8a3460e4967cd",
+      "published_review": "local-docker-runner-review.txt",
+      "review_sha256": "d5eae3964766c08efb8450d89e236f49f53b5a22f35f57ee85a12c6900a48986",
+      "redaction": "Only fixed synthetic DB password literals; no actual customer credentials."
+    },
+    {
+      "executed_path": "tools/local/f5-i/run-tests.sh",
+      "executed_sha256": "407f778878ab838e7761576ee43071b6471b25677f2674c020b4eb54b2d70a19",
+      "published_review": "run-tests-review.txt",
+      "review_sha256": "407f778878ab838e7761576ee43071b6471b25677f2674c020b4eb54b2d70a19",
+      "redaction": "Only fixed synthetic DB password literals; no actual customer credentials."
+    },
+    {
+      "executed_path": "tools/local/f5-i-browser-runner.py",
+      "executed_sha256": "62f8c3bd6dfc1ab706f67da805f90cf767fc2d54a48d1b609fd118e84c4775a3",
+      "published_review": "browser-runner-review.txt",
+      "review_sha256": "939e2fcf7a69c346a6bc017184291a6bba96ffe9b9971412d44930a2558924c5",
+      "redaction": "Only fixed synthetic DB password literals; no actual customer credentials."
+    }
+  ],
+  "php_isolation": "pinned PHP8.3.36/8.4.27 and MariaDB10.11 images, internal network, no host ports, readonly source bind, tmpfs DB/app, owned label cleanup only",
+  "browser_isolation": "owned ephemeral DB localhost port, headless installed Chrome156.0.8078.74 temporary profile; page routes restricted to owned native PHP loopback; HostPHP8.4.24 separately identified",
+  "audit_lock_binding": {
+    "tools/analysis/composer.lock": "1eaac8989bed22902a473cd97d3bcb803eca478ce5cc1c1cf76a59f3955cbdaa",
+    "tools/browser/package-lock.json": "1e2edc5f865ce563dd9946f658374e6f7459769a674e079059506d8ed503b687"
+  }
+}

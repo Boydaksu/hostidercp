@@ -1,0 +1,26 @@
+#!/bin/sh
+set -u
+mkdir -p /workspace/project
+tar -C /input --exclude=.git --exclude=storage --exclude=tools/local --exclude=tools/analysis/vendor --exclude=tools/browser/node_modules -cf - . | tar -C /workspace/project -xf -
+mkdir -p /workspace/project/storage
+cd /workspace/project || exit 80
+php -r '$m=json_decode(file_get_contents("/run-input/source-manifest.json"),true,512,JSON_THROW_ON_ERROR);foreach($m as $p=>$h){if(hash_file("sha256",$p)!==$h){exit(91);}}echo "F6F_SOURCE_MANIFEST_MATCH ".count($m).PHP_EOL;'
+php -r 'echo "F6F_PHP ".PHP_VERSION.PHP_EOL;echo "F6F_UID ".posix_geteuid().PHP_EOL;'
+failed=0
+for suite in tests/offline-backup.php tests/run.php tests/hardening-unit.php tests/integration.php tests/identity-security.php tests/finance-unit.php tests/finance.php tests/billing-cash.php tests/paid-refunds.php tests/post-delivery.php tests/support-migrations.php tests/support-http.php tests/support-e.php tests/support-auto-close.php tests/support-merge.php tests/support-merge-readonly.php tests/support-split.php tests/support-integration.php tests/migration-contract.php tests/migration-operations.php tests/migration-recovery.php tests/migration-recovery-target.php tests/migration-recovery-integrity.php; do
+ echo "F6F_SUITE_BEGIN $suite"
+ php "$suite"; code=$?; echo "F6F_SUITE_RESULT $suite $code"; if [ "$code" -ne 0 ]; then failed=1; fi
+done
+for quality in check audit; do
+ echo "F6F_QUALITY_BEGIN $quality"
+ php "tools/$quality.php"; code=$?; echo "F6F_QUALITY_RESULT $quality $code"; if [ "$code" -ne 0 ]; then failed=1; fi
+done
+echo F6F_QUALITY_BEGIN phpstan
+php /analysis/phpstan.phar analyse --no-progress --memory-limit=512M --error-format=json; code=$?; printf '\nF6F_QUALITY_RESULT phpstan %s\n' "$code"; if [ "$code" -ne 0 ]; then failed=1; fi
+git init -q
+git add -- README.md docs
+echo F6F_QUALITY_BEGIN documentation
+php tools/ci/doc-check.php; code=$?; echo "F6F_QUALITY_RESULT documentation $code"; if [ "$code" -ne 0 ]; then failed=1; fi
+php -r '$m=json_decode(file_get_contents("/run-input/source-manifest.json"),true,512,JSON_THROW_ON_ERROR);foreach($m as $p=>$h){if(hash_file("sha256",$p)!==$h){exit(91);}}echo "F6F_SOURCE_MANIFEST_MATCH ".count($m).PHP_EOL;'
+code=$?; if [ "$code" -ne 0 ]; then failed=1; fi
+exit "$failed"

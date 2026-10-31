@@ -1,0 +1,281 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_CANDIDATE",
+  "status": "DEVELOPMENT_VALIDATED_INDEPENDENT_REVIEW_PENDING",
+  "source_manifest_sha256": "a9d0c5efc53145928c979330c5d144c9f015c1062608ce8bc7516d375884489e",
+  "source_files": 520,
+  "source_diff_sha256": "dc6fb8826cdc6a9b40990b34dfb567991c364c566c73733a848b7d79ff095907",
+  "changed_source_files": [
+    ".github/workflows/f0.yml",
+    "bootstrap/app.php",
+    "migrations/057_support_ticket_split.php",
+    "public/assets/support-state.js",
+    "public/assets/support.js",
+    "src/Support/Mail/Attachments.php",
+    "src/Support/Merge/Commands.php",
+    "src/Support/Service.php",
+    "src/Support/Split/Commands.php",
+    "src/Support/Split/Controller.php",
+    "src/Support/Split/Projection.php",
+    "src/Support/UI/Views.php",
+    "src/Support/Work/Engine.php",
+    "tests/support-b-post-audit.php",
+    "tests/support-b.php",
+    "tests/support-c.php",
+    "tests/support-d.php",
+    "tests/support-e.php",
+    "tests/support-merge.php",
+    "tests/support-migrations.php",
+    "tests/support-split-child.php",
+    "tests/support-split-fixture.php",
+    "tests/support-split-state.cjs",
+    "tests/support-split.php",
+    "tools/ci/suites.json"
+  ],
+  "final_runs": [
+    {
+      "source_manifest_sha256": "a9d0c5efc53145928c979330c5d144c9f015c1062608ce8bc7516d375884489e",
+      "run_id": "hostider-f5h-bdef64b30063-83",
+      "suites": [
+        {
+          "path": "tests/support-split.php",
+          "passed": 32,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-merge-readonly.php",
+          "passed": 19,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-merge.php",
+          "passed": 36,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-auto-close.php",
+          "passed": 31,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-migrations.php",
+          "passed": 4,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-http.php",
+          "passed": 157,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-b.php",
+          "passed": 28,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-c.php",
+          "passed": 42,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-d.php",
+          "passed": 41,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-e.php",
+          "passed": 27,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/identity-security.php",
+          "passed": 8,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/hardening-unit.php",
+          "passed": 7,
+          "failed": 0,
+          "exit": 0
+        }
+      ],
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "php": "8.3.36",
+      "phpstan_totals": {
+        "errors": 0,
+        "file_errors": 0
+      },
+      "status": "PASS",
+      "host_source_unchanged": true,
+      "_file": "php83-hostider-f5h-bdef64b30063-83.json"
+    },
+    {
+      "source_manifest_sha256": "a9d0c5efc53145928c979330c5d144c9f015c1062608ce8bc7516d375884489e",
+      "run_id": "hostider-f5h-4baa79664698-84",
+      "suites": [
+        {
+          "path": "tests/support-split.php",
+          "passed": 32,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-merge-readonly.php",
+          "passed": 19,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-merge.php",
+          "passed": 36,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-auto-close.php",
+          "passed": 31,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-migrations.php",
+          "passed": 4,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-http.php",
+          "passed": 157,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-b.php",
+          "passed": 28,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-c.php",
+          "passed": 42,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-d.php",
+          "passed": 41,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/support-e.php",
+          "passed": 27,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/identity-security.php",
+          "passed": 8,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/hardening-unit.php",
+          "passed": 7,
+          "failed": 0,
+          "exit": 0
+        }
+      ],
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "php": "8.4.27",
+      "phpstan_totals": {
+        "errors": 0,
+        "file_errors": 0
+      },
+      "status": "PASS",
+      "host_source_unchanged": true,
+      "_file": "php84-hostider-f5h-4baa79664698-84.json"
+    }
+  ],
+  "all_run_history": [
+    {
+      "file": "php83-hostider-f5h-1a785e409477-83.json",
+      "status": "PASS",
+      "passed": 432,
+      "failed": 0,
+      "source_manifest_sha256": "f48396e06d7f066f9a52d2b9040c14c34964fe56994dcb522ec15fa109155b49"
+    },
+    {
+      "file": "php83-hostider-f5h-69b3439d77b3-83.json",
+      "status": "FAILED",
+      "passed": 30,
+      "failed": 1,
+      "source_manifest_sha256": "387ff3e20c60026bfdef1a35b3db9aa523755854878168dcbb5a65c507da1627"
+    },
+    {
+      "file": "php83-hostider-f5h-bdef64b30063-83.json",
+      "status": "PASS",
+      "passed": 432,
+      "failed": 0,
+      "source_manifest_sha256": "a9d0c5efc53145928c979330c5d144c9f015c1062608ce8bc7516d375884489e"
+    },
+    {
+      "file": "php84-hostider-f5h-4baa79664698-84.json",
+      "status": "PASS",
+      "passed": 432,
+      "failed": 0,
+      "source_manifest_sha256": "a9d0c5efc53145928c979330c5d144c9f015c1062608ce8bc7516d375884489e"
+    },
+    {
+      "file": "php84-hostider-f5h-ae422795249f-84.json",
+      "status": "PASS",
+      "passed": 432,
+      "failed": 0,
+      "source_manifest_sha256": "f48396e06d7f066f9a52d2b9040c14c34964fe56994dcb522ec15fa109155b49"
+    }
+  ],
+  "new_suite": {
+    "passed": 32,
+    "failed": 0
+  },
+  "existing_regressions_per_runtime": 400,
+  "total_per_runtime": 432,
+  "js_checks": 10,
+  "registry_expected_only": {
+    "suites": 69,
+    "tests": 1035,
+    "full_pass_claimed": false
+  },
+  "not_run": [
+    "FULL",
+    "Chromium",
+    "GitHub Actions",
+    "current Composer/npm vulnerability audit"
+  ],
+  "migration_057": "ADDITIVE_ONLY",
+  "live_split_allowed": false,
+  "real_gate_status": "BLOCKED",
+  "effects_allowed": false,
+  "source_commit": null,
+  "publication": "Exact parent one commit [skip ci]; final Git object URLs resolved at immutable published SHA in delivery response."
+}

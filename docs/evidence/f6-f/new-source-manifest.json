@@ -1,0 +1,14 @@
+{
+  "bin/offline-backup.php": "292360d0992d63535ef32eed15053f5719d672bfc77e0b8370ccdfe880c57c5e",
+  "src/OfflineBackup/Cli.php": "8dac2cecf8ea2dafe987ad6b4c5df289d375d024ff00c5a038ebc43a3a2364f0",
+  "src/OfflineBackup/Guard.php": "461c98005930dda92a56bd19e2d7c13f734b37c748ec1373b2d15fb3e488bd82",
+  "src/OfflineBackup/Image.php": "38ef0e358d101e0557e6b4808eb184cc76714b4a55ec5f6d2c54c44d410acea0",
+  "src/OfflineBackup/ManagedFiles.php": "50d0c0c8a1c01ddd034c59915125861fd1b8fdaee34c9fa038fb48c4111f2823",
+  "src/OfflineBackup/NativeSchema.php": "ba7f0b620fc40c65b2adc0ec0e1601b2a85721a8322b6ef9f38fc06f959fd9da",
+  "src/OfflineBackup/Rehearsal.php": "3c6a6ac223a42af44685c5105603c9150d4ef188bccd3873b397abe96e408f2b",
+  "src/OfflineBackup/StreamArchive.php": "24ba04ba892ca37283082235be029f188002a178f092d206f889a95932bc286f",
+  "src/OfflineBackup/Workspace.php": "406793347f6304d44bf410a2ba86a15c0aa87a75c46c09b543ac1bcfedfcf7f9",
+  "tests/offline-backup-child.php": "411b6cfd2a273eb30ee1cbb271bff53fb4c417de0fa4ea9cf8c569abe49f750f",
+  "tests/offline-backup-fixture.php": "b1d67f743ca2864aaf399299f66dda7942307e02b6966f9b149577d9c53bb9a6",
+  "tests/offline-backup.php": "99bb2804bc6a95df98223b552ca3ed8ef3d191ab224b2dee52193d371f935770"
+}

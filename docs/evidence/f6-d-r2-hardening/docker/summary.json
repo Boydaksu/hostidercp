@@ -1,0 +1,137 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_NOT_GITHUB_CI",
+  "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+  "overall": "FAILED_SUPPORT_PACKAGE",
+  "github_fast": "NOT_RUN_EXTERNAL_BILLING",
+  "independent_acceptance": "PENDING",
+  "docker_desktop": "4.86.0 (236216)",
+  "engine": "29.7.2",
+  "mariadb": "10.11.18",
+  "node": "18.20.4",
+  "npm": "9.2.0",
+  "composer": "2.10.3",
+  "github_runner_parity": false,
+  "versions": [
+    {
+      "php": "8.3.36",
+      "quality_exit": 0,
+      "quality_steps": [
+        "LOCAL_STEP_RESULT source_before 0",
+        "LOCAL_STEP_RESULT scope 0",
+        "LOCAL_STEP_RESULT documentation 0",
+        "LOCAL_STEP_RESULT helper 0",
+        "LOCAL_STEP_RESULT composer_audit 0",
+        "LOCAL_STEP_RESULT phpstan 0",
+        "LOCAL_STEP_RESULT lint 0",
+        "LOCAL_STEP_RESULT patterns 0",
+        "LOCAL_STEP_RESULT js_support 0",
+        "LOCAL_STEP_RESULT js_commerce 0",
+        "LOCAL_STEP_RESULT js_services 0",
+        "LOCAL_STEP_RESULT js_providers 0",
+        "LOCAL_STEP_RESULT js_state 0",
+        "LOCAL_STEP_RESULT npm_audit 0",
+        "LOCAL_STEP_RESULT source_after 0"
+      ],
+      "first_broad": {
+        "support_failures": 1,
+        "completed_suites": 50,
+        "support_not_executed": 97,
+        "support_passes": 59,
+        "exit": 1,
+        "completed_suite_tests": 398
+      },
+      "continuation": {
+        "support_failures": 1,
+        "completed_other_suites": 9,
+        "support_passes": 60,
+        "completed_other_tests": 227,
+        "exit": 1,
+        "support_not_executed": 96
+      },
+      "successful_registered_suites_total": 59,
+      "successful_registered_suite_tests_total": 625,
+      "r2_tests": {
+        "passed": 24,
+        "failed": 0
+      },
+      "r1_tests": {
+        "passed": 25,
+        "failed": 0
+      },
+      "new_integrity_tests": {
+        "passed": 2,
+        "failed": 0
+      },
+      "diagnostic_remaining_closures": {
+        "is_official_suite": false,
+        "passed": 31,
+        "executed": 97,
+        "interpretation": "Diagnostic continuation only; cascading failures not classified as new source regressions; full support package remains failed",
+        "failed": 66
+      }
+    },
+    {
+      "php": "8.4.27",
+      "quality_exit": 0,
+      "quality_steps": [
+        "LOCAL_STEP_RESULT source_before 0",
+        "LOCAL_STEP_RESULT scope 0",
+        "LOCAL_STEP_RESULT documentation 0",
+        "LOCAL_STEP_RESULT helper 0",
+        "LOCAL_STEP_RESULT composer_audit 0",
+        "LOCAL_STEP_RESULT phpstan 0",
+        "LOCAL_STEP_RESULT lint 0",
+        "LOCAL_STEP_RESULT patterns 0",
+        "LOCAL_STEP_RESULT js_support 0",
+        "LOCAL_STEP_RESULT js_commerce 0",
+        "LOCAL_STEP_RESULT js_services 0",
+        "LOCAL_STEP_RESULT js_providers 0",
+        "LOCAL_STEP_RESULT js_state 0",
+        "LOCAL_STEP_RESULT npm_audit 0",
+        "LOCAL_STEP_RESULT source_after 0"
+      ],
+      "first_broad": {
+        "support_failures": 1,
+        "completed_suites": 50,
+        "support_not_executed": 97,
+        "support_passes": 59,
+        "exit": 1,
+        "completed_suite_tests": 398
+      },
+      "continuation": {
+        "support_failures": 1,
+        "completed_other_suites": 9,
+        "support_passes": 60,
+        "completed_other_tests": 227,
+        "exit": 1,
+        "support_not_executed": 96
+      },
+      "successful_registered_suites_total": 59,
+      "successful_registered_suite_tests_total": 625,
+      "r2_tests": {
+        "passed": 24,
+        "failed": 0
+      },
+      "r1_tests": {
+        "passed": 25,
+        "failed": 0
+      },
+      "new_integrity_tests": {
+        "passed": 2,
+        "failed": 0
+      },
+      "diagnostic_remaining_closures": {
+        "is_official_suite": false,
+        "passed": 31,
+        "executed": 97,
+        "interpretation": "Diagnostic continuation only; cascading failures not classified as new source regressions; full support package remains failed",
+        "failed": 66
+      }
+    }
+  ],
+  "full_acceptance": false,
+  "production": "UNCHANGED",
+  "source_tests_ci_modified": false,
+  "user_edit_preserved": "docs/F6_B_B01_REVIEW.md"
+}

@@ -1,0 +1,27 @@
+{
+  "baseline_implementation": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+  "old_suites_rerun_locally": false,
+  "php": "8.4.24",
+  "runtime_fault_hooks_added": false,
+  "database": "local temporary MariaDB 10.11 schema",
+  "candidate": "d4ead54db3aad6208e1a40e70822da7ad1346e33",
+  "production_migrations_changed": false,
+  "after": {
+    "failures": 0,
+    "history_preserved": true,
+    "cursor_preserved": 1,
+    "tests": 1,
+    "migration_history_preserved": true,
+    "all_table_counts_preserved": true,
+    "resume_applied_records": 26,
+    "entire_run_row_preserved": true
+  },
+  "test": "tests/migration-readiness.php",
+  "before": {
+    "actual_status": "APPLYING",
+    "failures": 1,
+    "acceptance_evidence": false,
+    "tests": 1,
+    "expected_status": "FAILED"
+  }
+}

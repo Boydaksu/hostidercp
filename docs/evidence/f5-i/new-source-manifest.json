@@ -1,0 +1,6 @@
+{
+  "tests/support-integration-browser.cjs": "753766ab4e5c8f08940cd15a852b89984ad7ef0d339d20629f3e19aec3869367",
+  "tests/support-integration-browser.php": "c87cac1f6fe69803c3048665bb5b6b1711aaa55364f537cbfc809241b9c0f1c3",
+  "tests/support-integration-child.php": "eda68c416aa38b6cfa81a9a57d6e3147d46b513ce7d812db8fe857cf50cbd277",
+  "tests/support-integration.php": "771937e162cbc29c1ea4b9e9ba9f874d8e886062c17b53211467b217446a16bd"
+}

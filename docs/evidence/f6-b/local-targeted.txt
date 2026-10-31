@@ -1,0 +1,43 @@
+PASS F6-B dry-run repeats and reversed fixture produce deterministic plans
+PASS F6-B dry-run writes no target run claim provenance or checkpoint
+PASS F6-B dry-run has zero provider payment billing mail and notification calls
+PASS F6-B first load creates expected separate facts mappings and provenance
+PASS F6-B second load is no-op preserving all history and immutable data
+PASS F6-B same identity changed content never overwrites existing facts
+PASS F6-B customer user membership remain separate without admin MFA credentials
+PASS F6-B cross-customer ownership is review with zero target facts
+PASS F6-B four imported providers stay CREATE zero on first load retry and queue replay
+PASS F6-B 1 4 8 independent PHP workers serialize to one mapping per source
+PASS F6-B UNKNOWN payment and provider never become PAID ACTIVE or APPLIED
+PASS F6-B currency allocation refund limits and historical FX remain fail closed
+PASS F6-B wallet liability and payment allocations retain exact currency amounts once
+PASS F6-B official document and proforma retain separate original types and numbers
+PASS F6-B public archive excludes private note author metadata and private attachment path
+PASS F6-B public archive cross-owner ticket scope is denied
+PASS F6-B F6-A visibility P1 and forbidden legacy identity fields remain blocked
+PASS F6-B missing corrupt files and duplicate identities require review not completion
+PASS F6-B half batch exception rolls back entity mapping provenance and cursor
+PASS F6-B checkpoint write and target batch roll back atomically on exception
+PASS F6-B committed prefix resumes once with correct dependencies and final cursor
+PASS F6-B stale checkpoint and wrong target snapshot do not write targets
+PASS F6-B actual worker process crash rolls back then new process resumes
+PASS F6-B actual own connection loss rolls back and reconnect resumes deterministically
+PASS F6-B changed snapshot is conflict and never overwrites provenance
+PASS F6-B two source instances stay separate without physical resource or identity merge
+PASS F6-B competing resource payment email claims never silently merge
+PASS F6-B target identity cannot be owned by another source even before mapping
+PASS F6-B mapping target uniqueness is a physical database constraint
+PASS F6-B immutable facts mappings provenance and history reject runtime update delete
+PASS F6-B checkpoint tamper and failed migration readiness fail closed
+PASS F6-B environment and explicit synthetic authority are independent mandatory gates
+PASS F6-B arbitrary DSN real source URL path rows and credentials are not inputs
+PASS F6-B matching schema prefix alone cannot bypass actual grants or lease
+PASS F6-B unexpected native table and forged marker secret deny the sandbox
+PASS F6-B explicit effect attempts are denied and never dispatch
+PASS F6-B dry-run conflict check remains read only after a successful load
+PASS F6-B schema underscore cannot grant SELECT to a similarly named sibling database
+PASS F6-B real failed additive test DDL remains APPLYING and blocks sandbox replay
+PASS F6-B synthetic module has no native engines transports or external dispatch dependency
+PASS F6-B partial snapshot cannot admit changed content before that source row is mapped
+PASS F6-B dry-run mapping evidence matches committed mappings and source roots are immutable
+42 tests, 0 failures

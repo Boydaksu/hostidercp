@@ -1,0 +1,45 @@
+{
+  "classification": "SYNTHETIC",
+  "application_sha": "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa",
+  "application_tree": "0c5f1729089dafb07dec2e374e1079efa75fcbba",
+  "accepted_f6c_sha": "c5ee92645a3cda842581fccd86707e76cea4dfde",
+  "accepted_f6c_tree": "6418118929a977729f6fe12383c689c91f3edad5",
+  "f6c_acceptance_docs_sha": "90aaaaa8a8c8c743119b2c8f08e71cc58445a534",
+  "f6c_evidence_docs_sha": "2e5761921874cfef2ae25327434655a260064ff8",
+  "f6c_acceptance_files": [
+    "README.md",
+    "docs/F6_PLAN.md",
+    "docs/F6_C_PLAN.md",
+    "docs/F6_C_DELIVERY_REPORT.md"
+  ],
+  "f6c_acceptance_source_test_ci_changes": [],
+  "application_original_files_changed": [],
+  "application_new_source_directory": "src/Migration/Operations",
+  "production_migrations_subtree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "ci_registry_changes": [
+    "tools/ci/suites.json",
+    ".github/workflows/f0.yml"
+  ],
+  "unrelated_unstaged_user_edit": "docs/F6_B_B01_REVIEW.md",
+  "branch": "codex/f5-support-center",
+  "pr": {
+    "number": 3,
+    "state": "OPEN",
+    "draft": true
+  },
+  "main": {
+    "sha": "ada37dc52b324e34380ba836ae7794cebb174ec4",
+    "protected": false,
+    "rulesets": []
+  },
+  "full_dispatch": false,
+  "production_unchanged": true,
+  "independent_acceptance": "PENDING",
+  "development": "PARTIAL",
+  "native_application_restore": "BLOCKED_IDENTITY_BOUND",
+  "issuer_recovery": "BLOCKED_ISSUER_RECOVERY",
+  "original_archive_bytes": "NOT_VERIFIED",
+  "rollback_application_commits": [
+    "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa"
+  ]
+}

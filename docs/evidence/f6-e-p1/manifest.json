@@ -1,0 +1,24 @@
+{
+  "algorithm": "SHA-256",
+  "scope": "all evidence files except this self-referential manifest",
+  "files": {
+    "candidate-source-manifest.json": "e47f38315314b08d501be5c0d3b71127d4bb2110a61548b27723ff5fa48909cc",
+    "changed-files.json": "3b773651d984aeaf98af7f656743395797418f039a3af81d74efc1497d6e0c0b",
+    "final-validation.json": "96c09105ae9735ba18b48640a59f805b06a030b50579dc4ed1b0ae1a413a1133",
+    "php83-hostider-p1-0b2aea884b3a-83-source.json": "9a62cf59c6c9a32d37c2d830600b20ef74a36c5a8ffa6aaa4673c36db598a1be",
+    "php83-hostider-p1-0b2aea884b3a-83.json": "17eddf724a200b783cba3cbb47d0767ecb2d012a0ade688b9865e7dc7bb86555",
+    "php83-hostider-p1-0b2aea884b3a-83.txt": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "php83-hostider-p1-d09373b0e7db-83-source.json": "9a62cf59c6c9a32d37c2d830600b20ef74a36c5a8ffa6aaa4673c36db598a1be",
+    "php83-hostider-p1-d09373b0e7db-83.json": "72a8ac506e570724d6d95cb29c6a02aa85a1d601f80c9fa803519cc2b5436965",
+    "php83-hostider-p1-d09373b0e7db-83.txt": "2dd2819d8d6e9485caaff168fa77439b07a5e58667fe38ec542020e0575d02e4",
+    "php84-hostider-p1-1d59b141a45d-84-source.json": "9a62cf59c6c9a32d37c2d830600b20ef74a36c5a8ffa6aaa4673c36db598a1be",
+    "php84-hostider-p1-1d59b141a45d-84.json": "8b06da4de37b0c3c26b7473313cbb1f6cf6658fd795b00527c20909ae8cdad7c",
+    "php84-hostider-p1-1d59b141a45d-84.txt": "ae84dc9737e78422957c90101bfea09b196b9001bf4f42614976b9c3dda46c8f",
+    "preservation.json": "2af4e33d865fede7d9365fe983d21c7aacbe421c6c5e16abd92c931712bc756c",
+    "run-tests.sh": "90a764fe8f5cc16703273a01b970efe73ff21a33ba526d8e76b98e471ad826c4",
+    "runner-source-proof.json": "8296df4a28b36037c5412bd6dc1f148d5190d071ce6fd575712c7615b2875997",
+    "runner.py.txt": "521ac06b0c19232a68dae5910407bf477b9cf1fa929e57b3dedf8546819bd0b8",
+    "source.diff": "c83c0fef34a9df3b675a14381356a6cecb42fbd83d548fb710f97fe932fa51cf",
+    "summary.json": "70d7b747228351a1932834474e8f1bc4de8960fe5d9ad425750d942538cdb0a2"
+  }
+}

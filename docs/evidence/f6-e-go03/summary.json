@@ -1,0 +1,197 @@
+{
+  "classification": "GO03_LOCAL_DOCKER_SYNTHETIC_DEVELOPMENT_EVIDENCE_RECORDED_BEFORE_PUBLICATION",
+  "base_sha": "f0b1db72c5fae63294e8d01b79136d9d089ffb87",
+  "source_commit_at_execution": null,
+  "source_manifest_sha256": "5fce854aee56cd7a2e27cf3c327d68f93e29fded2da7e77a914c6d76834001ef",
+  "source_files": 494,
+  "new_source_manifest_sha256": "bcb2b5ef40386bb2a22cc600f6c402f12dbc423f0aba64efab13c725a640d40e",
+  "new_source_files": 7,
+  "runs": [
+    {
+      "file": "php83-hostider-go03-967129c185fa-83.json",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites": [
+        {
+          "path": "tests/migration-discovery-collector.php",
+          "passed": 22,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-inventory.php",
+          "passed": 27,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-discovery.php",
+          "passed": 33,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-contract.php",
+          "passed": 31,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-visibility.php",
+          "passed": 8,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-import.php",
+          "passed": 43,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-reconciliation.php",
+          "passed": 35,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/hardening-unit.php",
+          "passed": 7,
+          "failed": 0,
+          "exit": 0
+        }
+      ],
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "phpstan_messages": [],
+      "source_manifest_sha256": "5fce854aee56cd7a2e27cf3c327d68f93e29fded2da7e77a914c6d76834001ef",
+      "host_source_unchanged": true,
+      "cleanup": [
+        {
+          "name": "hostider-go03-967129c185fa-83-app",
+          "already_absent": true
+        },
+        {
+          "name": "hostider-go03-967129c185fa-83-db",
+          "ownership_verified": true,
+          "removed": true
+        },
+        {
+          "name": "hostider-go03-967129c185fa-83-net",
+          "ownership_verified": true,
+          "removed": true
+        }
+      ]
+    },
+    {
+      "file": "php84-hostider-go03-a55ce88cdf88-84.json",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites": [
+        {
+          "path": "tests/migration-discovery-collector.php",
+          "passed": 22,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-inventory.php",
+          "passed": 27,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-discovery.php",
+          "passed": 33,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-contract.php",
+          "passed": 31,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-visibility.php",
+          "passed": 8,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-import.php",
+          "passed": 43,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/migration-reconciliation.php",
+          "passed": 35,
+          "failed": 0,
+          "exit": 0
+        },
+        {
+          "path": "tests/hardening-unit.php",
+          "passed": 7,
+          "failed": 0,
+          "exit": 0
+        }
+      ],
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "phpstan_messages": [],
+      "source_manifest_sha256": "5fce854aee56cd7a2e27cf3c327d68f93e29fded2da7e77a914c6d76834001ef",
+      "host_source_unchanged": true,
+      "cleanup": [
+        {
+          "name": "hostider-go03-a55ce88cdf88-84-app",
+          "already_absent": true
+        },
+        {
+          "name": "hostider-go03-a55ce88cdf88-84-db",
+          "ownership_verified": true,
+          "removed": true
+        },
+        {
+          "name": "hostider-go03-a55ce88cdf88-84-net",
+          "ownership_verified": true,
+          "removed": true
+        }
+      ]
+    }
+  ],
+  "successful_runtime_totals": {
+    "php83": "8.3.36",
+    "php84": "8.4.27",
+    "suites": 8,
+    "passed": 206,
+    "failed": 0,
+    "new_cases": 22,
+    "related_regressions": 184
+  },
+  "failed_runs_this_task": [],
+  "registry_suites": 65,
+  "expected_total_tests_not_full_execution": 917,
+  "full_acceptance": false,
+  "chromium": false,
+  "github_actions": false,
+  "composer_npm_audit_current": false,
+  "r2_method_exception_inherited": false,
+  "real_whmcs_source_discovery": "NOT_EXECUTED",
+  "independent_code_review": "PENDING",
+  "G-O03": "OPEN",
+  "source_truth": "UNVERIFIED",
+  "operator_authority": "UNVERIFIED",
+  "cutover_allowed": false,
+  "effects_allowed": false,
+  "real_gate_status": "BLOCKED",
+  "global_snapshot_atomicity": "NOT_VERIFIED"
+}

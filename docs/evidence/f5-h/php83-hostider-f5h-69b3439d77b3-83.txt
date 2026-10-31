@@ -1,0 +1,37 @@
+F5H_SOURCE_MANIFEST_MATCH 520
+F5H_PHP 8.3.36
+F5H_SUITE_BEGIN tests/support-split.php
+PASS F5-H 01 split creates real independent NEW child without moving immutable messages
+PASS F5-H 02 child active and source active plus explicit history separate selected messages
+PASS F5-H 03 message author timestamp visibility and physical ownership are unchanged
+PASS F5-H 04 private note selection is rejected without business changes
+PASS F5-H 05 foreign customer and department message IDs cannot enter split
+PASS F5-H 06 no role only privilege or client IDOR grants split authority
+PASS F5-H 07 session and MFA revocation invalidate prepared split
+PASS F5-H 08 grant and membership revoke cannot execute confirmed intent
+PASS F5-H 09 stale source reply version rejects split without partial ticket
+PASS F5-H 10 invalid duplicate empty and all public selections are blocked
+PASS F5-H 11 exact duplicate execute creates one child while confirmation replay is blocked
+PASS F5-H 12 concurrent two split processes produce at most one child relationship
+PASS F5-H 13 split and source reply race preserves every accepted message
+PASS F5-H 14 split and merge race cannot combine membership graphs
+PASS F5-H 15 chain cycle and merge combinations are fail closed for parent and child
+PASS F5-H 16 merged SOURCE and TARGET cannot split
+PASS F5-H 17 original attachment ownership storage and both endpoint ACL remain native
+PASS F5-H 18 source SLA and assignment snapshots untouched child starts current independent cycle
+PASS F5-H 19 immutable edge membership audit provenance and HELD outbox are linked
+PASS F5-H 20 membership insertion fault rolls back child SLA events audit and confirmation
+PASS F5-H 21 child and source receive independent normal replies after split
+PASS F5-H 22 public private projection never moves or reveals source internal notes
+PASS F5-H 23 source child pagination and poll track independent current versions
+PASS F5-H 24 native HTTP CSRF explicit confirm client projection and child reply work
+PASS F5-H 25 explicit subject identity version epoch and confirmation bind payload
+PASS F5-H 26 relational scope and public membership constraints reject forged DB associations
+PASS F5-H 27 requester membership is current and cannot be spoofed by HTTP fields
+PASS F5-H 28 fresh057 installed056 upgrade replay and old checksums are preserved
+PASS F5-H 29 partial057 fails closed until explicit isolated forward completion
+PASS F5-H 30 split participants cannot change department through native service
+FAIL F5-H 31 unavailable requester and production environment never create split child: [details redacted]
+1 dependent tests BLOCKED after first failure; not counted as passed
+32 tests, 1 failures
+F5H_SUITE_RESULT tests/support-split.php 1

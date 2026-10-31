@@ -1,0 +1,2 @@
+FAIL F6-D authenticated duplicate JSON archive keys are rejected before restore: Expected exception: InvalidArgumentException
+1 tests, 1 failures

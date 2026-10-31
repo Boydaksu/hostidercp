@@ -1,0 +1,28 @@
+{
+  "run_id": "r6ae1f56f",
+  "php_target": "84",
+  "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+  "php_image": "sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "network": "hostider-r2h-r6ae1f56f-84-net",
+  "volume": "hostider-r2h-r6ae1f56f-84-work",
+  "db_container": "hostider-r2h-r6ae1f56f-84-db",
+  "containers": [
+    "hostider-r2h-r6ae1f56f-84-prep",
+    "hostider-r2h-r6ae1f56f-84-quality",
+    "hostider-r2h-r6ae1f56f-84-app"
+  ],
+  "status": "FAILURE",
+  "started_at": "2026-10-28T13:15:32.7554931Z",
+  "prepare_exit": 0,
+  "quality_exit": 0,
+  "application_exit": 1,
+  "filtered_output_lines": 22,
+  "github_actions": false,
+  "full_acceptance": false,
+  "chromium": false,
+  "marathons": false,
+  "host_ports_published": false,
+  "finished_at": "2026-10-28T13:19:15.7654542Z"
+}

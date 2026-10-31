@@ -1,0 +1,2 @@
+FAIL F6-B B-01 migration readiness lost inside batch rolls back before commit: Assertion failed: 'FAILED' != 'APPLYING'
+1 tests, 1 failures

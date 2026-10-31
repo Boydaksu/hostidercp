@@ -1,0 +1,164 @@
+{
+  "classification": "SYNTHETIC",
+  "contract": "hostider.backup.v1",
+  "backup_id": "9ecba4fae9bd376c7e5578da8da8cbb1159dfb557c35ac87bdaca0f8eaeddf7a",
+  "state": "VERIFIED",
+  "logical_sha256": "617c4a58305a43adb662f8e916901cea537532fd01257906eb8061cc7abb3924",
+  "schema_sha256": "1b36fe09db2048befcda2a7c149797b94e9ccc06008e03e21ef371c64cfcd7ec",
+  "migration_versions": [
+    {
+      "version": "001_synthetic_import.php",
+      "checksum": "c6032c70d0754016c881f1e5b7c3b44a7852d601878e44934428571da8e4d44c",
+      "status": "APPLIED"
+    }
+  ],
+  "file_inventory": [
+    {
+      "sha256": "8166af1507328c6e4f30dd710ff6f94b2e0ada82546879e115d591272742e96e",
+      "bytes": 109,
+      "source_identity": "2d8da2af5902b18feee372135c9a9061df17c6c4b0237b3def5eea7220918952"
+    },
+    {
+      "sha256": "71fde5d58485621b79472b82e897916187463bc484f92adb4054cdd81d27d8e6",
+      "bytes": 109,
+      "source_identity": "5b2d053bf5b88e14cf48467b16a929e695b67c63066f0590d0965364e579fd18"
+    },
+    {
+      "sha256": "37ed421be2ebdbfd186deb8f0e4820a797e29b56b37ce0f989224e685cf4a457",
+      "bytes": 109,
+      "source_identity": "9999c76abd1b74b19397db6344fffc9ffbc136bba4a4fc59e23d8fd4eeadabbe"
+    },
+    {
+      "sha256": "594758cdcf69f2d6b2546710e4e92779ec402b574944aadfa8c0c2036072f35f",
+      "bytes": 109,
+      "source_identity": "b2cb9856b03fbee0ef723fd2e32586c8d96516002f7bada6d55e295b5a80718b"
+    }
+  ],
+  "logical_total_bytes": 56651,
+  "mapping_provenance_checkpoint_sha256": "fb6202a66ea7ba758a468f3038fb2661f517e5cb832438af23e6c7dbd0865b71",
+  "consistency": "VERIFIED_DERIVED_SYNTHETIC_FILE_CONTRACT",
+  "restore_eligibility": "ESCROW_ONLY_NATIVE_BLOCKED",
+  "source_snapshot": "a82ea82d8588c8c66c1374c951d3dacebe10043023504a1fbfcfec45b5e3d8ca",
+  "source_reconciliation": "PASS",
+  "counts": {
+    "f6b_claims": 11,
+    "f6b_entities": 26,
+    "f6b_environment": 1,
+    "f6b_history": 4,
+    "f6b_mappings": 26,
+    "f6b_provenance": 26,
+    "f6b_runs": 1,
+    "f6b_source_snapshots": 1,
+    "schema_migrations": 1
+  },
+  "finance": {
+    "differences_by_currency": {
+      "allocation": {
+        "TRY": "0"
+      },
+      "confirmed_collection": {
+        "TRY": "0"
+      },
+      "official_pdf": {
+        "TRY": "0"
+      },
+      "order_total": {
+        "TRY": "0"
+      },
+      "payment_amount": {
+        "TRY": "0"
+      },
+      "proforma": {
+        "TRY": "0"
+      },
+      "remaining_balance": {
+        "TRY": "0"
+      },
+      "wallet_liability": {
+        "TRY": "0"
+      }
+    },
+    "equal": true,
+    "source": {
+      "ledger_credit": "NOT_AVAILABLE",
+      "ledger_debit": "NOT_AVAILABLE",
+      "no_facts_in_observed_scope": [
+        "refund"
+      ],
+      "real_payment_reconciliation": "NOT_VERIFIED",
+      "status": "OBSERVED_SYNTHETIC_METADATA",
+      "totals": {
+        "allocation": {
+          "TRY": "4000"
+        },
+        "confirmed_collection": {
+          "TRY": "6000"
+        },
+        "official_pdf": {
+          "TRY": "10000"
+        },
+        "order_total": {
+          "TRY": "10000"
+        },
+        "payment_amount": {
+          "TRY": "6000"
+        },
+        "proforma": {
+          "TRY": "10000"
+        },
+        "remaining_balance": {
+          "TRY": "6000"
+        },
+        "wallet_liability": {
+          "TRY": "2000"
+        }
+      }
+    },
+    "target": {
+      "ledger_credit": "NOT_AVAILABLE",
+      "ledger_debit": "NOT_AVAILABLE",
+      "no_facts_in_observed_scope": [
+        "refund"
+      ],
+      "real_payment_reconciliation": "NOT_VERIFIED",
+      "status": "OBSERVED_SYNTHETIC_METADATA",
+      "totals": {
+        "allocation": {
+          "TRY": "4000"
+        },
+        "confirmed_collection": {
+          "TRY": "6000"
+        },
+        "official_pdf": {
+          "TRY": "10000"
+        },
+        "order_total": {
+          "TRY": "10000"
+        },
+        "payment_amount": {
+          "TRY": "6000"
+        },
+        "proforma": {
+          "TRY": "10000"
+        },
+        "remaining_balance": {
+          "TRY": "6000"
+        },
+        "wallet_liability": {
+          "TRY": "2000"
+        }
+      }
+    }
+  },
+  "file_count": 4,
+  "file_bytes": 436,
+  "file_inventory_sha256": "0619e37a0268f51013779dfd55e49227f07307c07b9e330395bb63be10e88751",
+  "algorithm": "XCHACHA20-POLY1305-IETF",
+  "key_id": "synthetic-v1",
+  "created_at": "2026-10-27T17:41:11Z",
+  "file_contract": "F6D_DERIVED_SYNTHETIC_SAMPLES_NOT_ORIGINAL_ARCHIVE_BYTES",
+  "native_restore": "BLOCKED_IDENTITY_BOUND",
+  "original_archive_bytes": "NOT_VERIFIED",
+  "production_backup": "NOT_VERIFIED",
+  "replay": false
+}

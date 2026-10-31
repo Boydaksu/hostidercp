@@ -1,0 +1,42 @@
+{
+  "classification": "SYNTHETIC",
+  "php": "8.4.24",
+  "new_tests": 24,
+  "new_failures": 0,
+  "relevant_r1_tests": 25,
+  "relevant_r1_failures": 0,
+  "other_old_tests_rerun_locally": false,
+  "phpstan_errors": 0,
+  "lint_files": 452,
+  "lint_violations": 0,
+  "pattern_files": 474,
+  "pattern_findings": 0,
+  "composer_locked_audit": "No security vulnerability advisories found.",
+  "ci_helper_tests": 6,
+  "ci_helper_failures": 0,
+  "real_process_counts": [
+    1,
+    4,
+    8
+  ],
+  "actual_crash_exit": 73,
+  "source_schema_removed": true,
+  "operational_vault_expired": true,
+  "source_signing_secret_writer_or_admin_credentials_given_to_child": false,
+  "negative_before": {
+    "array_authority": {
+      "tests": 1,
+      "failures": 1
+    },
+    "marker_view_side_effect": {
+      "tests": 1,
+      "failures": 1
+    }
+  },
+  "development_failed": {
+    "tests": 22,
+    "failures": 1,
+    "reason": "Parent entity deletion fixture hit FK; fixed leaf deletion",
+    "acceptance_evidence": false
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "base_sha": "d8dd28ae7a6cd9b13b4dc7ff35742ba7c0faa955",
+  "base_tree": "9f967e2e7eaec0b418b6712bf77cf93b70f3b06c",
+  "production_migration_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "existing_source_tests_blob_equal": 385,
+  "old_evidence_blob_equal": 510,
+  "migrations_blob_equal": 54,
+  "all_existing_files_except_two_registration_edits_blob_equal": 1163,
+  "p0_p1_p2_r2_changed": false,
+  "new_production_migration": false,
+  "user_review_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7"
+}

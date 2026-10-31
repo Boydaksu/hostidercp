@@ -1,0 +1,124 @@
+{
+  "G-O03": "OPEN",
+  "base_commit": "7da6ad75f43013b8b2e6e51765adc784d463d767",
+  "baseline": "10 PASS/6 FAIL on exact parent application; no older regression/quality run after suite failure",
+  "chromium": "NOT_RUN",
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_CANDIDATE",
+  "current_composer_npm_audit": "NOT_RUN",
+  "effects_allowed": false,
+  "final_per_runtime": {
+    "failed": 0,
+    "new_R1": 19,
+    "passed": 400,
+    "related_regressions": 381,
+    "suites": 11
+  },
+  "full_acceptance": false,
+  "github_actions": false,
+  "intermediate": "397/0 and quality PASS per PHP83/84 only for its own earlier manifest/test scope; not final acceptance",
+  "migration_tree_unchanged": "67280d29411bb2b570dbc83e1b8fa0c8d3a0e468",
+  "new_source_files": 2,
+  "old_evidence_unchanged": 605,
+  "old_tests_unchanged": 150,
+  "quality": {
+    "final_both": "PASS",
+    "final_docs": "Complete package checked separately",
+    "lint_files": 489,
+    "pattern_files": 512,
+    "phpstan_level": 5
+  },
+  "real_gate_status": "BLOCKED",
+  "registry_inventory_only": {
+    "expected_tests": 1003,
+    "full_pass_claimed": false,
+    "php_suites": 68
+  },
+  "runs": [
+    {
+      "failed": 2,
+      "final_candidate": false,
+      "passed": 16,
+      "php": "8.3.36",
+      "quality": {},
+      "record": "php83-hostider-f5gr1-3eef0a119f91-83.json",
+      "source_manifest_sha256": "f8df7d09e1272acfbcb5a15aecb591febf7bda5b7d9786e12668f66cc9d6e198",
+      "status": "FAILED"
+    },
+    {
+      "failed": 0,
+      "final_candidate": true,
+      "passed": 400,
+      "php": "8.3.36",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php83-hostider-f5gr1-43df8541262b-83.json",
+      "source_manifest_sha256": "d0f508c1acc6253563289a4038391c13f2bd74d2a0d6bb2ff9748cbce30216f4",
+      "status": "PASS"
+    },
+    {
+      "failed": 6,
+      "final_candidate": false,
+      "passed": 10,
+      "php": "8.3.36",
+      "quality": {},
+      "record": "php83-hostider-f5gr1-7cfddd6c3381-83.json",
+      "source_manifest_sha256": "9741f5a2d276a84b98640ddf7925e5ef89e5fefb772172d4c378e9d5b088c712",
+      "status": "FAILED"
+    },
+    {
+      "failed": 0,
+      "final_candidate": false,
+      "passed": 397,
+      "php": "8.3.36",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php83-hostider-f5gr1-ce2d63c106eb-83.json",
+      "source_manifest_sha256": "3161314bc0ec4ca1ae9c907f17e307049a102122a4b8351e9fb6860fffd8239b",
+      "status": "PASS"
+    },
+    {
+      "failed": 0,
+      "final_candidate": true,
+      "passed": 400,
+      "php": "8.4.27",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php84-hostider-f5gr1-82792d9104ab-84.json",
+      "source_manifest_sha256": "d0f508c1acc6253563289a4038391c13f2bd74d2a0d6bb2ff9748cbce30216f4",
+      "status": "PASS"
+    },
+    {
+      "failed": 0,
+      "final_candidate": false,
+      "passed": 397,
+      "php": "8.4.27",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php84-hostider-f5gr1-c3b446ce3bd1-84.json",
+      "source_manifest_sha256": "3161314bc0ec4ca1ae9c907f17e307049a102122a4b8351e9fb6860fffd8239b",
+      "status": "PASS"
+    }
+  ],
+  "snapshot_repro": "16 PASS/2 FAIL after three initial guards; repeatable-read bypass then fixed; only R1 suite run",
+  "source_commit": null,
+  "source_files": 512,
+  "source_manifest_sha256": "d0f508c1acc6253563289a4038391c13f2bd74d2a0d6bb2ff9748cbce30216f4",
+  "status": "DEVELOPMENT_VALIDATED_INDEPENDENT_REVIEW_PENDING",
+  "whmcs_migration": "DEFERRED"
+}

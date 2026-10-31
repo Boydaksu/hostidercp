@@ -1,0 +1,51 @@
+{
+  "tests/support-b-post-audit.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 93,
+      "raises": 1
+    }
+  },
+  "tests/support-b.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 139,
+      "raises": 14
+    }
+  },
+  "tests/support-c.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 157,
+      "raises": 34
+    }
+  },
+  "tests/support-d.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 163,
+      "raises": 34
+    }
+  },
+  "tests/support-e.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 119,
+      "raises": 24
+    }
+  },
+  "tests/support-merge.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 129,
+      "raises": 32
+    }
+  },
+  "tests/support-migrations.php": {
+    "test_names_unchanged": true,
+    "assertion_calls": {
+      "same": 11,
+      "raises": 5
+    }
+  }
+}

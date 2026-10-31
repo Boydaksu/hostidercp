@@ -1,0 +1,23 @@
+F5G_SOURCE_MANIFEST_MATCH 510
+F5G_PHP 8.3.36
+F5G_SUITE_BEGIN tests/support-merge.php
+PASS F5-G 01 scoped merge preserves tickets and messages with immutable directed alias
+PASS F5-G 02 same ticket and unknown payload scope assertions are rejected
+PASS F5-G 03 cross customer merge rejected using real locked DB owners
+PASS F5-G 04 cross department merge denied even with both explicit grants
+PASS F5-G 05 customer and administrator without explicit merge grant cannot prepare
+PASS F5-G 06 session revocation invalidates prepared merge atomically
+PASS F5-G 07 disabled MFA cannot execute prepared merge
+PASS F5-G 08 current merge grant and membership revocation block execute
+PASS F5-G 09 stale source version rejects with no merge side effects
+PASS F5-G 10 stale target version rejects prepared merge
+PASS F5-G 11 direction tampering and explicit decline cannot execute
+PASS F5-G 12 exact duplicate is idempotent but fresh-key replay is blocked
+PASS F5-G 13 inverse real process race creates at most one edge and no cycle
+PASS F5-G 14 triples chains repeated endpoints and cycles remain blocked
+PASS F5-G 15 reply to source explicitly identifies target and never silently appends
+PASS F5-G 16 customer alias lookup and legacy projection enforce current ACL
+FAIL F5-G 17 private notes metadata and attachment ownership stay on original ticket: [details redacted]
+16 dependent tests BLOCKED after first failure; not counted as passed
+33 tests, 1 failures
+F5G_SUITE_RESULT tests/support-merge.php 1

@@ -1,0 +1,26 @@
+{
+  "classification": "SYNTHETIC",
+  "development": "PARTIAL",
+  "identity_bound": "OPEN",
+  "issuer_recovery": "PARTIAL_PRE_ENROLLED_READ_ONLY_VERIFICATION",
+  "original_archive_bytes": "OPEN",
+  "native_recovery_test": "BLOCKED",
+  "production_cold_restore": "NOT_VERIFIED",
+  "real_offsite_key_custody": "NOT_VERIFIED",
+  "full": "NOT_DISPATCHED",
+  "f6_e": "NOT_AUTHORIZED",
+  "production": "UNCHANGED",
+  "pr": {
+    "number": 3,
+    "state": "OPEN",
+    "draft": true
+  },
+  "main": {
+    "protected": false,
+    "rulesets": []
+  },
+  "authorization_window_max_seconds": 900,
+  "policy_source": "TRUSTED_OPERATOR_CONFIGURATION_NOT_CAPSULE",
+  "operator_label": "HASHED_LABEL_NOT_NATIVE_USER_AUTHENTICATION",
+  "independent_acceptance": "PENDING"
+}

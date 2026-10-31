@@ -1,0 +1,2 @@
+FAIL F6-D-R2 a caller supplied array comparison cannot claim actual database authority: Assertion failed: false != true
+1 tests, 1 failures

@@ -1,0 +1,11 @@
+PASS F5-B P1 resolved staff reopen completes exactly one new FIRST and preserves old cycle
+PASS F5-B P1 permitted CLOSED staff reopen completes FIRST and replay is an exact no-op
+PASS F5-B P1 customer reopen leaves FIRST pending until a genuine staff reply
+PASS F5-B P1 parallel native HTTP reopen replies create one cycle completion and public outbox
+PASS F5-B P1 HTTP empty weekly policy is rejected without writes and client can still create
+PASS F5-B P1 HTTP exception horizon policy is rejected and previous policy stays usable
+PASS F5-B P1 future calendar failure preserves HTTP ticket message and explicit idempotent unavailable result
+PASS F5-B P1 valid HTTP create is atomic and SQL failure leaves no partial support or idempotency rows
+PASS F5-B P1 active-cycle horizon failure preserves snapshots replies and cross-department recovery
+PASS F5-B P1 additive 050 to 051 preserves all prior checksums and replays without work
+10 tests, 0 failures

@@ -1,0 +1,219 @@
+P3_SOURCE_MANIFEST_MATCH 487
+P3_PHP 8.4.27
+P3_SUITE_BEGIN tests/migration-inventory.php
+PASS P3 01 valid synthetic inventory transforms into actual P2 contract
+PASS P3 02 repeated conversion same bytes key and context is deterministic
+PASS P3 03 wrong out of band source or snapshot always rejected
+PASS P3 04 missing schema or tables inventory explicit UNKNOWN no invented entries
+PASS P3 05 missing columns inventory represented unknown and absent metadata blocked
+PASS P3 06 missing indexes explicit unverified without inventing primary key
+PASS P3 07 duplicate and case ambiguous schema table column index identifiers rejected
+PASS P3 08 charset collation and column conflicts delegated to P2
+PASS P3 09 HMAC key separation changes opaque IDs never exposes either key
+PASS P3 10 HMAC source and snapshot domain separation with correctly rebound exports
+PASS P3 11 HMAC exact canonical algorithm kind and parent namespace independently checked
+PASS P3 12 modified offline export cannot match independently pinned byte hash
+PASS P3 13 malformed duplicate nested escaped keys and encoding rejected
+PASS P3 14 oversized empty deeply nested and excessive strings blocked
+PASS P3 15 wrong file types path URL and closed handle rejected
+PASS P3 16 consumed regular handle cannot be silently replayed and remains caller owned
+PASS P3 17 raw names and private mapping never leave successful adapter result
+PASS P3 18 row data credentials password hashes and PII fields blocked without leak
+PASS P3 19 each nested level rejects mixed source or snapshot identifiers
+PASS P3 20 forged G-O03 source truth and cutover authority cannot enter export
+PASS P3 21 invalid or oversized identifiers traversal Unicode and SQL text rejected
+PASS P3 22 missing required fields inventory conflicts and extra types fail closed
+PASS P3 23 composite index order preserved and unknown duplicate references blocked by P2
+PASS P3 24 shuffled export retains IDs but binds distinct byte provenance
+PASS P3 25 key length version classification and unclaimed source system rejected
+PASS P3 26 operator prepared export still cannot establish operator or source truth
+PASS P3 27 metadata semantic type errors delegated to immutable P2 validator
+27 tests, 0 failures
+P3_SUITE_RESULT tests/migration-inventory.php 0
+P3_SUITE_BEGIN tests/migration-discovery.php
+PASS P2 01 valid explicitly synthetic metadata contract and safe aggregate report
+PASS P2 02 every required root field fails closed when missing
+PASS P2 03 unsupported contract version and encoding rejected
+PASS P2 04 claimed numeric WHMCS version stays unverified unknown remains unknown
+PASS P2 05 missing table or column metadata cannot imply inventory compatibility
+PASS P2 06 unexpected custom field blocked unless exact out of band allowlist
+PASS P2 07 charset collation contradiction and unknown label cannot pass
+PASS P2 08 password algorithms are metadata claims never hash compatibility
+PASS P2 09 duplicate root JSON key rejected even with identical value
+PASS P2 10 nested duplicate keys and escaped key equivalence rejected
+PASS P2 11 malformed JSON invalid Unicode BOM surrogate and trailing input blocked
+PASS P2 12 byte string depth and node limits enforced
+PASS P2 13 out of band expected source binding rejects another source
+PASS P2 14 snapshot provenance and artifact binding mismatch blocked
+PASS P2 15 every category rejects mixed source snapshot metadata
+PASS P2 16 content fingerprint and schema fingerprint tampering rejected
+PASS P2 17 forbidden personal data fields never enter report or exception text
+PASS P2 18 credentials session secrets and actual password hash shapes forbidden
+PASS P2 19 forged G-O03 CLOSED and verified authority fields rejected
+PASS P2 20 missing file inventory is UNKNOWN absent category or contradictory items blocked
+PASS P2 21 canonical fingerprint deterministic across repeat and object key order
+PASS P2 22 malformed typed evidence never produces offline positive
+PASS P2 23 cutover effects readiness escalation always blocked
+PASS P2 24 no path URL traversal or filesystem locator accepted
+PASS P2 25 regular file handle bounded read and caller ownership preserved
+PASS P2 26 oversized file and non regular stream rejected without path reads
+PASS P2 27 duplicate inventory IDs index references primary and bounds rejected
+PASS P2 28 timezone date ordering and uncertainty allowlist fail closed
+PASS P2 29 sanitized operator supplied classification never establishes truth
+PASS P2 30 strict object list distinction and unknown enum values rejected
+PASS P2 31 escaped arbitrary strings do not confuse JSON duplicate scanning
+PASS P2 32 conflicting knowledge cannot be downgraded to unknown by date policy
+PASS P2 33 column charset metadata checked independently of table defaults
+33 tests, 0 failures
+P3_SUITE_RESULT tests/migration-discovery.php 0
+P3_SUITE_BEGIN tests/migration-contract.php
+PASS F6-A 01 same identity fingerprint deterministic replay and input order
+PASS F6-A 02 same identity changed content conflicts without overwrite
+PASS F6-A 03 source instances are isolated even with identical IDs
+PASS F6-A 04 missing immutable source ID fails closed
+PASS F6-A 05 invalid versions entity and extra envelope fields rejected
+PASS F6-A 06 mixed snapshots schema watermark and timezone rejected
+PASS F6-A 07 missing parents never invented or linked across instance
+PASS F6-A 08 duplicate external resources conflict for every provider
+PASS F6-A 09 customer service and provider account ownership fail closed
+PASS F6-A 10 unknown payment cannot establish PAID or allocations
+PASS F6-A 11 unknown or inflight resource never promoted ACTIVE
+PASS F6-A 12 currencies never combined or silently converted
+PASS F6-A 13 unknown historical FX remains review without current rate
+PASS F6-A 14 private note cannot become public or uncertain visibility
+PASS F6-A 15 wrong author membership or kind requires review
+PASS F6-A 16 attachment missing malformed checksum rejected
+PASS F6-A 17 traversal absolute encoded backslash and symlink paths reviewed without reads
+PASS F6-A 18 source staff cannot inherit admin MFA roles sessions or tokens
+PASS F6-A 19 legacy password format rejected and reset verification mandatory
+PASS F6-A 20 imported CREATE forbidden all providers and pure module has no effect dependencies
+PASS F6-A 21 malformed types floats overflow UTF8 and unknown fields fail closed
+PASS F6-A 22 duplicate identity and stale content SHA rejected
+PASS F6-A 23 knowledge states distinct and never carry guessed values
+PASS F6-A 24 mapping target tamper metadata and snapshot conflict
+PASS F6-A 25 partial payment limits refunds and immutable provenance
+PASS F6-A 26 original message order time visibility and attachment relations preserved
+PASS F6-A 27 attachment missing corrupt MIME size and reported file evidence
+PASS F6-A 28 timezone uncertainty email conflicts and invalid timestamps explicit
+PASS F6-A 29 fully evidenced PAID remains distinct from suspended imported resource
+PASS F6-A 30 published synthetic fixture and manifest match generator exactly
+PASS F6-A 31 malformed knowledge payload provenance timezone and source encoding rejected
+31 tests, 0 failures
+P3_SUITE_RESULT tests/migration-contract.php 0
+P3_SUITE_BEGIN tests/migration-visibility.php
+PASS F6-A P1 public reply with known PRIVATE is an explicit visibility conflict
+PASS F6-A P1 public reply with known PUBLIC remains valid and unchanged
+PASS F6-A P1 private internal note with verified source STAFF remains archive only
+PASS F6-A P1 internal note with PUBLIC remains rejected
+PASS F6-A P1 all four uncertain internal note visibility states are rejected
+PASS F6-A P1 all four uncertain public reply states remain review without normalization
+PASS F6-A P1 declared STAFF does not verify a customer source author for internal notes
+PASS F6-A P1 attachment to inconsistent message never makes snapshot public eligible in any order
+8 tests, 0 failures
+P3_SUITE_RESULT tests/migration-visibility.php 0
+P3_SUITE_BEGIN tests/migration-import.php
+PASS F6-B dry-run repeats and reversed fixture produce deterministic plans
+PASS F6-B dry-run writes no target run claim provenance or checkpoint
+PASS F6-B dry-run has zero provider payment billing mail and notification calls
+PASS F6-B first load creates expected separate facts mappings and provenance
+PASS F6-B second load is no-op preserving all history and immutable data
+PASS F6-B same identity changed content never overwrites existing facts
+PASS F6-B customer user membership remain separate without admin MFA credentials
+PASS F6-B cross-customer ownership is review with zero target facts
+PASS F6-B four imported providers stay CREATE zero on first load retry and queue replay
+PASS F6-B 1 4 8 independent PHP workers serialize to one mapping per source
+PASS F6-B UNKNOWN payment and provider never become PAID ACTIVE or APPLIED
+PASS F6-B currency allocation refund limits and historical FX remain fail closed
+PASS F6-B wallet liability and payment allocations retain exact currency amounts once
+PASS F6-B official document and proforma retain separate original types and numbers
+PASS F6-B public archive excludes private note author metadata and private attachment path
+PASS F6-B public archive cross-owner ticket scope is denied
+PASS F6-B F6-A visibility P1 and forbidden legacy identity fields remain blocked
+PASS F6-B missing corrupt files and duplicate identities require review not completion
+PASS F6-B half batch exception rolls back entity mapping provenance and cursor
+PASS F6-B checkpoint write and target batch roll back atomically on exception
+PASS F6-B committed prefix resumes once with correct dependencies and final cursor
+PASS F6-B stale checkpoint and wrong target snapshot do not write targets
+PASS F6-B actual worker process crash rolls back then new process resumes
+PASS F6-B actual own connection loss rolls back and reconnect resumes deterministically
+PASS F6-B changed snapshot is conflict and never overwrites provenance
+PASS F6-B two source instances stay separate without physical resource or identity merge
+PASS F6-B competing resource payment email claims never silently merge
+PASS F6-B target identity cannot be owned by another source even before mapping
+PASS F6-B mapping target uniqueness is a physical database constraint
+PASS F6-B immutable facts mappings provenance and history reject runtime update delete
+PASS F6-B checkpoint tamper and failed migration readiness fail closed
+PASS F6-B environment and explicit synthetic authority are independent mandatory gates
+PASS F6-B arbitrary DSN real source URL path rows and credentials are not inputs
+PASS F6-B matching schema prefix alone cannot bypass actual grants or lease
+PASS F6-B unexpected native table and forged marker secret deny the sandbox
+PASS F6-B explicit effect attempts are denied and never dispatch
+PASS F6-B dry-run conflict check remains read only after a successful load
+PASS F6-B schema underscore cannot grant SELECT to a similarly named sibling database
+PASS F6-B real failed additive test DDL remains APPLYING and blocks sandbox replay
+PASS F6-B synthetic module has no native engines transports or external dispatch dependency
+PASS F6-B partial snapshot cannot admit changed content before that source row is mapped
+PASS F6-B dry-run mapping evidence matches committed mappings and source roots are immutable
+PASS F6-B B-01 migration readiness lost inside batch rolls back before commit
+43 tests, 0 failures
+P3_SUITE_RESULT tests/migration-import.php 0
+P3_SUITE_BEGIN tests/migration-reconciliation.php
+PASS F6-C completed snapshot independently matches all entities and evidence
+PASS F6-C repeat reversed input and reviewer metadata preserve deterministic fingerprint
+PASS F6-C partial and failed runs never claim complete reconciliation
+PASS F6-C APPLIED status cannot hide missing mapping and orphan target
+PASS F6-C unexpected target entity is reported without repair
+PASS F6-C tampered mapping provenance and payload hashes are independently rejected
+PASS F6-C missing provenance is not accepted from APPLIED flag
+PASS F6-C stale checkpoint wrong snapshot and root tampering require review
+PASS F6-C changed source snapshot never silently reuses APPLIED target
+PASS F6-C customer ownership and target identity mismatch reject matching payload
+PASS F6-C provider account service external identity and claim conflicts are visible
+PASS F6-C wrong claim owner cannot be hidden by valid mapping
+PASS F6-C provider operations remain zero after load retry replay and parallel reads
+PASS F6-C payment allocation and refund mismatches stay review only
+PASS F6-C native Money totals keep allocation wallet collection and remaining separate
+PASS F6-C wallet liability and currency mismatches never cross sum currencies
+PASS F6-C unknown historical FX and payment evidence cannot produce zero difference PASS
+PASS F6-C official PDF and proforma retain independent metadata without byte claims
+PASS F6-C tied message timestamps retain deterministic source sequence and identity order
+PASS F6-C reports never expose private body author path email or credentials
+PASS F6-C private message and attachment metadata conflicts never gain public eligibility
+PASS F6-C test archive still refuses cross customer projection
+PASS F6-C incomplete migration and expired marker fail closed before data reporting
+PASS F6-C reader has physical SELECT only grants and denies excess permissions
+PASS F6-C reader cannot access similarly named sibling or native schema
+PASS F6-C arbitrary DSN source paths users and revoked synthetic authorization are denied
+PASS F6-C missing customer parent and orphan dependencies require review
+PASS F6-C repeated reports leave target finance history and every table byte unchanged
+PASS F6-C absent real source ledger and attachment bytes remain explicitly unverified
+PASS F6-C oversized payload and row inventory are inconclusive rather than truncated PASS
+PASS F6-C module has no native effect adapters transport file copy or repair SQL
+PASS F6-C unexpected refund cannot disappear into equal financial totals
+PASS F6-C target legacy credentials admin and MFA flags remain forbidden facts
+PASS F6-C unexpected columns or lost uniqueness block bounded reconciliation
+PASS F6-C different target contents with identical summaries have different evidence fingerprints
+35 tests, 0 failures
+P3_SUITE_RESULT tests/migration-reconciliation.php 0
+P3_SUITE_BEGIN tests/hardening-unit.php
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures
+P3_SUITE_RESULT tests/hardening-unit.php 0
+P3_QUALITY_BEGIN check
+465 PHP files checked; 0 violations
+P3_QUALITY_RESULT check 0
+P3_QUALITY_BEGIN audit
+487 source/config/test files scanned; 0 findings
+P3_QUALITY_RESULT audit 0
+P3_QUALITY_BEGIN phpstan
+P3_QUALITY_RESULT phpstan 0
+P3_QUALITY_BEGIN documentation
+643 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+P3_QUALITY_RESULT documentation 0
+P3_SOURCE_MANIFEST_MATCH 487

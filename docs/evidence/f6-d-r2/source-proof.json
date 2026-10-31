@@ -1,0 +1,47 @@
+{
+  "classification": "SYNTHETIC",
+  "application_sha": "f0db545b5b5fd0e569b07e33efb85e245be16b40",
+  "application_tree": "6482e0d546e9bcafbeeb7872052eda99a97d8d26",
+  "r1_accepted_sha": "3773351c01164dc3e58a7c4b869ef980a5b7cf79",
+  "r1_accepted_tree": "80beecd299c60ed669e4d0c52c76751ee020b692",
+  "r1_evidence_sha": "2a3b4d1d8ffd9a06cbabe66d10de694645971198",
+  "r1_acceptance_docs_sha": "1bcad5f93f4d75b4af336180fe71b46d1a4c1374",
+  "r1_acceptance_docs_files": [
+    "README.md",
+    "docs/F6_PLAN.md",
+    "docs/F6_D_PLAN.md",
+    "docs/F6_D_DELIVERY_REPORT.md",
+    "docs/F6_D_R1_PLAN.md",
+    "docs/F6_D_R1_DELIVERY_REPORT.md"
+  ],
+  "acceptance_source_test_ci_migration_changes": [],
+  "accepted_source_files_modified": [],
+  "source_files_added": [
+    "src/Migration/Operations/RecoveryContext.php",
+    "src/Migration/Operations/RecoveryInspector.php",
+    "src/Migration/Operations/RecoveryTargetPolicy.php"
+  ],
+  "old_test_files_equal": 129,
+  "old_tests": 756,
+  "old_suites": 58,
+  "new_tests_local": 24,
+  "production_migration_subtree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "remote_commit_tree_verified": true,
+  "branch": "codex/f5-support-center",
+  "pr": {
+    "number": 3,
+    "state": "OPEN",
+    "draft": true
+  },
+  "main": {
+    "sha": "ada37dc52b324e34380ba836ae7794cebb174ec4",
+    "protected": false,
+    "rulesets": []
+  },
+  "source_changed_before_retry": false,
+  "ci": "BLOCKED_EXTERNAL_BILLING_TESTS_NOT_STARTED",
+  "unrelated_unstaged_user_edit": "docs/F6_B_B01_REVIEW.md",
+  "rollback_application_commits": [
+    "f0db545b5b5fd0e569b07e33efb85e245be16b40"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": 40501763210,
+  "sha": "422bf81f7689523075cf46993486c8f66fd2e827",
+  "conclusion": "failure",
+  "php": [
+    "8.3",
+    "8.4"
+  ],
+  "old_baseline_tests": 621,
+  "old_baseline_failures": 0,
+  "new_tests": 40,
+  "new_failures": 35,
+  "safe_error": "F6B_TEST_SETUP_FAILED_1045",
+  "acceptance_evidence": false,
+  "fix": "Test accounts bound to server-observed exact client host across Docker published loopback port; no wildcard host or added privileges."
+}

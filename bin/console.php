@@ -16,7 +16,7 @@ try {
         echo base64_encode(random_bytes(32)) . PHP_EOL;
         exit(0);
     }
-    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire','cloud-costs:work','cloud-costs:propose','panel:inspect'], true)) {
+    if (!in_array($command, ['migrate','outbox:dispatch','queue:work','queue:attention','health:check','retention:rates','retention:job-payloads','services:discover','services:expire','services:work','services:schedule','domains:work','domains:expire','cloud:work','cloud:expire','cloud-costs:work','cloud-costs:propose','panel:inspect','support:work','support:auto-close','support:automation','support:mail-ingest','support:mail-retain'], true)) {
         fwrite(STDERR, 'Commands: key:generate, migrate, outbox:dispatch, queue:work --once, queue:attention, health:check, retention:rates, retention:job-payloads <age-seconds>, domains:work, domains:expire' . PHP_EOL);
         exit(2);
     }
@@ -28,6 +28,24 @@ try {
     $queue = new Queue($db);
     if ($command === 'migrate') {
         echo json_encode(['applied' => (new Migrator($db, dirname(__DIR__) . '/migrations'))->migrate()], JSON_THROW_ON_ERROR) . PHP_EOL;
+    } elseif ($command==='support:mail-ingest'||$command==='support:mail-retain') {
+        $m=new \Hostider\Support\Mail\Common(new \Hostider\Commerce\Services($db,$config));$m->gate();$files=\Hostider\Support\Mail\Factory::files($m);if($command==='support:mail-retain'){$result=(new \Hostider\Support\Mail\Retention($m,$files->store))->run();}else{$raw=stream_get_contents(STDIN,180001);if(strlen($raw)>180000){throw new InvalidArgumentException('Mail input limit');}$p=json_decode($raw,true,32,JSON_THROW_ON_ERROR);\Hostider\Core\Validation::fields($p,['department_id','raw_base64','proof'],['department_id','raw_base64','proof']);if(!is_string($p['raw_base64'])||!is_string($p['proof'])||strlen($p['proof'])>128||($bytes=base64_decode($p['raw_base64'],true))===false){throw new InvalidArgumentException('Mail input format');}$result=(new \Hostider\Support\Mail\Inbound($m,$files))->poll(new \Hostider\Support\Mail\TestAdapter([['department_id'=>$p['department_id'],'raw'=>$bytes,'proof'=>$p['proof']]]));}echo json_encode($result,JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command==='support:automation') {
+        echo json_encode((new \Hostider\Support\Automation\Engine(new \Hostider\Support\Advanced\Common(new \Hostider\Commerce\Services($db,$config))))->seed(),JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command==='support:auto-close') {
+        $options=[];$dry=false;$once=false;
+        foreach(array_slice($argv,2) as $option){
+            if($option==='--once'&&!$once){$once=true;continue;}
+            if($option==='--dry-run'&&!$dry){$dry=true;continue;}
+            if(!preg_match('/^--(max-tickets|max-seconds)=([1-9][0-9]*)$/D',$option,$m)||isset($options[$m[1]])){throw new InvalidArgumentException('Invalid auto-close worker option');}
+            $options[$m[1]]=(int)$m[2];
+        }
+        if(!$once){throw new InvalidArgumentException('Auto-close requires --once');}
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');
+        echo json_encode((new \Hostider\Support\AutoClose\Engine(new \Hostider\Commerce\Services($db,$config)))->run($options['max-tickets']??25,$options['max-seconds']??20,$dry),JSON_THROW_ON_ERROR).PHP_EOL;
+    } elseif ($command==='support:work') {
+        $db->execute('SET SESSION innodb_lock_wait_timeout=2');$options=[];foreach(array_slice($argv,2) as $option){if(!preg_match('/^--(max-tickets|max-seconds)=([1-9][0-9]*)$/D',$option,$m)||isset($options[$m[1]])){throw new InvalidArgumentException('Invalid support worker option');}$options[$m[1]]=(int)$m[2];}
+        echo json_encode((new \Hostider\Support\Work\Engine(new \Hostider\Commerce\Services($db,$config)))->run($options['max-tickets']??25,$options['max-seconds']??20),JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command==='services:schedule') {
         echo json_encode((new \Hostider\Services\Scheduler($db,$config))->run(),JSON_THROW_ON_ERROR).PHP_EOL;
     } elseif ($command==='panel:inspect') {
@@ -61,6 +79,10 @@ try {
         $worker = new Worker($db, $queue);
         // F2 handlers only record local facts; ready orders and mail remain explicitly held.
         $worker->register('core.probe', static fn(array $payload): string => 'SUCCEEDED');
+        (new \Hostider\Support\Automation\Engine(new \Hostider\Support\Advanced\Common(new \Hostider\Commerce\Services($db,$config))))->register($worker);
+        (new \Hostider\Support\AutoClose\Engine(new \Hostider\Commerce\Services($db,$config)))->register($worker);
+        (new \Hostider\Support\EventSink($db,$config))->register($worker);
+        (new \Hostider\Support\Work\HeldSink($db,$config))->register($worker);(new \Hostider\Support\Mail\Outbound(new \Hostider\Support\Mail\Common(new \Hostider\Commerce\Services($db,$config))))->register($worker);
         (new \Hostider\Commerce\EventSink($db))->register($worker);
         (new \Hostider\Services\EventSink($db,$config))->register($worker);
         (new \Hostider\Domains\EventSink($db,$config))->register($worker);

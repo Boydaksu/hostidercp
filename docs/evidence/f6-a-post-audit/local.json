@@ -1,0 +1,25 @@
+{
+  "application_sha": "063e846999e4bda513f3563de0c4f13ac8858b97",
+  "php": "8.4.24",
+  "new_visibility_suite": {
+    "tests": 8,
+    "failures": 0,
+    "exit": 0
+  },
+  "original_contract_suite": {
+    "tests": 31,
+    "failures": 0,
+    "exit": 0
+  },
+  "ci_helpers_separate": {
+    "tests": 6,
+    "failures": 0
+  },
+  "phpstan_errors": 0,
+  "lint_php_files": 403,
+  "lint_violations": 0,
+  "pattern_files": 425,
+  "pattern_findings": 0,
+  "full_local_db_http_run": false,
+  "real_external_effects": false
+}

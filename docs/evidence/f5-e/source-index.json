@@ -1,0 +1,233 @@
+{
+    "source_sha": "f226220847390ea3f5c69eef90ad968117d7edc7",
+    "cases": [
+        {
+            "name": "F5-E native admin and customer context expose only authorized departments and mock contracts",
+            "file": "tests/support-e.php",
+            "line": 10,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E SQL filters and deterministic pagination cover more than fifty authorized tickets",
+            "file": "tests/support-e.php",
+            "line": 11,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E subject search fails explicitly instead of searching only the first page",
+            "file": "tests/support-e.php",
+            "line": 12,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E customer conversation and timeline exclude internal notes in SQL",
+            "file": "tests/support-e.php",
+            "line": 13,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E encrypted drafts are scoped to exact owner session ticket customer and kind",
+            "file": "tests/support-e.php",
+            "line": 14,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E draft optimistic versions prevent overwrite and expired drafts do not return",
+            "file": "tests/support-e.php",
+            "line": 15,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E stale draft is retained and cannot silently rebase into a send",
+            "file": "tests/support-e.php",
+            "line": 16,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E exact confirmed send clears only its own draft and keeps note draft",
+            "file": "tests/support-e.php",
+            "line": 17,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E forged confirmation body kind version and session fail without consuming draft",
+            "file": "tests/support-e.php",
+            "line": 18,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E changed draft invalidates previously prepared send",
+            "file": "tests/support-e.php",
+            "line": 19,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E send transaction failure rolls back message event receipt confirmation and draft clear",
+            "file": "tests/support-e.php",
+            "line": 20,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E customer confirmed reply preserves canonical FIRST completion and own draft semantics",
+            "file": "tests/support-e.php",
+            "line": 21,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E polling snapshot changes with version and unchanged projection is bounded",
+            "file": "tests/support-e.php",
+            "line": 22,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E saved filters remain encrypted session scoped and reject search or forged fields",
+            "file": "tests/support-e.php",
+            "line": 23,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E presence is approximate bounded and never discloses note typing or viewers identities",
+            "file": "tests/support-e.php",
+            "line": 24,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E settings and rule editor reuse native snapshots and action-specific ACL",
+            "file": "tests/support-e.php",
+            "line": 25,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E incident projection and CSAT remain connected to canonical customer scope",
+            "file": "tests/support-e.php",
+            "line": 26,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E revoked department blocks draft poll filter and presence reads immediately",
+            "file": "tests/support-e.php",
+            "line": 27,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E migration 054 is additive with immutable 001 through 053 and replay no-op",
+            "file": "tests/support-e.php",
+            "line": 28,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E native HTTP CSRF method context and page guards operate with real MariaDB",
+            "file": "tests/support-e.php",
+            "line": 29,
+            "kind": "REAL_MARIADB_NATIVE_HTTP"
+        },
+        {
+            "name": "F5-E independent 1 4 8 PHP send replays produce one message event completion and cleared draft",
+            "file": "tests/support-e.php",
+            "line": 30,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E same user different native session cannot read or consume another session draft",
+            "file": "tests/support-e.php",
+            "line": 31,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E actual installed 053 upgrade applies only 054 and leaves previous migration rows unchanged",
+            "file": "tests/support-e.php",
+            "line": 32,
+            "kind": "REAL_MARIADB_APPLICATION"
+        },
+        {
+            "name": "F5-E native HTTP create assign reply SLA incident CSAT report flow remains atomic and scoped",
+            "file": "tests/support-e.php",
+            "line": 33,
+            "kind": "REAL_MARIADB_NATIVE_HTTP"
+        },
+        {
+            "name": "F5-E Chromium client DOM uses literal text and excludes internal note and staff controls",
+            "file": "tests/support-e-browser.cjs",
+            "line": 5,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium encrypted server draft survives reload without browser storage",
+            "file": "tests/support-e-browser.cjs",
+            "line": 6,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium native confirmed send renders one canonical public message",
+            "file": "tests/support-e-browser.cjs",
+            "line": 7,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium operator reply and note drafts stay separate",
+            "file": "tests/support-e-browser.cjs",
+            "line": 8,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium structured roster publishes with explicit native UTC time and server confirmation",
+            "file": "tests/support-e-browser.cjs",
+            "line": 9,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium native policy snapshot and structured AST editor open with current ACL",
+            "file": "tests/support-e-browser.cjs",
+            "line": 9,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium mobile portal fits viewport",
+            "file": "tests/support-e-browser.cjs",
+            "line": 10,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium changed native scope epoch stops polling and clears conversation drafts and dialog DOM",
+            "file": "tests/support-e-browser.cjs",
+            "line": 12,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E Chromium browser reports no page script errors",
+            "file": "tests/support-e-browser.cjs",
+            "line": 12,
+            "kind": "REAL_CHROMIUM_DOM"
+        },
+        {
+            "name": "F5-E selection generation rejects a late response for another ticket",
+            "file": "tests/support-e-state.cjs",
+            "line": 3,
+            "kind": "DETERMINISTIC_STATE"
+        },
+        {
+            "name": "F5-E response sequence and ticket version prevent backward projection",
+            "file": "tests/support-e-state.cjs",
+            "line": 4,
+            "kind": "DETERMINISTIC_STATE"
+        },
+        {
+            "name": "F5-E changed scope epoch stops projection until native reload",
+            "file": "tests/support-e-state.cjs",
+            "line": 5,
+            "kind": "DETERMINISTIC_STATE"
+        }
+    ],
+    "security_sources": {
+        "page_session_MFA_grants": "src/Support/UI/Context.php:10",
+        "SQL_scope_filter_pagination": "src/Support/UI/Views.php:16",
+        "SQL_note_projection": "src/Support/UI/Views.php:21",
+        "draft_owner_session_scope": "src/Support/UI/StateStore.php:16",
+        "draft_AEAD_version_expiry": "src/Support/UI/StateStore.php:25",
+        "exact_nonce_draft_send": "src/Support/UI/Commands.php:23",
+        "canonical_compose": "src/Support/Service.php:30",
+        "native_HTTP_CSRF_rate": "src/Support/UI/Controller.php:19",
+        "additive_migration": "migrations/054_support_ui_state.php:4",
+        "browser_generation_fence": "public/assets/support-state.js:3"
+    }
+}

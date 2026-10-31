@@ -1,0 +1,188 @@
+P1_SOURCE_MANIFEST_MATCH 480
+P1_PHP 8.4.27
+P1_SUITE_BEGIN tests/migration-cutover-rehearsal.php
+PASS F6-E-P1 end to end ordered rehearsal is verifiable read only and never grants cutover
+PASS F6-E-P1 identical identity lease evidence and order produce deterministic public trace
+PASS F6-E-P1 out of order issue permanently blocks the rehearsal
+PASS F6-E-P1 duplicate authentic event cannot advance twice
+PASS F6-E-P1 missing events expose only verified prefix and cannot complete
+PASS F6-E-P1 old token cannot replay into a new instance with the same rehearsal ID
+PASS F6-E-P1 evidence from another rehearsal identity is rejected
+PASS F6-E-P1 rehashing a tampered event fingerprint cannot replace its private MAC
+PASS F6-E-P1 own lease expiry rejects an already issued event
+PASS F6-E-P1 longer rehearsal lease cannot bypass an expired P0 reader lease
+PASS F6-E-P1 old snapshot cannot be consumed after source root changes
+PASS F6-E-P1 different restored logical root with unchanged counts blocks pinning
+PASS F6-E-P1 existing P0 rejects rehearsal incomplete-delta
+PASS F6-E-P1 existing P0 rejects rehearsal unknown-callback
+PASS F6-E-P1 existing P0 rejects rehearsal inflight-provider
+PASS F6-E-P1 existing P0 rejects rehearsal duplicate-actor
+PASS F6-E-P1 existing P0 rejects rehearsal missing-actor
+PASS F6-E-P1 existing P0 rejects rehearsal forged-gates
+PASS F6-E-P1 existing P0 rejects rehearsal missing-gate
+PASS F6-E-P1 missing final delta cannot skip to single actor check
+PASS F6-E-P1 contradictory final delta rejects a previously issued baseline event
+PASS F6-E-P1 final report rereads P0 and rejects evidence tampered after all seven events
+PASS F6-E-P1 trace copy tamper cannot change internal history or create an accepted input
+PASS F6-E-P1 private data keys signatures event MACs and malformed input never enter the report
+PASS F6-E-P1 ordinary JSON and old Report fingerprint cannot authorize a rehearsal
+PASS F6-E-P1 live purpose environment and event permission escalation remain denied
+26 tests, 0 failures
+P1_SUITE_RESULT tests/migration-cutover-rehearsal.php 0
+P1_SUITE_BEGIN tests/migration-cutover-preflight.php
+PASS F6-E-P0 actual source and restored readers complete synthetic checks with every real gate open
+PASS F6-E-P0 repeated evaluation preserves source restored evidence and deterministic report
+PASS F6-E-P0 simulation rejects missing-gate without granting live authority
+PASS F6-E-P0 simulation rejects duplicate-actor without granting live authority
+PASS F6-E-P0 simulation rejects missing-actor without granting live authority
+PASS F6-E-P0 simulation rejects unknown-callback without granting live authority
+PASS F6-E-P0 simulation rejects inflight-provider without granting live authority
+PASS F6-E-P0 simulation rejects incomplete-delta without granting live authority
+PASS F6-E-P0 simulation rejects forged-gates without granting live authority
+PASS F6-E-P0 simulation rejects authority-escalation without granting live authority
+PASS F6-E-P0 arbitrary JSON flags and rehashed PASS Report cannot enter the trusted reader boundary
+PASS F6-E-P0 missing or forged checkpoint fields cannot be hidden by an APPLIED run
+PASS F6-E-P0 changed source snapshot and tampered snapshot root fail existing reconciliation
+PASS F6-E-P0 actual source mapping uncertainty cannot complete preflight
+PASS F6-E-P0 actual source provenance uncertainty cannot complete preflight
+PASS F6-E-P0 actual source checkpoint uncertainty cannot complete preflight
+PASS F6-E-P0 actual source count uncertainty cannot complete preflight
+PASS F6-E-P0 actual source owner uncertainty cannot complete preflight
+PASS F6-E-P0 actual source privacy uncertainty cannot complete preflight
+PASS F6-E-P0 actual source finance uncertainty cannot complete preflight
+PASS F6-E-P0 actual source currency uncertainty cannot complete preflight
+PASS F6-E-P0 same-count restored target tamper cannot reuse a formerly complete evaluation
+PASS F6-E-P0 separately valid readers with different logical roots cannot be joined
+PASS F6-E-P0 expired preflight lease blocks previously valid evidence without caching
+PASS F6-E-P0 expired target marker fails closed
+PASS F6-E-P0 test-only purpose and environment are rechecked at evaluation
+PASS F6-E-P0 report excludes private bodies paths identities and cryptographic credentials
+27 tests, 0 failures
+P1_SUITE_RESULT tests/migration-cutover-preflight.php 0
+P1_SUITE_BEGIN tests/migration-reconciliation.php
+PASS F6-C completed snapshot independently matches all entities and evidence
+PASS F6-C repeat reversed input and reviewer metadata preserve deterministic fingerprint
+PASS F6-C partial and failed runs never claim complete reconciliation
+PASS F6-C APPLIED status cannot hide missing mapping and orphan target
+PASS F6-C unexpected target entity is reported without repair
+PASS F6-C tampered mapping provenance and payload hashes are independently rejected
+PASS F6-C missing provenance is not accepted from APPLIED flag
+PASS F6-C stale checkpoint wrong snapshot and root tampering require review
+PASS F6-C changed source snapshot never silently reuses APPLIED target
+PASS F6-C customer ownership and target identity mismatch reject matching payload
+PASS F6-C provider account service external identity and claim conflicts are visible
+PASS F6-C wrong claim owner cannot be hidden by valid mapping
+PASS F6-C provider operations remain zero after load retry replay and parallel reads
+PASS F6-C payment allocation and refund mismatches stay review only
+PASS F6-C native Money totals keep allocation wallet collection and remaining separate
+PASS F6-C wallet liability and currency mismatches never cross sum currencies
+PASS F6-C unknown historical FX and payment evidence cannot produce zero difference PASS
+PASS F6-C official PDF and proforma retain independent metadata without byte claims
+PASS F6-C tied message timestamps retain deterministic source sequence and identity order
+PASS F6-C reports never expose private body author path email or credentials
+PASS F6-C private message and attachment metadata conflicts never gain public eligibility
+PASS F6-C test archive still refuses cross customer projection
+PASS F6-C incomplete migration and expired marker fail closed before data reporting
+PASS F6-C reader has physical SELECT only grants and denies excess permissions
+PASS F6-C reader cannot access similarly named sibling or native schema
+PASS F6-C arbitrary DSN source paths users and revoked synthetic authorization are denied
+PASS F6-C missing customer parent and orphan dependencies require review
+PASS F6-C repeated reports leave target finance history and every table byte unchanged
+PASS F6-C absent real source ledger and attachment bytes remain explicitly unverified
+PASS F6-C oversized payload and row inventory are inconclusive rather than truncated PASS
+PASS F6-C module has no native effect adapters transport file copy or repair SQL
+PASS F6-C unexpected refund cannot disappear into equal financial totals
+PASS F6-C target legacy credentials admin and MFA flags remain forbidden facts
+PASS F6-C unexpected columns or lost uniqueness block bounded reconciliation
+PASS F6-C different target contents with identical summaries have different evidence fingerprints
+35 tests, 0 failures
+P1_SUITE_RESULT tests/migration-reconciliation.php 0
+P1_SUITE_BEGIN tests/migration-recovery-integrity.php
+PASS F6-D-R2 integrity equal row multisets with different ordered root cannot match reference
+PASS F6-D-R2 integrity actual DB PASS requires matched root and same-count tamper cannot pass
+2 tests, 0 failures
+P1_SUITE_RESULT tests/migration-recovery-integrity.php 0
+P1_SUITE_BEGIN tests/migration-recovery-target.php
+PASS F6-D-R2 actual restored target reconciles in a fresh process after source loss and Vault expiry
+PASS F6-D-R2 wrong schema and account cannot reuse the target policy
+PASS F6-D-R2 source backup snapshot and encryption key mismatches are blocked
+PASS F6-D-R2 revoked or forged recovery issuer cannot establish a context
+PASS F6-D-R2 wrong purpose stale epoch and revoked target policy are denied
+PASS F6-D-R2 expired authorization is checked again before reporting
+PASS F6-D-R2 stale or expired restore marker blocks verification
+PASS F6-D-R2 restored payload tamper changes actual evidence despite unchanged aggregate counts
+PASS F6-D-R2 mapping provenance history and checkpoint mismatches cannot pass
+PASS F6-D-R2 customer and private attachment ownership changes are blocked
+PASS F6-D-R2 private message visibility cannot become public in recovery
+PASS F6-D-R2 finance amount and currency mutations require review without ledger writes
+PASS F6-D-R2 changed schema or unique index and missing migration are blocked
+PASS F6-D-R2 unexpected and missing target rows are detected by actual queries
+PASS F6-D-R2 partial restore and corrupt marker cannot claim PASS
+PASS F6-D-R2 SELECT-only reader denies DML DDL native and sibling schema reads
+PASS F6-D-R2 added write execute or trigger privilege blocks reader authority
+PASS F6-D-R2 views are denied and ungranted triggers routines are never executed
+PASS F6-D-R2 1 4 8 independent processes reconcile deterministically without writes
+PASS F6-D-R2 real process crashes never publish a verified report or alter target evidence
+PASS F6-D-R2 reports redact credentials bodies identifiers paths signatures and ciphertext
+PASS F6-D-R2 oversized row and disconnected target cannot produce PASS
+PASS F6-D-R2 a caller supplied array comparison cannot claim actual database authority
+PASS F6-D-R2 marker view is rejected before any definer SELECT side effect
+24 tests, 0 failures
+P1_SUITE_RESULT tests/migration-recovery-target.php 0
+P1_SUITE_BEGIN tests/migration-recovery.php
+PASS F6-D-R1 cold verification succeeds in a fresh process after source schema loss and Vault expiry
+PASS F6-D-R1 enrollment preserves original artifact issuer MAC backup identity and legacy verification
+PASS F6-D-R1 encryption key without a trusted issuer authority cannot verify or self-enrol
+PASS F6-D-R1 trusted issuer authority without the correct encryption key is denied
+PASS F6-D-R1 wrong backup source root target snapshot and encryption version are denied
+PASS F6-D-R1 revoked untrusted and malformed pinned issuer keys fail closed
+PASS F6-D-R1 forged detached signature and wrong signing context cannot authenticate
+PASS F6-D-R1 encryption-key forged issuer MAC cannot reuse the original recovery signature
+PASS F6-D-R1 corrupt truncated and substituted ciphertext cannot verify
+PASS F6-D-R1 independently signed corrupt AEAD tag still fails native decryption
+PASS F6-D-R1 tampered manifest unknown format and embedded trust key are rejected
+PASS F6-D-R1 duplicate JSON keys noncanonical bytes missing parts and oversize are rejected
+PASS F6-D-R1 expired operational lease is distinct from expired bounded recovery authorization
+PASS F6-D-R1 another backup or source instance cannot replay a valid certificate under the current authorization
+PASS F6-D-R1 recovery key rotation preserves an old correct backup and enforces revocation
+PASS F6-D-R1 expired Vault or wrong capability cannot enrol an artifact after issuer loss
+PASS F6-D-R1 signer binds the exact authenticated ciphertext and cannot attest a substituted package
+PASS F6-D-R1 authentic malformed inner payload still fails immutable issuer evidence and duplicate-key checks
+PASS F6-D-R1 recovery report redacts keys signatures ciphertext issuer MAC private bodies and paths
+PASS F6-D-R1 environment and explicit recovery authorization flags remain mandatory
+PASS F6-D-R1 real crashes before authority and after verification do not change the immutable backup
+PASS F6-D-R1 duplicate and concurrent verification is read-only and grants no native activation
+PASS F6-D-R1 restored schema still rejects native Sandbox authority without rewriting original evidence
+PASS F6-D-R1 history mapping provenance and customer conflicts in restored targets remain fail closed
+PASS F6-D-R1 cached authentication cannot enrol a cold capsule after original issuer lease expiry
+25 tests, 0 failures
+P1_SUITE_RESULT tests/migration-recovery.php 0
+P1_SUITE_BEGIN tests/finance-unit.php
+PASS F2-A exact arithmetic exceeds JavaScript and machine integer precision
+PASS F2-A explicit symmetric rounding and ties to even
+PASS F2-A money minor strings survive JSON and currency precision
+PASS F2-A malformed or lossy input and overflow fail closed
+4 tests, 0 failures
+P1_SUITE_RESULT tests/finance-unit.php 0
+P1_SUITE_BEGIN tests/hardening-unit.php
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures
+P1_SUITE_RESULT tests/hardening-unit.php 0
+P1_QUALITY_BEGIN check
+458 PHP files checked; 0 violations
+P1_QUALITY_RESULT check 0
+P1_QUALITY_BEGIN audit
+480 source/config/test files scanned; 0 findings
+P1_QUALITY_RESULT audit 0
+P1_QUALITY_BEGIN phpstan
+P1_QUALITY_RESULT phpstan 0
+P1_QUALITY_BEGIN documentation
+599 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+P1_QUALITY_RESULT documentation 0
+P1_SOURCE_MANIFEST_MATCH 480

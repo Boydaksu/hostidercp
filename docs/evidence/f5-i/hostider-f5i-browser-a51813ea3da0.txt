@@ -1,0 +1,2 @@
+SUITE tests/support-e-browser.php
+SUITE tests/support-integration-browser.php

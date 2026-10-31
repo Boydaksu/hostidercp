@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "stdout": "\nadded 2 packages in 18s\n",
+  "stderr": "",
+  "scripts": "DISABLED",
+  "scope": "isolated development-only browser toolchain"
+}

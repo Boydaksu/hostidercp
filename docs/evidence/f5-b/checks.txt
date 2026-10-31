@@ -1,0 +1,11 @@
+F5-B test/mock; local PHP8.4.24; 25 October 2026
+Source: ce994e395fb85027fbc74feb01bd0f872702c381
+PHPStan: [OK] No errors
+tools/check.php: 338 PHP files checked; 0 violations
+tools/audit.php: 350 source/config/test files scanned; 0 findings
+composer audit --working-dir=tools/analysis --locked: No security vulnerability advisories found
+git diff --check: clean
+Protected 62 files byte-equal: migrations001-049, native Identity, Core Queue/Outbox, workflow
+First standalone F5-B run: 26 tests, 0 failures; two additional regressions included in full suite/CI
+Local full-suite and real PHP8.3/8.4 CI evidence stored separately after completion.
+No live provider IO, mail dispatch, merge, staging or production.

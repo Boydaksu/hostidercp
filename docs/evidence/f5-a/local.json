@@ -1,0 +1,21 @@
+{
+  "environment": "test",
+  "php": "8.4.24",
+  "mariadb": "10.11.18",
+  "baseline_suites": 49,
+  "baseline_pass": 394,
+  "new_suites": 2,
+  "new_pass": 34,
+  "aggregate_pass": 428,
+  "failures": 0,
+  "validation": "49 baseline suites + migration suite in clean batch; HTTP suite rerun after EventSink canonical-key-order fix",
+  "live_mail": false,
+  "live_provider": false,
+  "http_servers": 2,
+  "http_workers": [
+    1,
+    2,
+    4,
+    8
+  ]
+}

@@ -1,0 +1,803 @@
+{
+  "baseline": "5d944dcb9abbf5e0f447272d8273346349aab3c8",
+  "migrations": [
+    {
+      "path": "migrations/001_f0_infrastructure.php",
+      "git_blob": "e632bffe6337aacf1418e582f399f6c651a3b16d",
+      "sha256": "b3eb10070a1c21180d3fbe0611d388d6b5bb435d521daa001a26e6c068bb8965",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/002_f0_1_retention.php",
+      "git_blob": "6b459bd9af671953c837286a1d07b9ad78eede37",
+      "sha256": "921b6f9e2edc3766e0244fddae14c8c4cb17881152a8dd518f715a044c92ae15",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/003_f1_identity.php",
+      "git_blob": "ae6a33cf8030e02644e7f9f07b53ab402deb0558",
+      "sha256": "33cea76f09cd1b8c98fe81801b2bc0612191afb909a935953b22554ea36a042b",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/004_f1_1_confirmations.php",
+      "git_blob": "5d65ea0162af95b6226d165cd187c16aa6cf49db",
+      "sha256": "5f8cf9a4c6b954b8fd9b2eb3f0f6309bf35a289d4b3dad3e7571fc2f903930a9",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/005_f1_1_reset_step_up.php",
+      "git_blob": "15ca3aa29aa480ddcba80000bbde7cf5577f4909",
+      "sha256": "4dc9c03e57a962fa4ffa691e9d5b550c5bef1e4ea59fc6bd269b69b208086b7e",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/006_f2_finance.php",
+      "git_blob": "96a48c92ac3e34bcbb5b08daa648836907ce6e47",
+      "sha256": "97e2a3507deb26ee2e1b9c8c6c4d1d886f30a40df04ed5a7db5d4b839754655f",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/007_f2_wallet_credits.php",
+      "git_blob": "71bd38472863140337834c208a81dafc384b7272",
+      "sha256": "9cd6d260745ee58d7be371ebdd41c9292e3f1b1f6b41c6562f774aef6d6e058e",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/008_f2_catalog.php",
+      "git_blob": "70cb67fd1f80a680a2ab958d29c54eeebafef88d",
+      "sha256": "7feb55ed7ac53a2f2bc95e5811123fe6e82efb1fe1f47e07298db34f0e6ae7bf",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/009_f2_pricing.php",
+      "git_blob": "d2daafa7e24dda7948e962e4f37ed6859190d12a",
+      "sha256": "dc5f34fa318e0ac77f2370a6b644ca26a8d3b747019062ed650f7bf017b5cbef",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/010_f2_orders_billing.php",
+      "git_blob": "a82c15682cae0577b675aaa02dca8f8d145769d5",
+      "sha256": "51ccfdfadf8d293a48b4efd21dd4b2db702b1334715606a14aedbf41dd0099e5",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/011_f2_payment_workflows.php",
+      "git_blob": "d2c6f4e834c5b49047953cf388316c4dbf3c8a10",
+      "sha256": "b1e9f9adb4c265e6604ab66834b16a151535a9b2f14a00c455d924f271659d63",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/012_f2_documents_cash.php",
+      "git_blob": "e069ae5eeeae22e4020995d9357a6baf7aa97528",
+      "sha256": "7633bcbb49fdc13ac021d103488468d174814b6d9f3508321aaa3a96ceb496a4",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/013_f2_commerce_confirmations.php",
+      "git_blob": "71e058fbd2310a64bb520e8bfeff661296f26a78",
+      "sha256": "cc847c3045bbc668214050048b8d4998e45273f3e03e5338ef915777da593166",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/014_f2_paid_refunds.php",
+      "git_blob": "6b5d0f31d640dacc43897ed8f36319843b91c40c",
+      "sha256": "046ed51e9fdec380758633b519d0b2a290f100b0d3d65a657590ae2a17f06798",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/015_f2_standalone_addons.php",
+      "git_blob": "7ffa87745a5c46023fced330716c54e9d220d765",
+      "sha256": "a6a355224d0bcdbbfb02415d583cdf7492c74de4844c6c0563810c2547498a6b",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/016_f2_source_evidence.php",
+      "git_blob": "dc3930bb741d5af6f1b6c9118aa53b0b2e9235d1",
+      "sha256": "d3f5ccb378f1f576d697c28d23b372a4fb6c00ed3c7b7188de022075113061be",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/017_f2_wallet_currency.php",
+      "git_blob": "08fba6bd3b3fe46a17bc60680763f554d76e0f33",
+      "sha256": "8623261999d5fc4af0d2944112c8ff3ee6411fd3d75e087847dc674d32df9651",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/018_f2_wallet_refund_fx.php",
+      "git_blob": "2eace08d3875ae3a1bf603e1a2d39e65b66a367f",
+      "sha256": "c0fd259c0d3d7796794d713df4b3bd9df35d3405e0541ed1ee598a1a7821537f",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/019_f2_held_facts.php",
+      "git_blob": "9d460fb0404356961a5defaa9c4b2384defe40db",
+      "sha256": "f2b2c7849508be7a57eb7ebc8647a2667838ec0fc75dbd41ee21e220b56e4bfa",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/020_f2_reconciliation_resolution.php",
+      "git_blob": "4ef8434dcd764e660d3f2a37ebdb17cbeb06d94e",
+      "sha256": "dcad3cdb3a90793a35f56f49da8445139fe9dfbe832cf87a0dab4a906acf5a40",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/021_f2_order_provenance.php",
+      "git_blob": "a2772c8814118f36ae5e09afc1a5608202fa398e",
+      "sha256": "e317363a343b59b0fa474af931f610d575747fd50c31fb50fe0ee249e765cc83",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/022_f2_confirmation_versions.php",
+      "git_blob": "c14fa376f101d960c08780dbe50e1760225c9c1a",
+      "sha256": "127ca8c342844298a5871567c7d39c06429d9c29b2f1e1760ed01ffb391c0840",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/023_f3_service_model.php",
+      "git_blob": "58659226c607a78df584ee5f51168d483f18b177",
+      "sha256": "e24894460b0cdcf7ab7bf88b45e81efab8fa74caf494152e6fac4a77ed5f8e2f",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/024_f3_resources.php",
+      "git_blob": "6f275908d13cb90b172c145d00ff080221ef77cf",
+      "sha256": "edae51ba5c7de0170964c8dda6043a04ed928822619acb27aed34662d4b88f87",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/025_f3_operations.php",
+      "git_blob": "e9c21bbd461586f009ac5eed88a953907d9c83b5",
+      "sha256": "02cd485070124e6aefa002d2303c1ecd87d57257f10512cd7703a5394a188b1e",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/026_f3_mock_hosting.php",
+      "git_blob": "ba3d86bbc800ae9a979309fafef0763e10b1f8ea",
+      "sha256": "8b86ab9c4e0420091cf0670424ff709242f5150601b5319e0217eb5b35d1a775",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/027_f3_mapping_integrity.php",
+      "git_blob": "559ce00a1acaa5ba1f23993ffa1e9c1bb08d0f73",
+      "sha256": "40a82ee6133785afa750b0a0782064ba5b8c26e47c2fde6a4173f0fd85c60033",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/028_f3_reconciliation.php",
+      "git_blob": "ef0cb7a7152537a07935f31454c90a48b68ab2e9",
+      "sha256": "8d4b5884d7d5bb20347cc32db9eb43ab7b497022a6c574f02222ea966a20af94",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/029_f3_lifecycle_policy.php",
+      "git_blob": "20fb0a795b45534abf404959c8bd0e2e05d13097",
+      "sha256": "ea2c81044f4167f141b7a4e29f53a699b7b3d041f1260fc1e1e25006b4bd5251",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/030_f3_renewals.php",
+      "git_blob": "0222221304a46a449041c1e6abac973360b1edd0",
+      "sha256": "4789d3393bb64c740a20755777b69995b2b68cb6888119f4217e3283fa30b247",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/031_f3_cancellations.php",
+      "git_blob": "e11a95432409fcb8ad2df45f18cfc9386afe8da3",
+      "sha256": "85b4cf29dd39c77519fe85677a7f23f0484262ac620d12fce7ee7bc2c4c0b142",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/032_f3_action_evidence.php",
+      "git_blob": "432424d56fd7ea814c238c4e96ebcd4bbaffea55",
+      "sha256": "97664416a465123d72bee94020906658b85d02430bd45e48da9455fc67659fe8",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/033_f3_transfer.php",
+      "git_blob": "ea9ba084870be34c41e39bb1e8ba3a51c84be119",
+      "sha256": "92396c6b1ab777838dc0b27511670cc2fbad4da15d541d435c63f32e715d384c",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/034_f3_package_changes.php",
+      "git_blob": "02049973441e40d6148a7edcec6ee8b0140c37c3",
+      "sha256": "f555a64dd9924be65416bb02543268ab509495f26cb54cf4ed15aed31d4a8d96",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/035_f3_http_confirmations.php",
+      "git_blob": "1e2099a42387f3a556fe37f221c3f40c5cb3fe6f",
+      "sha256": "ffd9aeefa7b2a07ea514e23e7039b45cbc20f56f85b53503cf75b16c91966ab8",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/036_f3_scope_and_query_guards.php",
+      "git_blob": "4ad32d5e7d76be99f1550000098c60475ab2d102",
+      "sha256": "ca02859608f5b437134ab6c4f59a7405dbc3c852a8b76831bfa4d496587c3caa",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/037_f3_scheduler_fairness.php",
+      "git_blob": "a13b2cbea23f6cf6be7a3a640dd50b6c8712949e",
+      "sha256": "e67f0a93a4194d217af3ec6ff969aa483c411e46e0e83266b7a3d19cb07227e7",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/038_service_runner_fairness.php",
+      "git_blob": "68a39bdf162e07554430ec83815529514fc49b06",
+      "sha256": "95c745e3feb8dd7806ed7b3c49a85a4c3c0f077cb67b54245851c9670a63af35",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/039_f4_domain_model.php",
+      "git_blob": "8f83645f53087bb668ac87540324954dcce2b303",
+      "sha256": "144f0eed70100d92788aab0b8d4450c702d6fba6970e38d71a9411aa447817bb",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/040_f4_mock_registrar.php",
+      "git_blob": "ca34cbb4996fd6b1eaa5ef5f4362decc16c5c724",
+      "sha256": "f8490c5ca09ed2a21dba294840641401515c54e92b1b389d3cee714a1267b453",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/041_f4_domain_operations.php",
+      "git_blob": "d3aaddd38ed7b1e95e03ab9939344dc33896549d",
+      "sha256": "456db8c758f758bdab4f4f2a68829dcef4d568dfb476776a42fc8720398e145f",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/042_f4_domain_runner_fairness.php",
+      "git_blob": "1c3249e9efd53c16791e337a98671df35c342e49",
+      "sha256": "72c9c6bec7919d5efb56f448d5059fc604eda0d9ff6b6766fda874135f9b2968",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/043_f4_domain_audit_safety.php",
+      "git_blob": "e1a5b5cd3795ecd173107d97454747a0dd511e02",
+      "sha256": "d9a786fcaa6cfb6531f5130b6934f5b0be8aa9da8a9bc85209258140f1ae9351",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/044_f4_cloud_operations.php",
+      "git_blob": "2589d547c2fcc2fbd495c2e9bd756fc24a4c4701",
+      "sha256": "ed160643313f28c918173d1e5c11f5b334c9f1f79c7a613ce9ea14dc5a53478f",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/045_cloud_purchase_containment.php",
+      "git_blob": "8db428671f88f829898e22adc0cb7f376f377684",
+      "sha256": "6b9d1a8324a99ee24db6d59e2abc9f2acdde2a15031325d1516962db21c826db",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/046_cloud_metering_costs.php",
+      "git_blob": "4b02fa4ce527823684817dd08a1a970ed1e0d276",
+      "sha256": "db8e72c41e22e843f6c9193172b54ff5cea5ac6727d621c98d52deb0c38318c5",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/047_cloud_cost_admission.php",
+      "git_blob": "3da480a877c7819f1211c20fd002c788bf326c4d",
+      "sha256": "be4e9a1220693d4146093f7c912aadc0cc63621e13330c22602e73dc1d883888",
+      "unchanged": true
+    },
+    {
+      "path": "migrations/048_provider_panel.php",
+      "git_blob": "c728fa7c52970756f55b5da672007b6a1b55df89",
+      "sha256": "d183c79d2f859b860385d9a9e3898a5b53821cc33df7683e07dcdb0c37827bbe",
+      "unchanged": true
+    }
+  ],
+  "tests": [
+    {
+      "path": "tests/addons.php",
+      "baseline_blob": "9b4e7fd3c29e12a947c863c93110f0f557f30e8e",
+      "current_blob": "9b4e7fd3c29e12a947c863c93110f0f557f30e8e",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/billing-cash.php",
+      "baseline_blob": "ccbbec6ec6912efe2f99664fc959a33ec13e2274",
+      "current_blob": "ccbbec6ec6912efe2f99664fc959a33ec13e2274",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/catalog-fixture.php",
+      "baseline_blob": "0b1173a6f1134f43e2f1a83dd3b3a8b00d1ca434",
+      "current_blob": "0b1173a6f1134f43e2f1a83dd3b3a8b00d1ca434",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/catalog.php",
+      "baseline_blob": "eecf8cd20b67ceab709291d015fac5d05abc41bf",
+      "current_blob": "eecf8cd20b67ceab709291d015fac5d05abc41bf",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/child.php",
+      "baseline_blob": "b1230ccc708471d0552237c5cbd5e15b0dacf6e1",
+      "current_blob": "b1230ccc708471d0552237c5cbd5e15b0dacf6e1",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-audit.php",
+      "baseline_blob": "1f6de7cb4adda8827133c2d1492dd7974a9902dd",
+      "current_blob": "1f6de7cb4adda8827133c2d1492dd7974a9902dd",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-child.php",
+      "baseline_blob": "775cec1655862b3fb44b8762a2d2b1d24f15a09b",
+      "current_blob": "775cec1655862b3fb44b8762a2d2b1d24f15a09b",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-cost-child.php",
+      "baseline_blob": "ac6ed1f711cb9ef839fb933cb4b42491f1472b27",
+      "current_blob": "ac6ed1f711cb9ef839fb933cb4b42491f1472b27",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-cost-fixture.php",
+      "baseline_blob": "edd02e1e35f825ee840e3c77a940bbf904d5b59d",
+      "current_blob": "edd02e1e35f825ee840e3c77a940bbf904d5b59d",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-cost-races.php",
+      "baseline_blob": "3a87443de6a9429600d25789c51e029fc5377fb9",
+      "current_blob": "3a87443de6a9429600d25789c51e029fc5377fb9",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-costs.php",
+      "baseline_blob": "1a6069a8c9a6e6821d881212e96deea3c32924ae",
+      "current_blob": "07a8a59634d56be41254c8deeb43b94c21e72ef7",
+      "preservation": "EXACT_049_EXPECTATION_APPEND"
+    },
+    {
+      "path": "tests/cloud-final-audit.php",
+      "baseline_blob": "1e59761730b5dbc98941dacb27e94b9aee22dbc1",
+      "current_blob": "1e59761730b5dbc98941dacb27e94b9aee22dbc1",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-fixture.php",
+      "baseline_blob": "27549add7c73f496dc98e778664ab2059282f5ce",
+      "current_blob": "27549add7c73f496dc98e778664ab2059282f5ce",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-races.php",
+      "baseline_blob": "93a7075956b50756abb6810246767220537defe1",
+      "current_blob": "93a7075956b50756abb6810246767220537defe1",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-safety-child.php",
+      "baseline_blob": "2c5036b51215d98944d298240a6268ab82e62fef",
+      "current_blob": "2c5036b51215d98944d298240a6268ab82e62fef",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud-sdk.php",
+      "baseline_blob": "67d33d7d2aad9c0c6e6fe5d2c5de8e918be59c32",
+      "current_blob": "67d33d7d2aad9c0c6e6fe5d2c5de8e918be59c32",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/cloud.php",
+      "baseline_blob": "a03f99878a3167908ba07780bcbb215de295e8ee",
+      "current_blob": "62e18ebed2ae5a4b7788c54c7b5688fb4bf781c7",
+      "preservation": "EXACT_049_EXPECTATION_APPEND"
+    },
+    {
+      "path": "tests/commerce-events.php",
+      "baseline_blob": "812b38350068e9219f06c920705fa830272d4d07",
+      "current_blob": "812b38350068e9219f06c920705fa830272d4d07",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/commerce-fixture.php",
+      "baseline_blob": "6673dddc206b59fb3b32c442450a1a8e16859bdc",
+      "current_blob": "6673dddc206b59fb3b32c442450a1a8e16859bdc",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/commerce-http.php",
+      "baseline_blob": "c4d048a1864355959e6be93874f39185716f363e",
+      "current_blob": "c4d048a1864355959e6be93874f39185716f363e",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/commerce-router.php",
+      "baseline_blob": "c817e449d89fbbfec08e7e6430b0051de5c93246",
+      "current_blob": "c817e449d89fbbfec08e7e6430b0051de5c93246",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/commerce.php",
+      "baseline_blob": "3c2a8cf5637d7003fdf4b5e04259cf0364bab5ce",
+      "current_blob": "3c2a8cf5637d7003fdf4b5e04259cf0364bab5ce",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/confirmation-child.php",
+      "baseline_blob": "242931a592004e0aabbbc92565d220d5b7c184eb",
+      "current_blob": "242931a592004e0aabbbc92565d220d5b7c184eb",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/currency-change.php",
+      "baseline_blob": "a1f61281781425e7ca096deb9de5e13d57929f81",
+      "current_blob": "a1f61281781425e7ca096deb9de5e13d57929f81",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/database.php",
+      "baseline_blob": "8c90f4a50c151379acc12ba4c916ce4a84ae50db",
+      "current_blob": "8c90f4a50c151379acc12ba4c916ce4a84ae50db",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-audit.php",
+      "baseline_blob": "be42030112d82b19620e066dbfdda6eefad453b4",
+      "current_blob": "b4120dfedede7748248978d2d8321a4adb112d33",
+      "preservation": "EXACT_049_EXPECTATION_APPEND"
+    },
+    {
+      "path": "tests/domains-boundaries.php",
+      "baseline_blob": "9e5209e66df77d7a81966c005c5c4e0b916e5a53",
+      "current_blob": "9e5209e66df77d7a81966c005c5c4e0b916e5a53",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-child.php",
+      "baseline_blob": "795bd709076cd19a98977d2eb917107d0e8dd19c",
+      "current_blob": "795bd709076cd19a98977d2eb917107d0e8dd19c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-concurrency-child.php",
+      "baseline_blob": "fcd876609d57c02c227d04e708de6ae6a9ee1a9a",
+      "current_blob": "fcd876609d57c02c227d04e708de6ae6a9ee1a9a",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-fixture.php",
+      "baseline_blob": "d36cc70fe3fdd44e50b4e8b99d023b5d94901d47",
+      "current_blob": "d36cc70fe3fdd44e50b4e8b99d023b5d94901d47",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-model.php",
+      "baseline_blob": "0d51c328c02bde4d41ccfe24dec76902d1351593",
+      "current_blob": "0d51c328c02bde4d41ccfe24dec76902d1351593",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-operations.php",
+      "baseline_blob": "fdd336b71b2d0bfa4d06253d176799a42a701b7d",
+      "current_blob": "fdd336b71b2d0bfa4d06253d176799a42a701b7d",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-provider.php",
+      "baseline_blob": "76379cc0318d69a797725f219554d24fe3d8a298",
+      "current_blob": "76379cc0318d69a797725f219554d24fe3d8a298",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/domains-unit.php",
+      "baseline_blob": "e507eb805e684c9e89e3bd01a21b3a1a761c62cd",
+      "current_blob": "e507eb805e684c9e89e3bd01a21b3a1a761c62cd",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/fence-child.php",
+      "baseline_blob": "c1233f87c2eb81da76fc3167492cf0346383b9f0",
+      "current_blob": "c1233f87c2eb81da76fc3167492cf0346383b9f0",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/finance-child.php",
+      "baseline_blob": "02775a2114db8242eebfd1e0168ce6fd663a3a5c",
+      "current_blob": "02775a2114db8242eebfd1e0168ce6fd663a3a5c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/finance-unit.php",
+      "baseline_blob": "e94b98b37b1e94c590c97a4fc0a7af6795ab2ebe",
+      "current_blob": "e94b98b37b1e94c590c97a4fc0a7af6795ab2ebe",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/finance.php",
+      "baseline_blob": "6ae463faa2aa33dc6b8e3358de3e192ad84fdcc8",
+      "current_blob": "6ae463faa2aa33dc6b8e3358de3e192ad84fdcc8",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/hardening-unit.php",
+      "baseline_blob": "67f9b5c6de643a81bdc5103063cf286ec26eb571",
+      "current_blob": "67f9b5c6de643a81bdc5103063cf286ec26eb571",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/harness.php",
+      "baseline_blob": "91c01444723daf213c063db9b4b0cea8e1e1b68a",
+      "current_blob": "91c01444723daf213c063db9b4b0cea8e1e1b68a",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/http-harness.php",
+      "baseline_blob": "6f36b9482aaa507c5533a7d6fc614e91401c458d",
+      "current_blob": "6f36b9482aaa507c5533a7d6fc614e91401c458d",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/http.php",
+      "baseline_blob": "4341bf35a8acc404ae7a922d2c4f75eb322dba2c",
+      "current_blob": "4341bf35a8acc404ae7a922d2c4f75eb322dba2c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/identity-child.php",
+      "baseline_blob": "7a45574d44af1423f38a169823251f0f129cdb93",
+      "current_blob": "7a45574d44af1423f38a169823251f0f129cdb93",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/identity-http.php",
+      "baseline_blob": "eb8b9a57136a379e9260c8c0920500514b61b936",
+      "current_blob": "eb8b9a57136a379e9260c8c0920500514b61b936",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/identity-router.php",
+      "baseline_blob": "f639d6dca9d1e4926004e0eccd93b20d181f8401",
+      "current_blob": "f639d6dca9d1e4926004e0eccd93b20d181f8401",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/identity-security.php",
+      "baseline_blob": "9979b8d1dacd1a628df65025367bf551d09e9211",
+      "current_blob": "9979b8d1dacd1a628df65025367bf551d09e9211",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/identity.php",
+      "baseline_blob": "2c31932457b41d2ff0105a89865d4e6281eeb171",
+      "current_blob": "2c31932457b41d2ff0105a89865d4e6281eeb171",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/integration.php",
+      "baseline_blob": "a0fe8b2e026aa118025b1b9fd9602ebe3eb966c2",
+      "current_blob": "a0fe8b2e026aa118025b1b9fd9602ebe3eb966c2",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/order-child.php",
+      "baseline_blob": "c2b59fc0f24ec5c23a451ae9855be3a27558ee9c",
+      "current_blob": "c2b59fc0f24ec5c23a451ae9855be3a27558ee9c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/orders-fixture.php",
+      "baseline_blob": "1967cab79bbe84dec3922211cc38dedd5eb09b3f",
+      "current_blob": "1967cab79bbe84dec3922211cc38dedd5eb09b3f",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/orders.php",
+      "baseline_blob": "7a5fbfb7e4a38f3e7e12aa3401ab55b6d4d13fea",
+      "current_blob": "7a5fbfb7e4a38f3e7e12aa3401ab55b6d4d13fea",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/paid-refunds.php",
+      "baseline_blob": "9b7e53de78e8acea9aa1fdc4377de510db0dc7f1",
+      "current_blob": "9b7e53de78e8acea9aa1fdc4377de510db0dc7f1",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/payments.php",
+      "baseline_blob": "660b72832e929b42c31fe15dddd1f88fe7c81146",
+      "current_blob": "660b72832e929b42c31fe15dddd1f88fe7c81146",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/post-delivery.php",
+      "baseline_blob": "547410243a29ce43a088e47769812bdcd37fc7a2",
+      "current_blob": "547410243a29ce43a088e47769812bdcd37fc7a2",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/pricing-fixture.php",
+      "baseline_blob": "bee5ba8a51d02429b70ec822af7acaca900c926c",
+      "current_blob": "bee5ba8a51d02429b70ec822af7acaca900c926c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/pricing.php",
+      "baseline_blob": "9c49688ed2f1ddda18d4fc82be948029313d97d8",
+      "current_blob": "9c49688ed2f1ddda18d4fc82be948029313d97d8",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/promotion-child.php",
+      "baseline_blob": "7ed239414afa2ccdd60aaa9aa569ae30df5dbd28",
+      "current_blob": "7ed239414afa2ccdd60aaa9aa569ae30df5dbd28",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/provider-panel-evidence-cases.php",
+      "baseline_blob": "1b6026e86e1ee5e8d4b4359054832a9556668fa6",
+      "current_blob": "1b6026e86e1ee5e8d4b4359054832a9556668fa6",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/provider-panel-http-child.php",
+      "baseline_blob": "c68b71051bf9758f08bf9ba62fa5397033a114ac",
+      "current_blob": "c68b71051bf9758f08bf9ba62fa5397033a114ac",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/provider-panel-http.php",
+      "baseline_blob": "ebf596cd560882f1665d817bceebd1b51c343931",
+      "current_blob": "ebf596cd560882f1665d817bceebd1b51c343931",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/refund-child.php",
+      "baseline_blob": "012013e9f65b520205e14c1e52ec55648b60da8e",
+      "current_blob": "012013e9f65b520205e14c1e52ec55648b60da8e",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/review-child.php",
+      "baseline_blob": "f1135deb161313d09ec681713f9d04d42c1c5a7e",
+      "current_blob": "f1135deb161313d09ec681713f9d04d42c1c5a7e",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/run.php",
+      "baseline_blob": "d17589d0f5632b1ec2860486ff9084822cb480b2",
+      "current_blob": "d17589d0f5632b1ec2860486ff9084822cb480b2",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-action-race-child.php",
+      "baseline_blob": "708e862cd93aec2e890e912d41fdcb1cc635d396",
+      "current_blob": "708e862cd93aec2e890e912d41fdcb1cc635d396",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-benchmark-child.php",
+      "baseline_blob": "470b190b90a8c0eb633c26cdef8e6b2bed9fb7de",
+      "current_blob": "470b190b90a8c0eb633c26cdef8e6b2bed9fb7de",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-child.php",
+      "baseline_blob": "c041dc797dbc2230ff2d2deaa1290df81c5291aa",
+      "current_blob": "c041dc797dbc2230ff2d2deaa1290df81c5291aa",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-engine.php",
+      "baseline_blob": "d6e2097a6aac44cf87cc9b81191c3d8de2373c5c",
+      "current_blob": "d6e2097a6aac44cf87cc9b81191c3d8de2373c5c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-fixture.php",
+      "baseline_blob": "d0cac4162ab8f7fc16d856d8633dc2c395bddacb",
+      "current_blob": "d0cac4162ab8f7fc16d856d8633dc2c395bddacb",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-hosting.php",
+      "baseline_blob": "424c1dac8179a5b9d87050a52740960650d72b37",
+      "current_blob": "424c1dac8179a5b9d87050a52740960650d72b37",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-http.php",
+      "baseline_blob": "fa71af9053ae7f729fb49fc6c90e362b35585da8",
+      "current_blob": "fa71af9053ae7f729fb49fc6c90e362b35585da8",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-lifecycle.php",
+      "baseline_blob": "480e4ae9ee1c368fc598662da0c2c0dc8ac33c02",
+      "current_blob": "480e4ae9ee1c368fc598662da0c2c0dc8ac33c02",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-model.php",
+      "baseline_blob": "aa7891881f6a5f411525ea8ee6899f895b708cd3",
+      "current_blob": "aa7891881f6a5f411525ea8ee6899f895b708cd3",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-package.php",
+      "baseline_blob": "2211133319672176616391a0c30251ff681b1a84",
+      "current_blob": "2211133319672176616391a0c30251ff681b1a84",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-reconciliation.php",
+      "baseline_blob": "bdf801334073320393aa0b2c560fe9da5db82a9c",
+      "current_blob": "bdf801334073320393aa0b2c560fe9da5db82a9c",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-runner.php",
+      "baseline_blob": "fa2f169f188ecfc6dcc452283c7b880b03455abe",
+      "current_blob": "fa2f169f188ecfc6dcc452283c7b880b03455abe",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/services-transfer.php",
+      "baseline_blob": "0eaa33faf2054e16733acf42857a9552a81d11d4",
+      "current_blob": "0eaa33faf2054e16733acf42857a9552a81d11d4",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/session-child.php",
+      "baseline_blob": "7f1ee978ef2cd0e3939e9e562bffb2735a448f3f",
+      "current_blob": "7f1ee978ef2cd0e3939e9e562bffb2735a448f3f",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/session-concurrency.php",
+      "baseline_blob": "2ccf9d0158b2b4adc41c4dbd6d3f16ada5b49a05",
+      "current_blob": "2ccf9d0158b2b4adc41c4dbd6d3f16ada5b49a05",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/session-http-router.php",
+      "baseline_blob": "74a21fdbd6be826d6da26760eabc034c73ac6eee",
+      "current_blob": "74a21fdbd6be826d6da26760eabc034c73ac6eee",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/session-http.php",
+      "baseline_blob": "de442586e34a18acf16647c71f726e0c106d9f01",
+      "current_blob": "de442586e34a18acf16647c71f726e0c106d9f01",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/session.php",
+      "baseline_blob": "f3367fca8a1f6c9dc1edb8d1b4be9ebe7fe0b2e1",
+      "current_blob": "f3367fca8a1f6c9dc1edb8d1b4be9ebe7fe0b2e1",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/support/FixtureDirectory.php",
+      "baseline_blob": "58a9fd93422105cbb4c56ebf129d06d092b303aa",
+      "current_blob": "58a9fd93422105cbb4c56ebf129d06d092b303aa",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/support/HttpTestServer.php",
+      "baseline_blob": "95bf4c0fc804650c603f26cf2052bcaf1946dd92",
+      "current_blob": "95bf4c0fc804650c603f26cf2052bcaf1946dd92",
+      "preservation": "UNCHANGED"
+    },
+    {
+      "path": "tests/voyar-sdk.php",
+      "baseline_blob": "e4b2c936e0c53aa366c159d530de9c34ba87dd31",
+      "current_blob": "e4b2c936e0c53aa366c159d530de9c34ba87dd31",
+      "preservation": "UNCHANGED"
+    }
+  ],
+  "existing_suite_count": 49,
+  "existing_test_count": 394,
+  "new_suite_count": 2,
+  "new_test_count": 34
+}

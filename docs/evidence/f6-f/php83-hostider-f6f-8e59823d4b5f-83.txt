@@ -1,0 +1,45 @@
+F6F_SOURCE_MANIFEST_MATCH 536
+F6F_PHP 8.3.36
+F6F_UID 10001
+F6F_SUITE_BEGIN tests/offline-backup.php
+PASS F6-F 01 actual complete encrypted native backup contains no plaintext secret
+PASS F6-F 02 real isolated native restore matches every row file schema and ledger
+PASS F6-F 03 independently reopened native target has current57 migrations and exact rows
+PASS F6-F 04 native restored attachment decrypts to exact original checksum
+PASS F6-F 05 native official PDF bytes and encrypted metadata restore correctly
+PASS F6-F 06 wrong256 bit key rejects before target allocation
+PASS F6-F 07 modified ciphertext rejects before any restore effects
+PASS F6-F 08 truncated ciphertext cannot be mistaken for a complete backup
+PASS F6-F 09 authenticated but altered final manifest is rejected
+PASS F6-F 10 authenticated missing registered file cannot pass a recomputed manifest
+PASS F6-F 11 traversal in an authenticated file record never escapes private target
+PASS F6-F 12 nonroot source permissions are enforced without changing existing DB data
+PASS F6-F 13 actual insufficient tmpfs free space blocks backup before export
+PASS F6-F 14 real competing DB mutation is blocked during the read locked snapshot
+PASS F6-F 15 noncooperating file change during capture cannot produce success
+PASS F6-F 16 partial export fault leaves no complete archive and preserves source
+PASS F6-F 17 partial restore import fault deletes only new owned target and preserves source
+PASS F6-F 18 completed restore replay and cleanup cannot overwrite existing target
+PASS F6-F 19 concurrent backup process is rejected without second archive or source writes
+PASS F6-F 20 production environment DSN and path inputs fail closed
+PASS F6-F 21 real CLI seal backup restore never print key configuration or payload secrets
+PASS F6-F 22 authenticated migration mismatch rejects before target creation
+PASS F6-F 23 independent ledger sums match and unbalanced native source cannot be backed up
+PASS F6-F 24 audit copy is protected by verification fence and native message triggers remain
+F6F_OBSERVATION {"safe_stage":"document","exception":"RuntimeException","trace":[{"function":"require","class":"Hostider\\OfflineBackup\\Guard","file":"Workspace.php"},{"function":"set","class":"Hostider\\OfflineBackup\\Workspace","file":"Workspace.php"},{"function":"cleanup","class":"Hostider\\OfflineBackup\\Workspace","file":"offline-backup.php"},{"function":"{closure}","class":"","file":"offline-backup.php"},{"function":"{closure}","class":"","file":"harness.php"},{"function":"executeTests","class":"","file":"offline-backup.php"}]}
+FAIL F6-F 25 killed backup leaves only ciphertext and owned cleanup preserves source: [details redacted]
+10 dependent tests BLOCKED after first failure; not counted as passed
+35 tests, 1 failures
+F6F_SUITE_RESULT tests/offline-backup.php 1
+F6F_QUALITY_BEGIN check
+511 PHP files checked; 0 violations
+F6F_QUALITY_RESULT check 0
+F6F_QUALITY_BEGIN audit
+536 source/config/test files scanned; 0 findings
+F6F_QUALITY_RESULT audit 0
+F6F_QUALITY_BEGIN phpstan
+F6F_QUALITY_RESULT phpstan 0
+F6F_QUALITY_BEGIN documentation
+854 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6F_QUALITY_RESULT documentation 0
+F6F_SOURCE_MANIFEST_MATCH 536

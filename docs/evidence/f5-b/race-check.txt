@@ -1,0 +1,2 @@
+PASS SUP-006 real 1 4 8 PHP workers assign each ticket once with consistent RR and bounded cron
+1 tests, 0 failures

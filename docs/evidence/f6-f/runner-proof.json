@@ -1,0 +1,22 @@
+{
+  "final_runners": [
+    {
+      "executed_path": "tools/local/f6-f-runner.py",
+      "executed_sha256": "49534bba6c5d4401143500ce522cef2ba014f2d0948292eb4081f1e2ac8620d7",
+      "published_review": "local-docker-runner-review.txt",
+      "review_sha256": "b6d529e9ed8276ecf07cb0833df377a04133b7c26b479536b68166a667004337",
+      "redaction": "Only the fixed synthetic DB password literal; no real credentials."
+    },
+    {
+      "executed_path": "tools/local/f6-f/run-tests.sh",
+      "executed_sha256": "3deca46782776c4a7b9e313d9caa97d7f6f1914ab1362051f554fbb015d894bf",
+      "published_review": "run-tests-review.txt",
+      "review_sha256": "3deca46782776c4a7b9e313d9caa97d7f6f1914ab1362051f554fbb015d894bf",
+      "redaction": "Only the fixed synthetic DB password literal; no real credentials."
+    }
+  ],
+  "isolation": "pinned images; PHP UID10001 non-root; internal network/no host ports; readonly source bind; tmpfs DB4GiB/app512MiB/tmp256MiB; label ownership checked cleanup only",
+  "database_free_space": "MariaDB DISKS plugin already loaded in owned Docker startup; component never installs plugins; test fixture can provision DISKS only with strict APP_ENV=test and exact loopback hostider_f0_test DSN",
+  "canonical_manifest_encoding": "UTF-8 JSON with sorted path keys; Python json.dumps default separators; no final newline; hash exact bytes",
+  "audits": "tools/audit.php pattern scan; no Composer/npm advisory audit or browser test in this phase"
+}

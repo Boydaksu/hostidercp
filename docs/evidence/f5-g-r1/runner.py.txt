@@ -1,0 +1,89 @@
+import subprocess,json,pathlib,hashlib,uuid,time,re,sys,os,shutil
+sys.stdout.reconfigure(encoding='utf-8')
+root=pathlib.Path(__file__).resolve().parents[2]
+version=sys.argv[1]
+mode=sys.argv[2] if len(sys.argv)>2 else 'all'
+assert mode in ['all','quality']
+assert version in ['83','84']
+images={'83':'sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad','84':'sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba'}
+dbimage='sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d'
+task='hostider-f5gr1-'+uuid.uuid4().hex[:12]+'-'+version
+label='hostider.f5gr1='+task
+runtime_base=root/'tools/local/f5-g-r1'
+runtime=runtime_base/task
+runtime.mkdir(parents=True,exist_ok=True)
+shutil.copyfile(runtime_base/'run-tests.sh',runtime/'run-tests.sh')
+evidence=root/'docs/evidence/f5-g-r1'
+evidence.mkdir(parents=True,exist_ok=True)
+manifest={}
+for directory in ['src','tests','bootstrap','bin','public','migrations','tools','.github']:
+ for p in (root/directory).rglob('*'):
+  rel=p.relative_to(root).as_posix()
+  if not p.is_file() or any(s in rel for s in ['tools/local/','tools/analysis/vendor/','tools/browser/node_modules/']):continue
+  manifest[rel]=hashlib.sha256(p.read_bytes()).hexdigest()
+# Docker Linux input files use repository bytes; copies preserve line endings.
+mp=runtime/'source-manifest.json'
+mp.write_text(json.dumps(manifest,sort_keys=True),encoding='utf-8')
+manifest_digest=hashlib.sha256(mp.read_bytes()).hexdigest()
+def run(args,**kw):
+ p=subprocess.run(args,capture_output=True,text=True,encoding='utf-8',errors='replace',**kw)
+ if p.returncode:raise RuntimeError('F5GR1_DOCKER_COMMAND_FAILED')
+ return p
+net=task+'-net';db=task+'-db';app=task+'-app'
+created=[]
+meta={'classification':'LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE','php_target':version,'mode':mode,'php_image':images[version],'db_image':dbimage,'source_commit':None,'source_manifest_sha256':manifest_digest,'source_files':len(manifest),'run_id':task,'github_actions':False,'full_acceptance':False,'real_gate_closure':False,'host_ports_published':False,'started_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'suites':[],'quality':{},'safe_output_lines':0}
+safe=[];current=None
+try:
+ run(['docker','network','create','--internal','--label',label,net]);created.append(('network',net))
+ run(['docker','run','-d','--name',db,'--label',label,'--network',net,'--log-driver','none','--tmpfs','/var/lib/mysql:rw,size=4g','-e','MARIADB_ROOT_PASSWORD=SYNTHETIC_FIXTURE_PASSWORD_REDACTED','-e','MARIADB_DATABASE=hostider_f0_test','--health-cmd','healthcheck.sh --connect --innodb_initialized','--health-interval','2s','--health-retries','40',dbimage]);created.append(('container',db))
+ for i in range(80):
+  state=run(['docker','inspect','--format','{{.State.Health.Status}}',db]).stdout.strip()
+  if state=='healthy':break
+  time.sleep(1)
+ else:raise RuntimeError('F5GR1_DB_NOT_HEALTHY')
+ cmd=['docker','run','--rm','--name',app,'--label',label,'--network','container:'+db,'--log-driver','none','--tmpfs','/workspace:rw,size=512m','--tmpfs','/tmp:rw,size=256m','--mount','type=bind,source='+str(root)+',target=/input,readonly','--mount','type=bind,source='+str(runtime)+',target=/run-input,readonly','--mount','type=bind,source=C:/Users/alici/OneDrive/Desktop/hostidercp/tools/analysis/vendor/phpstan/phpstan/phpstan.phar,target=/analysis/phpstan.phar,readonly','-e','APP_ENV=test','-e','F5GR1_MODE='+mode,'-e','SYNTHETIC_PREFLIGHT_ALLOWED=1','-e','SYNTHETIC_REHEARSAL_ALLOWED=1','-e','HTTP_TEST_ENGINE=interpreter','-e','TEST_DB_DSN=mysql:host=127.0.0.1;port=3306;dbname=hostider_f0_test;charset=utf8mb4','-e','TEST_DB_USER=root','-e','TEST_DB_PASSWORD=SYNTHETIC_FIXTURE_PASSWORD_REDACTED','--entrypoint','sh',images[version],'/run-input/run-tests.sh']
+ created.append(('container',app))
+ proc=subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,encoding='utf-8',errors='replace')
+ for raw in proc.stdout:
+  line=raw.rstrip()
+  if line.startswith('F5GR1_SUITE_BEGIN '):
+   current={'path':line.split(' ',1)[1],'passed':0,'failed':0};meta['suites'].append(current)
+  if line.startswith('PASS ') and current:current['passed']+=1
+  if line.startswith('FAIL ') and current:current['failed']+=1
+  if line.startswith('F5GR1_SUITE_RESULT '):
+   current['exit']=int(line.rsplit(' ',1)[1]);print(line,flush=True)
+  if line.startswith('F5GR1_QUALITY_RESULT '):
+   _,q,code=line.split();meta['quality'][q]=int(code);print(line,flush=True)
+  if line.startswith('F5GR1_PHP '):meta['php']=line.split(' ',1)[1]
+  if line.startswith('{') and '"totals"' in line:
+   try:
+    j=json.loads(line);meta['phpstan_totals']=j.get('totals');meta['phpstan_messages']=[m['message'] for f in j.get('files',{}).values() for m in f.get('messages',[])]
+   except (ValueError,KeyError):pass
+  if line.startswith('FAIL '):line=line.split(': ',1)[0]+': [details redacted]'
+  if line.startswith(('F5GR1_','PASS ','FAIL ')) or re.match(r'^\d+ dependent tests BLOCKED',line) or re.match(r'^\d+ tests, \d+ failures$',line) or re.match(r'^\d+ (PHP files checked;|source/config/test files scanned;|documentation files:)',line):
+   safe.append(line)
+ meta['exit']=proc.wait()
+ meta['status']='PASS' if meta['exit']==0 else 'FAILED'
+except Exception as e:
+ meta['status']='BLOCKED_OR_FAILED';meta['safe_failure']=str(e) if str(e).startswith('F5GR1_') else type(e).__name__;print(meta['safe_failure'],flush=True)
+finally:
+ meta['cleanup']=[]
+ for kind,name in reversed(created):
+  try:
+   inspect=['docker','inspect' if kind=='container' else 'network','inspect'] if kind=='network' else ['docker','inspect']
+   inspect+=['--format','{{index .Labels "hostider.f5gr1"}}' if kind=='network' else '{{index .Config.Labels "hostider.f5gr1"}}',name]
+   p=subprocess.run(inspect,capture_output=True,text=True)
+   if p.returncode!=0:meta['cleanup'].append({'name':name,'already_absent':True});continue
+   if p.stdout.strip()!=task:raise RuntimeError('F5GR1_OWNERSHIP_MISMATCH')
+   run(['docker','rm','-f',name] if kind=='container' else ['docker','network','rm',name])
+   meta['cleanup'].append({'name':name,'ownership_verified':True,'removed':True})
+  except Exception:meta['cleanup'].append({'name':name,'cleanup_failed':True})
+ unchanged=all((root/p).is_file() and hashlib.sha256((root/p).read_bytes()).hexdigest()==h for p,h in manifest.items())
+ meta['host_source_unchanged']=unchanged
+ meta['finished_at']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime());meta['safe_output_lines']=len(safe)
+ stem='php'+version+'-'+task
+ (evidence/(stem+'.txt')).write_text('\n'.join(safe)+'\n',encoding='utf-8')
+ (evidence/(stem+'.json')).write_text(json.dumps(meta,indent=2)+'\n',encoding='utf-8')
+ (evidence/(stem+'-source.json')).write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+ print(json.dumps({'status':meta['status'],'php':meta.get('php'),'tests_passed':sum(s['passed'] for s in meta['suites']),'tests_failed':sum(s['failed'] for s in meta['suites']),'quality':meta['quality'],'phpstan_messages':meta.get('phpstan_messages',[]),'host_source_unchanged':unchanged,'evidence':stem}),flush=True)
+sys.exit(0 if meta['status']=='PASS' and meta['host_source_unchanged'] else 1)

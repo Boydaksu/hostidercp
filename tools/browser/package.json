@@ -1,0 +1,9 @@
+{
+  "name": "hostider-f5-e-browser-checks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Development-only native support UI browser checks; no production runtime dependency",
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

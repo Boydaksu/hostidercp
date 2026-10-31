@@ -1,0 +1,72 @@
+F5I_SOURCE_MANIFEST_MATCH 524
+F5I_PHP 8.3.36
+F5I_SUITE_BEGIN tests/domains-audit.php
+PASS F4-C missing resource and UNKNOWN call never prove no effect; replay stays held
+PASS F4-C crash before call cannot be confirmed failed; expiry fences old worker
+PASS F4-C independently recorded definitive no effect permits explicit failure only
+PASS F4-C mismatched call fingerprint status account and resource fail closed
+PASS F4-C stale inspection generation domain version and newer inspection fence resolution
+PASS F4-C hold timestamp and reason commit together and roll back together
+PASS F4-C SKIP LOCKED bypasses contended first operation without losing its state
+PASS F4-C 1 4 and 8 independent PHP runners produce one physical registration per domain
+PASS F4-C renewal finance rechecked at claim and result; refund never dispatches or extends again
+PASS F4-C manual approval and immutable renewal binding cannot be bypassed
+PASS F4-C crash after effect and duplicate queue job cannot replay a registration
+PASS F4-C parallel canonical renewal requests converge and eight runners extend only once
+12 tests, 0 failures
+F5I_SUITE_RESULT tests/domains-audit.php 0
+F5I_SUITE_BEGIN tests/cloud.php
+PASS F4-D canonical paid CLOUD source scope unit and immutable specification
+PASS F4-D catalog OS location custom bounds and secret fields fail closed
+PASS F4-D create acceptance is not ACTIVE until independent task and resource evidence
+PASS F4-D power reinstall upgrade and terminate use confirmation and verified tasks
+PASS F4-D before after body-loss and auth-loss never trigger a second create
+PASS F4-D UNKNOWN absent call or pending task cannot become successful
+PASS F4-D timeout after effect reconciles one existing task with explicit scoped operator decision
+PASS F4-D crash after effect expires lease; stale response and durable send replay are fenced
+PASS F4-D alien task status resource account and fingerprint never mean success
+PASS F4-D refund after dispatch preserves resource evidence and suspends funded service
+PASS F4-D imported VM binds verified external resource and cannot CREATE
+PASS F4-D projections immutable usage provenance and non-test environments exclude secrets
+12 tests, 0 failures
+F5I_SUITE_RESULT tests/cloud.php 0
+F5I_SUITE_BEGIN tests/cloud-costs.php
+PASS F4-E duplicate usage creates one balanced existing Ledger accrual and atomic outbox
+PASS F4-E partial hours quantum minimum and explicit money rounding use exact arithmetic
+PASS F4-E adjacent intervals and provider invoice reconcile without a second accrual
+PASS F4-E overlapping or zero reversed future and stale intervals fail closed
+PASS F4-E sequence gap waits for evidence while older sequence cannot create cost
+PASS F4-E account VM task and spec tariff references cannot be mixed
+PASS F4-E missing metering or unapproved tariff remains UNVERIFIED not zero verified cost
+PASS F4-E effect observation clock never becomes usage duration or billing boundary
+PASS F4-E UNKNOWN create cannot infer cost until independent task resource evidence is resolved
+PASS F4-E STOPPED VM still incurs independently evidenced provider cost
+PASS F4-E terminated VM accepts delayed final invoice but termination alone closes no payable
+PASS F4-E invoice mismatch wrong currency stale and noncontiguous coverage require review
+PASS F4-E invoice before cost evidence is append-only UNVERIFIED then matches once
+PASS F4-E FX currency exponents and amounts above JavaScript precision remain exact
+PASS F4-E addon and provider tax are explicit while unpermitted quantities cannot accrue
+PASS F4-E fixed extra fees stay separate from recurring forecast and unapproved fees fail closed
+PASS F4-E provisional invoice match does not block later independent final invoice proof
+PASS F4-E tariffs require real fresh staff and neither live nor secret input is accepted
+PASS F4-E immutable tariff metering cost journal proposal and history cannot be overwritten
+PASS F4-E cost rise creates existing catalog proposal and separate approval then confirmed mock publication
+PASS F4-E proposal currency review and changed catalog confirmation fail closed
+PASS F4-E customer prepaid cycle is exactly 30 days and cannot be silently changed
+PASS F4-E failed cost insert rolls back ledger outbox and work before retry
+PASS F4-E known rolled-back deadlock retries local accrual once without duplicate money
+PASS F4-E prepaid provider VM never produces ondemand hourly cost despite approved tariff
+25 tests, 0 failures
+F5I_SUITE_RESULT tests/cloud-costs.php 0
+F5I_QUALITY_BEGIN check
+499 PHP files checked; 0 violations
+F5I_QUALITY_RESULT check 0
+F5I_QUALITY_BEGIN audit
+524 source/config/test files scanned; 0 findings
+F5I_QUALITY_RESULT audit 0
+F5I_QUALITY_BEGIN phpstan
+F5I_QUALITY_RESULT phpstan 0
+F5I_QUALITY_BEGIN documentation
+806 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F5I_QUALITY_RESULT documentation 0
+F5I_SOURCE_MANIFEST_MATCH 524

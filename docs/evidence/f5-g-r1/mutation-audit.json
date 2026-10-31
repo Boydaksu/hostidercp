@@ -1,0 +1,15 @@
+{
+  "Advanced.Csat": "FIX: writable immediately after native ACL before replay/status/version/rating writes; historical view unchanged",
+  "Advanced.Incidents": "FIX: linkable canonical service seam now writable after current manage+incident grants; command entry already guarded. Incident-only updates do not mutate linked ticket",
+  "AutoClose": "Selection excludes SOURCE and locked eligibility rechecks immutable SOURCE marker; target native version/policy rules unchanged",
+  "Automation": "Native ticket mutation permission and Operations.preflight writable; stale-version jobs skip, receipts are bookkeeping not new ticket authority",
+  "Mail.Attachments": "Upload uses native reply guard. Save is trusted internal post-canonical-write seam; reads/token/download preserve ACL/ownership/retention and allowed access audit",
+  "Mail.Inbound": "Hint/reply uses Access.ticket reply and Service.inbound canonical authorization before message/file writes. Denied input may remain unbound REVIEW intake; no silent target append",
+  "Mail.Outbound": "FIX: both ready/dispatch durable bindings reject SOURCE, with current locking read inside receipt transaction; no fake user/session or alias disclosure",
+  "Mail.Retention": "Existing expiry/hold/purge safeguards remain operational; merge does not override privacy retention",
+  "Merge.Projection": "FIX: writable and alias ACL validation use current locking edge/ticket reads; view defaults remain nonlocking/read-only. Repeatable-read snapshot bypass reproduced16/2 before fix.",
+  "Service": "FIX: target department pin uses current edge read; Source canonical writes use current writable. Other Service behavior unchanged.",
+  "UI": "Draft mutations use reply/internal-note guard. Presence/filter/session/rate metadata are independent observation/preferences, not ticket business authority",
+  "Work": "assign/auto/enroll/delegated guarded through native assign permission; scheduler skips SOURCE before work/SLA writes; views remain reads",
+  "audit_scope": "Authenticated HTTP/native command paths and their canonical/queued services; no broad new authorization engine"
+}

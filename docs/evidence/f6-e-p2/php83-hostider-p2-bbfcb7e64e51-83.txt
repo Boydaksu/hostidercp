@@ -1,0 +1,37 @@
+P2_SOURCE_MANIFEST_MATCH 484
+P2_PHP 8.3.36
+P2_SUITE_BEGIN tests/migration-discovery.php
+PASS P2 01 valid explicitly synthetic metadata contract and safe aggregate report
+PASS P2 02 every required root field fails closed when missing
+PASS P2 03 unsupported contract version and encoding rejected
+PASS P2 04 claimed numeric WHMCS version stays unverified unknown remains unknown
+PASS P2 05 missing table or column metadata cannot imply inventory compatibility
+PASS P2 06 unexpected custom field blocked unless exact out of band allowlist
+PASS P2 07 charset collation contradiction and unknown label cannot pass
+PASS P2 08 password algorithms are metadata claims never hash compatibility
+PASS P2 09 duplicate root JSON key rejected even with identical value
+PASS P2 10 nested duplicate keys and escaped key equivalence rejected
+PASS P2 11 malformed JSON invalid Unicode BOM surrogate and trailing input blocked
+PASS P2 12 byte string depth and node limits enforced
+PASS P2 13 out of band expected source binding rejects another source
+PASS P2 14 snapshot provenance and artifact binding mismatch blocked
+PASS P2 15 every category rejects mixed source snapshot metadata
+PASS P2 16 content fingerprint and schema fingerprint tampering rejected
+PASS P2 17 forbidden personal data fields never enter report or exception text
+PASS P2 18 credentials session secrets and actual password hash shapes forbidden
+PASS P2 19 forged G-O03 CLOSED and verified authority fields rejected
+PASS P2 20 missing file inventory is UNKNOWN absent category or contradictory items blocked
+PASS P2 21 canonical fingerprint deterministic across repeat and object key order
+FAIL P2 22 malformed typed evidence never produces offline positive: [details redacted]
+PASS P2 23 cutover effects readiness escalation always blocked
+PASS P2 24 no path URL traversal or filesystem locator accepted
+PASS P2 25 regular file handle bounded read and caller ownership preserved
+PASS P2 26 oversized file and non regular stream rejected without path reads
+PASS P2 27 duplicate inventory IDs index references primary and bounds rejected
+PASS P2 28 timezone date ordering and uncertainty allowlist fail closed
+PASS P2 29 sanitized operator supplied classification never establishes truth
+PASS P2 30 strict object list distinction and unknown enum values rejected
+FAIL P2 31 escaped arbitrary strings do not confuse JSON duplicate scanning: [details redacted]
+PASS P2 32 conflicting knowledge cannot be downgraded to unknown by date policy
+32 tests, 2 failures
+P2_SUITE_RESULT tests/migration-discovery.php 1

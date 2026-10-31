@@ -1,0 +1,29 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC",
+  "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+  "php": "8.4.27",
+  "unchanged_closure_diagnostics": [
+    {
+      "result": "PASS",
+      "isolated": true,
+      "runner": "diagnose-support.php",
+      "name": "SUP-006 native HTTP permission revoke session version and stale step-up cut access"
+    },
+    {
+      "result": "PASS",
+      "isolated": true,
+      "runner": "diagnose-upgrade.php",
+      "name": "F5-B additive 049 to 050 upgrade replay and old checksums are preserved"
+    },
+    {
+      "result": "PASS",
+      "isolated": true,
+      "runner": "diagnose-mail.php",
+      "name": "SUP-001 malformed MIME is encrypted bounded review and oversized raw writes nothing"
+    }
+  ],
+  "inference": "Package/order/shared-state or environment issue remains unresolved; no root cause claimed",
+  "full_support_package": "FAILED",
+  "github_actions": false
+}

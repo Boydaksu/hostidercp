@@ -1,0 +1,33 @@
+{
+  "pattern_findings": 0,
+  "php": "8.4.24",
+  "phpstan_errors": 0,
+  "real_external_effects": false,
+  "development": [
+    {
+      "failures": 0,
+      "tests": 31,
+      "acceptance_evidence": false
+    },
+    {
+      "failures": 1,
+      "tests": 34,
+      "safe_error": "1553 FK requires supporting index",
+      "acceptance_evidence": false
+    }
+  ],
+  "lint_violations": 0,
+  "failures": 0,
+  "tests": 35,
+  "pattern_files": 445,
+  "old_664_rerun_locally": false,
+  "database": "owned ephemeral MariaDB 10.11 schemas",
+  "independent_read_processes": 4,
+  "lint_files": 423,
+  "evidence_binding_before": {
+    "failures": 1,
+    "source": "3b1fdd1cd42e5826b2107d4d906226d1df8960f8",
+    "tests": 1,
+    "acceptance_evidence": false
+  }
+}
