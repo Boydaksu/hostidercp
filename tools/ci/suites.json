@@ -65,5 +65,6 @@
   "tests/migration-inventory.php",
   "tests/migration-discovery-collector.php",
   "tests/support-auto-close.php",
-  "tests/support-merge.php"
+  "tests/support-merge.php",
+  "tests/support-merge-readonly.php"
 ]

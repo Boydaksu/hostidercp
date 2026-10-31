@@ -139,6 +139,7 @@ jobs:
       - run: php tests/migration-discovery-collector.php
       - run: php tests/support-auto-close.php
           php tests/support-merge.php
+          php tests/support-merge-readonly.php
       - run: node --check public/assets/support.js
       - run: node tests/support-e-state.cjs
       - run: node tests/support-merge-state.cjs

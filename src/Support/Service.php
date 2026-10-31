@@ -119,7 +119,7 @@ final readonly class Service
     private function change(array $u,array $s,array $p,string $action,string $trace): array
     {
         $row=$this->access->ticket($u,$s,$p['id'],'support.ticket.manage');$this->expected($row,$p['version']);$status=$row['status'];$dep=$row['department_id'];
-        if($action==='move'&&(new \Hostider\Support\Merge\Projection($this->c))->edge($row['id'])!==null){throw new HttpError(409,'MERGE_DEPARTMENT_PINNED');}
+        if($action==='move'&&(new \Hostider\Support\Merge\Projection($this->c))->edge($row['id'],true)!==null){throw new HttpError(409,'MERGE_DEPARTMENT_PINNED');}
         if($action==='state'){State::transition($status,$p['status'],$this->access->department($dep));$status=$p['status'];}else{$dep=$p['department_id'];if($dep===$row['department_id']){throw new HttpError(409,'SUPPORT_DEPARTMENT_UNCHANGED');}}
         $next=$this->update($row,$status,$dep);$this->event($u,$s,$next,strtoupper($action),$trace,true,$row);return $this->slaResult(['id'=>$row['id'],'version'=>$next['version']]);
     }

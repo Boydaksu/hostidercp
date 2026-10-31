@@ -15,7 +15,7 @@ final readonly class Incidents
     }
     public function linkable(array $u,array $s,array $t,string $id): array
     {
-        $this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.ticket.manage');$this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.incident.manage');$r=$this->m->c->db->execute('SELECT * FROM support_incidents WHERE id=? FOR UPDATE',[$id])->fetch();if(!$r||$r['department_id']!==$t['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}if((int)$this->m->c->db->execute('SELECT COUNT(*) FROM support_incident_tickets WHERE incident_id=?',[$id])->fetchColumn()>=1000){throw new HttpError(409,'INCIDENT_LINK_LIMIT');}return $r;
+        $this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.ticket.manage');$this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.incident.manage');(new \Hostider\Support\Merge\Projection($this->m->c))->writable($u,$s,$t);$r=$this->m->c->db->execute('SELECT * FROM support_incidents WHERE id=? FOR UPDATE',[$id])->fetch();if(!$r||$r['department_id']!==$t['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}if((int)$this->m->c->db->execute('SELECT COUNT(*) FROM support_incident_tickets WHERE incident_id=?',[$id])->fetchColumn()>=1000){throw new HttpError(409,'INCIDENT_LINK_LIMIT');}return $r;
     }
     public function link(array $u,array $s,array $t,string $id,string $trace,?string $execution=null,?string $cause=null): string
     {

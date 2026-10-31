@@ -8,19 +8,19 @@ use Hostider\Support\Advanced\Common;
 final readonly class Projection
 {
     public function __construct(private Services $c){}
-    public function edge(string $id):?array
+    public function edge(string $id,bool $lock=false):?array
     {
-        return $this->c->db->execute('SELECT e.* FROM support_ticket_merges e JOIN support_merge_members m ON m.merge_id=e.id WHERE m.ticket_id=?',[$id])->fetch()?:null;
+        if($lock){$this->c->db->requireTransaction();}return $this->c->db->execute('SELECT e.* FROM support_ticket_merges e JOIN support_merge_members m ON m.merge_id=e.id WHERE m.ticket_id=?'.($lock?' FOR UPDATE':''),[$id])->fetch()?:null;
     }
-    public function alias(array $u,array $s,array $t):?array
+    public function alias(array $u,array $s,array $t,bool $lock=false):?array
     {
-        $e=$this->edge($t['id']);if($e===null){return null;}$a=new Access($this->c);$tickets=[];
-        foreach([$e['source_id'],$e['target_id']] as $id){$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=?',[$id])->fetch();if(!$row||$row['customer_id']!==$e['customer_id']||$row['department_id']!==$e['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}$a->require($u,$s,$row['customer_id'],$row['department_id']);$tickets[$id]=$row;}
+        $e=$this->edge($t['id'],$lock);if($e===null){return null;}$a=new Access($this->c);$tickets=[];
+        foreach([$e['source_id'],$e['target_id']] as $id){$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=?'.($lock?' FOR UPDATE':''),[$id])->fetch();if(!$row||$row['customer_id']!==$e['customer_id']||$row['department_id']!==$e['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}$a->require($u,$s,$row['customer_id'],$row['department_id']);$tickets[$id]=$row;}
         return ['source_id'=>$e['source_id'],'source_number'=>$e['source_number'],'target_id'=>$e['target_id'],'target_number'=>$tickets[$e['target_id']]['number'],'source_version'=>(int)$tickets[$e['source_id']]['version'],'target_version'=>(int)$tickets[$e['target_id']]['version'],'read_only'=>$t['id']===$e['source_id'],'created_at'=>$e['created_at']];
     }
     public function writable(array $u,array $s,array $t):void
     {
-        $e=$this->edge($t['id']);if($e!==null&&$e['source_id']===$t['id']){$a=$this->alias($u,$s,$t);throw new HttpError(409,'SUPPORT_TICKET_MERGED_TARGET_'.$a['target_id']);}
+        $e=$this->edge($t['id'],true);if($e!==null&&$e['source_id']===$t['id']){$a=$this->alias($u,$s,$t,true);throw new HttpError(409,'SUPPORT_TICKET_MERGED_TARGET_'.$a['target_id']);}
     }
     /** Combined messages are a bounded read projection. Attachments retain the origin ticket. */
     public function augment(array $u,array $s,array $t,array $out,int $offset=0):array

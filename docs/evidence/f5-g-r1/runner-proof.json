@@ -1,0 +1,10 @@
+{
+  "executed_sha256": "b52546cfcafdb346a6187e169ac1edfd11d3bd1d3572fa6bc999bad831b227da",
+  "full_shell_sha256": "a3358b31ab791c24f3e2966035a119dce8b1bd50293b0f01bd32540d846e4919",
+  "isolation": "Pinned runtimes, separate internal networks/tmpfs MariaDB, no host ports, owned cleanup",
+  "redaction": "Only fixed isolated synthetic fixture password; no real credentials",
+  "review_sha256": "837ba637946aca6c36a27dac1047c475eec91d04d675150b7c6b083945ab9c22",
+  "snapshot_repro_scope": "18 new tests only; other regressions/quality NOT_RUN after failure",
+  "snapshot_repro_shell_sha256": "1b93bb159095edf1f86906953e8f52e7636481a5e3f98b105b8995f4eeaf30b5",
+  "source_copy": "Read-only source copied to tmpfs; SHA256 before/after"
+}
