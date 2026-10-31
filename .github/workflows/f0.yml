@@ -142,6 +142,8 @@ jobs:
           php tests/support-merge-readonly.php
           php tests/support-split.php
           php tests/support-integration.php
+      - name: Offline native encrypted backup restore rehearsal (synthetic only)
+        run: php tests/offline-backup.php
       - run: node --check public/assets/support.js
       - run: node tests/support-e-state.cjs
       - run: node tests/support-merge-state.cjs

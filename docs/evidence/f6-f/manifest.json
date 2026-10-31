@@ -1,0 +1,170 @@
+{
+  "candidate-source-manifest.json": {
+    "sha256": "c29eb1e09fb45c20998a48080a96baa74390c617b8c98a0e04550674731d0b4b",
+    "bytes": 54530
+  },
+  "changed-files.json": {
+    "sha256": "62269636159524d01f13b7eef4f170a89ae84e08d6b796dccb5802da30da607d",
+    "bytes": 13102
+  },
+  "DELIVERY_REPORT.md": {
+    "sha256": "903f8d1d7e108529d9e0e4bd491f2a8e464e64facbd8ece3f75cb8d851bffa47",
+    "bytes": 15804
+  },
+  "final-documentation-check.json": {
+    "sha256": "8585d479812f455aa400bd4e447f7380690d0f2044f24d32945b9987a068ca2c",
+    "bytes": 525
+  },
+  "final-validation.json": {
+    "sha256": "95c33b33d824efd5e7632d96549eead41f20076cd7691925251c2844f3d67a35",
+    "bytes": 1308
+  },
+  "local-docker-runner-review.txt": {
+    "sha256": "b6d529e9ed8276ecf07cb0833df377a04133b7c26b479536b68166a667004337",
+    "bytes": 7893
+  },
+  "new-source-manifest.json": {
+    "sha256": "616dcdeac1ab528fd076e47939a5404f4815f268b2010aab814f4f2cb2af00a0",
+    "bytes": 1243
+  },
+  "php83-hostider-f6f-16ff028386db-83-source.json": {
+    "sha256": "ff4df9dec423d22afad66ae2de3d872dcf869c1ab48924b15680125cb1471830",
+    "bytes": 56143
+  },
+  "php83-hostider-f6f-16ff028386db-83.json": {
+    "sha256": "b074a7c206af2192f9605be9fa652dedcd832a44edf9e02aa77c665198c23368",
+    "bytes": 2355
+  },
+  "php83-hostider-f6f-16ff028386db-83.txt": {
+    "sha256": "32cf12721ac809419a0f0b797e302e89f96f18bbe40a919dabe54158c9fc25b7",
+    "bytes": 2266
+  },
+  "php83-hostider-f6f-341034c96a54-83-source.json": {
+    "sha256": "143cf605726f16c1c8b6f5b991d5ff47db4b92f85ec2bed1b90138a06738aec5",
+    "bytes": 56143
+  },
+  "php83-hostider-f6f-341034c96a54-83.json": {
+    "sha256": "f02064230a2218c46574229b47c4325ac7919a29f43627c4ebb0400a3a3b1576",
+    "bytes": 1656
+  },
+  "php83-hostider-f6f-341034c96a54-83.txt": {
+    "sha256": "d618c44782b9be19cab691fa64d0adb1fd66058cea1f2b061d09ac5fd66f3c2f",
+    "bytes": 3679
+  },
+  "php83-hostider-f6f-523f0879c9b4-83-source.json": {
+    "sha256": "ee3d8146eda849dc0eaaf6a0b8eac9ff3069edfcfa196532f73e6718f4d512f5",
+    "bytes": 56038
+  },
+  "php83-hostider-f6f-523f0879c9b4-83.json": {
+    "sha256": "cf4fc736c87a979aec410b4bd8e79d17a5b687b7f470baec3fa163e28923f302",
+    "bytes": 1655
+  },
+  "php83-hostider-f6f-523f0879c9b4-83.txt": {
+    "sha256": "328275b8e1af50a2e99508ebf41f5ee493edf82c965d3f0162d1185962f443b4",
+    "bytes": 817
+  },
+  "php83-hostider-f6f-712cc131edf1-83-source.json": {
+    "sha256": "d11c6cff29074ea27bc4a546dd89f116e06e4dc2a5422c9c1f673db65dfd6b62",
+    "bytes": 56038
+  },
+  "php83-hostider-f6f-712cc131edf1-83.json": {
+    "sha256": "66b50aaf6f0500bd5bb9d262ba6b6a44725aef86493b07b61cef15a268308bad",
+    "bytes": 1816
+  },
+  "php83-hostider-f6f-712cc131edf1-83.txt": {
+    "sha256": "f235468efd87f30f3a5e33b1af9ecc09d97398a9c24655d029fd51fe5a7e9f0b",
+    "bytes": 695
+  },
+  "php83-hostider-f6f-85f27691bfb1-83-source.json": {
+    "sha256": "09d05a6d2e498bc954a64bb19988cc5e8be0760520749b31b907e4aeab7fa254",
+    "bytes": 56038
+  },
+  "php83-hostider-f6f-85f27691bfb1-83.json": {
+    "sha256": "2e2a1e3337e07d2a7c96b984abcab0aa3dadc7e0e38eeb05b60ce12f6d9d9ade",
+    "bytes": 1776
+  },
+  "php83-hostider-f6f-85f27691bfb1-83.txt": {
+    "sha256": "6918b66e9f8ff8bca59231006cd77a931b6ac83b4e3f9cf9f10363fade624358",
+    "bytes": 823
+  },
+  "php83-hostider-f6f-8e59823d4b5f-83-source.json": {
+    "sha256": "4617fcde5a919ab87967962e6613930f779f0d96f29d4f94a2299f9f19478e6a",
+    "bytes": 56143
+  },
+  "php83-hostider-f6f-8e59823d4b5f-83.json": {
+    "sha256": "52e7d01b8792c97909efe236740dfbe62bdd3ffda04d02a85981d19738b5ea2f",
+    "bytes": 2673
+  },
+  "php83-hostider-f6f-8e59823d4b5f-83.txt": {
+    "sha256": "5e4c3bd31ce3a96e005d6991e8ae379b96523f824a1e3d1ddfd2ab504374ecda",
+    "bytes": 3343
+  },
+  "php83-hostider-f6f-a11be1293b60-83-source.json": {
+    "sha256": "545350898c0759d511832c5f2c486be31026dde808af16746849a13121847e40",
+    "bytes": 56038
+  },
+  "php83-hostider-f6f-a11be1293b60-83.json": {
+    "sha256": "ed9ec2ee49d3873542a07eb74d272f0ab130ca74e0603e07cdb9c35ac50925f1",
+    "bytes": 2905
+  },
+  "php83-hostider-f6f-a11be1293b60-83.txt": {
+    "sha256": "a2c2da3db0dd719bf08db540ef1d983025417db33aec7aeeb3d083a0282b8d14",
+    "bytes": 1456
+  },
+  "php83-hostider-f6f-b8981a02e582-83-source.json": {
+    "sha256": "6b78d3c640d439463b70bd699084b74d103ab399e2c95d9e8569cb6bb9254ef4",
+    "bytes": 56143
+  },
+  "php83-hostider-f6f-b8981a02e582-83.json": {
+    "sha256": "43da175a769eb9a923cc26ddbeaa4b999ada777bc5fa9f63683655966fe4fdb4",
+    "bytes": 2358
+  },
+  "php83-hostider-f6f-b8981a02e582-83.txt": {
+    "sha256": "c6d6c30d39c6e81b024604d7444a9617a056e965cb1374f6bb3c3bae1cef3ad3",
+    "bytes": 3035
+  },
+  "php83-hostider-f6f-ec28602128d8-83-source.json": {
+    "sha256": "1ec10c56ddcb68332577c9f851158bd292ea65fce1df54c73df21d1d9c9eb8e2",
+    "bytes": 56143
+  },
+  "php83-hostider-f6f-ec28602128d8-83.json": {
+    "sha256": "72c5d8c99ebfa3fb5e78d6fcd0c3ea3fd1d83ad691227e3e9cdb8bcf25ce3f49",
+    "bytes": 4228
+  },
+  "php83-hostider-f6f-ec28602128d8-83.txt": {
+    "sha256": "71f419386af77861d54d02775af9568f62a2787b4172bf9577438ccfe1b36cf4",
+    "bytes": 50478
+  },
+  "php84-hostider-f6f-9829a5346ad0-84-source.json": {
+    "sha256": "1ec10c56ddcb68332577c9f851158bd292ea65fce1df54c73df21d1d9c9eb8e2",
+    "bytes": 56143
+  },
+  "php84-hostider-f6f-9829a5346ad0-84.json": {
+    "sha256": "9114d6fa6db273fdfecb9ff160b8ee89e5d70046483ce211e93f2bd756311abf",
+    "bytes": 4228
+  },
+  "php84-hostider-f6f-9829a5346ad0-84.txt": {
+    "sha256": "425660c1bcdd6c426bbe5a2ef81b662a623754d48c645bbda8861402cab25861",
+    "bytes": 50478
+  },
+  "preservation.json": {
+    "sha256": "ab40bc84198c425641713debfd54a2fe273c5c25378b504bfd9eefd7560fa260",
+    "bytes": 5737
+  },
+  "run-tests-review.txt": {
+    "sha256": "3deca46782776c4a7b9e313d9caa97d7f6f1914ab1362051f554fbb015d894bf",
+    "bytes": 2269
+  },
+  "runner-proof.json": {
+    "sha256": "de4f4a2796f0961ad831e4608f71b6741e34ebbd01c495b592f0f313a0c79b51",
+    "bytes": 1473
+  },
+  "source.diff": {
+    "sha256": "c328fc50d1c0f846d26a3379cc202daa9cd40d4cf349612d2d87f2ba22959426",
+    "bytes": 89185
+  },
+  "summary.json": {
+    "sha256": "e82219853503b54c5f42dd641435fa1686dddeee99ad9ddc9076998a8948e297",
+    "bytes": 7649
+  }
+}

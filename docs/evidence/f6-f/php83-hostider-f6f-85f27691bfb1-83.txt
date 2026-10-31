@@ -1,0 +1,20 @@
+F6F_SOURCE_MANIFEST_MATCH 535
+F6F_PHP 8.3.36
+F6F_UID 10001
+F6F_SUITE_BEGIN tests/offline-backup.php
+FAIL F6-F 01 actual complete encrypted native backup contains no plaintext secret: [details redacted]
+1 dependent tests BLOCKED after first failure; not counted as passed
+2 tests, 1 failures
+F6F_SUITE_RESULT tests/offline-backup.php 1
+F6F_QUALITY_BEGIN check
+510 PHP files checked; 0 violations
+F6F_QUALITY_RESULT check 0
+F6F_QUALITY_BEGIN audit
+535 source/config/test files scanned; 0 findings
+F6F_QUALITY_RESULT audit 0
+F6F_QUALITY_BEGIN phpstan
+F6F_QUALITY_RESULT phpstan 1
+F6F_QUALITY_BEGIN documentation
+839 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6F_QUALITY_RESULT documentation 0
+F6F_SOURCE_MANIFEST_MATCH 535

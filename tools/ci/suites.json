@@ -68,5 +68,6 @@
   "tests/support-merge.php",
   "tests/support-merge-readonly.php",
   "tests/support-split.php",
-  "tests/support-integration.php"
+  "tests/support-integration.php",
+  "tests/offline-backup.php"
 ]

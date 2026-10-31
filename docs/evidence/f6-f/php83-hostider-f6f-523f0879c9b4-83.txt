@@ -1,0 +1,20 @@
+F6F_SOURCE_MANIFEST_MATCH 535
+F6F_PHP 8.3.36
+F6F_UID 10001
+F6F_SUITE_BEGIN tests/offline-backup.php
+PASS F6-F 01 actual complete encrypted native backup contains no plaintext secret
+PASS F6-F 02 real isolated native restore matches every row file schema and ledger
+2 tests, 0 failures
+F6F_SUITE_RESULT tests/offline-backup.php 0
+F6F_QUALITY_BEGIN check
+510 PHP files checked; 0 violations
+F6F_QUALITY_RESULT check 0
+F6F_QUALITY_BEGIN audit
+535 source/config/test files scanned; 0 findings
+F6F_QUALITY_RESULT audit 0
+F6F_QUALITY_BEGIN phpstan
+F6F_QUALITY_RESULT phpstan 0
+F6F_QUALITY_BEGIN documentation
+845 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6F_QUALITY_RESULT documentation 0
+F6F_SOURCE_MANIFEST_MATCH 535
