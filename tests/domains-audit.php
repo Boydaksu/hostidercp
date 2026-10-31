@@ -14,7 +14,7 @@ $copied=[];
 try {
     foreach(glob(dirname(__DIR__).'/migrations/*.php') as $source){if(basename($source)<'043'){$target=$upgradeDir.'/'.basename($source);copy($source,$target);$copied[]=$target;}}
     same(42,count((new Migrator($db,$upgradeDir))->migrate()));
-    $migrator=new Migrator($db,dirname(__DIR__).'/migrations');same(['043_f4_domain_audit_safety.php','044_f4_cloud_operations.php','045_cloud_purchase_containment.php','046_cloud_metering_costs.php','047_cloud_cost_admission.php','048_provider_panel.php','049_support_core.php','050_support_sla_assignment.php','051_support_sla_availability.php','052_support_mail.php','053_support_automation_incident_csat.php','054_support_ui_state.php'],$migrator->migrate());same([],$migrator->migrate());$migrator->assertReady();
+    $migrator=new Migrator($db,dirname(__DIR__).'/migrations');same(['043_f4_domain_audit_safety.php','044_f4_cloud_operations.php','045_cloud_purchase_containment.php','046_cloud_metering_costs.php','047_cloud_cost_admission.php','048_provider_panel.php','049_support_core.php','050_support_sla_assignment.php','051_support_sla_availability.php','052_support_mail.php','053_support_automation_incident_csat.php','054_support_ui_state.php','055_support_auto_close.php','056_support_ticket_merge.php','057_support_ticket_split.php'],$migrator->migrate());same([],$migrator->migrate());$migrator->assertReady();
     echo 'MIGRATION 001-042 preserved; 042 to 043 additive upgrade; replay no-op PASS'.PHP_EOL;
 } finally {foreach($copied as $target){unlink($target);}rmdir($upgradeDir);}
 function auditDomain($db,bool $registered=false): array {

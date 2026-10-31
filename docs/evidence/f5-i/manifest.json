@@ -1,0 +1,190 @@
+{
+  "browser-dependency-install.json": {
+    "sha256": "69a8f894dccb547ff79641eea67f774ab2ce64c231795dddd1c6fd963e691030",
+    "bytes": 158
+  },
+  "browser-runner-review.txt": {
+    "sha256": "939e2fcf7a69c346a6bc017184291a6bba96ffe9b9971412d44930a2558924c5",
+    "bytes": 4321
+  },
+  "candidate-source-manifest.json": {
+    "sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3",
+    "bytes": 53314
+  },
+  "changed-files.json": {
+    "sha256": "35e924ba1874b569dfd1ed0d01c2d2310c227b19f7fd30c56c7343b12ec81f70",
+    "bytes": 13330
+  },
+  "composer-audit.json": {
+    "sha256": "b408f0f13bda2f1a9e1afb9db97ed8b45d1e9f90423a36d865440075bb800196",
+    "bytes": 242
+  },
+  "DELIVERY_REPORT.md": {
+    "sha256": "b89ece9397d4de70ecd7c8e9c2c734c6bc94b1fca2852ffe3f08b891d55cd210",
+    "bytes": 10017
+  },
+  "final-validation.json": {
+    "sha256": "fe466eb2a89169973fde3ab9d8a14f018a4b01f2c1530e0ee3547907b457fc6f",
+    "bytes": 1546
+  },
+  "hostider-f5i-browser-5c9ed8f14fa1.json": {
+    "sha256": "c5a1a4651d6ee38df7ff18e0df8c2963895818b87f53be0e04203df2a0063073",
+    "bytes": 1179
+  },
+  "hostider-f5i-browser-5c9ed8f14fa1.txt": {
+    "sha256": "dcf5bd47cb88dfb65114c597e2740325697083dea10a87dbb946f13bebb5ffdf",
+    "bytes": 1369
+  },
+  "hostider-f5i-browser-a51813ea3da0.json": {
+    "sha256": "df7eecfef8b467831499368dbe248ecbb9b2611bd367ec752f34ff96b78f2944",
+    "bytes": 945
+  },
+  "hostider-f5i-browser-a51813ea3da0.txt": {
+    "sha256": "681b4a2b178532ecd7c92fa7011fa928325e07987b3681045443ab5684b45d7b",
+    "bytes": 78
+  },
+  "hostider-f5i-browser-d7d27bc877d3.json": {
+    "sha256": "73a03eb5bb85ffff085914494deaf8717b58e33a4aa65901bbe0b8a5fdcbb45f",
+    "bytes": 981
+  },
+  "hostider-f5i-browser-d7d27bc877d3.txt": {
+    "sha256": "dcf5bd47cb88dfb65114c597e2740325697083dea10a87dbb946f13bebb5ffdf",
+    "bytes": 1369
+  },
+  "js-checks.json": {
+    "sha256": "dc97735f523258f79323914a264a95a066f73ce07996b23641ee98b0dab00075",
+    "bytes": 1162
+  },
+  "local-docker-runner-review.txt": {
+    "sha256": "d5eae3964766c08efb8450d89e236f49f53b5a22f35f57ee85a12c6900a48986",
+    "bytes": 7798
+  },
+  "new-source-manifest.json": {
+    "sha256": "019c4a80aa4cd9a72282890051dc75ee5bd61f28e1c82aab3c77e9887d2e2148",
+    "bytes": 437
+  },
+  "npm-audit.json": {
+    "sha256": "5d3da3ab4e8868092bdaf5ee0172095a357686454239a0e94b7f3e8106630669",
+    "bytes": 516
+  },
+  "old-test-preservation.json": {
+    "sha256": "b7b7b90b0e00287e6c587dbf7e1b7199b5a61f32208f586d7b0da7db62f0d331",
+    "bytes": 758
+  },
+  "php83-hostider-f5i-15ec8e857dad-83-source.json": {
+    "sha256": "5b5f53464307ce2132186ca6a2ce6ae26fa6ed11085bbd93f9d87acf5c1f09df",
+    "bytes": 54667
+  },
+  "php83-hostider-f5i-15ec8e857dad-83.json": {
+    "sha256": "b1478dba875f153c44a5781957343ca0fdd51544c3df9976a2efcdcdcae90ca2",
+    "bytes": 1867
+  },
+  "php83-hostider-f5i-15ec8e857dad-83.txt": {
+    "sha256": "ab51f5b935f621f7113e0dcaaa228a5431f02c395edd8d83611e5a51680f7d8c",
+    "bytes": 2060
+  },
+  "php83-hostider-f5i-27faf3b787bb-83-source.json": {
+    "sha256": "caef4bff22473ae2529b39af109098dd8d5ac45fe85d1f14bcc0df6e71526366",
+    "bytes": 54891
+  },
+  "php83-hostider-f5i-27faf3b787bb-83.json": {
+    "sha256": "cd88782381ca0c643b5a2eb5def332a6252f6d4093e9d25575a09c03cd76dbbc",
+    "bytes": 9675
+  },
+  "php83-hostider-f5i-27faf3b787bb-83.txt": {
+    "sha256": "caf5b4ed997e3175f172f3a3bce322fdec2a5322fdf195c373b1d5e533c2f5c2",
+    "bytes": 96059
+  },
+  "php83-hostider-f5i-687d490fedef-83-source.json": {
+    "sha256": "e71d16d639cc9c91a614702819cbc277b8cb1ae3787ae77addb838947f8b644e",
+    "bytes": 54891
+  },
+  "php83-hostider-f5i-687d490fedef-83.json": {
+    "sha256": "0341746a5c388a0b041b53346ae29596717bb14f12187520173b114db5dbeeeb",
+    "bytes": 9680
+  },
+  "php83-hostider-f5i-687d490fedef-83.txt": {
+    "sha256": "9d2d1f88c040bc62b9a1e8f3b45b968d37431762ba3ffad8a1167866cee62f99",
+    "bytes": 91779
+  },
+  "php83-hostider-f5i-906b3b41d6c3-83-source.json": {
+    "sha256": "caef4bff22473ae2529b39af109098dd8d5ac45fe85d1f14bcc0df6e71526366",
+    "bytes": 54891
+  },
+  "php83-hostider-f5i-906b3b41d6c3-83.json": {
+    "sha256": "7064d64111318bb59219d13db7eeb85d9ac3d404d40d00c484e8a31e921bf5b0",
+    "bytes": 1881
+  },
+  "php83-hostider-f5i-906b3b41d6c3-83.txt": {
+    "sha256": "5f6d3f8a6d43cb90cecb485cdc723b148d4e2626031874320712d68025e88544",
+    "bytes": 5048
+  },
+  "php83-hostider-f5i-c9375e993c56-83-source.json": {
+    "sha256": "bcac6d0db86ee0c3afc98a1fe96ff65369f722883b201e2007728ab0fe969739",
+    "bytes": 54667
+  },
+  "php83-hostider-f5i-c9375e993c56-83.json": {
+    "sha256": "d4c56a293156e1b53dd3a2b6bfe45162aadf9f9dff5115c5d6e4a61c80b10ef5",
+    "bytes": 2101
+  },
+  "php83-hostider-f5i-c9375e993c56-83.txt": {
+    "sha256": "b7624f8aa125fbdeb36008b1758aecf072c8691b6aa071a88f26d78bfe4163ac",
+    "bytes": 2320
+  },
+  "php83-hostider-f5i-dc4dc05ff964-83-source.json": {
+    "sha256": "e71d16d639cc9c91a614702819cbc277b8cb1ae3787ae77addb838947f8b644e",
+    "bytes": 54891
+  },
+  "php83-hostider-f5i-dc4dc05ff964-83.json": {
+    "sha256": "1a47336d6913d96ff72db5350b9427435cb9e4c5cc6d05465a97d005e3b05420",
+    "bytes": 1661
+  },
+  "php83-hostider-f5i-dc4dc05ff964-83.txt": {
+    "sha256": "2931cc7495e8d61a7acd39f8920bdcdfe1cb82a99d1c94c46c8e5513868b42e9",
+    "bytes": 2238
+  },
+  "php84-hostider-f5i-24a8ce2cb068-84-source.json": {
+    "sha256": "e71d16d639cc9c91a614702819cbc277b8cb1ae3787ae77addb838947f8b644e",
+    "bytes": 54891
+  },
+  "php84-hostider-f5i-24a8ce2cb068-84.json": {
+    "sha256": "a6c8897f137f5e2403754e83fb2e88e9c39ae155df6186ad90739bb0bca578e0",
+    "bytes": 9680
+  },
+  "php84-hostider-f5i-24a8ce2cb068-84.txt": {
+    "sha256": "d267419e715d0136024337a07a86c92d3859b7fdf921448e16bd23a6880926fc",
+    "bytes": 91779
+  },
+  "php84-hostider-f5i-4ef34f6b5946-84-source.json": {
+    "sha256": "caef4bff22473ae2529b39af109098dd8d5ac45fe85d1f14bcc0df6e71526366",
+    "bytes": 54891
+  },
+  "php84-hostider-f5i-4ef34f6b5946-84.json": {
+    "sha256": "455f984f46f93f85890fc5e8c9cf557951fb20161de289ad955406b6568d16e9",
+    "bytes": 9675
+  },
+  "php84-hostider-f5i-4ef34f6b5946-84.txt": {
+    "sha256": "a8e8819c5ad50ef8933b144a632c86b5ece21eb70330e753a3b2c33f0f6a174c",
+    "bytes": 96059
+  },
+  "preservation.json": {
+    "sha256": "c273b747be8d697e32ae2638a21be6b1cc513aacf65f44d943390a1f93384fdf",
+    "bytes": 5852
+  },
+  "run-tests-review.txt": {
+    "sha256": "407f778878ab838e7761576ee43071b6471b25677f2674c020b4eb54b2d70a19",
+    "bytes": 2071
+  },
+  "runner-proof.json": {
+    "sha256": "ffeea43ffccabefa90f124bdabbf3e72d87138add8315b37c5afa8ef4ed53168",
+    "bytes": 1856
+  },
+  "source.diff": {
+    "sha256": "06e7670569390b6a223b162446d53a61f797331908e9856873fa846a00b985f3",
+    "bytes": 32980
+  },
+  "summary.json": {
+    "sha256": "5312c15f05240d6b78fc095502f53ea4a63620440dc45f5f63bd01cd7cfb05d8",
+    "bytes": 6416
+  }
+}

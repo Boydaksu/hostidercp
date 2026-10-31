@@ -1,0 +1,26 @@
+#!/bin/sh
+set -u
+tar -C /input --exclude=.git --exclude=storage --exclude=tools/local --exclude=tools/analysis/vendor --exclude=tools/browser/node_modules -cf - . | tar -C /workspace -xf -
+mkdir -p /workspace/storage
+cd /workspace || exit 80
+php -r '$m=json_decode(file_get_contents("/run-input/source-manifest.json"),true,512,JSON_THROW_ON_ERROR);foreach($m as $p=>$h){if(hash_file("sha256",$p)!==$h){exit(91);}}echo "F5I_SOURCE_MANIFEST_MATCH ".count($m).PHP_EOL;'
+php -r 'echo "F5I_PHP ".PHP_VERSION.PHP_EOL;'
+failed=0
+if [ "${F5I_MODE:-full}" = "inventory" ]; then printf "tests/domains-audit.php\ntests/cloud.php\ntests/cloud-costs.php\n" > /tmp/suites.txt; elif [ "${F5I_MODE:-full}" = "target" ]; then printf 'tests/support-integration.php\n' > /tmp/suites.txt; elif [ "${F5I_MODE:-full}" = "full" ]; then php -r 'foreach(json_decode(file_get_contents("tools/ci/suites.json"),true,512,JSON_THROW_ON_ERROR) as $s){echo $s.PHP_EOL;}' > /tmp/suites.txt; else : > /tmp/suites.txt; fi
+while IFS= read -r suite; do
+ echo "F5I_SUITE_BEGIN $suite"
+ php "$suite"; code=$?; echo "F5I_SUITE_RESULT $suite $code"; if [ "$code" -ne 0 ]; then failed=1; fi
+done < /tmp/suites.txt
+for quality in check audit; do
+ echo "F5I_QUALITY_BEGIN $quality"
+ php "tools/$quality.php"; code=$?; echo "F5I_QUALITY_RESULT $quality $code"; if [ "$code" -ne 0 ]; then failed=1; fi
+done
+echo F5I_QUALITY_BEGIN phpstan
+php /analysis/phpstan.phar analyse --no-progress --memory-limit=512M --error-format=json; code=$?; printf '\nF5I_QUALITY_RESULT phpstan %s\n' "$code"; if [ "$code" -ne 0 ]; then failed=1; fi
+git init -q
+git add -- README.md docs
+echo F5I_QUALITY_BEGIN documentation
+php tools/ci/doc-check.php; code=$?; echo "F5I_QUALITY_RESULT documentation $code"; if [ "$code" -ne 0 ]; then failed=1; fi
+php -r '$m=json_decode(file_get_contents("/run-input/source-manifest.json"),true,512,JSON_THROW_ON_ERROR);foreach($m as $p=>$h){if(hash_file("sha256",$p)!==$h){exit(91);}}echo "F5I_SOURCE_MANIFEST_MATCH ".count($m).PHP_EOL;'
+code=$?; if [ "$code" -ne 0 ]; then failed=1; fi
+exit "$failed"

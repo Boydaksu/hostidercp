@@ -1,0 +1,69 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "target",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "c9711916066b5c5420a597e1da2eda2e17bc3ad27f0c29e7ef4b2804d5f834a1",
+  "source_files": 522,
+  "run_id": "hostider-f5i-15ec8e857dad-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "scope": "target",
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-31T13:36:17Z",
+  "suites": [
+    {
+      "path": "tests/support-integration.php",
+      "passed": 12,
+      "failed": 4,
+      "exit": 1
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "phpstan": 0,
+    "documentation": 0
+  },
+  "safe_output_lines": 33,
+  "registry_before": {
+    "suites": 69,
+    "expected_tests": 1035
+  },
+  "registry_candidate_suites": 70,
+  "php": "8.3.36",
+  "integration_failures": [
+    "Undefined array key \"advanced\"",
+    "Undefined array key \"advanced\"",
+    "Unexpected exception class: ErrorException",
+    "Assertion failed: 200 != 409"
+  ],
+  "phpstan_totals": {
+    "errors": 0,
+    "file_errors": 0
+  },
+  "phpstan_messages": [],
+  "exit": 1,
+  "status": "FAILED",
+  "cleanup": [
+    {
+      "name": "hostider-f5i-15ec8e857dad-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f5i-15ec8e857dad-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f5i-15ec8e857dad-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-31T13:37:48Z"
+}

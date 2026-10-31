@@ -1,0 +1,36 @@
+F5I_SOURCE_MANIFEST_MATCH 522
+F5I_PHP 8.3.36
+F5I_SUITE_BEGIN tests/support-integration.php
+PASS F5-I 01 split source customer and child staff/customer replies remain independent
+PASS F5-I 02 child SLA and assignment change without source Work mutation
+PASS F5-I 03 split versus queued auto-close serializes without duplicate child or close
+PASS F5-I 04 queued merge SOURCE auto-close job cannot mutate frozen source
+PASS F5-I 05 merge TARGET keeps independent native SLA and CSAT
+PASS F5-I 06 split selected attachment retention preserves membership and immutable history
+PASS F5-I 07 merge SOURCE CSAT incident and queued outbound guards are atomic
+PASS F5-I 08 split merge chains and both endpoints reject without business writes
+PASS F5-I 09 stale split confirmation after native reply creates no partial child
+PASS F5-I 10 duplicate key replay and different-key confirmation replay are distinct
+PASS F5-I 11 current session MFA grant membership revoke preserve all business tables
+PASS F5-I 12 source private notes remain isolated from child and foreign customer
+F5I_OBSERVATION {"status":409,"code":"SYNTHETIC_LOCK_CONFLICT","native_error":1213,"phase":["claim"]}
+FAIL F5-I 13 four concurrent workers close split participants independently once: [details redacted]
+PASS F5-I 14 native HELD outbox queue audit and immutable split events reconcile
+PASS F5-I 15 fault after child SLA creation rolls back all split effects and permits reviewed retry
+PASS F5-I 16 native HTTP CSRF and client split mutation preserve business state
+F5I_OBSERVATION {"status":409,"code":"SYNTHETIC_LOCK_CONFLICT","native_error":1213,"phase":["claim"]}
+FAIL F5-I 17 native concurrent queue claims must not leak deadlocks or lose lease accounting: [details redacted]
+17 tests, 2 failures
+F5I_SUITE_RESULT tests/support-integration.php 1
+F5I_QUALITY_BEGIN check
+498 PHP files checked; 0 violations
+F5I_QUALITY_RESULT check 0
+F5I_QUALITY_BEGIN audit
+522 source/config/test files scanned; 0 findings
+F5I_QUALITY_RESULT audit 0
+F5I_QUALITY_BEGIN phpstan
+F5I_QUALITY_RESULT phpstan 0
+F5I_QUALITY_BEGIN documentation
+795 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F5I_QUALITY_RESULT documentation 0
+F5I_SOURCE_MANIFEST_MATCH 522

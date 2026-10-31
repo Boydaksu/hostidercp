@@ -67,5 +67,6 @@
   "tests/support-auto-close.php",
   "tests/support-merge.php",
   "tests/support-merge-readonly.php",
-  "tests/support-split.php"
+  "tests/support-split.php",
+  "tests/support-integration.php"
 ]

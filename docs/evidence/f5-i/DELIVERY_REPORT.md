@@ -1,0 +1,50 @@
+# F5-I Support Center integration and hardening
+
+31 October 2026. VALIDATED LOCAL DEVELOPMENT / INDEPENDENT REVIEW PENDING.
+Base7251be9098f33b36ab3eaa735f01c84c2276ae8e; treeefd020fe765a7094371708db8f4aa8560cc1e4e0; migrations001–057 tree01b51a655655cb4c7483d6b5937555504264ca3f.
+Requirements FR-SUPPORT; SUP-003/004 ACL/private/attachment; SUP-005 Work/SLA; SUP-007 current state/idempotency; SUP-008 automation; cross-feature F5-F/G/R1/H integration.
+
+Plan scope: add a native assertion-bearing integration suite covering independent split replies/SLA/assignment, split versus auto-close, queued merge SOURCE jobs, TARGET CSAT, original attachments/retention, SOURCE incident/mail guards, combination/replay/revocation/snapshot negatives, multi-process workers and atomic event/audit/outbox rollback. Each critical denied command compares all support/business/audit/outbox/queue/idempotency snapshots. Preserve existing source and tests; only fix a reproduced actual bug narrowly if needed.
+Files: new integration suite and process helper, suite registry and static FULL workflow entry; one report and sanitized evidence under docs/evidence/f5-i. No new customer feature. No migration planned;001–057 immutable.058 only if demonstrably unavoidable with explicit tests.
+Validation: initial69/1035 is registry inventory, not PASS. Run new suite first then every registered PHP suite separately on local pinned8.3.36/8.4.27 plus PHPStan5/lint/pattern/docs, JS state/syntax. Attempt isolated real Chromium and current locked Composer/npm audit; record unavailable/failed results, not false PASS. No Actions dispatch. Canonical SHA256 before/after; preserve every failed run.
+Rollback: separately authorized reviewed forward-fix/consistent restore only; no automatic reset/clean/rebase/revert/delete. Exact expected parent, one [skip ci] force=false fast-forward only after mandatory success. PR3 OPEN/DRAFT. Main review hash fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7 preserved. WHMCS DEFERRED; G-O03 OPEN; all live support/merge/split/auto-close/staging/production NOT AUTHORIZED.
+
+## Result and scope
+
+No new customer feature or migration. The only runtime change is12 lines in Core/Queue/Queue.php: a private local claim transaction seam with at most5 attempts for native MariaDB1213 deadlock. Database.transaction rolls back before retry. Delay totals at most250ms excluding actual DB execution. Any other DB error or exhausted fifth attempt rethrows. Job handlers, provider commands and Queue.finish are outside this retry. No blind external operation replay, daemon or new engine.
+
+The reproduced defect: four concurrent workers on two pending jobs could escape Queue.claim with1213 before a handler ran. Integration cases13 and17 failed on the old implementation with native_error1213 / phaseclaim. Case17 amplifies real overlap using an isolated test trigger. After the narrow fix, both pass without deleting their strict200/final-state assertions. Case18 proves an unsafe handler runs once and stays UNKNOWN after a simulated handler-side error. Case19 proves exactly5 claim attempts and complete business/job-attempt rollback at exhaustion. Concurrent auto-close may retain native retry-safe backoff; the scenario drains it after the actual due delay and still requires exactly one close per participant.
+
+New native integration19 cases cover: source customer and child staff/customer replies; independent SLA/assignment; split versus queued auto-close; queued merge SOURCE exclusion; TARGET SLA/CSAT; selected attachment ownership/download plus retention; SOURCE CSAT/incident/outbound guards; merge/split chains; stale version; duplicate Idempotency-Key versus confirmation replay; session/MFA/grant/department-member revoke; private note/customer isolation; four native processes; HELD outbox/queue/audit/immutable membership; injected atomic rollback; native HTTP CSRF/client-mutation denial; pure queue claim contention, unsafe handler and retry exhaustion. Critical denied operations use full support/audit/outbox/inbox/jobs/idempotency/job_attempt/dead_letter snapshots or explicit row/immutable-history assertions. Existing R1, H, Work/SLA/Mail/Identity/security suites run unchanged.
+
+Three historical setup defects were also exposed by full execution: domains-audit.php, cloud.php and cloud-costs.php expected a current migration tail ending054. Their expected ordered list now includes055/056/057. All former expected entries, test names and same/raises assertion counts remain. No test skipped, disabled, ignored or weakened; no old migration byte changed. old-test-preservation.json records the exact counts.
+
+## Actual results and failed history
+
+Final Linux local Docker PHP8.3.36 and8.4.27 each execute every registered70 PHP suite:1054 PASS /0 FAIL, all70 suite exits0. This includes1035 executions from the starting69 suites plus19 new integration tests. Counts are actual execution counts; native combined support-http includes cases also run by their own registry suites, so they are not represented as1054 distinct unique names. PHPStan level5 errors0/file_errors0;499 PHP lint files/0 violations;524 pattern files/0 findings; per-run documentation checks pass. JS state10/0 and syntax11/0.
+
+Historical first target:12 PASS/4 FAIL of16; three new-fixture wiring errors corrected to the existing Common/Advanced setup and actual selected original message ID. The fourth was actual claim contention. Second target:15 PASS/2 FAIL of17; both were native claim1213 with phaseclaim. Post-fix target:19/0. First full run on EACH PHP version executes70 suites, records1005 PASS/0 assertionFAIL but THREE suite setup ERROR exits255 before their49 tests can run; its status remains FAILED, never FULL PASS. The three affected suites replay49/0 after ordered inventory correction. Final full reruns above execute all1054 on the exact final manifest. Every original log, status and source manifest remains published; failures are not overwritten.
+
+Initial cached Chromium could not spawn: both browser launchers exit1,0 assertions executed, historical status FAILED. Installed headless Google Chrome156.0.8078.74 then passes existing11 plus new4 native browser assertions. The final browser run also passes15/0 and is bound to final canonical source hash. Browser server is Windows HOST PHP8.4.24 with an owned ephemeral local MariaDB; this is separate from, and never mislabeled as, the Linux PHP8.3.36/8.4.27 regression results. Browser contexts use new temporary profiles, abort non-test-origin page requests and route the test origin to owned loopback PHP. Actual new UI checks cover public-message selection/preview/native confirmation, new-child navigation, timestamp/provenance/private-author redaction, customer reply/source-history separation and no page script errors. No personal browser profile or real customer data used.
+
+Current locked Composer audit exits0/no advisories; current npm audit exits0/vulnerabilities0. npm install uses lock and disabled scripts in ignored dev-only browser tools. Lock hashes are unchanged and recorded. These results do not attest future advisory state. GitHub Actions dispatch/rerun and formal GitHub FAST/FULL acceptance are NOT RUN/NOT CLAIMED. Local complete registered regression is not live support or deployment authorization.
+
+## Integrity, review and rollback
+
+Canonical candidate-source-manifest.json is the exact sorted524-file runner input, checked inside each container before/after, on the host, and during final browser execution. SHA256: e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3. Both final PHP runs and final browser share this hash; source_commit remains null in precommit runner metadata honestly, with publication equivalence checked through Git blobs afterward. source.diff covers exactly10 source/config/test paths:6 modified base files and4 new test files. All remaining1360 base blobs,665 old evidence files and57 migration blobs are preserved. Migration subtree stays01b51a655655cb4c7483d6b5937555504264ca3f; no058 and no production DB access. Main user review SHA256 stays fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7; no reset/clean/rebase/force checkout or old-worktree deletion.
+
+Review: [Queue fix](../../../src/Core/Queue/Queue.php), [native integration suite](../../../tests/support-integration.php), [browser assertions](../../../tests/support-integration-browser.cjs), [summary](summary.json), [source diff](source.diff), [canonical manifest](candidate-source-manifest.json), [evidence manifest](manifest.json), [preservation](preservation.json), [JS results](js-checks.json). Individual per-PHP logs and all failed/intermediate runs are named in summary.json; final browser is hostider-f5i-browser-5c9ed8f14fa1.json/txt.
+
+Publication only after all mandatory checks: one commit test(F5-I): integrate and harden support center [skip ci], parent exactly7251be9098f33b36ab3eaa735f01c84c2276ae8e; force=false expected-head fast-forward, PR3 OPEN/DRAFT. Exact immutable commit/tree/diff and post-publication check observations are delivered in the final response because this precommit report cannot contain its own future hash. [skip ci] is not CI PASS. No GitHub Actions dispatch, actual SMTP/IMAP/provider/payment/WHMCS command, merge, staging or production action.
+
+Rollback note: no schema change or data migration. A reviewed separate forward-fix/revert of this narrow application/test package is possible; preserve native immutable history and existing queued-job lease semantics. No automatic rollback, deletion or rebase performed. Bounded retry may still exhaust under sustained contention and then rethrows without business effects; this is deliberate fail-closed behavior, not a throughput guarantee. Independent review remains required.
+
+F5-I: INDEPENDENT REVIEW PENDING
+
+F5-F/G/H: LIMITED SYNTHETIC CODE REVIEW PASSED
+
+WHMCS MIGRATION: DEFERRED
+
+G-O03: OPEN
+
+LIVE SUPPORT / MERGE / SPLIT / AUTO-CLOSE / STAGING / PRODUCTION: NOT AUTHORIZED

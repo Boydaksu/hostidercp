@@ -1,0 +1,64 @@
+{
+  "runtime": "Node23.11.1 LOCAL",
+  "syntax": [
+    {
+      "path": "public/assets/commerce.js",
+      "exit": 0
+    },
+    {
+      "path": "public/assets/identity.js",
+      "exit": 0
+    },
+    {
+      "path": "public/assets/provider-panel.js",
+      "exit": 0
+    },
+    {
+      "path": "public/assets/services.js",
+      "exit": 0
+    },
+    {
+      "path": "public/assets/support-state.js",
+      "exit": 0
+    },
+    {
+      "path": "public/assets/support.js",
+      "exit": 0
+    },
+    {
+      "path": "tests/support-e-browser.cjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/support-e-state.cjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/support-integration-browser.cjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/support-merge-state.cjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/support-split-state.cjs",
+      "exit": 0
+    }
+  ],
+  "state": {
+    "tests/support-e-state.cjs": {
+      "passed": 3,
+      "failed": 0
+    },
+    "tests/support-merge-state.cjs": {
+      "passed": 3,
+      "failed": 0
+    },
+    "tests/support-split-state.cjs": {
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "state_total": 10
+}
