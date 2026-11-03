@@ -1,0 +1,258 @@
+{
+  "status": "DEVELOPMENT_VALIDATED_INDEPENDENT_REVIEW_PENDING",
+  "classification": "NATIVE_READ_ONLY_PREFLIGHT_TARGETED_LOCAL_DOCKER",
+  "base_head": "6483a6c2aa79d0fe65694118e035ffd47fe0e76b",
+  "base_tree": "74bb2e6d29b31a48fd6c8988cf52a1fabf0912f0",
+  "manifest_sha256": "d4ee5cd5fdd3eaa52c017200ebe109408b69972547dfffbb74b867158e9c4054",
+  "source_files": 548,
+  "changed_source_files": [
+    ".github/workflows/f0.yml",
+    "bin/hosting-preflight.php",
+    "src/HostingPreflight/Catalog.php",
+    "src/HostingPreflight/Cli.php",
+    "src/HostingPreflight/Environment.php",
+    "src/HostingPreflight/Evaluator.php",
+    "src/HostingPreflight/Filesystem.php",
+    "src/HostingPreflight/Metadata.php",
+    "src/HostingPreflight/Observation.php",
+    "src/HostingPreflight/PrivateFd.php",
+    "src/HostingPreflight/Report.php",
+    "tests/hosting-preflight-fixture.php",
+    "tests/hosting-preflight.php",
+    "tools/ci/suites.json"
+  ],
+  "source_diff_sha256": "6c65adb3aea2b97171e05dafd98edca7be6efa1566e77b94a2d083400052cfe2",
+  "starting_registry_expected_only": {
+    "suites": 71,
+    "tests": 1090
+  },
+  "candidate_registry_expected_only": {
+    "suites": 72,
+    "tests": 1136,
+    "full_pass_claimed": false
+  },
+  "new_suite_tests": 46,
+  "checks": 40,
+  "final_php_runs": [
+    {
+      "file": "php83-hostider-f6g-0e77f261f28e-83.json",
+      "run_id": "hostider-f6g-0e77f261f28e-83",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "d4ee5cd5fdd3eaa52c017200ebe109408b69972547dfffbb74b867158e9c4054"
+    },
+    {
+      "file": "php84-hostider-f6g-319fb088b94d-84.json",
+      "run_id": "hostider-f6g-319fb088b94d-84",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "d4ee5cd5fdd3eaa52c017200ebe109408b69972547dfffbb74b867158e9c4054"
+    }
+  ],
+  "all_php_run_history": [
+    {
+      "file": "php83-hostider-f6g-0194cfbae28c-83.json",
+      "run_id": "hostider-f6g-0194cfbae28c-83",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 1,
+      "passed_tests": 43,
+      "failed_assertions": 1,
+      "suite_errors": [
+        "tests/hosting-preflight.php"
+      ],
+      "source_manifest_sha256": "0b2241e8f6d47df49c4fa801a58f9e7aa31cd6b5e996da1e646f2b16c5c5d4a0"
+    },
+    {
+      "file": "php83-hostider-f6g-0e77f261f28e-83.json",
+      "run_id": "hostider-f6g-0e77f261f28e-83",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "d4ee5cd5fdd3eaa52c017200ebe109408b69972547dfffbb74b867158e9c4054"
+    },
+    {
+      "file": "php83-hostider-f6g-5f3a6e117847-83.json",
+      "run_id": "hostider-f6g-5f3a6e117847-83",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "083e0ec306e1f2280d9b77bf3a423035c116faf7edc20f9eda3eed046041ee72"
+    },
+    {
+      "file": "php83-hostider-f6g-804ad580e0ca-83.json",
+      "run_id": "hostider-f6g-804ad580e0ca-83",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 9,
+      "passed_tests": 165,
+      "failed_assertions": 1,
+      "suite_errors": [
+        "tests/hosting-preflight.php"
+      ],
+      "source_manifest_sha256": "4e7e76a77e81b3a7f10939d61faf795258e9fd3a44f83d10f4ece7d1173f4eea"
+    },
+    {
+      "file": "php83-hostider-f6g-830848727d21-83.json",
+      "run_id": "hostider-f6g-830848727d21-83",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "81480338dbf13be1cf337b1432b66729f1b8da45b597f82c1c2b8f8918e76cc9"
+    },
+    {
+      "file": "php83-hostider-f6g-864cc3be6d52-83.json",
+      "run_id": "hostider-f6g-864cc3be6d52-83",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 1,
+      "passed_tests": 6,
+      "failed_assertions": 1,
+      "suite_errors": [
+        "tests/hosting-preflight.php"
+      ],
+      "source_manifest_sha256": "8f67a4fc863589b3e71f95492b080a55a8491e448a859b19a321946920ce0f33"
+    },
+    {
+      "file": "php83-hostider-f6g-9fddd050dd25-83.json",
+      "run_id": "hostider-f6g-9fddd050dd25-83",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 1,
+      "passed_tests": 45,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "5010857480dda95e312aefcc9654f7d388017401a8a08516815ab428f0e5d0f1"
+    },
+    {
+      "file": "php83-hostider-f6g-a0739457e950-83.json",
+      "run_id": "hostider-f6g-a0739457e950-83",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 9,
+      "passed_tests": 165,
+      "failed_assertions": 1,
+      "suite_errors": [
+        "tests/identity.php"
+      ],
+      "source_manifest_sha256": "d4ee5cd5fdd3eaa52c017200ebe109408b69972547dfffbb74b867158e9c4054"
+    },
+    {
+      "file": "php83-hostider-f6g-e5519b761aea-83.json",
+      "run_id": "hostider-f6g-e5519b761aea-83",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 1,
+      "passed_tests": 43,
+      "failed_assertions": 1,
+      "suite_errors": [
+        "tests/hosting-preflight.php"
+      ],
+      "source_manifest_sha256": "10cae0b2260d087fdc0627ca58b4b5a2b5ea9079f34a187cb7a2c4a67f719064"
+    },
+    {
+      "file": "php84-hostider-f6g-319fb088b94d-84.json",
+      "run_id": "hostider-f6g-319fb088b94d-84",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "d4ee5cd5fdd3eaa52c017200ebe109408b69972547dfffbb74b867158e9c4054"
+    },
+    {
+      "file": "php84-hostider-f6g-32d19dc07127-84.json",
+      "run_id": "hostider-f6g-32d19dc07127-84",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "81480338dbf13be1cf337b1432b66729f1b8da45b597f82c1c2b8f8918e76cc9"
+    },
+    {
+      "file": "php84-hostider-f6g-7f593999f1d2-84.json",
+      "run_id": "hostider-f6g-7f593999f1d2-84",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 9,
+      "passed_tests": 166,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "083e0ec306e1f2280d9b77bf3a423035c116faf7edc20f9eda3eed046041ee72"
+    },
+    {
+      "file": "php84-hostider-f6g-9407a139570e-84.json",
+      "run_id": "hostider-f6g-9407a139570e-84",
+      "php": "8.4.27",
+      "status": "FAILED",
+      "suites_executed": 9,
+      "passed_tests": 165,
+      "failed_assertions": 1,
+      "suite_errors": [
+        "tests/hosting-preflight.php"
+      ],
+      "source_manifest_sha256": "4e7e76a77e81b3a7f10939d61faf795258e9fd3a44f83d10f4ece7d1173f4eea"
+    }
+  ],
+  "targeted_suites": [
+    "tests/hosting-preflight.php",
+    "tests/run.php",
+    "tests/hardening-unit.php",
+    "tests/integration.php",
+    "tests/identity.php",
+    "tests/identity-security.php",
+    "tests/session.php",
+    "tests/session-concurrency.php",
+    "tests/offline-backup.php"
+  ],
+  "quality": {
+    "8.3.36": {
+      "check": 0,
+      "audit": 0,
+      "phpstan": 0,
+      "documentation": 0
+    },
+    "8.4.27": {
+      "check": 0,
+      "audit": 0,
+      "phpstan": 0,
+      "documentation": 0
+    }
+  },
+  "migration": "001–057 unchanged; no058",
+  "old_evidence_preserved": 756,
+  "github_actions": "NOT_RUN",
+  "full_acceptance": "NOT_CLAIMED",
+  "dependency_advisory_audits": "NOT_RUN_IN_THIS_PHASE",
+  "browser": "NOT_RUN_NO_UI_CHANGE",
+  "real_hosting_compatibility": "NOT_VERIFIED",
+  "gates": {
+    "G-O01": "OPEN",
+    "G-O02": "OPEN",
+    "OPS-002": "OPEN",
+    "OPS-003": "OPEN"
+  },
+  "production_allowed": false,
+  "effects_allowed": false,
+  "real_gate_status": "BLOCKED"
+}

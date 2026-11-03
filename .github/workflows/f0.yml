@@ -144,6 +144,8 @@ jobs:
           php tests/support-integration.php
       - name: Offline native encrypted backup restore rehearsal (synthetic only)
         run: php tests/offline-backup.php
+      - name: Shared hosting read-only installation preflight
+        run: php tests/hosting-preflight.php
       - run: node --check public/assets/support.js
       - run: node tests/support-e-state.cjs
       - run: node tests/support-merge-state.cjs

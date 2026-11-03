@@ -1,0 +1,27 @@
+F6G_SOURCE_MANIFEST_MATCH 548
+F6G_PHP 8.3.36
+F6G_UID 10001
+F6G_SUITE_BEGIN tests/hosting-preflight.php
+PASS F6-G 01 full native CLI metadata preflight is safe and inside checked scope
+PASS F6-G 02 missing extension in a real php no-ini process blocks safely
+PASS F6-G 03 actually disabled native mb function blocks required capability
+PASS F6-G 04 missing POSIX and fsync do not block a cPanel core installation observation
+PASS F6-G 05 actual open_basedir denial cannot become a path PASS or leak a path
+PASS F6-G 06 declared CLI web PHP mismatch blocks while matching declaration is unverified
+F6G_OBSERVATION {"exception":"RuntimeException","trace":[{"function":"same","class":"","file":"hosting-preflight.php"},{"function":"{closure}","class":"","file":"hosting-preflight.php"},{"function":"{closure}","class":"","file":"harness.php"},{"function":"executeTests","class":"","file":"hosting-preflight.php"}]}
+FAIL F6-G 07 real read-only account without FILE cannot attest optional DISKS metadata: [details redacted]
+37 dependent tests BLOCKED after first failure; not counted as passed
+44 tests, 1 failures
+F6G_SUITE_RESULT tests/hosting-preflight.php 1
+F6G_QUALITY_BEGIN check
+523 PHP files checked; 0 violations
+F6G_QUALITY_RESULT check 0
+F6G_QUALITY_BEGIN audit
+548 source/config/test files scanned; 0 findings
+F6G_QUALITY_RESULT audit 0
+F6G_QUALITY_BEGIN phpstan
+F6G_QUALITY_RESULT phpstan 0
+F6G_QUALITY_BEGIN documentation
+878 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6G_QUALITY_RESULT documentation 0
+F6G_SOURCE_MANIFEST_MATCH 548

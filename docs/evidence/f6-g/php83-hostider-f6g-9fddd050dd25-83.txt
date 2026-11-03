@@ -1,0 +1,63 @@
+F6G_SOURCE_MANIFEST_MATCH 548
+F6G_PHP 8.3.36
+F6G_UID 10001
+F6G_SUITE_BEGIN tests/hosting-preflight.php
+PASS F6-G 01 full native CLI metadata preflight is safe and inside checked scope
+PASS F6-G 02 missing extension in a real php no-ini process blocks safely
+PASS F6-G 03 actually disabled native mb function blocks required capability
+PASS F6-G 04 missing POSIX and fsync do not block a cPanel core installation observation
+PASS F6-G 05 actual open_basedir denial cannot become a path PASS or leak a path
+PASS F6-G 06 declared CLI web PHP mismatch blocks while matching declaration is unverified
+PASS F6-G 07 real read-only account without FILE cannot attest optional DISKS metadata
+PASS F6-G 08 no explicit descriptor means UNKNOWN and no environment DB fallback
+PASS F6-G 09 closed private descriptor is blocked without raw diagnostics
+PASS F6-G 10 writable config descriptor is rejected without changing its bytes
+PASS F6-G 11 malformed private config never prints secret payload or parser details
+PASS F6-G 12 stdout redacts config credentials hosts usernames private paths and file contents
+PASS F6-G 13 actual symlink configuration path is rejected without following it
+PASS F6-G 14 traversal is rejected even when it names an existing private file
+PASS F6-G 15 source root cannot be declared as the public webroot
+PASS F6-G 16 configuration under public is never treated as safe
+PASS F6-G 17 actual nonroot read-only native storage permission blocks without a write probe
+PASS F6-G 18 real tmpfs space pressure disables F6-F rather than inventing a core capacity floor
+PASS F6-G 19 missing MariaDB DISKS is a feature failure and does not block core metadata
+PASS F6-G 20 minute cron permission remains UNKNOWN even after all local checks pass
+PASS F6-G 21 duplicate checks cannot overwrite an earlier result
+PASS F6-G 22 unknown checks cannot enter a report
+PASS F6-G 23 missing check inventory fails closed
+PASS F6-G 24 arbitrary status or raw diagnostic reason cannot be emitted
+PASS F6-G 25 repeated real CLI observations have byte-identical deterministic sanitized JSON
+PASS F6-G 26 tool leaves every native source byte and private input unchanged
+PASS F6-G 27 live install or mutation options are rejected before metadata use
+PASS F6-G 28 non-readonly and SQL-smuggling descriptor configs are rejected
+PASS F6-G 29 openssl zip curl imagick absence is not an invented global core requirement
+PASS F6-G 30 session SQL mode and UTC mismatches stay unverified without SET repair
+PASS F6-G 31 denied required engine metadata leaves incomplete rather than guessing PASS
+PASS F6-G 32 MySQL or unsupported MariaDB baseline is not silently accepted
+PASS F6-G 33 older PHP and 32-bit observations block the native baseline
+PASS F6-G 34 missing fileinfo or intl closes only the dependent feature
+PASS F6-G 35 disabled PHP file writes and flock close managed files and F6-F without a write attempt
+PASS F6-G 36 descriptor privacy cannot be guessed when UID and proc metadata are unavailable
+PASS F6-G 37 permissive private descriptor mode is rejected without modification
+PASS F6-G 38 unrelated storage directory cannot substitute for the native storage root
+PASS F6-G 39 explicit remote DSN remains unverified without any remote connector
+PASS F6-G 40 caller flags cannot create production permission
+PASS F6-G 41 hard-linked private descriptor is rejected and original bytes survive
+PASS F6-G 42 actual read-only source mount cannot be misreported as writable native storage
+PASS F6-G 43 duplicate and reused descriptor options fail closed
+PASS F6-G 44 real metadata account queries are exactly allowlisted SELECTs with zero mutation
+PASS F6-G 45 explicit metadata query denial remains UNKNOWN and cannot leak its exception
+45 tests, 0 failures
+F6G_SUITE_RESULT tests/hosting-preflight.php 0
+F6G_QUALITY_BEGIN check
+523 PHP files checked; 0 violations
+F6G_QUALITY_RESULT check 0
+F6G_QUALITY_BEGIN audit
+548 source/config/test files scanned; 0 findings
+F6G_QUALITY_RESULT audit 0
+F6G_QUALITY_BEGIN phpstan
+F6G_QUALITY_RESULT phpstan 0
+F6G_QUALITY_BEGIN documentation
+887 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6G_QUALITY_RESULT documentation 0
+F6G_SOURCE_MANIFEST_MATCH 548
