@@ -1,0 +1,11 @@
+# Hosting paneli veya ayrı korumalı ortam yükleyicisi ile aktarın.
+# PHP bu dosyayı kendiliğinden yüklemez. Değerleri web kökü dışında tutun.
+APP_ENV=staging
+APP_URL=https://hostider.example.invalid
+APP_KEY=
+DB_DSN=
+DB_USER=
+DB_PASSWORD=
+PROVISIONING_ALLOWED=false
+PAYMENT_LIVE_ALLOWED=false
+EXTERNAL_MAIL_ALLOWED=false

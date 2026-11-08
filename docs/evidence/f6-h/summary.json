@@ -1,0 +1,41 @@
+{
+  "base": "8ce41bf547bd866a43a4b437689af9ac11bcfea3",
+  "base_tree": "b248ff2e9a62d025f9346bfa3ade21328471317e",
+  "migrations": "01b51a655655cb4c7483d6b5937555504264ca3f",
+  "archive_sha256": "56251df83e059e58d321efdbadef3289de3c2ef87c243ec054e1446ac3504587",
+  "release_manifest_sha256": "d6969d4a0d773d213400b7c9a100379c6f408109d6c77dbcda16a0970d2eabe7",
+  "source_manifest_sha256": "28f1622142a94532bbdea59671e148b62ee8bc14ad3e68ea25367c8e970be65f",
+  "archive_payload_files": 354,
+  "archive_checks": [
+    "deterministic exact Git source build",
+    "inventory exclusions and externally pinned manifest",
+    "reject traversal",
+    "reject absolute",
+    "reject windows-drive",
+    "reject backslash",
+    "reject duplicate",
+    "reject case-collision",
+    "reject unexpected-php",
+    "reject unlisted-php",
+    "reject tamper",
+    "reject missing",
+    "reject symlink",
+    "reject manifest-duplicate",
+    "fresh extraction and no overwrite"
+  ],
+  "old_php_guard": {
+    "php": "8.2.35",
+    "image": "php@sha256:604de2f0cba9e9dde16cf717c2f03b0948c99949bdf7c11cdf76326e0da7d2ea",
+    "status": "PASS"
+  },
+  "final": {
+    "8.3.36/install": "hostider-f6h-83-68e737c8",
+    "8.3.36/regression": "hostider-f6h-83-d9c6581a",
+    "8.4.27/install": "hostider-f6h-84-d7215e1f",
+    "8.4.27/regression": "hostider-f6h-84-53060a71"
+  },
+  "full": "NOT_RUN",
+  "chromium": "NOT_RUN",
+  "github_actions": "NOT_RUN",
+  "real_cpanel": "NOT_VERIFIED"
+}
