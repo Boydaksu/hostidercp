@@ -1,0 +1,104 @@
+{
+  "run": "hostider-q2-84-83cb946b",
+  "php_image": "sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba",
+  "mariadb_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_manifest_sha256": "8bddbc714a9bef50b6e30af35651f773af14d33bbdec4b7fb34f7bbac867b9d4",
+  "suites": [
+    {
+      "suite": "identity",
+      "pass": 15,
+      "fail": [
+        {
+          "case": "F1-B bootstrap is one-use has no seeded password and login throttles account attempts",
+          "diagnostic": "REDACTED"
+        },
+        {
+          "case": "F1-B account throttle resets on the first second of the next 300-second window",
+          "diagnostic": "REDACTED"
+        }
+      ],
+      "exit": 1
+    },
+    {
+      "suite": "identity",
+      "pass": 15,
+      "fail": [
+        {
+          "case": "F1-B bootstrap is one-use has no seeded password and login throttles account attempts",
+          "diagnostic": "REDACTED"
+        },
+        {
+          "case": "F1-B account throttle resets on the first second of the next 300-second window",
+          "diagnostic": "REDACTED"
+        }
+      ],
+      "exit": 1
+    },
+    {
+      "suite": "identity",
+      "pass": 15,
+      "fail": [
+        {
+          "case": "F1-B bootstrap is one-use has no seeded password and login throttles account attempts",
+          "diagnostic": "REDACTED"
+        },
+        {
+          "case": "F1-B account throttle resets on the first second of the next 300-second window",
+          "diagnostic": "REDACTED"
+        }
+      ],
+      "exit": 1
+    },
+    {
+      "suite": "identity-throttle-q1",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-security",
+      "pass": 8,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-http",
+      "pass": 6,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "session",
+      "pass": 1,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "session-concurrency",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "integration",
+      "pass": 26,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "hardening-unit",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "ci/doc-check": 0,
+    "phpstan": 0
+  },
+  "manifest_match": true,
+  "php": "8.4.27",
+  "exit": 1
+}
