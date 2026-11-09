@@ -1,0 +1,7 @@
+{
+  "executed_runner_sha256": "2ab995c0488908ff90e3ae14f4a17018d55e6fa1d18d360af8d8653a2fe2cfb5",
+  "published_review_sha256": "3e89f0c0cffb169c05e93775cdfd9bf093897a67854ec7b6f4dfd9b173634dab",
+  "redaction": "Only the fixed synthetic MariaDB fixture password literal was replaced in published runner review; production credentials were not used.",
+  "executed_shell_sha256": "64a1fc2d4a30a3858a95aaabe2aa8656cd862c50689aaeb950a796374c0fbf35",
+  "isolation": "Pinned images; internal network; no host port; readonly source mount; tmpfs DB/app; owned label cleanup only."
+}

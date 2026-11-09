@@ -1,0 +1,26 @@
+{
+  "tests/domains-audit.php": {
+    "test_names_unchanged": true,
+    "assertion_counts": {
+      "same": 53,
+      "raises": 12
+    },
+    "change": "Only append055/056/057 to full-current migration inventory; all former expected migrations remain."
+  },
+  "tests/cloud.php": {
+    "test_names_unchanged": true,
+    "assertion_counts": {
+      "same": 42,
+      "raises": 23
+    },
+    "change": "Only append055/056/057 to full-current migration inventory; all former expected migrations remain."
+  },
+  "tests/cloud-costs.php": {
+    "test_names_unchanged": true,
+    "assertion_counts": {
+      "same": 96,
+      "raises": 19
+    },
+    "change": "Only append055/056/057 to full-current migration inventory; all former expected migrations remain."
+  }
+}

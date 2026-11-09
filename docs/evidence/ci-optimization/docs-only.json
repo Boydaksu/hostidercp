@@ -1,0 +1,19 @@
+{
+  "sha": "b0c3eb7ec39f4640fb42ff7552ae7c2d924df90e",
+  "tree": "1d23da2c7993aad988619134622004589b203841",
+  "run_id": 40380246812,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40380246812",
+  "event": "push",
+  "profile": "docs",
+  "selected_php_suites": 0,
+  "scope_job": 121774220224,
+  "scope_conclusion": "success",
+  "stable_result_job": 121774331980,
+  "result_conclusion": "success",
+  "verify_job": 121774334415,
+  "verify_conclusion": "skipped",
+  "mariadb_started": false,
+  "chromium_started": false,
+  "full_run_started": false,
+  "raw_logs_persisted": false
+}

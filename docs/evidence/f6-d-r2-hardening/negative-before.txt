@@ -1,0 +1,2 @@
+FAIL F6-D-R2 integrity equal row multisets with different ordered root cannot match reference: Assertion failed: 'REFERENCE_DIFFERENCES' != 'MATCHED_REFERENCE'
+1 tests, 1 failures

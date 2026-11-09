@@ -1,0 +1,78 @@
+{
+  "run": "hostider-q2-83-7f62b380",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "mariadb_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_manifest_sha256": "dab9c38a41f46c14a2f0b8a1514f93ee063a954354a37c94429cc9ff73fa1bd6",
+  "suites": [
+    {
+      "suite": "identity",
+      "pass": 17,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity",
+      "pass": 17,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity",
+      "pass": 17,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-throttle-q1",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-security",
+      "pass": 8,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-http",
+      "pass": 6,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "session",
+      "pass": 1,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "session-concurrency",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "integration",
+      "pass": 26,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "hardening-unit",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "ci/doc-check": 0,
+    "phpstan": 0
+  },
+  "manifest_match": true,
+  "php": "8.3.36",
+  "clock_parameter_probe": "42000:1232",
+  "exit": 0
+}

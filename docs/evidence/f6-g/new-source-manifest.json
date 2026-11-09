@@ -1,0 +1,14 @@
+{
+  "bin/hosting-preflight.php": "a33593c55968217a4957008ace1c1be0fbff9f31a63c1dcad2da6f8d848a72a2",
+  "src/HostingPreflight/Catalog.php": "afe1b7a80cd9979d5ff44988f0af0d4c9c5d5e97c32d433e6ceea1c5e3e7ea78",
+  "src/HostingPreflight/Cli.php": "f356dfe38a3baa7210dc657f4eeb1f785c01bce95e7ac1524d696afc603f613a",
+  "src/HostingPreflight/Environment.php": "f5203447743c91ca48a1c3c2728dd026423b4519b35edfc51e5ab01f30be0a3c",
+  "src/HostingPreflight/Evaluator.php": "c00d68ca85e73bd914dd23e76b12f138b889c0cedb8ba6d70c58c021bffc52b4",
+  "src/HostingPreflight/Filesystem.php": "69949e4d65db569a2164230f57831805cad7e33892b18e2c916167af9dcc86a5",
+  "src/HostingPreflight/Metadata.php": "f0ea02b6251d5a2bc3f2572c84ea3997d96ab45e080905342a520c878a53180d",
+  "src/HostingPreflight/Observation.php": "b0a2ce8676512add1363261708245c483140b85501f3a0ce5c1e28eaaaa3ea61",
+  "src/HostingPreflight/PrivateFd.php": "21b41d056f8859cef1b3f553632e2e35c1756dc38693cdcb8e58a811af170b14",
+  "src/HostingPreflight/Report.php": "7203b5f466b34a1ec052cf2267f1b52038b492501ae1c43c367554b4f1e54822",
+  "tests/hosting-preflight-fixture.php": "b87a8bf78656c0c277175eb9dcd4c8025b34fb9aa15d877cf2658cde949b2357",
+  "tests/hosting-preflight.php": "447f273e244ae5feb06b69e0c7b4dd6d5c563a13ed9642ec47b938fd919bab82"
+}

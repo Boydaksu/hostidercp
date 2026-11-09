@@ -1,0 +1,5 @@
+<?php
+declare(strict_types=1);
+require dirname(__DIR__).'/bootstrap/autoload.php';
+ini_set('display_errors','0');ini_set('log_errors','0');ini_set('zend.exception_ignore_args','1');
+try{$p=json_decode(stream_get_contents(STDIN),true,32,JSON_THROW_ON_ERROR);$c=\Hostider\Core\Config::fromEnvironment();if($c->environment!=='test'||!str_contains($c->dsn,'dbname=hostider_f0_test')){exit(2);}$db=\Hostider\Core\Database\Database::connect($c);$db->execute('SET SESSION innodb_lock_wait_timeout=5');$m=new \Hostider\Support\Mail\Common(new \Hostider\Commerce\Services($db,$c));$result=$p['op']==='inbound'?(new \Hostider\Support\Mail\Inbound($m,\Hostider\Support\Mail\Factory::files($m)))->ingest($p['department_id'],base64_decode($p['raw_base64'],true),$p['proof']):($p['op']==='ready'?(new \Hostider\Support\Mail\Outbound($m))->ready($p['payload']):(new \Hostider\Support\Mail\Outbound($m))->dispatch($p['payload']));echo json_encode(['result'=>$result],JSON_THROW_ON_ERROR);}catch(Throwable){echo '{"error":"MAIL_CHILD_FAILED"}';exit(1);}

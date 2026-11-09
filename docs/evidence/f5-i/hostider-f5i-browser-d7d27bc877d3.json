@@ -1,0 +1,29 @@
+{
+  "classification": "LOCAL_SYNTHETIC_HEADLESS_CHROMIUM",
+  "run_id": "hostider-f5i-browser-d7d27bc877d3",
+  "php_target": "HOST_PHP_8.4.24_NOT_8.4.27",
+  "browser_binary": "INSTALLED_GOOGLE_CHROME_HEADLESS_OWN_TEMP_PROFILE",
+  "prior_cached_browser_launch": "spawn UNKNOWN; no assertions executed",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "network": "Docker bridge; only an ephemeral127.0.0.1 DB port published; browser requests routed exclusively to owned loopback PHP server",
+  "suites": [
+    {
+      "path": "tests/support-e-browser.php",
+      "exit": 0,
+      "passed": 11,
+      "failed": 0,
+      "failure_message": ""
+    },
+    {
+      "path": "tests/support-integration-browser.php",
+      "exit": 0,
+      "passed": 4,
+      "failed": 0,
+      "failure_message": ""
+    }
+  ],
+  "started_at": "2026-10-31T13:45:51Z",
+  "status": "PASS",
+  "cleanup_owned_db_removed": true,
+  "finished_at": "2026-10-31T13:47:15Z"
+}

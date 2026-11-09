@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-03",
+  "initial_docker": "ENGINE_PIPE_UNAVAILABLE_NOT_A_TEST_PASS",
+  "resolution": "Existing Docker Desktop started in background; Linux engine and pinned local images became available.",
+  "initial_main_workspace": "EXPECTED_PATH_ABSENT; no file modified; owner restored original path during task.",
+  "restored_user_review_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7",
+  "restored_main_status": " M docs/F6_B_B01_REVIEW.md",
+  "real_hosting_connections": "NONE; only owned internal Docker MariaDB instances used",
+  "github_actions": "NOT_RUN"
+}

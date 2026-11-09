@@ -1,0 +1,327 @@
+{
+  "job_id": 122058872039,
+  "php": "8.4",
+  "suites": 53,
+  "tests": 613,
+  "failures": 0,
+  "baseline_tests": 582,
+  "missing_baseline": [],
+  "new_tests": [
+    "F6-A 01 same identity fingerprint deterministic replay and input order",
+    "F6-A 02 same identity changed content conflicts without overwrite",
+    "F6-A 03 source instances are isolated even with identical IDs",
+    "F6-A 04 missing immutable source ID fails closed",
+    "F6-A 05 invalid versions entity and extra envelope fields rejected",
+    "F6-A 06 mixed snapshots schema watermark and timezone rejected",
+    "F6-A 07 missing parents never invented or linked across instance",
+    "F6-A 08 duplicate external resources conflict for every provider",
+    "F6-A 09 customer service and provider account ownership fail closed",
+    "F6-A 10 unknown payment cannot establish PAID or allocations",
+    "F6-A 11 unknown or inflight resource never promoted ACTIVE",
+    "F6-A 12 currencies never combined or silently converted",
+    "F6-A 13 unknown historical FX remains review without current rate",
+    "F6-A 14 private note cannot become public or uncertain visibility",
+    "F6-A 15 wrong author membership or kind requires review",
+    "F6-A 16 attachment missing malformed checksum rejected",
+    "F6-A 17 traversal absolute encoded backslash and symlink paths reviewed without reads",
+    "F6-A 18 source staff cannot inherit admin MFA roles sessions or tokens",
+    "F6-A 19 legacy password format rejected and reset verification mandatory",
+    "F6-A 20 imported CREATE forbidden all providers and pure module has no effect dependencies",
+    "F6-A 21 malformed types floats overflow UTF8 and unknown fields fail closed",
+    "F6-A 22 duplicate identity and stale content SHA rejected",
+    "F6-A 23 knowledge states distinct and never carry guessed values",
+    "F6-A 24 mapping target tamper metadata and snapshot conflict",
+    "F6-A 25 partial payment limits refunds and immutable provenance",
+    "F6-A 26 original message order time visibility and attachment relations preserved",
+    "F6-A 27 attachment missing corrupt MIME size and reported file evidence",
+    "F6-A 28 timezone uncertainty email conflicts and invalid timestamps explicit",
+    "F6-A 29 fully evidenced PAID remains distinct from suspended imported resource",
+    "F6-A 30 published synthetic fixture and manifest match generator exactly",
+    "F6-A 31 malformed knowledge payload provenance timezone and source encoding rejected"
+  ],
+  "new_suite_executed": true,
+  "results": [
+    {
+      "suite": "tests/run.php",
+      "tests": 19,
+      "failures": 0
+    },
+    {
+      "suite": "tests/hardening-unit.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-concurrency.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/session-http.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/integration.php",
+      "tests": 26,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity.php",
+      "tests": 16,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-security.php",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "suite": "tests/identity-http.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance-unit.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/finance.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/catalog.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/pricing.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/addons.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/orders.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/payments.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/billing-cash.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/paid-refunds.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/currency-change.php",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "tests/commerce-events.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/post-delivery.php",
+      "tests": 9,
+      "failures": 0
+    },
+    {
+      "suite": "tests/http-harness.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-model.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-engine.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-hosting.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-reconciliation.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-lifecycle.php",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-transfer.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-package.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-http.php",
+      "tests": 10,
+      "failures": 0
+    },
+    {
+      "suite": "tests/services-runner.php",
+      "tests": 6,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-unit.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-model.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-provider.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/voyar-sdk.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-boundaries.php",
+      "tests": 3,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-operations.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/domains-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-races.php",
+      "tests": 7,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-sdk.php",
+      "tests": 1,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-audit.php",
+      "tests": 15,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-final-audit.php",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-costs.php",
+      "tests": 25,
+      "failures": 0
+    },
+    {
+      "suite": "tests/cloud-cost-races.php",
+      "tests": 5,
+      "failures": 0
+    },
+    {
+      "suite": "tests/provider-panel-http.php",
+      "tests": 39,
+      "failures": 0
+    },
+    {
+      "suite": "tests/support-migrations.php",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "tests/support-http.php",
+      "tests": 157,
+      "failures": 0
+    },
+    {
+      "suite": "tests/support-e.php",
+      "tests": 27,
+      "failures": 0
+    },
+    {
+      "suite": "tests/migration-contract.php",
+      "tests": 31,
+      "failures": 0
+    }
+  ],
+  "quality_lines": [
+    "Complete job name: FAST PHP 8.4",
+    "✓ PHP Installed PHP 8.4.27",
+    "No security vulnerability advisories found.",
+    "[OK] No errors",
+    "402 PHP files checked; 0 violations",
+    "424 source/config/test files scanned; 0 findings",
+    "3 state checks, 0 failures",
+    "found 0 vulnerabilities"
+  ],
+  "application_sha": "8340be6c5a12e551587ab92e72da930a18a7894d",
+  "application_tree": "63c9f86c6b618002d140ec49512d1e703f00f2cb",
+  "run_id": 40465060398,
+  "profile": "broad",
+  "conclusion": "success",
+  "runtime": "8.4.27",
+  "final_source_guard_completed": true
+}

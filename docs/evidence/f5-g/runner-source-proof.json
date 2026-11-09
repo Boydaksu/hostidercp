@@ -1,0 +1,12 @@
+{
+  "executed_runner_sha256": "ca878a879c369c3202b9298cd131fa584c8af4aae542e6b1d926d1612f5d4f8f",
+  "final_run_ids": [
+    "hostider-f5g-facc773bfc91-83",
+    "hostider-f5g-97834ececa34-84"
+  ],
+  "initial_shell_proof": "runner-initial-shell-proof.json",
+  "normal_shell_sha256": "c7a342455feabfb3c80def34e67ad0ff4165c9af550df5ad74b8daeb315cb6b6",
+  "redaction": "Only fixed isolated synthetic fixture password is replaced; no real credentials used",
+  "review_copy_sha256": "934902cca045059aa2f963355b6c7ea5a169a04ea978e2bc0c54307ea7523a58",
+  "run_profile": "Pinned PHP image, pinned MariaDB image, owned internal network, tmpfs database, read-only source, no host port, source manifest before/after, owned resources cleanup"
+}

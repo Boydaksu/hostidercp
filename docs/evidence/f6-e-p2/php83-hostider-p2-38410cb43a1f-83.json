@@ -1,0 +1,47 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "all",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "b478f0690c0359230149cbf917dac575949230c22a20d8d45d51f48c9bc0f821",
+  "source_files": 484,
+  "run_id": "hostider-p2-38410cb43a1f-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-29T06:20:20Z",
+  "suites": [
+    {
+      "path": "tests/migration-discovery.php",
+      "passed": 31,
+      "failed": 1,
+      "exit": 1
+    }
+  ],
+  "quality": {},
+  "safe_output_lines": 37,
+  "php": "8.3.36",
+  "exit": 1,
+  "status": "FAILED",
+  "cleanup": [
+    {
+      "name": "hostider-p2-38410cb43a1f-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-p2-38410cb43a1f-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-p2-38410cb43a1f-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-29T06:20:31Z"
+}

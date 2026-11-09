@@ -1,0 +1,24 @@
+{
+  "runtime": "Node.js23.11.1 LOCAL",
+  "support-e-state": {
+    "passed": 3,
+    "failed": 0
+  },
+  "support-merge-state": {
+    "passed": 3,
+    "failed": 0
+  },
+  "support-split-state": {
+    "passed": 4,
+    "failed": 0
+  },
+  "syntax": [
+    "public/assets/support.js",
+    "public/assets/support-state.js"
+  ],
+  "historical_invocation_error": {
+    "command": "node tests/support-state.cjs",
+    "result": "MODULE_NOT_FOUND; no assertions ran. Correct native suite tests/support-e-state.cjs was then run and passed3/0."
+  },
+  "chromium": "NOT_RUN"
+}

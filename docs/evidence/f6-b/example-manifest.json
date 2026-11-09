@@ -1,0 +1,154 @@
+{
+    "classification": "SYNTHETIC",
+    "fixture_byte_sha256": "91b125b1016dc3947ab4cd886cbfc13a7c6f09a2a0f1b19989e704601020caf7",
+    "dry_run": {
+        "classification": "SYNTHETIC",
+        "mode": "DRY_RUN",
+        "status": "PLANNED",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "counts": {
+            "allocation": 1,
+            "attachment": 2,
+            "customer": 2,
+            "document": 2,
+            "membership": 2,
+            "message": 2,
+            "order": 1,
+            "payment": 1,
+            "resource": 4,
+            "service": 4,
+            "ticket": 1,
+            "user": 3,
+            "wallet": 1
+        },
+        "mapping_plan": {
+            "records": 26,
+            "sha256": "f27082061730dd349ba187f33b1910be236d75b9d15c0f7344161c90c062dfe8"
+        },
+        "source_snapshot_roots": {
+            "c234af6e1c86872cb1175a25bc4960ed6ee9294035f85088279365ce1821858e": "7c0ed76d4326a1ed5d009d9fe0bcd2d6f788952075d4ca567f1852c1699dabc9"
+        },
+        "reasons": [],
+        "effects_allowed": false,
+        "imported_records": 0,
+        "effects": {
+            "calls": {
+                "CPANEL_CREATE": 0,
+                "VOYAR_CREATE": 0,
+                "RESELLERCLUB_CREATE": 0,
+                "DOMAINNAMEAPI_CREATE": 0,
+                "PAYMENT": 0,
+                "BILLING": 0,
+                "MAIL": 0,
+                "NOTIFICATION": 0
+            },
+            "denied": 0
+        }
+    },
+    "synthetic_load": {
+        "classification": "SYNTHETIC",
+        "mode": "SYNTHETIC_LOAD",
+        "status": "APPLIED",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "counts": {
+            "allocation": 1,
+            "attachment": 2,
+            "customer": 2,
+            "document": 2,
+            "membership": 2,
+            "message": 2,
+            "order": 1,
+            "payment": 1,
+            "resource": 4,
+            "service": 4,
+            "ticket": 1,
+            "user": 3,
+            "wallet": 1
+        },
+        "mapping_plan": {
+            "records": 26,
+            "sha256": "f27082061730dd349ba187f33b1910be236d75b9d15c0f7344161c90c062dfe8"
+        },
+        "source_snapshot_roots": {
+            "c234af6e1c86872cb1175a25bc4960ed6ee9294035f85088279365ce1821858e": "7c0ed76d4326a1ed5d009d9fe0bcd2d6f788952075d4ca567f1852c1699dabc9"
+        },
+        "reasons": [],
+        "effects_allowed": false,
+        "imported_records": 26,
+        "replay": false,
+        "checkpoint": {
+            "run_id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+            "target_snapshot": "e08d07c2d63fb2bd0e6a844548b1b7edaeeb99bda1862878b0d914945befac8d",
+            "cursor": 26,
+            "version": 1,
+            "hash": "cb193117d1a15d97268c826d3fc9932ae67ffb287432dd2925f885c4e805d818"
+        },
+        "effects": {
+            "calls": {
+                "CPANEL_CREATE": 0,
+                "VOYAR_CREATE": 0,
+                "RESELLERCLUB_CREATE": 0,
+                "DOMAINNAMEAPI_CREATE": 0,
+                "PAYMENT": 0,
+                "BILLING": 0,
+                "MAIL": 0,
+                "NOTIFICATION": 0
+            },
+            "denied": 0
+        }
+    },
+    "replay": {
+        "classification": "SYNTHETIC",
+        "mode": "SYNTHETIC_LOAD",
+        "status": "APPLIED",
+        "plan_hash": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+        "counts": {
+            "allocation": 1,
+            "attachment": 2,
+            "customer": 2,
+            "document": 2,
+            "membership": 2,
+            "message": 2,
+            "order": 1,
+            "payment": 1,
+            "resource": 4,
+            "service": 4,
+            "ticket": 1,
+            "user": 3,
+            "wallet": 1
+        },
+        "mapping_plan": {
+            "records": 26,
+            "sha256": "f27082061730dd349ba187f33b1910be236d75b9d15c0f7344161c90c062dfe8"
+        },
+        "source_snapshot_roots": {
+            "c234af6e1c86872cb1175a25bc4960ed6ee9294035f85088279365ce1821858e": "7c0ed76d4326a1ed5d009d9fe0bcd2d6f788952075d4ca567f1852c1699dabc9"
+        },
+        "reasons": [],
+        "effects_allowed": false,
+        "imported_records": 26,
+        "replay": true,
+        "checkpoint": {
+            "run_id": "c294d6b52a8a0b20b5235a88a26b5ba916a9c0c2553a7ff9b302dd5fe37862d4",
+            "target_snapshot": "e08d07c2d63fb2bd0e6a844548b1b7edaeeb99bda1862878b0d914945befac8d",
+            "cursor": 26,
+            "version": 1,
+            "hash": "cb193117d1a15d97268c826d3fc9932ae67ffb287432dd2925f885c4e805d818"
+        },
+        "effects": {
+            "calls": {
+                "CPANEL_CREATE": 0,
+                "VOYAR_CREATE": 0,
+                "RESELLERCLUB_CREATE": 0,
+                "DOMAINNAMEAPI_CREATE": 0,
+                "PAYMENT": 0,
+                "BILLING": 0,
+                "MAIL": 0,
+                "NOTIFICATION": 0
+            },
+            "denied": 0
+        }
+    },
+    "real_files_verified": false,
+    "native_entities_written": false
+}

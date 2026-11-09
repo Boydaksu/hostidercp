@@ -1,0 +1,131 @@
+{
+    "classification": "SYNTHETIC",
+    "source_schema_actually_removed": true,
+    "old_vault_lease_actually_expired": true,
+    "fresh_php_process": true,
+    "source_signing_secret_supplied_to_child": false,
+    "result": {
+        "classification": "SYNTHETIC",
+        "contract": "hostider.cold-recovery.v1",
+        "verification": "VERIFIED_PRE_ENROLLED_ESCROW",
+        "backup_id": "98734a67579bf393ec170626c168706aab3afea0c297ae2d9cdc361fa0253ca8",
+        "logical_sha256": "5bea0f969d959d02479a3fb15211f8d6852a4aceac11ac77158f81c7a4af121d",
+        "source_roots_sha256": "4d679b26c0fce8ef877795c0762b39d4d89418c4b0981862e69419fe22ed3e63",
+        "original_target_snapshot": "34a3e034543f66fb7cbc8997ab9d19f488ba50e919e39e36f670f5ba0fa27431",
+        "authority_key_id": "recovery-v1",
+        "encryption_key_id": "synthetic-v1",
+        "operator_sha256": "551a86491405b98160fb7f35e9b76f99a5527a00ad3c4b5b2c44e4598e9ed835",
+        "tables": 9,
+        "records": 97,
+        "files": 4,
+        "finance": {
+            "differences_by_currency": {
+                "allocation": {
+                    "TRY": "0"
+                },
+                "confirmed_collection": {
+                    "TRY": "0"
+                },
+                "official_pdf": {
+                    "TRY": "0"
+                },
+                "order_total": {
+                    "TRY": "0"
+                },
+                "payment_amount": {
+                    "TRY": "0"
+                },
+                "proforma": {
+                    "TRY": "0"
+                },
+                "remaining_balance": {
+                    "TRY": "0"
+                },
+                "wallet_liability": {
+                    "TRY": "0"
+                }
+            },
+            "equal": true,
+            "source": {
+                "ledger_credit": "NOT_AVAILABLE",
+                "ledger_debit": "NOT_AVAILABLE",
+                "no_facts_in_observed_scope": [
+                    "refund"
+                ],
+                "real_payment_reconciliation": "NOT_VERIFIED",
+                "status": "OBSERVED_SYNTHETIC_METADATA",
+                "totals": {
+                    "allocation": {
+                        "TRY": "4000"
+                    },
+                    "confirmed_collection": {
+                        "TRY": "6000"
+                    },
+                    "official_pdf": {
+                        "TRY": "10000"
+                    },
+                    "order_total": {
+                        "TRY": "10000"
+                    },
+                    "payment_amount": {
+                        "TRY": "6000"
+                    },
+                    "proforma": {
+                        "TRY": "10000"
+                    },
+                    "remaining_balance": {
+                        "TRY": "6000"
+                    },
+                    "wallet_liability": {
+                        "TRY": "2000"
+                    }
+                }
+            },
+            "target": {
+                "ledger_credit": "NOT_AVAILABLE",
+                "ledger_debit": "NOT_AVAILABLE",
+                "no_facts_in_observed_scope": [
+                    "refund"
+                ],
+                "real_payment_reconciliation": "NOT_VERIFIED",
+                "status": "OBSERVED_SYNTHETIC_METADATA",
+                "totals": {
+                    "allocation": {
+                        "TRY": "4000"
+                    },
+                    "confirmed_collection": {
+                        "TRY": "6000"
+                    },
+                    "official_pdf": {
+                        "TRY": "10000"
+                    },
+                    "order_total": {
+                        "TRY": "10000"
+                    },
+                    "payment_amount": {
+                        "TRY": "6000"
+                    },
+                    "proforma": {
+                        "TRY": "10000"
+                    },
+                    "remaining_balance": {
+                        "TRY": "6000"
+                    },
+                    "wallet_liability": {
+                        "TRY": "2000"
+                    }
+                }
+            }
+        },
+        "original_issuer_record": "PRESERVED_AUTHENTICATED_AT_ENROLMENT",
+        "original_hmac_recomputed": false,
+        "source_connection_required": false,
+        "operational_vault_required": false,
+        "native_recovery": "BLOCKED_IDENTITY_BOUND",
+        "original_archive_bytes": "NOT_VERIFIED",
+        "production_restore": "NOT_VERIFIED",
+        "key_custody": "NOT_VERIFIED",
+        "effects_allowed": false
+    },
+    "production_cold_restore": "NOT_VERIFIED"
+}

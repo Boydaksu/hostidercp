@@ -1,0 +1,22 @@
+{
+  "final_runners": [
+    {
+      "executed_path": "tools/local/f6-g-runner.py",
+      "executed_sha256": "0d6c8bcdcb678dda2f149963c66fbb91afbbc0c627df4ba3b3c10f92d536e3fa",
+      "published_review": "local-docker-runner-review.txt",
+      "review_sha256": "74117c1fea9937b98602a666475d4d3016271c7da4954a488a7427537c4d65b9",
+      "redaction": "Only the fixed synthetic DB password literal; no actual credentials or private FD files."
+    },
+    {
+      "executed_path": "tools/local/f6-g/run-tests.sh",
+      "executed_sha256": "97c2d50131e82796f597479d8a2a38ec53d9c11c5a796dd7662f7f9ba2e564e5",
+      "published_review": "run-tests-review.txt",
+      "review_sha256": "97c2d50131e82796f597479d8a2a38ec53d9c11c5a796dd7662f7f9ba2e564e5",
+      "redaction": "Only the fixed synthetic DB password literal; no actual credentials or private FD files."
+    }
+  ],
+  "isolation": "pinned images; PHP UID10001 non-root; internal network/no published host ports; readonly source bind; tmpfs DB4GiB/app512MiB/tmp256MiB; owned-label cleanup only",
+  "database_log_proof": "Fixture accounts are dedicated read-only metadata readers. The owned synthetic server general_log records Query/Prepare/Execute; exact four literal SELECT allowlist checked with >=40 actual executions. The private tool never enables logging, provisions accounts or changes privileges. Fixture disables logging before old regressions. No raw server log exported.",
+  "canonical_manifest_encoding": "UTF-8 sorted-key JSON; Python json.dumps default separators; no final newline; hash exact bytes",
+  "advisory_audits": "NOT_RUN; tools/audit.php is the source pattern scan"
+}

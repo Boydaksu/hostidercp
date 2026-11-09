@@ -1,0 +1,57 @@
+{
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "sha256": "1ae6087548f0e201ea8413256665e50474b927056f6b58b5046dad3ca3e49d2d",
+      "file": "after-4g-php83.json"
+    },
+    {
+      "sha256": "fd3b1fc9d1182081b997f5b1ff88ce26307380a400bd1a9c7d6e2c3704291639",
+      "file": "after-4g-php83.txt"
+    },
+    {
+      "sha256": "0e138838659cb731ab72c1e669019b2cb239450aec036258ca68b81ab57a2c86",
+      "file": "after-4g-php84.json"
+    },
+    {
+      "sha256": "ad16279800b31fe8f387e9e53d73d5e11b4025fa80dc21fed99fb4951765d7c2",
+      "file": "after-4g-php84.txt"
+    },
+    {
+      "sha256": "db33939a4793c8f8e999321e1bbce7fd91ef6b15a546e7d41c928e74663ffc03",
+      "file": "application.sh"
+    },
+    {
+      "sha256": "ef9d2dcd07478deea6ab467b56754639d00885c4d3de043e0664830269880257",
+      "file": "before-768m-php84.json"
+    },
+    {
+      "sha256": "50ccb805c54f1f80338039780eaa288104a1df73d5b099ed4e242c45cb1769bc",
+      "file": "before-768m-php84.txt"
+    },
+    {
+      "sha256": "42e0d0ecab22aad9b2de2032f69972e42a33a8460caee6e55d424ffd34ea8245",
+      "file": "capacity.json"
+    },
+    {
+      "sha256": "00312cbcc7ce844cb7f7a9914a5873d28bfff343f54c80971db9e9dc0ea413ec",
+      "file": "cleanup.json"
+    },
+    {
+      "sha256": "c91aa5a22190c0f00b9fb0c2fee25db31c7a23bd98b08dea8aa1d4d002cd5e84",
+      "file": "prepare.sh"
+    },
+    {
+      "sha256": "4fa006ffb11bfe1acaaaa25d97af66f2f0ea6f804b43502e9e715e9d640d7e99",
+      "file": "result.json"
+    },
+    {
+      "sha256": "bfeeeea3b03c100968ff5758b58399c2551e18e3a7776b79f1e52f6a3180bf15",
+      "file": "runner-4g.ps1.txt"
+    },
+    {
+      "sha256": "6157cdec658e0aeea14f1f44731e602f2edde549dfd3b0e77e4fa2b85d47a01e",
+      "file": "runner-768m.ps1.txt"
+    }
+  ]
+}

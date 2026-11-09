@@ -1,0 +1,415 @@
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/support-http.php
+PASS F5-A native HTTP authentication MFA and method gates
+PASS F5-A client create canonical ownership and strict field allowlist
+PASS F5-A staff role without department membership cannot discover title or search metadata
+PASS F5-A membership role customer grant and department scope are jointly required
+PASS F5-A another customer cannot read reply or enumerate ticket
+PASS F5-A client cannot forge message kind visibility author or other customer binding
+PASS F5-A internal note never enters client response search or outbox notifications
+PASS F5-A note permission revoked next request also blocks cached idempotency replay
+PASS F5-A CSRF missing wrong method and missing idempotency key cannot mutate
+PASS F5-A create and message retry same key are single durable effects different payload conflicts
+PASS F5-A two different staff in independent HTTP processes conflict and explicit retry preserves both
+PASS F5-A 1 4 8 independent HTTP processes duplicate key create one message
+PASS F5-A stale state version returns explicit 409 without message or audit loss
+PASS F5-A failed audit insert rolls back message state event outbox and idempotency
+PASS F5-A HTML XSS text is JSON data under no-store CSP and no HTML renderer
+PASS F5-A closed reopen and hold obey explicit department policy allowlist
+PASS F5-A department move requires both scopes and invalidates old staff access
+PASS F5-A fresh MFA management controls mutable template policy and department membership
+PASS F5-A impersonation does not confer privileged support permission
+PASS F5-A service link uses canonical ownership and transfer never opens old conversations
+PASS F5-A messages events tenant binding and ticket ownership immutable in MariaDB
+PASS F5-A database visibility CHECK and composite customer FK independently reject forgeries
+PASS F5-A existing queue consumes held public receipts once and rejects private or forged payloads
+PASS F5-A malformed null body version identifiers and links are 422 without partial mutation
+PASS F5-A multi-account memberships do not union selected account permissions
+PASS F5-A explicit department reopen policy changes permit only canonical transition
+PASS F5-A native staff removal revokes department membership without deleting history
+PASS F5-A requester membership revocation succeeds and keeps immutable ticket history
+PASS F5-A identity version invalidation rejects next HTTP request
+PASS F5-A session revocation rejects read and cached mutation
+PASS P1-1 distinct STATE events consume only their own dispatched receipt
+PASS P1-1 event ticket message private note and extra fields cannot forge receipt
+PASS P1-1 unpublished legacy or mismatched native queue payload stays unreceived
+PASS P1-2 search beyond first 50 is explicitly unsupported for client and department staff
+PASS P1-2 unfiltered pagination covers authorized 51 once with matching client staff pages
+PASS SUP-005 Friday 17:30 plus 120 business minutes is Monday 10:30 local
+PASS SUP-005 explicit holiday pushes deadline to Tuesday and half-day is exact
+PASS SUP-005 DST spring skips nonexistent wall minutes without losing real UTC time
+PASS SUP-005 DST fold counts each real UTC minute once and interval union avoids duplicates
+PASS SUP-005 overnight shift and holiday override carry with half-open boundaries
+PASS SUP-005 microsecond precision and overlapping shifts use exact integer arithmetic
+PASS SUP-005 invalid calendars pause states and missing commercial targets fail closed
+PASS SUP-005 held acknowledgement and internal note never count as actual first response
+PASS SUP-005 each customer reply starts a next clock and genuine staff reply closes pending clocks
+PASS SUP-005 pause states are policy-specific and customer reply resumes resolution
+PASS SUP-005 paused duration is not consumed while nonpaused first response continues
+PASS SUP-005 policy revision does not rewrite historical targets calendars or completed response
+PASS SUP-005 risk breach and held receipts remain unique across repeated cron time
+PASS SUP-006 round robin is deterministic and cron does not reassign valid staff
+PASS SUP-006 weighted least load uses explicit weights and UUID tie break
+PASS SUP-006 missing shift availability priority or expiry is fail closed
+PASS SUP-006 assignment revocation rechecks native membership role active staff and MFA
+PASS SUP-006 manual assignment and unassign override auto until explicit auto command
+PASS SUP-006 transaction rollback leaves no half assignment cursor audit or outbox
+PASS SUP-005 move preserves old policy history and starts current department cycle
+PASS SUP-005 legacy unconfigured tickets require explicit confirmed enrollment without backfill
+PASS SUP-006 real 1 4 8 PHP workers assign each ticket once with consistent RR and bounded cron
+PASS SUP-005 native HTTP detail protects department customer scope and fresh confirmation rules
+PASS SUP-006 two native HTTP staff same version produce one assignment and explicit conflict
+PASS SUP-006 native HTTP permission revoke session version and stale step-up cut access
+FAIL F5-B additive 049 to 050 upgrade replay and old checksums are preserved: [details redacted]
+96 dependent tests BLOCKED after first failure; not counted as passed
+157 tests, 1 failures
+CONTINUATION_RESULT support-http 1
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/support-e.php
+PASS F5-E native admin and customer context expose only authorized departments and mock contracts
+PASS F5-E SQL filters and deterministic pagination cover more than fifty authorized tickets
+PASS F5-E subject search fails explicitly instead of searching only the first page
+PASS F5-E customer conversation and timeline exclude internal notes in SQL
+PASS F5-E encrypted drafts are scoped to exact owner session ticket customer and kind
+PASS F5-E draft optimistic versions prevent overwrite and expired drafts do not return
+PASS F5-E stale draft is retained and cannot silently rebase into a send
+PASS F5-E exact confirmed send clears only its own draft and keeps note draft
+PASS F5-E forged confirmation body kind version and session fail without consuming draft
+PASS F5-E changed draft invalidates previously prepared send
+PASS F5-E send transaction failure rolls back message event receipt confirmation and draft clear
+PASS F5-E customer confirmed reply preserves canonical FIRST completion and own draft semantics
+PASS F5-E polling snapshot changes with version and unchanged projection is bounded
+PASS F5-E saved filters remain encrypted session scoped and reject search or forged fields
+PASS F5-E presence is approximate bounded and never discloses note typing or viewers identities
+PASS F5-E settings and rule editor reuse native snapshots and action-specific ACL
+PASS F5-E incident projection and CSAT remain connected to canonical customer scope
+PASS F5-E revoked department blocks draft poll filter and presence reads immediately
+PASS F5-E migration 054 is additive with immutable 001 through 053 and replay no-op
+PASS F5-E native HTTP CSRF method context and page guards operate with real MariaDB
+PASS F5-E independent 1 4 8 PHP send replays produce one message event completion and cleared draft
+PASS F5-E same user different native session cannot read or consume another session draft
+PASS F5-E actual installed 053 upgrade applies only 054 and leaves previous migration rows unchanged
+PASS F5-E native HTTP create assign reply SLA incident CSAT report flow remains atomic and scoped
+PASS F5-E audit UI HTTP redacts message authors and preserves native own attachment CSRF stale replay revoke guards
+PASS F5-E audit legacy HTTP redacts message authors while preserving public messages admin notes and tenant isolation
+PASS F5-E audit can_attach follows current reply grant and never substitutes for native upload authorization
+27 tests, 0 failures
+CONTINUATION_RESULT support-e 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-contract.php
+PASS F6-A 01 same identity fingerprint deterministic replay and input order
+PASS F6-A 02 same identity changed content conflicts without overwrite
+PASS F6-A 03 source instances are isolated even with identical IDs
+PASS F6-A 04 missing immutable source ID fails closed
+PASS F6-A 05 invalid versions entity and extra envelope fields rejected
+PASS F6-A 06 mixed snapshots schema watermark and timezone rejected
+PASS F6-A 07 missing parents never invented or linked across instance
+PASS F6-A 08 duplicate external resources conflict for every provider
+PASS F6-A 09 customer service and provider account ownership fail closed
+PASS F6-A 10 unknown payment cannot establish PAID or allocations
+PASS F6-A 11 unknown or inflight resource never promoted ACTIVE
+PASS F6-A 12 currencies never combined or silently converted
+PASS F6-A 13 unknown historical FX remains review without current rate
+PASS F6-A 14 private note cannot become public or uncertain visibility
+PASS F6-A 15 wrong author membership or kind requires review
+PASS F6-A 16 attachment missing malformed checksum rejected
+PASS F6-A 17 traversal absolute encoded backslash and symlink paths reviewed without reads
+PASS F6-A 18 source staff cannot inherit admin MFA roles sessions or tokens
+PASS F6-A 19 legacy password format rejected and reset verification mandatory
+PASS F6-A 20 imported CREATE forbidden all providers and pure module has no effect dependencies
+PASS F6-A 21 malformed types floats overflow UTF8 and unknown fields fail closed
+PASS F6-A 22 duplicate identity and stale content SHA rejected
+PASS F6-A 23 knowledge states distinct and never carry guessed values
+PASS F6-A 24 mapping target tamper metadata and snapshot conflict
+PASS F6-A 25 partial payment limits refunds and immutable provenance
+PASS F6-A 26 original message order time visibility and attachment relations preserved
+PASS F6-A 27 attachment missing corrupt MIME size and reported file evidence
+PASS F6-A 28 timezone uncertainty email conflicts and invalid timestamps explicit
+PASS F6-A 29 fully evidenced PAID remains distinct from suspended imported resource
+PASS F6-A 30 published synthetic fixture and manifest match generator exactly
+PASS F6-A 31 malformed knowledge payload provenance timezone and source encoding rejected
+31 tests, 0 failures
+CONTINUATION_RESULT migration-contract 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-visibility.php
+PASS F6-A P1 public reply with known PRIVATE is an explicit visibility conflict
+PASS F6-A P1 public reply with known PUBLIC remains valid and unchanged
+PASS F6-A P1 private internal note with verified source STAFF remains archive only
+PASS F6-A P1 internal note with PUBLIC remains rejected
+PASS F6-A P1 all four uncertain internal note visibility states are rejected
+PASS F6-A P1 all four uncertain public reply states remain review without normalization
+PASS F6-A P1 declared STAFF does not verify a customer source author for internal notes
+PASS F6-A P1 attachment to inconsistent message never makes snapshot public eligible in any order
+8 tests, 0 failures
+CONTINUATION_RESULT migration-visibility 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-import.php
+PASS F6-B dry-run repeats and reversed fixture produce deterministic plans
+PASS F6-B dry-run writes no target run claim provenance or checkpoint
+PASS F6-B dry-run has zero provider payment billing mail and notification calls
+PASS F6-B first load creates expected separate facts mappings and provenance
+PASS F6-B second load is no-op preserving all history and immutable data
+PASS F6-B same identity changed content never overwrites existing facts
+PASS F6-B customer user membership remain separate without admin MFA credentials
+PASS F6-B cross-customer ownership is review with zero target facts
+PASS F6-B four imported providers stay CREATE zero on first load retry and queue replay
+PASS F6-B 1 4 8 independent PHP workers serialize to one mapping per source
+PASS F6-B UNKNOWN payment and provider never become PAID ACTIVE or APPLIED
+PASS F6-B currency allocation refund limits and historical FX remain fail closed
+PASS F6-B wallet liability and payment allocations retain exact currency amounts once
+PASS F6-B official document and proforma retain separate original types and numbers
+PASS F6-B public archive excludes private note author metadata and private attachment path
+PASS F6-B public archive cross-owner ticket scope is denied
+PASS F6-B F6-A visibility P1 and forbidden legacy identity fields remain blocked
+PASS F6-B missing corrupt files and duplicate identities require review not completion
+PASS F6-B half batch exception rolls back entity mapping provenance and cursor
+PASS F6-B checkpoint write and target batch roll back atomically on exception
+PASS F6-B committed prefix resumes once with correct dependencies and final cursor
+PASS F6-B stale checkpoint and wrong target snapshot do not write targets
+PASS F6-B actual worker process crash rolls back then new process resumes
+PASS F6-B actual own connection loss rolls back and reconnect resumes deterministically
+PASS F6-B changed snapshot is conflict and never overwrites provenance
+PASS F6-B two source instances stay separate without physical resource or identity merge
+PASS F6-B competing resource payment email claims never silently merge
+PASS F6-B target identity cannot be owned by another source even before mapping
+PASS F6-B mapping target uniqueness is a physical database constraint
+PASS F6-B immutable facts mappings provenance and history reject runtime update delete
+PASS F6-B checkpoint tamper and failed migration readiness fail closed
+PASS F6-B environment and explicit synthetic authority are independent mandatory gates
+PASS F6-B arbitrary DSN real source URL path rows and credentials are not inputs
+PASS F6-B matching schema prefix alone cannot bypass actual grants or lease
+PASS F6-B unexpected native table and forged marker secret deny the sandbox
+PASS F6-B explicit effect attempts are denied and never dispatch
+PASS F6-B dry-run conflict check remains read only after a successful load
+PASS F6-B schema underscore cannot grant SELECT to a similarly named sibling database
+PASS F6-B real failed additive test DDL remains APPLYING and blocks sandbox replay
+PASS F6-B synthetic module has no native engines transports or external dispatch dependency
+PASS F6-B partial snapshot cannot admit changed content before that source row is mapped
+PASS F6-B dry-run mapping evidence matches committed mappings and source roots are immutable
+PASS F6-B B-01 migration readiness lost inside batch rolls back before commit
+43 tests, 0 failures
+CONTINUATION_RESULT migration-import 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-reconciliation.php
+PASS F6-C completed snapshot independently matches all entities and evidence
+PASS F6-C repeat reversed input and reviewer metadata preserve deterministic fingerprint
+PASS F6-C partial and failed runs never claim complete reconciliation
+PASS F6-C APPLIED status cannot hide missing mapping and orphan target
+PASS F6-C unexpected target entity is reported without repair
+PASS F6-C tampered mapping provenance and payload hashes are independently rejected
+PASS F6-C missing provenance is not accepted from APPLIED flag
+PASS F6-C stale checkpoint wrong snapshot and root tampering require review
+PASS F6-C changed source snapshot never silently reuses APPLIED target
+PASS F6-C customer ownership and target identity mismatch reject matching payload
+PASS F6-C provider account service external identity and claim conflicts are visible
+PASS F6-C wrong claim owner cannot be hidden by valid mapping
+PASS F6-C provider operations remain zero after load retry replay and parallel reads
+PASS F6-C payment allocation and refund mismatches stay review only
+PASS F6-C native Money totals keep allocation wallet collection and remaining separate
+PASS F6-C wallet liability and currency mismatches never cross sum currencies
+PASS F6-C unknown historical FX and payment evidence cannot produce zero difference PASS
+PASS F6-C official PDF and proforma retain independent metadata without byte claims
+PASS F6-C tied message timestamps retain deterministic source sequence and identity order
+PASS F6-C reports never expose private body author path email or credentials
+PASS F6-C private message and attachment metadata conflicts never gain public eligibility
+PASS F6-C test archive still refuses cross customer projection
+PASS F6-C incomplete migration and expired marker fail closed before data reporting
+PASS F6-C reader has physical SELECT only grants and denies excess permissions
+PASS F6-C reader cannot access similarly named sibling or native schema
+PASS F6-C arbitrary DSN source paths users and revoked synthetic authorization are denied
+PASS F6-C missing customer parent and orphan dependencies require review
+PASS F6-C repeated reports leave target finance history and every table byte unchanged
+PASS F6-C absent real source ledger and attachment bytes remain explicitly unverified
+PASS F6-C oversized payload and row inventory are inconclusive rather than truncated PASS
+PASS F6-C module has no native effect adapters transport file copy or repair SQL
+PASS F6-C unexpected refund cannot disappear into equal financial totals
+PASS F6-C target legacy credentials admin and MFA flags remain forbidden facts
+PASS F6-C unexpected columns or lost uniqueness block bounded reconciliation
+PASS F6-C different target contents with identical summaries have different evidence fingerprints
+35 tests, 0 failures
+CONTINUATION_RESULT migration-reconciliation 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-operations.php
+PASS F6-D actual encrypted backup verifies bounded DB and private sample files
+PASS F6-D backup identity is deterministic while native crypto uses fresh nonces
+PASS F6-D reports contain no keys tokens paths private bodies or ciphertext
+PASS F6-D wrong rotated missing revoked and mismatched key identities fail closed
+PASS F6-D ciphertext tag truncation and missing package cannot verify
+PASS F6-D source file missing corrupt size or snapshot mismatch prevents complete backup
+PASS F6-D traversal absolute sibling Unicode case and unknown file types are rejected
+PASS F6-D foreign owner checksum and inventory loss block authenticated malformed packages
+PASS F6-D physical source symlink is denied where platform capability exists
+PASS F6-D environment explicit authority wrong vault and expired lease fail closed
+PASS F6-D 1 4 8 independent backup processes publish one immutable artifact
+PASS F6-D real process crashes at capture encryption manifest and publish never expose final
+PASS F6-D controlled short write disk budget and stale operation do not verify partial files
+PASS F6-D escrow restore preserves exact DB evidence finance and sample file bytes
+PASS F6-D wrong target marker ownership lease grants and schema are denied
+PASS F6-D corrupted backup and wrong key leave owned destination empty
+PASS F6-D restore exception and real crashes rollback or re-read exact durable outcome
+PASS F6-D existing conflicting restore rows are never overwritten or rebound
+PASS F6-D source readiness lost migration checksum partial schema or evidence cannot back up
+PASS F6-D actual source connection loss prevents publication and fresh reconnect recovers
+PASS F6-D dry retention uses tier union and protects the last recoverable verified copy
+PASS F6-D retention clock key loss incomplete chain quota and timezone produce review not deletion
+PASS F6-D native Queue expiry keeps unsafe outcome UNKNOWN and rejects stale owner finish
+PASS F6-D native retry-safe poison work reaches DLQ without dispatching other engines
+PASS F6-D destination least privilege denies UPDATE DELETE DDL and cross-schema reads
+PASS F6-D compression version duplicate archive key and partial manifest cannot authenticate
+PASS F6-D dry retention rejects duplicate identities and never performs filesystem deletion
+PASS F6-D native Worker executes only an explicitly registered synthetic backup handler
+PASS F6-D operations module has no provider finance mail transport or public endpoint dependency
+PASS F6-D authenticated duplicate JSON archive keys are rejected before restore
+PASS F6-D encryption key alone cannot issue a forged source ownership backup
+PASS F6-D unapproved target definer trigger blocks restore before any insert
+32 tests, 0 failures
+CONTINUATION_RESULT migration-operations 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-recovery.php
+PASS F6-D-R1 cold verification succeeds in a fresh process after source schema loss and Vault expiry
+PASS F6-D-R1 enrollment preserves original artifact issuer MAC backup identity and legacy verification
+PASS F6-D-R1 encryption key without a trusted issuer authority cannot verify or self-enrol
+PASS F6-D-R1 trusted issuer authority without the correct encryption key is denied
+PASS F6-D-R1 wrong backup source root target snapshot and encryption version are denied
+PASS F6-D-R1 revoked untrusted and malformed pinned issuer keys fail closed
+PASS F6-D-R1 forged detached signature and wrong signing context cannot authenticate
+PASS F6-D-R1 encryption-key forged issuer MAC cannot reuse the original recovery signature
+PASS F6-D-R1 corrupt truncated and substituted ciphertext cannot verify
+PASS F6-D-R1 independently signed corrupt AEAD tag still fails native decryption
+PASS F6-D-R1 tampered manifest unknown format and embedded trust key are rejected
+PASS F6-D-R1 duplicate JSON keys noncanonical bytes missing parts and oversize are rejected
+PASS F6-D-R1 expired operational lease is distinct from expired bounded recovery authorization
+PASS F6-D-R1 another backup or source instance cannot replay a valid certificate under the current authorization
+PASS F6-D-R1 recovery key rotation preserves an old correct backup and enforces revocation
+PASS F6-D-R1 expired Vault or wrong capability cannot enrol an artifact after issuer loss
+PASS F6-D-R1 signer binds the exact authenticated ciphertext and cannot attest a substituted package
+PASS F6-D-R1 authentic malformed inner payload still fails immutable issuer evidence and duplicate-key checks
+PASS F6-D-R1 recovery report redacts keys signatures ciphertext issuer MAC private bodies and paths
+PASS F6-D-R1 environment and explicit recovery authorization flags remain mandatory
+PASS F6-D-R1 real crashes before authority and after verification do not change the immutable backup
+PASS F6-D-R1 duplicate and concurrent verification is read-only and grants no native activation
+PASS F6-D-R1 restored schema still rejects native Sandbox authority without rewriting original evidence
+PASS F6-D-R1 history mapping provenance and customer conflicts in restored targets remain fail closed
+PASS F6-D-R1 cached authentication cannot enrol a cold capsule after original issuer lease expiry
+25 tests, 0 failures
+CONTINUATION_RESULT migration-recovery 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-recovery-target.php
+PASS F6-D-R2 actual restored target reconciles in a fresh process after source loss and Vault expiry
+PASS F6-D-R2 wrong schema and account cannot reuse the target policy
+PASS F6-D-R2 source backup snapshot and encryption key mismatches are blocked
+PASS F6-D-R2 revoked or forged recovery issuer cannot establish a context
+PASS F6-D-R2 wrong purpose stale epoch and revoked target policy are denied
+PASS F6-D-R2 expired authorization is checked again before reporting
+PASS F6-D-R2 stale or expired restore marker blocks verification
+PASS F6-D-R2 restored payload tamper changes actual evidence despite unchanged aggregate counts
+PASS F6-D-R2 mapping provenance history and checkpoint mismatches cannot pass
+PASS F6-D-R2 customer and private attachment ownership changes are blocked
+PASS F6-D-R2 private message visibility cannot become public in recovery
+PASS F6-D-R2 finance amount and currency mutations require review without ledger writes
+PASS F6-D-R2 changed schema or unique index and missing migration are blocked
+PASS F6-D-R2 unexpected and missing target rows are detected by actual queries
+PASS F6-D-R2 partial restore and corrupt marker cannot claim PASS
+PASS F6-D-R2 SELECT-only reader denies DML DDL native and sibling schema reads
+PASS F6-D-R2 added write execute or trigger privilege blocks reader authority
+PASS F6-D-R2 views are denied and ungranted triggers routines are never executed
+PASS F6-D-R2 1 4 8 independent processes reconcile deterministically without writes
+PASS F6-D-R2 real process crashes never publish a verified report or alter target evidence
+PASS F6-D-R2 reports redact credentials bodies identifiers paths signatures and ciphertext
+PASS F6-D-R2 oversized row and disconnected target cannot produce PASS
+PASS F6-D-R2 a caller supplied array comparison cannot claim actual database authority
+PASS F6-D-R2 marker view is rejected before any definer SELECT side effect
+24 tests, 0 failures
+CONTINUATION_RESULT migration-recovery-target 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+CONTINUATION_SUITE tests/migration-recovery-integrity.php
+PASS F6-D-R2 integrity equal row multisets with different ordered root cannot match reference
+PASS F6-D-R2 integrity actual DB PASS requires matched root and same-count tamper cannot pass
+2 tests, 0 failures
+CONTINUATION_RESULT migration-recovery-integrity 0
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}

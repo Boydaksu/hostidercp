@@ -1,0 +1,41 @@
+{
+    "old_application_sha": "f226220847390ea3f5c69eef90ad968117d7edc7",
+    "old_delivery_head": "579788e66f448b5560e05c37b7a3ba9487923731",
+    "real_mariadb": true,
+    "native_http": true,
+    "same_regression_assertions": true,
+    "old_exit": 1,
+    "new_exit": 0,
+    "proof": {
+        "before": [
+            {
+                "status": "FAIL",
+                "case": "F5-E audit UI HTTP redacts message authors and preserves native own attachment CSRF stale replay revoke guards: Assertion failed: false != true"
+            },
+            {
+                "status": "FAIL",
+                "case": "F5-E audit legacy HTTP redacts message authors while preserving public messages admin notes and tenant isolation: Assertion failed: false != true"
+            },
+            {
+                "status": "FAIL",
+                "case": "F5-E audit can_attach follows current reply grant and never substitutes for native upload authorization: Undefined array key \"can_attach\""
+            }
+        ],
+        "before_sha256": "ebbd0f415b35451a8d016d577851dab037623316f1e97ea2afe003c0dd50e75d",
+        "after": [
+            {
+                "status": "PASS",
+                "case": "F5-E audit UI HTTP redacts message authors and preserves native own attachment CSRF stale replay revoke guards"
+            },
+            {
+                "status": "PASS",
+                "case": "F5-E audit legacy HTTP redacts message authors while preserving public messages admin notes and tenant isolation"
+            },
+            {
+                "status": "PASS",
+                "case": "F5-E audit can_attach follows current reply grant and never substitutes for native upload authorization"
+            }
+        ],
+        "after_sha256": "8f5b82242b0179a9f66ac079260cbd93abd9cc413fcab20b03deb75c266b15a1"
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "docs/evidence/f5-f/candidate-source-manifest.json": "926df6d77291ad3c398464d0d0a69fa2cd1c184281206bc2aff7ac9b7662dce7",
+    "docs/evidence/f5-f/changed-files.json": "b73876de7faf9e663b2f1583cbf9836076744a27ef2d77daf7b6cab169c845d0",
+    "docs/evidence/f5-f/final-validation.json": "f036f43f03c3fc6b3de59eb19b91b07aa6ebe9f625ffa56e019857adb0159d0e",
+    "docs/evidence/f5-f/new-source-manifest.json": "4e12ea579e25efa9daff9a054299e722988ee9dd48c4b235d33d380593de8cd5",
+    "docs/evidence/f5-f/php83-hostider-f5f-5278f725620a-83-source.json": "03d3dd9fd46e8325ff9bd6c012b5d140e0c8e2a189322320c5ae0d7b83932a9a",
+    "docs/evidence/f5-f/php83-hostider-f5f-5278f725620a-83.json": "212dc9c5ad1dd1055819992a83815be2e68eecd1cbb185119792b32e48a25f6b",
+    "docs/evidence/f5-f/php83-hostider-f5f-5278f725620a-83.txt": "1079a108477ebb8f1f73274daaeb508bd6c1279a896d167fb05634260baaae4f",
+    "docs/evidence/f5-f/php83-hostider-f5f-9592b5c74f87-83-source.json": "f9e18b1d42a283e9f489e3e8bdeaaf01c3c250cd94f3f834537e34b4286998c8",
+    "docs/evidence/f5-f/php83-hostider-f5f-9592b5c74f87-83.json": "591cbb071f57d571bdbf1372fe76e6cbc93cb31075805cd774b24784c253e3a0",
+    "docs/evidence/f5-f/php83-hostider-f5f-9592b5c74f87-83.txt": "3cfc565355cb103c6ef22e18466eda0e99d6983a2ba63ff355ffc26a2121002a",
+    "docs/evidence/f5-f/php83-hostider-f5f-e648223206bb-83-source.json": "dc9db76f75b7cc174ad1278d360d525f428951629806595debbfa0ce29b16b9d",
+    "docs/evidence/f5-f/php83-hostider-f5f-e648223206bb-83.json": "5b335350edafd9648d20fff364161a7a8c481cc62956e927a3203776289bad79",
+    "docs/evidence/f5-f/php83-hostider-f5f-e648223206bb-83.txt": "95069aac78970e60c447f0179af54b44385c8860d8c7694170e2414b70674446",
+    "docs/evidence/f5-f/php84-hostider-f5f-bdada3ab44e0-84-source.json": "dc9db76f75b7cc174ad1278d360d525f428951629806595debbfa0ce29b16b9d",
+    "docs/evidence/f5-f/php84-hostider-f5f-bdada3ab44e0-84.json": "ea6b01992c6638c19c93f3c2f3ba8b55e63620f70cf7ab23e980f9c54151c9c8",
+    "docs/evidence/f5-f/php84-hostider-f5f-bdada3ab44e0-84.txt": "98e4e1811fe98a93a580405bebb99a0557cb129dba865fd9a86b0bebd48c9fdb",
+    "docs/evidence/f5-f/preservation.json": "d387ebd780cfb12878ada92198f932b9a7a2831e361b85798304a95577e9f2c4",
+    "docs/evidence/f5-f/run-tests.sh": "bb85675c864f44b29d4341a55727478cb023d44a042aa10316a3f6e9d2074519",
+    "docs/evidence/f5-f/runner-initial-proof.json": "24c0ab9a696382415241fb0d3799113d1b93651d872d6befbcb28384c60b7853",
+    "docs/evidence/f5-f/runner-initial.py.txt": "79ed85bea9b5b2f46ffa0e1f81008eed204f2dc39e8d83465b552e82bec8670b",
+    "docs/evidence/f5-f/runner-source-proof.json": "9d1ed43ce3c53ce797f0bbcebf1ae53323982349608cc30012985aaa616aec97",
+    "docs/evidence/f5-f/runner.py.txt": "f7c5a28368c23a125c59548f9597dcf229b483a607e68183b0360250efdf72a3",
+    "docs/evidence/f5-f/source.diff": "ad07593ab8dc5f4f0a3c4e835b74d9b51f3ca5378ece45cd1e3c73cce5201ea7",
+    "docs/evidence/f5-f/summary.json": "33ee8d7d5366aa8e561c78e05a7ed18bde73efc195ea416e9424decf44b8df32"
+  },
+  "scope": "all F5-F evidence files except this manifest itself"
+}

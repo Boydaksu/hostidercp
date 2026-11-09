@@ -1,0 +1,28 @@
+{
+  "algorithm": "SHA-256",
+  "scope": "all evidence files except self",
+  "files": {
+    "candidate-source-manifest.json": "0b0b4d99c33ff565e4576ba0c2989775f9389933d5a7afbd1fbdfbbfe2e5a999",
+    "changed-files.json": "c90c30d936986d0bb981a3018bb2ccca5c951bcf967d94707e6b2197268e6138",
+    "final-validation.json": "24c3e89839d161d9efe3664bc5eafda2a560e21f1aac090ab8c15b30ff612847",
+    "new-source-manifest.json": "ddf3b38fae3638d996fa5d48bdeafa24b939666014f893c84b721b6c4b0c4885",
+    "php83-hostider-p2-056e249129f3-83-source.json": "85d7cd86141262443bfc15ffa4bc30ea01e53e8d0ed7b96278ea140cf9413244",
+    "php83-hostider-p2-056e249129f3-83.json": "951539e46abf56e465636a51ecf5b8269992163a7680c77b74e73455923026f7",
+    "php83-hostider-p2-056e249129f3-83.txt": "e018ec308eac9b9f61887797a23a6c39af2e89b10094f886bb08f33c5e289c31",
+    "php83-hostider-p2-38410cb43a1f-83-source.json": "f3a8a6d40837d77cc980151ef663107e8fc919eed9139bdfc16d56bf685da240",
+    "php83-hostider-p2-38410cb43a1f-83.json": "5a4cd2ce78021298f7792621f6bd4f3f4e91f171bbd9bcf79166941658980d82",
+    "php83-hostider-p2-38410cb43a1f-83.txt": "ac755946e53efade2b4ad8608875b4658f61e6d9fffaf2b99b18963bc5f29c5f",
+    "php83-hostider-p2-bbfcb7e64e51-83-source.json": "f27c33d20b4b54c035e9e532d2454a9ef6449c1d6c2843a8525ddb3b4201b901",
+    "php83-hostider-p2-bbfcb7e64e51-83.json": "c33b2b0cb5ed91c9c79ef1244bf466b548ade6ad9c3fcca006bacd896e092f64",
+    "php83-hostider-p2-bbfcb7e64e51-83.txt": "bb0fbd4162a277f8ffd63ab9b251e2296fdc08baffdc58b94f80064fe807f0b0",
+    "php84-hostider-p2-543efaa0f3db-84-source.json": "85d7cd86141262443bfc15ffa4bc30ea01e53e8d0ed7b96278ea140cf9413244",
+    "php84-hostider-p2-543efaa0f3db-84.json": "24d7e8e880c880dde02dc47ab737026802d6b866bb454f05028927cfab06aa9a",
+    "php84-hostider-p2-543efaa0f3db-84.txt": "ca3298995466d65d0a76aa4fb4814d5a38b70c23338049de1bbda02a12afb85b",
+    "preservation.json": "5ec639bfb2a08b80a3115613311141f9230b60157cf8b2bcc99fbeabf76cbe1e",
+    "run-tests.sh": "4169ad66988611c33a5e087bf586959355ca6ff6aed2d678caa90a61998aab55",
+    "runner-source-proof.json": "c39d1fde5c108c05c34c1f8284735797fa81e9b738b5b0c5609815c211522c0d",
+    "runner.py.txt": "72d4fccf617b69c0c7ba51c18bacdfd686fa464e435f1417406faff419fe2138",
+    "source.diff": "ce6a843bd3bbc6c39340a2cf77cc203733f9a3c0f97216226de103f6299a2e62",
+    "summary.json": "9cd4d4094298f7086e5215af6e83ad5e8f5edc628bd1733d213d0f83fdc26a48"
+  }
+}

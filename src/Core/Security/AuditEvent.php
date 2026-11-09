@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Hostider\Core\Security;
 enum AuditEvent: string
 {
+    case SupportChanged = 'support.changed';
     case ServiceChanged = 'service.changed';
     case DomainChanged = 'domain.changed';
     case FinancialPosted = 'finance.posted';

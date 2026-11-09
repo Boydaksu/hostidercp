@@ -1,0 +1,24 @@
+{
+  "base_commit": "c7f51e3de3479cc35b64e05d13462889f1cfba23",
+  "chromium": "NOT_RUN",
+  "documentation": "Final complete package rechecked before upload; run snapshot checks PASS",
+  "effects_allowed": false,
+  "main_status": "Only existing docs/F6_B_B01_REVIEW.md user modification",
+  "main_user_file_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7",
+  "native_UI_state_fail": 0,
+  "native_UI_state_pass": 6,
+  "new_migration_tree": "67280d29411bb2b570dbc83e1b8fa0c8d3a0e468",
+  "node_syntax": "PASS",
+  "old_evidence_preserved": 572,
+  "old_migrations_preserved": 55,
+  "preparation_notes": [
+    "Windows shell CRLF startup failure preserved as FAILED/zero tests",
+    "Temporary snapshot Git message terminator and alternates LF corrected before runtime",
+    "One UTF-8 read and one draft report-template quoting error prevented those preparation scripts from applying; corrected without rewriting test results"
+  ],
+  "real_gate_status": "BLOCKED",
+  "source_diff_files": 27,
+  "source_files": 510,
+  "source_frozen": true,
+  "source_manifest_sha256": "c08dd224b714936e02a8c398ff82677941ab181cb88ba840d988ae4777cda30e"
+}

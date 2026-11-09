@@ -1,0 +1,23 @@
+{
+  "PHPStan_level": 5,
+  "all_quality": "PASS",
+  "chromium": "NOT_RUN",
+  "effects_allowed": false,
+  "final_documents": "Complete package rechecked before upload",
+  "final_failures": 0,
+  "final_tests_per_runtime": 400,
+  "full": "NOT_RUN",
+  "github_actions": "NOT_RUN",
+  "main_status": "Only pre-existing user review modification",
+  "main_user_review_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7",
+  "migrations_001_056_tree": "67280d29411bb2b570dbc83e1b8fa0c8d3a0e468",
+  "new_R1_tests": 19,
+  "new_migrations": 0,
+  "old_evidence_byte_equal": 605,
+  "old_tests_byte_equal": 150,
+  "real_gate_status": "BLOCKED",
+  "source_diff_files": 9,
+  "source_files": 512,
+  "source_frozen": true,
+  "source_manifest_sha256": "d0f508c1acc6253563289a4038391c13f2bd74d2a0d6bb2ff9748cbce30216f4"
+}

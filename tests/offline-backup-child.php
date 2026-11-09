@@ -1,0 +1,7 @@
+<?php
+declare(strict_types=1);
+require dirname(__DIR__).'/bootstrap/autoload.php';
+ini_set('display_errors','0');ini_set('log_errors','0');ini_set('zend.exception_ignore_args','1');
+use Hostider\OfflineBackup\{Workspace,Rehearsal,Guard};
+try{$input=json_decode(stream_get_contents(STDIN),true,8,JSON_THROW_ON_ERROR);$config=json_decode(stream_get_contents(fopen('php://fd/3','rb')),true,8,JSON_THROW_ON_ERROR);$key=stream_get_contents(fopen('php://fd/4','rb'));$w=Workspace::load($input['id'],$config);if($input['mode']==='writer'){$db=$w->db();$db->execute('SET SESSION lock_wait_timeout=1');$db->execute('SET SESSION innodb_lock_wait_timeout=1');try{$db->execute('UPDATE support_tickets SET version=version+1 WHERE id=?',[$input['ticket']]);echo '{"status":"MUTATED"}';}catch(PDOException $e){echo json_encode(['status'=>'WRITE_BLOCKED','native_error'=>(int)($e->errorInfo[1]??0)],JSON_THROW_ON_ERROR);}exit;}$seen=false;$hook=function($stage)use($input,$w,&$seen):void{if($seen||$stage!==$input['stage']){return;}$seen=true;$ready=Guard::open($w->root.'/test.ready','x+b');Guard::write($ready,'READY');fclose($ready);$until=hrtime(true)+20_000_000_000;while(!file_exists($w->root.'/test.release')){Guard::require(hrtime(true)<$until,'TEST_BARRIER_TIMEOUT');usleep(10000);}};$r=$input['mode']==='backup'?Rehearsal::backup($w,$key,$hook):Rehearsal::restore($w,$key,$hook);echo json_encode($r,JSON_THROW_ON_ERROR);
+}catch(Throwable){echo '{"status":"CHILD_BLOCKED"}';exit(1);}

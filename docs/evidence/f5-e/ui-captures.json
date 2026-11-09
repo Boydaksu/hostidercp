@@ -1,0 +1,20 @@
+{
+  "final_ci_source_sha": "f226220847390ea3f5c69eef90ad968117d7edc7",
+  "synthetic": true,
+  "real_customer_data": false,
+  "capture_source_sha": "81d719c8fafc4fdb902ab160127a5cbe85266246",
+  "images": [
+    {
+      "bytes": 398690,
+      "sha256": "695d280cfab6915b4b14fe21214d0eefbff8937ccf166d603d59e132eb5791f6",
+      "file": "ui-admin.png"
+    },
+    {
+      "bytes": 35650,
+      "sha256": "4e12fc7550595749d12c0a0398f8790e8fdae6a4934ccc2c602c9eca8701cd97",
+      "file": "ui-client-mobile.png"
+    }
+  ],
+  "only_difference": "CI timeout15 to30 minutes",
+  "runtime_and_tests_equal": true
+}

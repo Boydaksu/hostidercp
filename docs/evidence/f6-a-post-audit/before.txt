@@ -1,0 +1,10 @@
+FAIL F6-A P1 public reply with known PRIVATE is an explicit visibility conflict: Assertion failed: false != true
+PASS F6-A P1 public reply with known PUBLIC remains valid and unchanged
+PASS F6-A P1 private internal note with verified source STAFF remains archive only
+PASS F6-A P1 internal note with PUBLIC remains rejected
+PASS F6-A P1 all four uncertain internal note visibility states are rejected
+FAIL F6-A P1 all four uncertain public reply states remain review without normalization: Assertion failed: true != false
+FAIL F6-A P1 declared STAFF does not verify a customer source author for internal notes: Expected exception: InvalidArgumentException
+FAIL F6-A P1 attachment to inconsistent message never makes snapshot public eligible in any order: Assertion failed: false != true
+8 tests, 4 failures
+exit=1

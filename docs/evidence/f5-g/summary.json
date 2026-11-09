@@ -1,0 +1,129 @@
+{
+  "F5F": "LIMITED SYNTHETIC CODE REVIEW PASSED per owner task; formal CI acceptance not claimed",
+  "G-O03": "OPEN",
+  "base_commit": "c7f51e3de3479cc35b64e05d13462889f1cfba23",
+  "chromium": "NOT_RUN",
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_CANDIDATE",
+  "current_composer_npm_audit": "NOT_RUN",
+  "effects_allowed": false,
+  "failure_history": {
+    "MFA": "6 PASS/1 FAIL; current enabled-factor guard added;23 remaining new tests and regressions/quality NOT_RUN",
+    "attachment_fixture": "16 PASS/1 FAIL; native factory object reused;16 remaining new tests and regressions/quality NOT_RUN",
+    "initial_shell": "CRLF exit2 before PHP,0 tests,FAILED",
+    "intermediate": "379/0 plus quality PASS only for its own earlier source hash"
+  },
+  "final_per_runtime": {
+    "failed": 0,
+    "new_merge": 36,
+    "passed": 381,
+    "related_F5A_F5F_identity_hardening": 345,
+    "suites": 10
+  },
+  "full_acceptance": false,
+  "github_actions": false,
+  "live_auto_close_allowed": false,
+  "live_merge_allowed": false,
+  "new_001_056_tree": "67280d29411bb2b570dbc83e1b8fa0c8d3a0e468",
+  "new_source_files": 8,
+  "old_001_055_tree": "202a5803956639f4b282d990fcfe4a5b353cb083",
+  "quality": {
+    "both_final_runtimes": "PASS",
+    "documentation": "Snapshots PASS; final complete package checked separately",
+    "lint_files": 487,
+    "native_UI_state": {
+      "existing": 3,
+      "failed": 0,
+      "new": 3
+    },
+    "pattern_files": 510,
+    "phpstan_level": 5
+  },
+  "real_gate_status": "BLOCKED",
+  "registry_inventory_only": {
+    "expected_tests": 984,
+    "full_pass_claimed": false,
+    "php_suites": 67
+  },
+  "runs": [
+    {
+      "failed": 1,
+      "final_candidate": false,
+      "passed": 16,
+      "php": "8.3.36",
+      "quality": {},
+      "record": "php83-hostider-f5g-636b41d84ae5-83.json",
+      "source_manifest_sha256": "b8be32a3f3d5c778afdee286936bcf1edf79a8af27b83a7dc387d8229a7c89b1",
+      "status": "FAILED"
+    },
+    {
+      "failed": 0,
+      "final_candidate": false,
+      "passed": 379,
+      "php": "8.3.36",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php83-hostider-f5g-824baf5fadcf-83.json",
+      "source_manifest_sha256": "bc3e8efdff73c81461e09757214e0a8c3352a42a59576982e292834cdacc00c5",
+      "status": "PASS"
+    },
+    {
+      "failed": 1,
+      "final_candidate": false,
+      "passed": 6,
+      "php": "8.3.36",
+      "quality": {},
+      "record": "php83-hostider-f5g-d370f69a4bd9-83.json",
+      "source_manifest_sha256": "e18ee07b300074a3720b25d89ed51c5fd2a684ea805af4618f697d852bb857de",
+      "status": "FAILED"
+    },
+    {
+      "failed": 0,
+      "final_candidate": false,
+      "passed": 0,
+      "php": null,
+      "quality": {},
+      "record": "php83-hostider-f5g-da88cf62db04-83.json",
+      "source_manifest_sha256": "e18ee07b300074a3720b25d89ed51c5fd2a684ea805af4618f697d852bb857de",
+      "status": "FAILED"
+    },
+    {
+      "failed": 0,
+      "final_candidate": true,
+      "passed": 381,
+      "php": "8.3.36",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php83-hostider-f5g-facc773bfc91-83.json",
+      "source_manifest_sha256": "c08dd224b714936e02a8c398ff82677941ab181cb88ba840d988ae4777cda30e",
+      "status": "PASS"
+    },
+    {
+      "failed": 0,
+      "final_candidate": true,
+      "passed": 381,
+      "php": "8.4.27",
+      "quality": {
+        "audit": 0,
+        "check": 0,
+        "documentation": 0,
+        "phpstan": 0
+      },
+      "record": "php84-hostider-f5g-97834ececa34-84.json",
+      "source_manifest_sha256": "c08dd224b714936e02a8c398ff82677941ab181cb88ba840d988ae4777cda30e",
+      "status": "PASS"
+    }
+  ],
+  "source_commit": null,
+  "source_files": 510,
+  "source_manifest_sha256": "c08dd224b714936e02a8c398ff82677941ab181cb88ba840d988ae4777cda30e",
+  "status": "DEVELOPMENT_VALIDATED_INDEPENDENT_CODE_REVIEW_PENDING",
+  "whmcs_migration": "DEFERRED"
+}

@@ -1,0 +1,194 @@
+{
+  "status": "INDEPENDENT_REVIEW_PENDING",
+  "classification": "ALL_REGISTERED_LOCAL_PHP_REGRESSION_AND_NATIVE_CHROMIUM",
+  "base_head": "7251be9098f33b36ab3eaa735f01c84c2276ae8e",
+  "manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3",
+  "source_files": 524,
+  "changed_source_files": [
+    ".github/workflows/f0.yml",
+    "src/Core/Queue/Queue.php",
+    "tests/cloud-costs.php",
+    "tests/cloud.php",
+    "tests/domains-audit.php",
+    "tests/support-integration-browser.cjs",
+    "tests/support-integration-browser.php",
+    "tests/support-integration-child.php",
+    "tests/support-integration.php",
+    "tools/ci/suites.json"
+  ],
+  "source_diff_sha256": "06e7670569390b6a223b162446d53a61f797331908e9856873fa846a00b985f3",
+  "starting_registry_expected_only": {
+    "suites": 69,
+    "tests": 1035
+  },
+  "final_registry": {
+    "suites": 70,
+    "tests_executed_per_runtime": 1054,
+    "old_suite_test_executions": 1035,
+    "new_integration_tests": 19
+  },
+  "final_php_runs": [
+    {
+      "file": "php83-hostider-f5i-27faf3b787bb-83.json",
+      "run_id": "hostider-f5i-27faf3b787bb-83",
+      "mode": "full",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 70,
+      "suite_errors": [],
+      "passed_tests": 1054,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    },
+    {
+      "file": "php84-hostider-f5i-4ef34f6b5946-84.json",
+      "run_id": "hostider-f5i-4ef34f6b5946-84",
+      "mode": "full",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 70,
+      "suite_errors": [],
+      "passed_tests": 1054,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    }
+  ],
+  "all_php_run_history": [
+    {
+      "file": "php83-hostider-f5i-15ec8e857dad-83.json",
+      "run_id": "hostider-f5i-15ec8e857dad-83",
+      "mode": "target",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 1,
+      "suite_errors": [
+        "tests/support-integration.php"
+      ],
+      "passed_tests": 12,
+      "failed_assertions": 4,
+      "source_manifest_sha256": "c9711916066b5c5420a597e1da2eda2e17bc3ad27f0c29e7ef4b2804d5f834a1"
+    },
+    {
+      "file": "php83-hostider-f5i-27faf3b787bb-83.json",
+      "run_id": "hostider-f5i-27faf3b787bb-83",
+      "mode": "full",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 70,
+      "suite_errors": [],
+      "passed_tests": 1054,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    },
+    {
+      "file": "php83-hostider-f5i-687d490fedef-83.json",
+      "run_id": "hostider-f5i-687d490fedef-83",
+      "mode": "full",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 70,
+      "suite_errors": [
+        "tests/domains-audit.php",
+        "tests/cloud.php",
+        "tests/cloud-costs.php"
+      ],
+      "passed_tests": 1005,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "9c8b9a9cbc9d96a6b1e835b7b323a9c933ee357d2795f351f414c1bdb3ee8ee6"
+    },
+    {
+      "file": "php83-hostider-f5i-906b3b41d6c3-83.json",
+      "run_id": "hostider-f5i-906b3b41d6c3-83",
+      "mode": "inventory",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 3,
+      "suite_errors": [],
+      "passed_tests": 49,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    },
+    {
+      "file": "php83-hostider-f5i-c9375e993c56-83.json",
+      "run_id": "hostider-f5i-c9375e993c56-83",
+      "mode": "target",
+      "php": "8.3.36",
+      "status": "FAILED",
+      "suites_executed": 1,
+      "suite_errors": [
+        "tests/support-integration.php"
+      ],
+      "passed_tests": 15,
+      "failed_assertions": 2,
+      "source_manifest_sha256": "aea6e53289e23947ad8f313a5776efc72257fba6d0672bb030be4bdd6d3cd7ac"
+    },
+    {
+      "file": "php83-hostider-f5i-dc4dc05ff964-83.json",
+      "run_id": "hostider-f5i-dc4dc05ff964-83",
+      "mode": "target",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 1,
+      "suite_errors": [],
+      "passed_tests": 19,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "9c8b9a9cbc9d96a6b1e835b7b323a9c933ee357d2795f351f414c1bdb3ee8ee6"
+    },
+    {
+      "file": "php84-hostider-f5i-24a8ce2cb068-84.json",
+      "run_id": "hostider-f5i-24a8ce2cb068-84",
+      "mode": "full",
+      "php": "8.4.27",
+      "status": "FAILED",
+      "suites_executed": 70,
+      "suite_errors": [
+        "tests/domains-audit.php",
+        "tests/cloud.php",
+        "tests/cloud-costs.php"
+      ],
+      "passed_tests": 1005,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "9c8b9a9cbc9d96a6b1e835b7b323a9c933ee357d2795f351f414c1bdb3ee8ee6"
+    },
+    {
+      "file": "php84-hostider-f5i-4ef34f6b5946-84.json",
+      "run_id": "hostider-f5i-4ef34f6b5946-84",
+      "mode": "full",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 70,
+      "suite_errors": [],
+      "passed_tests": 1054,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    }
+  ],
+  "browser": {
+    "final_file": "hostider-f5i-browser-5c9ed8f14fa1.json",
+    "passed": 15,
+    "failed": 0,
+    "original_checks": 11,
+    "new_checks": 4,
+    "binary": "GoogleChrome156.0.8078.74 headless",
+    "php": "HOST8.4.24; not counted as target8.4.27 test result",
+    "manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3",
+    "historical_launch_failure_file": "hostider-f5i-browser-a51813ea3da0.json"
+  },
+  "js_state": {
+    "passed": 10,
+    "failed": 0,
+    "syntax_files": 11
+  },
+  "dependency_audits": {
+    "composer_locked": "PASS_NO_ADVISORIES",
+    "npm_locked": "PASS_ZERO_VULNERABILITIES"
+  },
+  "runtime_fix": "Only Queue.claim: at most5 retries of rolled-back local DB claim transaction on MariaDB1213; no handler/provider retry; exhaustion rethrows.",
+  "migration": "001–057 unchanged; no058",
+  "github_actions": "NOT_RUN",
+  "formal_ci_or_live_acceptance": "NOT_CLAIMED",
+  "independent_review": "PENDING",
+  "real_gate_status": "BLOCKED",
+  "live_support_allowed": false,
+  "effects_allowed": false
+}

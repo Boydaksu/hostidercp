@@ -1,0 +1,462 @@
+--- a/.github/workflows/f0.yml
++++ b/.github/workflows/f0.yml
+@@ -144,6 +144,8 @@
+           php tests/support-integration.php
+       - name: Offline native encrypted backup restore rehearsal (synthetic only)
+         run: php tests/offline-backup.php
++      - name: Shared hosting read-only installation preflight
++        run: php tests/hosting-preflight.php
+       - run: node --check public/assets/support.js
+       - run: node tests/support-e-state.cjs
+       - run: node tests/support-merge-state.cjs
+--- /dev/null
++++ b/bin/hosting-preflight.php
+@@ -0,0 +1,6 @@
++<?php
++declare(strict_types=1);
++ini_set('display_errors','0');ini_set('log_errors','0');ini_set('zend.exception_ignore_args','1');
++require dirname(__DIR__).'/bootstrap/autoload.php';
++set_error_handler(static function(int $severity,string $message,string $file,int $line):never{throw new ErrorException('Preflight metadata unavailable',0,$severity,$file,$line);});
++exit(\Hostider\HostingPreflight\Cli::main(array_slice($argv,1)));
+--- /dev/null
++++ b/src/HostingPreflight/Catalog.php
+@@ -0,0 +1,52 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Catalog
++{
++    /** Fixed, source-derived checks; no input may supply an explanation or action. */
++    public static function definitions(): array
++    {
++        return [
++            'PHP_VERSION'=>['core','REQUIRED','bin/console.php','64-bit PHP 8.3+ native baseline.','Select PHP 8.3 or newer for CLI and independently verify the web runtime.'],
++            'PHP_BITS'=>['core','REQUIRED','bin/console.php','Native identifiers and exact integer operations require a 64-bit build.','Use a 64-bit PHP build.'],
++            'CLI_RUNTIME'=>['queue','REQUIRED','bin/console.php','This probe and bounded native commands require CLI PHP.','Run this tool with the hosting CLI PHP binary.'],
++            'PDO_MYSQL'=>['core','REQUIRED','src/Core/Database/Database.php','Native persistence uses PDO MySQL.','Enable PDO and its mysql driver in the applicable PHP runtime.'],
++            'SODIUM'=>['core','REQUIRED','src/Core/Security/Crypto.php','Native protected records use sodium XChaCha20-Poly1305.','Enable the sodium extension.'],
++            'MBSTRING'=>['core','REQUIRED','src/Core/Validation.php','Native text validation uses mb_check_encoding and mb_strlen.','Enable mbstring.'],
++            'SESSION'=>['identity','REQUIRED','src/Core/Security/Session.php','Native Identity uses PHP session handling.','Enable session support and verify its backend separately.'],
++            'CORE_FUNCTIONS'=>['core','REQUIRED','src/Core/Id.php','Core JSON/hash/filter/random/time/config functions must be callable.','Enable the source-derived core functions; review disabled_functions.'],
++            'ARGON2ID'=>['identity','REQUIRED','src/Identity/Passwords.php','Native password hashing explicitly uses PASSWORD_ARGON2ID.','Use PHP compiled with Argon2id password support.'],
++            'WEBROOT_PATH'=>['core','REQUIRED','docs/F0_SETUP.md','The declared document root must resolve exactly to the native public directory.','Provide deployment metadata through a private FD; point the virtualhost only at public.'],
++            'CONFIG_FILE'=>['core','OPERATIONAL_VALIDATION','docs/F0_SETUP.md','A declared secret configuration file must be private and outside the webroot.','If a file is used, provide its existing owner-private path; environment-injected secrets need separate panel validation. Never supply secret contents to this report.'],
++            'STORAGE_PATH'=>['core','REQUIRED','src/Support/Mail/Factory.php','Native storage must be outside the public directory and locally accessible.','Provide an existing protected storage directory; provision permissions outside this tool.'],
++            'SESSION_PATH'=>['identity','REQUIRED','src/Core/Security/Session.php','The files session backend needs a usable non-public directory.','Verify the actual web and CLI session backend and private session-file permissions.'],
++            'OPEN_BASEDIR'=>['core','OPERATIONAL_VALIDATION','docs/F0_SETUP.md','Path probes respect the effective open_basedir policy.','Independently ensure all deployment paths are allowed for CLI and web PHP.'],
++            'WRITE_AND_LOCK'=>['core','OPERATIONAL_VALIDATION','src/Support/Mail/FileStore.php','Read-only permission metadata does not prove write, lock, rename or durability.','Arrange a separately authorized disposable write/lock/durability check; none is performed here.'],
++            'DISK_CAPACITY'=>['core','OPERATIONAL_VALIDATION','docs/14_OPEN_VALIDATIONS.md','An observed positive free-space value is not a hosting capacity or quota guarantee.','Measure application, database, quota and retention budgets on the actual host.'],
++            'FILEINFO'=>['documents','FEATURE_SPECIFIC','src/Billing/DocumentStore.php','Official PDF inspection uses the finfo MIME inspector.','Enable fileinfo before enabling official PDF upload/inspection.'],
++            'INTL_IDN'=>['domains','FEATURE_SPECIFIC','src/Domains/DomainName.php','Native IDN normalization uses idn_to_ascii.','Enable intl before enabling native IDN domain operations.'],
++            'FILE_LOCKS'=>['documents','FEATURE_SPECIFIC','src/Billing/DocumentStore.php','Managed native uploads require fopen/flock/flush and file operations.','Enable native file operations and independently verify storage locking.'],
++            'BACKUP_FILE_FUNCTIONS'=>['offline_backup','FEATURE_SPECIFIC','src/OfflineBackup/Guard.php','F6-F also needs callable native file, lock and secretstream functions.','Keep F6-F disabled when its native storage or secretstream functions are disabled.'],
++            'POSIX_BACKUP'=>['offline_backup','FEATURE_SPECIFIC','src/OfflineBackup/Guard.php','F6-F requires posix_geteuid and a non-root process.','Keep F6-F disabled unless its own non-root and ownership requirements are satisfied.'],
++            'FSYNC_BACKUP'=>['offline_backup','FEATURE_SPECIFIC','src/OfflineBackup/Guard.php','F6-F requires file and directory fsync.','Keep F6-F disabled if fsync is unavailable; validate directory fsync independently.'],
++            'BACKUP_HEADROOM'=>['offline_backup','FEATURE_SPECIFIC','src/OfflineBackup/Guard.php','F6-F requires at least 128 MiB of measured app-filesystem free headroom.','Independently validate F6-F app and DB headroom; this is not a global installation minimum.'],
++            'POSIX_DISCOVERY'=>['source_discovery','FEATURE_SPECIFIC','src/Migration/Discovery/DiscoveryCli.php','Offline discovery private-descriptor ownership checks require POSIX UID support.','Keep that discovery CLI disabled if its own private-descriptor requirements cannot be met.'],
++            'OPENSSL_OBSERVED'=>['transport','OPERATIONAL_VALIDATION','docs/14_OPEN_VALIDATIONS.md','openssl availability is observed; no direct openssl_* core requirement is invented.','Validate actual HTTPS/certificate and transport integration separately; this tool makes no network request.'],
++            'WEB_PHP'=>['core','OPERATIONAL_VALIDATION','docs/14_OPEN_VALIDATIONS.md','A caller-declared web version may reveal a mismatch but cannot attest the web process.','Independently inspect the web PHP version/extensions/settings without exposing phpinfo or secrets.'],
++            'CRON'=>['queue','OPERATIONAL_VALIDATION','docs/F0_SETUP.md','Minute cron permission, command routing and overlap behavior are unverified.','Verify one-minute hosting cron and bounded outbox/worker invocations; do not install cron from this tool.'],
++            'MEMORY_TIMEOUT'=>['queue','OPERATIONAL_VALIDATION','src/Core/Queue/Queue.php','Hosting memory, timeout and concurrent worker admission require operational measurement.','Validate native worker lease/runtime and memory budgets on the intended hosting plan.'],
++            'WEB_MAPPING_TLS'=>['core','OPERATIONAL_VALIDATION','docs/F0_SETUP.md','Local path metadata does not prove virtualhost routing, HTTPS or web isolation.','Verify actual HTTPS and denial of source, config, storage and directory listing over the web.'],
++            'DB_CONNECTION'=>['core','REQUIRED','src/Core/Database/Database.php','Database metadata is only queried after an explicit private read-only config FD.','Provide a dedicated least-privilege read-only metadata account via the explicit DB config FD.'],
++            'DB_SCHEMA'=>['core','REQUIRED','src/Core/Config.php','The explicit metadata connection must select its declared native database.','Provide a DB-scoped DSN through the read-only private FD.'],
++            'DB_MARIADB'=>['core','REQUIRED','docs/F0_SETUP.md','The documented MariaDB 10.11+ baseline is checked from server version metadata.','Use the documented MariaDB baseline; version detection is not a full SQL contract test.'],
++            'DB_INNODB'=>['core','REQUIRED','migrations/001_f0_infrastructure.php','Native schema and queue depend on InnoDB transactions.','Ensure InnoDB is available; validate migration and transaction behavior separately.'],
++            'DB_CHARSET'=>['core','REQUIRED','src/Core/Config.php','Native configuration requires utf8mb4 connection encoding.','Use utf8mb4 in the explicitly supplied metadata DSN and application configuration.'],
++            'DB_SQL_MODE'=>['core','OPERATIONAL_VALIDATION','src/Core/Database/Database.php','Current metadata session SQL mode is observed without issuing SET.','Validate that native application session SQL-mode initialization works with its actual account.'],
++            'DB_UTC'=>['core','OPERATIONAL_VALIDATION','src/Core/Database/Database.php','Current UTC offset is observed without modifying session time_zone.','Validate native application UTC initialization and actual scheduling semantics.'],
++            'DB_SQL_FEATURES'=>['queue','OPERATIONAL_VALIDATION','src/Core/Queue/Queue.php','Version metadata does not execute or attest queue SKIP LOCKED, triggers, CHECKs or migrations.','Perform separately authorized migration/transaction/queue contract tests in an isolated environment.'],
++            'DB_DISKS'=>['offline_backup','FEATURE_SPECIFIC','src/OfflineBackup/Guard.php','F6-F DISKS metadata visibility is optional to general hosting installation.','Keep F6-F disabled if DISKS is missing/denied; do not install a plugin from this tool.'],
++            'BACKUP_PRIVILEGES'=>['offline_backup','OPERATIONAL_VALIDATION','src/OfflineBackup/Workspace.php','CREATE/DROP/LOCK/TRIGGER and actual recovery privileges are not tested.','Independently authorize and validate isolated backup/restore prerequisites; never infer them from grants or flags.'],
++            'PITR_OFFSITE'=>['recovery','OPERATIONAL_VALIDATION','docs/13_ACCEPTANCE_TESTS.md','Offsite custody, retention, PITR and actual restore are not tested.','Obtain independent OPS-002/003 and G-O02 operational evidence.'],
++        ];
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Cli.php
+@@ -0,0 +1,21 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Cli
++{
++    public static function main(array $arguments): int
++    {
++        try{
++            if(PHP_SAPI!=='cli'||PHP_VERSION_ID<80300){throw new \RuntimeException('CLI baseline');}
++            $options=[];foreach($arguments as $arg){if(!is_string($arg)||preg_match('/\A--(deployment-fd|db-config-fd)=([0-9]{1,2})\z/D',$arg,$m)!==1||isset($options[$m[1]])){throw new \InvalidArgumentException('Options');}$options[$m[1]]=(int)$m[2];}
++            if(isset($options['deployment-fd'],$options['db-config-fd'])&&$options['deployment-fd']===$options['db-config-fd']){throw new \InvalidArgumentException('Descriptor reuse');}
++            $deployment=isset($options['deployment-fd'])?PrivateFd::read($options['deployment-fd']):[];
++            // Validate local input before a connection can be considered; no environment DB fallback.
++            $local=Environment::capture($deployment);
++            $database=isset($options['db-config-fd'])?Metadata::fromDescriptor($options['db-config-fd']):Metadata::absent();
++            $report=Evaluator::evaluate(new Observation($local->runtime,$local->filesystem,$database,$local->declaredWebVersion))->jsonSerialize();
++            echo json_encode($report,JSON_THROW_ON_ERROR|JSON_UNESCAPED_SLASHES).PHP_EOL;
++            return match($report['status']){'PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE'=>0,'PREFLIGHT_INCOMPLETE'=>2,default=>1};
++        }catch(\Throwable){echo '{"format_version":1,"scope":"LOCAL_CLI_AND_READ_ONLY_METADATA_ONLY","status":"PREFLIGHT_BLOCKED","checks":[{"check_code":"INPUT_CONTRACT","feature":"preflight","classification":"REQUIRED","status":"FAIL","reason":"UNSAFE","explanation":"Private input or runtime contract unavailable.","operator_action":"Review the documented private descriptor and CLI contract; no error details are emitted."}],"gates":{"G-O01":"OPEN","G-O02":"OPEN","OPS-002":"OPEN","OPS-003":"OPEN"},"production_allowed":false,"effects_allowed":false,"real_gate_status":"BLOCKED"}'.PHP_EOL;return 1;}
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Environment.php
+@@ -0,0 +1,14 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Environment
++{
++    public const CORE_FUNCTIONS=['random_bytes','hash','hash_hmac','hash_equals','hrtime','usleep','getenv','json_encode','json_decode','filter_var','password_hash','password_verify','password_needs_rehash','mb_check_encoding','mb_strlen','session_start','session_write_close','session_regenerate_id','session_abort','session_status','session_name','session_id','session_set_cookie_params'];
++    public const FILE_FUNCTIONS=['fopen','fstat','fseek','flock','fwrite','fflush','fclose','is_file','is_dir','is_link','realpath','fileperms','filesize','file_get_contents','mkdir','chmod','unlink','rename'];
++    public static function capture(array $deployment=[],?array $database=null): Observation
++    {
++        $functions=[];foreach([...self::CORE_FUNCTIONS,...self::FILE_FUNCTIONS,'sodium_crypto_aead_xchacha20poly1305_ietf_encrypt','sodium_crypto_secretstream_xchacha20poly1305_init_push','sodium_crypto_secretstream_xchacha20poly1305_push','sodium_crypto_secretstream_xchacha20poly1305_init_pull','sodium_crypto_secretstream_xchacha20poly1305_pull','posix_geteuid','fsync','idn_to_ascii','finfo_open'] as $f){$functions[$f]=function_exists($f);}
++        $runtime=['version'=>PHP_VERSION_ID,'bits'=>PHP_INT_SIZE*8,'sapi'=>PHP_SAPI,'extensions'=>array_fill_keys(get_loaded_extensions(),true),'functions'=>$functions,'mysql'=>class_exists(\PDO::class)&&in_array('mysql',\PDO::getAvailableDrivers(),true),'argon2id'=>function_exists('password_algos')&&in_array('argon2id',password_algos(),true),'finfo'=>class_exists(\finfo::class),'nonroot'=>PrivateFd::uid()!==null&&PrivateFd::uid()!==0];
++        return new Observation($runtime,Filesystem::inspect($deployment),$database??Metadata::absent(),$deployment['web_php_version']??null);
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Evaluator.php
+@@ -0,0 +1,31 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Evaluator
++{
++    public static function evaluate(Observation $observation): Report
++    {
++        $r=new Report();$v=$observation->runtime;$f=$v['functions'];$e=$v['extensions'];
++        $check=static function(string $code,bool $ok)use($r):void{$r->add($code,$ok?'PASS':'FAIL',$ok?'OBSERVED':'MISSING');};
++        $check('PHP_VERSION',$v['version']>=80300);$check('PHP_BITS',$v['bits']===64);$check('CLI_RUNTIME',$v['sapi']==='cli');
++        $check('PDO_MYSQL',($e['PDO']??false)&&($e['pdo_mysql']??false)&&$v['mysql']);
++        $check('SODIUM',($e['sodium']??false)&&($f['sodium_crypto_aead_xchacha20poly1305_ietf_encrypt']??false));
++        $check('MBSTRING',($e['mbstring']??false)&&($f['mb_check_encoding']??false)&&($f['mb_strlen']??false));
++        $check('SESSION',($e['session']??false)&&($f['session_start']??false));
++        $ok=true;foreach(Environment::CORE_FUNCTIONS as $name){$ok=$ok&&($f[$name]??false);}$check('CORE_FUNCTIONS',$ok);$check('ARGON2ID',$v['argon2id']);
++        foreach(['WEBROOT_PATH','CONFIG_FILE','STORAGE_PATH','SESSION_PATH','OPEN_BASEDIR','WRITE_AND_LOCK','DISK_CAPACITY','BACKUP_HEADROOM'] as $code){$row=$observation->filesystem[$code]??['UNKNOWN','UNVERIFIED'];$r->add($code,$row[0],$row[1]);}
++        $check('FILEINFO',($e['fileinfo']??false)&&$v['finfo']);$check('INTL_IDN',($e['intl']??false)&&($f['idn_to_ascii']??false));
++        $ok=true;foreach(Environment::FILE_FUNCTIONS as $name){$ok=$ok&&($f[$name]??false);}$check('FILE_LOCKS',$ok);foreach(['sodium_crypto_secretstream_xchacha20poly1305_init_push','sodium_crypto_secretstream_xchacha20poly1305_push','sodium_crypto_secretstream_xchacha20poly1305_init_pull','sodium_crypto_secretstream_xchacha20poly1305_pull'] as $name){$ok=$ok&&($f[$name]??false);}$check('BACKUP_FILE_FUNCTIONS',$ok);
++        $check('POSIX_BACKUP',($f['posix_geteuid']??false)&&$v['nonroot']);$check('FSYNC_BACKUP',$f['fsync']??false);$check('POSIX_DISCOVERY',$f['posix_geteuid']??false);
++        $r->add('OPENSSL_OBSERVED',($e['openssl']??false)?'PASS':'NOT_APPLICABLE',($e['openssl']??false)?'OBSERVED':'UNVERIFIED');
++        $web=$observation->declaredWebVersion;$r->add('WEB_PHP',$web!==null&&$web!==$v['version']?'FAIL':'UNKNOWN',$web!==null&&$web!==$v['version']?'VERSION_MISMATCH':($web===null?'UNVERIFIED':'OPERATOR_DECLARATION'));
++        foreach(['CRON','MEMORY_TIMEOUT','WEB_MAPPING_TLS','DB_SQL_FEATURES','BACKUP_PRIVILEGES','PITR_OFFSITE'] as $code){$r->add($code,'UNKNOWN','UNVERIFIED');}
++        $db=$observation->database;$r->add('DB_CONNECTION',$db['connection'][0],$db['connection'][1]);$server=$db['server'];$r->add('DB_SCHEMA',is_array($server)&&isset($server['schema_selected'])?((int)$server['schema_selected']===1?'PASS':'FAIL'):'UNKNOWN',is_array($server)&&isset($server['schema_selected'])?((int)$server['schema_selected']===1?'OBSERVED':'MISSING'):'UNVERIFIED');
++        if(!is_array($server)||!isset($server['version'])){$r->add('DB_MARIADB','UNKNOWN','UNVERIFIED');$r->add('DB_CHARSET','UNKNOWN','UNVERIFIED');$r->add('DB_SQL_MODE','UNKNOWN','UNVERIFIED');$r->add('DB_UTC','UNKNOWN','UNVERIFIED');}
++        else{$s=(string)$server['version'];$ok=preg_match('/\A(?:5\.5\.5-)?([0-9]+\.[0-9]+\.[0-9]+)-MariaDB(?:-|\z)/D',$s,$m)===1&&version_compare($m[1],'10.11.0','>=');$r->add('DB_MARIADB',$ok?'PASS':'FAIL',$ok?'OBSERVED':'VERSION_MISMATCH');$check('DB_CHARSET',($server['charset']??null)==='utf8mb4');$modes=explode(',',(string)($server['sql_mode']??''));$ok=in_array('STRICT_ALL_TABLES',$modes,true)&&in_array('ERROR_FOR_DIVISION_BY_ZERO',$modes,true)&&in_array('NO_ENGINE_SUBSTITUTION',$modes,true);$r->add('DB_SQL_MODE',$ok?'PASS':'UNKNOWN',$ok?'OBSERVED':'UNVERIFIED');$ok=isset($server['utc_offset'])&&(string)$server['utc_offset']==='0';$r->add('DB_UTC',$ok?'PASS':'UNKNOWN',$ok?'OBSERVED':'UNVERIFIED');}
++        $engine=$db['engine'];if($engine===null){$r->add('DB_INNODB','UNKNOWN','UNVERIFIED');}else{$check('DB_INNODB',in_array($engine['SUPPORT']??null,['YES','DEFAULT'],true)&&($engine['TRANSACTIONS']??null)==='YES');}
++        if($db['connection'][0]!=='PASS'||$db['plugin']===null){$r->add('DB_DISKS','UNKNOWN','UNVERIFIED');}elseif(($db['plugin']['PLUGIN_STATUS']??null)!=='ACTIVE'){$r->add('DB_DISKS','FAIL','MISSING');}elseif($db['disks']===null){$r->add('DB_DISKS','UNKNOWN','DENIED');}else{$r->add('DB_DISKS',isset($db['disks']['AVAILABLE'])?'PASS':'UNKNOWN',isset($db['disks']['AVAILABLE'])?'OBSERVED':'UNVERIFIED');}
++        // Force the inventory invariant before returning a report to any caller.
++        $r->jsonSerialize();return $r;
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Filesystem.php
+@@ -0,0 +1,46 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Filesystem
++{
++    private static function beneath(string $path,string $root): bool {return $path===$root||str_starts_with($path,$root.'/');}
++    /** Resolve no links or dot traversal. Never create/read file contents/change permissions. */
++    private static function path(string $path,bool $directory): array
++    {
++        if(!str_starts_with($path,'/')||strlen($path)>4096||preg_match('/[\x00-\x1f\\\\]/',$path)||in_array('..',explode('/',$path),true)||in_array('.',explode('/',$path),true)){throw new \InvalidArgumentException('Unsafe path');}
++        $path=rtrim($path,'/');if($path===''){$path='/';}
++        $p=$path;for($i=0;$i<128;++$i){if(is_link($p)){throw new \InvalidArgumentException('Linked path');}if($p==='/'){break;}$p=dirname($p);if($i===127){throw new \InvalidArgumentException('Path bound');}}
++        $s=lstat($path);$real=realpath($path);
++        if($s===false||$real!==$path||($s['mode']&0170000)!==($directory?0040000:0100000)||(!$directory&&$s['nlink']!==1)){throw new \InvalidArgumentException('Path metadata');}
++        return ['path'=>$path,'mode'=>$s['mode']&07777,'owner'=>$s['uid'],'readable'=>is_readable($path),'writable'=>is_writable($path),'executable'=>$directory?is_executable($path):false];
++    }
++    private static function inspectPath(string $path,bool $directory,?string $public,string $kind): array
++    {
++        try{
++            $v=self::path($path,$directory);
++            if($public!==null&&self::beneath($v['path'],$public)){return ['FAIL','UNSAFE'];}
++            if($kind==='config'){$uid=PrivateFd::uid();if(!in_array($v['mode'],[0400,0600],true)||!$v['readable']||($uid!==null&&$v['owner']!==$uid)){return ['FAIL','UNSAFE'];}return $uid===null?['UNKNOWN','UNVERIFIED']:['PASS','OBSERVED'];}
++            // Shared files-session directories may legitimately be sticky and administrator-owned.
++            $sharedSticky=$kind==='session'&&($v['mode']&01000)!==0;
++            if(($v['mode']&0022)!==0&&!$sharedSticky){return ['FAIL','UNSAFE'];}
++            return $v['readable']&&$v['writable']&&$v['executable']?['PASS','OBSERVED']:['FAIL','ACCESS_UNAVAILABLE'];
++        }catch(\InvalidArgumentException){return ['FAIL','UNSAFE'];}catch(\Throwable){return ['UNKNOWN','ACCESS_UNAVAILABLE'];}
++    }
++    public static function inspect(array $deployment): array
++    {
++        $allowed=['webroot','config_file','storage','session_path','web_php_version'];
++        if(array_diff(array_keys($deployment),$allowed)!==[]){throw new \InvalidArgumentException('Deployment fields');}
++        foreach($deployment as $k=>$v){if($k==='web_php_version'){if(!is_int($v)||$v<10000||$v>999999){throw new \InvalidArgumentException('Web version');}}elseif(!is_string($v)||$v===''){throw new \InvalidArgumentException('Deployment path');}}
++        $root=dirname(__DIR__,2);$public=$root.'/public';$out=[];
++        if(!isset($deployment['webroot'])){$out['WEBROOT_PATH']=['UNKNOWN','UNVERIFIED'];}
++        else{try{$v=self::path($deployment['webroot'],true);$out['WEBROOT_PATH']=$v['path']===$public&&$v['readable']&&$v['executable']?['PASS','OBSERVED']:['FAIL','UNSAFE'];}catch(\InvalidArgumentException){$out['WEBROOT_PATH']=['FAIL','UNSAFE'];}catch(\Throwable){$out['WEBROOT_PATH']=['UNKNOWN','ACCESS_UNAVAILABLE'];}}
++        $out['CONFIG_FILE']=isset($deployment['config_file'])?self::inspectPath($deployment['config_file'],false,$public,'config'):['UNKNOWN','UNVERIFIED'];
++        $storage=$deployment['storage']??$root.'/storage';$out['STORAGE_PATH']=$storage===$root.'/storage'?self::inspectPath($storage,true,$public,'storage'):['FAIL','UNSAFE'];
++        $session=$deployment['session_path']??null;
++        if($session===null&&ini_get('session.save_handler')==='files'){$parts=explode(';',(string)ini_get('session.save_path'));$session=end($parts);if($session===''){$session=sys_get_temp_dir();}}
++        $out['SESSION_PATH']=ini_get('session.save_handler')==='files'&&is_string($session)&&$session!==''?self::inspectPath($session,true,$public,'session'):['UNKNOWN','UNVERIFIED'];
++        $out['OPEN_BASEDIR']=['UNKNOWN','UNVERIFIED'];$out['WRITE_AND_LOCK']=['UNKNOWN','UNVERIFIED'];$out['DISK_CAPACITY']=['UNKNOWN','UNVERIFIED'];$out['BACKUP_HEADROOM']=['UNKNOWN','UNVERIFIED'];
++        try{$v=self::path($storage,true);$free=disk_free_space($v['path']);if($free!==false){$out['DISK_CAPACITY']=$free>0?['UNKNOWN','UNVERIFIED']:['FAIL','MISSING'];$out['BACKUP_HEADROOM']=$free>=134217728?['PASS','OBSERVED']:['FAIL','MISSING'];if($free<=0){$out['STORAGE_PATH']=['FAIL','MISSING'];}}}catch(\Throwable){}
++        return $out;
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Metadata.php
+@@ -0,0 +1,36 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Metadata
++{
++    public const QUERIES=[
++        'server'=>"SELECT VERSION() AS version,@@session.sql_mode AS sql_mode,@@session.time_zone AS time_zone,TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(),NOW()) AS utc_offset,@@session.character_set_connection AS charset,DATABASE() IS NOT NULL AS schema_selected",
++        'engine'=>"SELECT SUPPORT,TRANSACTIONS FROM information_schema.ENGINES WHERE ENGINE='InnoDB'",
++        'plugin'=>"SELECT PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME='DISKS'",
++        'disks'=>"SELECT AVAILABLE FROM information_schema.DISKS LIMIT 1",
++    ];
++    public static function absent(): array {return ['connection'=>['UNKNOWN','NO_CONNECTION'],'server'=>null,'engine'=>null,'plugin'=>null,'disks'=>null];}
++    /** Pure adapter seam: runtime uses only the four literal metadata SELECT statements above. */
++    public static function inspect(\Closure $select): array
++    {
++        $out=['connection'=>['PASS','OBSERVED'],'server'=>null,'engine'=>null,'plugin'=>null,'disks'=>null];
++        foreach(['server','engine','plugin'] as $name){try{$v=$select(self::QUERIES[$name]);$out[$name]=is_array($v)?$v:[];}catch(\Throwable){$out[$name]=null;}}
++        if(($out['plugin']['PLUGIN_STATUS']??null)==='ACTIVE'){try{$v=$select(self::QUERIES['disks']);$out['disks']=is_array($v)?$v:[];}catch(\Throwable){$out['disks']=null;}}
++        return $out;
++    }
++    public static function fromDescriptor(int $fd): array {return self::connect(PrivateFd::read($fd));}
++    private static function connect(#[\SensitiveParameter] array $config): array
++    {
++        $keys=array_keys($config);sort($keys);if($keys!==['dsn','password','read_only','user']||$config['read_only']!==true||!is_string($config['dsn'])||strlen($config['dsn'])>512||!is_string($config['user'])||strlen($config['user'])<1||strlen($config['user'])>128||!is_string($config['password'])||strlen($config['password'])>1024||str_contains($config['password'],"\0")){throw new \InvalidArgumentException('Database config');}
++        if(!str_starts_with($config['dsn'],'mysql:')){throw new \InvalidArgumentException('Database driver');}
++        $parts=[];foreach(explode(';',substr($config['dsn'],6)) as $part){if(preg_match('/\A(host|port|dbname|charset)=([a-zA-Z0-9_.:\\-]+)\z/D',$part,$m)!==1||isset($parts[$m[1]])){throw new \InvalidArgumentException('Database DSN');}$parts[$m[1]]=$m[2];}
++        if(!isset($parts['host'],$parts['dbname'],$parts['charset'])||$parts['charset']!=='utf8mb4'||preg_match('/\A[a-zA-Z0-9_]+\z/D',$parts['dbname'])!==1||(isset($parts['port'])&&(preg_match('/\A[0-9]+\z/D',$parts['port'])!==1||(int)$parts['port']<1||(int)$parts['port']>65535))){throw new \InvalidArgumentException('Database DSN');}
++        // This initial offline installation probe intentionally has no remote-host/TLS connector.
++        if(!in_array($parts['host'],['localhost','127.0.0.1','::1'],true)){return self::absent();}
++        if(!class_exists(\PDO::class)||!in_array('mysql',\PDO::getAvailableDrivers(),true)){return self::absent();}
++        try{
++            $pdo=new \PDO($config['dsn'],$config['user'],$config['password'],[\PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION,\PDO::ATTR_DEFAULT_FETCH_MODE=>\PDO::FETCH_ASSOC,\PDO::ATTR_EMULATE_PREPARES=>false,\PDO::ATTR_PERSISTENT=>false,\PDO::ATTR_TIMEOUT=>2,\PDO::MYSQL_ATTR_MULTI_STATEMENTS=>false]);
++            return self::inspect(static function(string $sql)use($pdo): array {if(!in_array($sql,self::QUERIES,true)){throw new \LogicException('Metadata allowlist');}$stmt=$pdo->query($sql);return $stmt->fetch()?:[];});
++        }catch(\Throwable){$out=self::absent();$out['connection']=['UNKNOWN','ACCESS_UNAVAILABLE'];return $out;}
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Observation.php
+@@ -0,0 +1,7 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final readonly class Observation
++{
++    public function __construct(public array $runtime,public array $filesystem,public array $database,public ?int $declaredWebVersion=null){}
++}
+--- /dev/null
++++ b/src/HostingPreflight/PrivateFd.php
+@@ -0,0 +1,26 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class PrivateFd
++{
++    public static function uid(): ?int
++    {
++        if(function_exists('posix_geteuid')){return posix_geteuid();}
++        try{$s=@file_get_contents('/proc/self/status',false,null,0,8192);return is_string($s)&&preg_match('/^Uid:\s+[0-9]+\s+([0-9]+)/m',$s,$m)===1?(int)$m[1]:null;}catch(\Throwable){return null;}
++    }
++    /** Never uses writable modes or accepts path/pipe/socket descriptors. */
++    public static function read(int $fd): array
++    {
++        if($fd<3||$fd>64){throw new \InvalidArgumentException('Private descriptor');}
++        $h=null;
++        try{
++            $info=@file_get_contents('/proc/self/fdinfo/'.$fd,false,null,0,8192);
++            if(!is_string($info)||preg_match('/^flags:\s+([0-7]+)/m',$info,$m)!==1||(octdec($m[1])&3)!==0){throw new \InvalidArgumentException('Read-only descriptor required');}
++            $h=@fopen('php://fd/'.$fd,'rb');if(!is_resource($h)){throw new \InvalidArgumentException('Private descriptor');}
++            $s=fstat($h);$uid=self::uid();
++            if($s===false||$uid===null||($s['mode']&0170000)!==0100000||!in_array($s['mode']&0777,[0400,0600],true)||$s['uid']!==$uid||$s['nlink']!==1||$s['size']<2||$s['size']>8192||ftell($h)!==0){throw new \InvalidArgumentException('Private descriptor metadata');}
++            $raw=stream_get_contents($h,8193);if(!is_string($raw)||strlen($raw)!==$s['size']){throw new \InvalidArgumentException('Private descriptor size');}
++            $v=json_decode($raw,true,8,JSON_THROW_ON_ERROR);if(!is_array($v)||array_is_list($v)){throw new \InvalidArgumentException('Private descriptor object');}return $v;
++        }finally{if(is_resource($h)){fclose($h);}}
++    }
++}
+--- /dev/null
++++ b/src/HostingPreflight/Report.php
+@@ -0,0 +1,28 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\HostingPreflight;
++final class Report implements \JsonSerializable
++{
++    private array $checks=[];
++    private const REASONS=['OBSERVED','MISSING','UNVERIFIED','UNSAFE','ACCESS_UNAVAILABLE','DENIED','VERSION_MISMATCH','NO_CONNECTION','DEPENDENCY_MISSING','OPERATOR_DECLARATION'];
++    public function add(string $code,string $status,string $reason): void
++    {
++        $defs=Catalog::definitions();
++        if(!isset($defs[$code])||isset($this->checks[$code])||!in_array($status,['PASS','FAIL','UNKNOWN','NOT_APPLICABLE'],true)||!in_array($reason,self::REASONS,true)){throw new \InvalidArgumentException('Preflight check contract');}
++        [$feature,$class,$source,$description,$action]=$defs[$code];
++        $this->checks[$code]=['check_code'=>$code,'feature'=>$feature,'classification'=>$class,'status'=>$status,'reason'=>$reason,'explanation'=>$description,'operator_action'=>$action,'source'=>$source,'verification'=>$status==='UNKNOWN'?'UNVERIFIED':'LOCAL_OBSERVATION_ONLY'];
++    }
++    public function jsonSerialize(): array
++    {
++        $defs=Catalog::definitions();if(count($this->checks)!==count($defs)){throw new \LogicException('Incomplete check inventory');}
++        $checks=[];$requiredFail=false;$requiredUnknown=false;
++        foreach($defs as $code=>$def){$c=$this->checks[$code]??throw new \LogicException('Missing check');$checks[]=$c;if($c['classification']==='OPERATIONAL_VALIDATION'&&$c['status']==='FAIL'){$requiredFail=true;}if($c['classification']==='REQUIRED'){$requiredFail=$requiredFail||$c['status']==='FAIL';$requiredUnknown=$requiredUnknown||$c['status']!=='PASS';}}
++        $overall=$requiredFail?'PREFLIGHT_BLOCKED':($requiredUnknown?'PREFLIGHT_INCOMPLETE':'PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE');
++        $features=[];foreach(['core','identity','queue','documents','domains','offline_backup','source_discovery'] as $feature){$subset=array_filter($checks,fn($v)=>$v['feature']===$feature&&$v['classification']!=='OPERATIONAL_VALIDATION');$fail=$requiredFail;$unknown=$requiredUnknown;foreach($subset as $c){$fail=$fail||$c['status']==='FAIL';$unknown=$unknown||$c['status']!=='PASS';}$features[$feature]=$fail?'BLOCKED_BY_OBSERVED_PREREQUISITE':($unknown?'UNVERIFIED':'PREREQUISITES_OBSERVED_ONLY');}
++        return ['format_version'=>1,'scope'=>'LOCAL_CLI_AND_READ_ONLY_METADATA_ONLY','status'=>$overall,'checks'=>$checks,'feature_prerequisites'=>$features,'gates'=>['G-O01'=>'OPEN','G-O02'=>'OPEN','OPS-002'=>'OPEN','OPS-003'=>'OPEN'],'production_allowed'=>false,'effects_allowed'=>false,'real_gate_status'=>'BLOCKED'];
++    }
++    public static function denied(): array
++    {
++        return ['format_version'=>1,'scope'=>'LOCAL_CLI_AND_READ_ONLY_METADATA_ONLY','status'=>'PREFLIGHT_BLOCKED','checks'=>[['check_code'=>'INPUT_CONTRACT','feature'=>'preflight','classification'=>'REQUIRED','status'=>'FAIL','reason'=>'UNSAFE','explanation'=>'Private input or runtime contract unavailable.','operator_action'=>'Review the documented private descriptor and CLI contract; no error details are emitted.']],'gates'=>['G-O01'=>'OPEN','G-O02'=>'OPEN','OPS-002'=>'OPEN','OPS-003'=>'OPEN'],'production_allowed'=>false,'effects_allowed'=>false,'real_gate_status'=>'BLOCKED'];
++    }
++}
+--- /dev/null
++++ b/tests/hosting-preflight-fixture.php
+@@ -0,0 +1,31 @@
++<?php
++declare(strict_types=1);
++use Hostider\HostingPreflight\{Environment,Observation,Evaluator,Metadata,Report,Catalog};
++function hgPrivate(string $name,array|string $value): string{
++ $root=$GLOBALS['hg']['private_root'];$p=$root.'/'.$name;$bytes=is_array($value)?json_encode($value,JSON_THROW_ON_ERROR|JSON_UNESCAPED_SLASHES):$value;$h=fopen($p,'x+b');same(true,is_resource($h));same(true,chmod($p,0600));same(strlen($bytes),fwrite($h,$bytes));fclose($h);return $p;
++}
++function hgFixture():array{
++ same('test',getenv('APP_ENV'));same(1,preg_match('/\Amysql:host=127\.0\.0\.1;port=([0-9]+);dbname=hostider_f0_test;charset=utf8mb4\z/D',getenv('TEST_DB_DSN'),$m));
++ $admin=new PDO(getenv('TEST_DB_DSN'),getenv('TEST_DB_USER')?:'root',getenv('TEST_DB_PASSWORD')?:'',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::MYSQL_ATTR_MULTI_STATEMENTS=>false]);
++ $base=sys_get_temp_dir().'/f6g-'.bin2hex(random_bytes(10));same(true,mkdir($base,0700));$id=bin2hex(random_bytes(6));$full='f6g_ro_'.$id;$limited='f6g_min_'.$id;$password=bin2hex(random_bytes(32));
++ foreach([$full,$limited] as $name){$admin->exec('CREATE USER '.$admin->quote($name)."@'%' IDENTIFIED BY ".$admin->quote($password));$admin->exec('GRANT SELECT ON hostider_f0_test.* TO '.$admin->quote($name)."@'%'");}
++ $admin->exec('GRANT FILE ON *.* TO '.$admin->quote($full)."@'%'");
++ $GLOBALS['hg']=['admin'=>$admin,'private_root'=>$base,'full_user'=>$full,'limited_user'=>$limited,'password'=>$password];
++ $secret=hgPrivate('app-config','F6G_SECRET_CONFIG_CANARY');$deployment=['webroot'=>dirname(__DIR__).'/public','config_file'=>$secret,'storage'=>dirname(__DIR__).'/storage','session_path'=>$base,'web_php_version'=>PHP_VERSION_ID];
++ $config=['dsn'=>getenv('TEST_DB_DSN'),'user'=>$full,'password'=>$password,'read_only'=>true];
++ $GLOBALS['hg']+=['deployment'=>$deployment,'config'=>$config,'deployment_file'=>hgPrivate('deployment.json',$deployment),'db_file'=>hgPrivate('db.json',$config),'secret_file'=>$secret];
++ $admin->exec("SET GLOBAL log_output='TABLE'");$admin->exec('SET GLOBAL general_log=1');
++ register_shutdown_function(static function()use($admin):void{try{$admin->exec('SET GLOBAL general_log=0');}catch(Throwable){}});
++ return $GLOBALS['hg'];
++}
++function hgCli(array $args=[],array $ini=[],?string $deployment=null,?string $db=null,string $dbMode='r'):array{
++ $cmd=[PHP_BINARY,...$ini,dirname(__DIR__).'/bin/hosting-preflight.php'];$spec=[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']];
++ if($deployment!==null){$cmd[]='--deployment-fd=3';$spec[3]=['file',$deployment,'r'];}if($db!==null){$cmd[]='--db-config-fd=4';$spec[4]=['file',$db,$dbMode];}
++ $pipes=[];$proc=proc_open([...$cmd,...$args],$spec,$pipes,null,getenv());same(true,is_resource($proc));fclose($pipes[0]);$stdout=stream_get_contents($pipes[1]);$stderr=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);$exit=proc_close($proc);same('',$stderr);$j=json_decode($stdout,true,32,JSON_THROW_ON_ERROR);return ['exit'=>$exit,'raw'=>$stdout,'report'=>$j];
++}
++function hgFull(array $ini=[],array $extra=[]):array{return hgCli($extra,$ini,$GLOBALS['hg']['deployment_file'],$GLOBALS['hg']['db_file']);}
++function hgCheck(array $report,string $code):array{foreach($report['checks'] as $c){if($c['check_code']===$code){return $c;}}throw new RuntimeException('Missing expected check');}
++function hgRow(array $report,string $code,string $status):void{same($status,hgCheck($report,$code)['status']);}
++function hgGates(array $report):void{same(false,$report['production_allowed']);same(false,$report['effects_allowed']);same('BLOCKED',$report['real_gate_status']);same(['G-O01'=>'OPEN','G-O02'=>'OPEN','OPS-002'=>'OPEN','OPS-003'=>'OPEN'],$report['gates']);}
++function hgObserved(array $runtime=[],array $filesystem=[],?array $database=null,?int $web=null):array{$b=$GLOBALS['hg']['observation'];return Evaluator::evaluate(new Observation(array_replace_recursive($b->runtime,$runtime),array_replace($b->filesystem,$filesystem),$database??$b->database,$web))->jsonSerialize();}
++function hgSource():array{$out=[];foreach(['src','tests','bootstrap','bin','public','migrations','tools','.github'] as $dir){$base=dirname(__DIR__).'/'.$dir;if(!is_dir($base)){continue;}foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($base,FilesystemIterator::SKIP_DOTS)) as $p){if(!$p->isFile()||str_contains($p->getPathname(),'/tools/local/')||str_contains($p->getPathname(),'/vendor/')||str_contains($p->getPathname(),'/node_modules/')){continue;}$out[substr($p->getPathname(),strlen(dirname(__DIR__))+1)]=hash_file('sha256',$p->getPathname());}}ksort($out);return $out;}
+--- /dev/null
++++ b/tests/hosting-preflight.php
+@@ -0,0 +1,107 @@
++<?php
++declare(strict_types=1);
++require __DIR__.'/harness.php';require __DIR__.'/hosting-preflight-fixture.php';
++use Hostider\HostingPreflight\{Catalog,Report,Observation,Evaluator,Environment,Metadata};
++
++test('F6-G 00 a non-files session backend stays UNKNOWN and its callbacks are never invoked',function():void{$handler=new class implements SessionHandlerInterface{public int $calls=0;public function open(string $path,string $name):bool{++$this->calls;return true;}public function close():bool{++$this->calls;return true;}public function read(string $id):string|false{++$this->calls;return '';}public function write(string $id,string $data):bool{++$this->calls;return true;}public function destroy(string $id):bool{++$this->calls;return true;}public function gc(int $max_lifetime):int|false{++$this->calls;return 0;}};same(true,session_set_save_handler($handler));try{$f=Environment::capture();same(['UNKNOWN','UNVERIFIED'],$f->filesystem['SESSION_PATH']);same(0,$handler->calls);}finally{session_module_name('files');}});
++
++test('F6-G 01 full native CLI metadata preflight is safe and inside checked scope',function():void{$f=hgFixture();$GLOBALS['hg_source_before']=hgSource();$result=hgFull();same(0,$result['exit']);same('PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE',$result['report']['status']);same(count(Catalog::definitions()),count($result['report']['checks']));foreach(['PDO_MYSQL','SODIUM','MBSTRING','SESSION','ARGON2ID','DB_CONNECTION','DB_SCHEMA','DB_MARIADB','DB_INNODB','DB_CHARSET','DB_DISKS'] as $code){hgRow($result['report'],$code,'PASS');}hgGates($result['report']);$GLOBALS['hg']['full']=$result;$local=Environment::capture($f['deployment']);$db=Metadata::inspect(fn($sql)=>$f['admin']->query($sql)->fetch()?:[]);$GLOBALS['hg']['observation']=new Observation($local->runtime,$local->filesystem,$db,PHP_VERSION_ID);});
++
++test('F6-G 02 missing extension in a real php no-ini process blocks safely',function():void{$r=hgFull(['-n']);same(1,$r['exit']);same('PREFLIGHT_BLOCKED',$r['report']['status']);hgRow($r['report'],'PDO_MYSQL','FAIL');hgGates($r['report']);});
++
++test('F6-G 03 actually disabled native mb function blocks required capability',function():void{$r=hgFull(['-d','disable_functions=mb_strlen']);same(1,$r['exit']);hgRow($r['report'],'CORE_FUNCTIONS','FAIL');hgRow($r['report'],'MBSTRING','FAIL');});
++
++test('F6-G 04 missing POSIX and fsync do not block a cPanel core installation observation',function():void{$r=hgFull(['-d','disable_functions=posix_geteuid,fsync,proc_open,shell_exec,exec,system,passthru']);same(0,$r['exit']);hgRow($r['report'],'POSIX_BACKUP','FAIL');hgRow($r['report'],'POSIX_DISCOVERY','FAIL');hgRow($r['report'],'FSYNC_BACKUP','FAIL');hgRow($r['report'],'PDO_MYSQL','PASS');hgRow($r['report'],'DB_CONNECTION','PASS');same('BLOCKED_BY_OBSERVED_PREREQUISITE',$r['report']['feature_prerequisites']['offline_backup']);hgGates($r['report']);});
++
++test('F6-G 05 actual open_basedir denial cannot become a path PASS or leak a path',function():void{$root=dirname(__DIR__);$allowed=implode(PATH_SEPARATOR,[$root.'/src',$root.'/bootstrap',$root.'/bin','/proc',$GLOBALS['hg']['private_root']]);$r=hgFull(['-d','open_basedir='.$allowed]);same(true,$r['report']['status']!=='PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE');same(true,in_array(hgCheck($r['report'],'STORAGE_PATH')['status'],['FAIL','UNKNOWN'],true));same(false,str_contains($r['raw'],$GLOBALS['hg']['private_root']));hgGates($r['report']);});
++
++test('F6-G 06 declared CLI web PHP mismatch blocks while matching declaration is unverified',function():void{$d=$GLOBALS['hg']['deployment'];$d['web_php_version']=80200;$p=hgPrivate('web-mismatch.json',$d);$r=hgCli([],[],$p,$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgRow($r['report'],'WEB_PHP','FAIL');hgRow($GLOBALS['hg']['full']['report'],'WEB_PHP','UNKNOWN');same('OPERATOR_DECLARATION',hgCheck($GLOBALS['hg']['full']['report'],'WEB_PHP')['reason']);hgGates($r['report']);});
++
++test('F6-G 07 real read-only account without FILE cannot attest optional DISKS metadata',function():void{$c=$GLOBALS['hg']['config'];$c['user']=$GLOBALS['hg']['limited_user'];$p=hgPrivate('limited-db.json',$c);$r=hgCli([],[],$GLOBALS['hg']['deployment_file'],$p);same(0,$r['exit']);hgRow($r['report'],'DB_CONNECTION','PASS');hgRow($r['report'],'DB_DISKS','UNKNOWN');same('UNVERIFIED',hgCheck($r['report'],'DB_DISKS')['reason']);hgGates($r['report']);});
++
++test('F6-G 08 no explicit descriptor means UNKNOWN and no environment DB fallback',function():void{$r=hgCli();same(2,$r['exit']);hgRow($r['report'],'DB_CONNECTION','UNKNOWN');same('NO_CONNECTION',hgCheck($r['report'],'DB_CONNECTION')['reason']);hgRow($r['report'],'DB_MARIADB','UNKNOWN');hgGates($r['report']);$d=$GLOBALS['hg']['deployment'];unset($d['config_file']);$env=hgCli([],[],hgPrivate('environment-config-layout.json',$d),$GLOBALS['hg']['db_file']);same(0,$env['exit']);hgRow($env['report'],'CONFIG_FILE','UNKNOWN');same('OPERATIONAL_VALIDATION',hgCheck($env['report'],'CONFIG_FILE')['classification']);hgGates($env['report']);});
++
++test('F6-G 09 closed private descriptor is blocked without raw diagnostics',function():void{$r=hgCli(['--db-config-fd=63']);same(1,$r['exit']);same('PREFLIGHT_BLOCKED',$r['report']['status']);same('INPUT_CONTRACT',$r['report']['checks'][0]['check_code']);hgGates($r['report']);});
++
++test('F6-G 10 writable config descriptor is rejected without changing its bytes',function():void{$p=$GLOBALS['hg']['db_file'];$before=hash_file('sha256',$p);$r=hgCli([],[],$GLOBALS['hg']['deployment_file'],$p,'r+');same(1,$r['exit']);same($before,hash_file('sha256',$p));hgGates($r['report']);});
++
++test('F6-G 11 malformed private config never prints secret payload or parser details',function():void{$p=hgPrivate('bad-json','{"password":"F6G_SECRET_INVALID_JSON_CANARY"');$r=hgCli([],[],null,$p);same(1,$r['exit']);same(false,str_contains($r['raw'],'F6G_SECRET_INVALID_JSON_CANARY'));hgGates($r['report']);});
++
++test('F6-G 12 stdout redacts config credentials hosts usernames private paths and file contents',function():void{$r=hgFull();foreach([$GLOBALS['hg']['password'],$GLOBALS['hg']['full_user'],$GLOBALS['hg']['config']['dsn'],$GLOBALS['hg']['private_root'],$GLOBALS['hg']['secret_file'],'F6G_SECRET_CONFIG_CANARY'] as $s){same(false,str_contains($r['raw'],$s));}same(true,str_contains($r['raw'],'operator_action'));hgGates($r['report']);});
++
++test('F6-G 13 actual symlink configuration path is rejected without following it',function():void{$p=$GLOBALS['hg']['private_root'].'/linked-secret';same(true,symlink($GLOBALS['hg']['secret_file'],$p));$d=$GLOBALS['hg']['deployment'];$d['config_file']=$p;$r=hgCli([],[],hgPrivate('linked-layout.json',$d),$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgRow($r['report'],'CONFIG_FILE','FAIL');same('F6G_SECRET_CONFIG_CANARY',file_get_contents($GLOBALS['hg']['secret_file']));});
++
++test('F6-G 14 traversal is rejected even when it names an existing private file',function():void{$d=$GLOBALS['hg']['deployment'];$d['config_file']=$GLOBALS['hg']['private_root'].'/../'.basename($GLOBALS['hg']['private_root']).'/app-config';$r=hgCli([],[],hgPrivate('traversal-layout.json',$d),$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgRow($r['report'],'CONFIG_FILE','FAIL');});
++
++test('F6-G 15 source root cannot be declared as the public webroot',function():void{$d=$GLOBALS['hg']['deployment'];$d['webroot']=dirname(__DIR__);$r=hgCli([],[],hgPrivate('bad-webroot.json',$d),$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgRow($r['report'],'WEBROOT_PATH','FAIL');});
++
++test('F6-G 16 configuration under public is never treated as safe',function():void{$d=$GLOBALS['hg']['deployment'];$d['config_file']=dirname(__DIR__).'/public/index.php';$r=hgCli([],[],hgPrivate('public-config.json',$d),$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgRow($r['report'],'CONFIG_FILE','FAIL');});
++
++test('F6-G 17 actual nonroot read-only native storage permission blocks without a write probe',function():void{$p=dirname(__DIR__).'/storage';same(true,chmod($p,0500));clearstatcache(true,$p);same(false,is_writable($p));try{$r=hgFull();same(1,$r['exit']);hgRow($r['report'],'STORAGE_PATH','FAIL');}finally{same(true,chmod($p,0700));}});
++
++test('F6-G 18 real tmpfs space pressure disables F6-F rather than inventing a core capacity floor',function():void{$p=dirname(__DIR__).'/storage/f6g-space-pressure';$h=fopen($p,'x+b');same(true,is_resource($h));$written=0;try{while(disk_free_space(dirname($p))>=134217728){same(true,$written<469762048);same(2097152,fwrite($h,str_repeat("\0",2097152)));$written+=2097152;}same(true,disk_free_space(dirname($p))<134217728);$r=hgFull();same(0,$r['exit']);hgRow($r['report'],'BACKUP_HEADROOM','FAIL');hgRow($r['report'],'DISK_CAPACITY','UNKNOWN');hgRow($r['report'],'STORAGE_PATH','PASS');hgGates($r['report']);}finally{fclose($h);same(true,unlink($p));}});
++
++test('F6-G 19 missing MariaDB DISKS is a feature failure and does not block core metadata',function():void{$b=$GLOBALS['hg']['observation'];$db=$b->database;$db['plugin']=[];$db['disks']=null;$r=hgObserved(database:$db);same('PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE',$r['status']);hgRow($r,'DB_DISKS','FAIL');hgGates($r);});
++
++test('F6-G 20 minute cron permission remains UNKNOWN even after all local checks pass',function():void{$r=$GLOBALS['hg']['full']['report'];hgRow($r,'CRON','UNKNOWN');same('UNVERIFIED',hgCheck($r,'CRON')['verification']);hgRow($r,'BACKUP_PRIVILEGES','UNKNOWN');hgRow($r,'PITR_OFFSITE','UNKNOWN');hgGates($r);});
++
++test('F6-G 21 duplicate checks cannot overwrite an earlier result',function():void{$r=new Report();$r->add('PHP_BITS','PASS','OBSERVED');raises(InvalidArgumentException::class,fn()=>$r->add('PHP_BITS','FAIL','MISSING'));});
++
++test('F6-G 22 unknown checks cannot enter a report',function():void{$r=new Report();raises(InvalidArgumentException::class,fn()=>$r->add('PRODUCTION_GO','PASS','OBSERVED'));});
++
++test('F6-G 23 missing check inventory fails closed',function():void{$r=new Report();$r->add('PHP_BITS','PASS','OBSERVED');raises(LogicException::class,fn()=>$r->jsonSerialize());});
++
++test('F6-G 24 arbitrary status or raw diagnostic reason cannot be emitted',function():void{$r=new Report();raises(InvalidArgumentException::class,fn()=>$r->add('PHP_BITS','ACCEPTED','OBSERVED'));raises(InvalidArgumentException::class,fn()=>$r->add('PHP_BITS','PASS','F6G_SECRET_ERROR_MESSAGE'));});
++
++test('F6-G 25 repeated real CLI observations have byte-identical deterministic sanitized JSON',function():void{$a=hgFull();$b=hgFull();same($a['raw'],$b['raw']);hgGates($a['report']);});
++
++test('F6-G 26 tool leaves every native source byte and private input unchanged',function():void{$before=hgSource();$files=[$GLOBALS['hg']['deployment_file'],$GLOBALS['hg']['db_file'],$GLOBALS['hg']['secret_file']];$hashes=array_map(fn($p)=>hash_file('sha256',$p),$files);$entries=scandir($GLOBALS['hg']['private_root']);hgFull();same($before,hgSource());same($GLOBALS['hg_source_before'],hgSource());same($hashes,array_map(fn($p)=>hash_file('sha256',$p),$files));same($entries,scandir($GLOBALS['hg']['private_root']));});
++
++test('F6-G 27 live install or mutation options are rejected before metadata use',function():void{foreach(['--install','--migrate','--chmod=700','--production=true','--cron=enable'] as $arg){$r=hgFull(extra:[$arg]);same(1,$r['exit']);hgGates($r['report']);}});
++
++test('F6-G 28 non-readonly and SQL-smuggling descriptor configs are rejected',function():void{$base=$GLOBALS['hg']['config'];$a=$base;$a['read_only']=false;$b=$base;$b['dsn'].=';MYSQL_INIT_COMMAND=DROP_DATABASE_live';$c=$base;$c['init_command']='DELETE FROM native_data';foreach([$a,$b,$c] as $i=>$value){$r=hgCli([],[],$GLOBALS['hg']['deployment_file'],hgPrivate('unsafe-db-'.$i.'.json',$value));same(1,$r['exit']);hgGates($r['report']);}});
++
++test('F6-G 29 openssl zip curl imagick absence is not an invented global core requirement',function():void{$r=hgObserved(runtime:['extensions'=>['openssl'=>false,'zip'=>false,'curl'=>false,'imagick'=>false]]);same('PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE',$r['status']);hgRow($r,'OPENSSL_OBSERVED','NOT_APPLICABLE');hgGates($r);});
++
++test('F6-G 30 session SQL mode and UTC mismatches stay unverified without SET repair',function():void{$db=$GLOBALS['hg']['observation']->database;$db['server']['sql_mode']='';$db['server']['utc_offset']='3600';$r=hgObserved(database:$db);same('PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE',$r['status']);hgRow($r,'DB_SQL_MODE','UNKNOWN');hgRow($r,'DB_UTC','UNKNOWN');hgGates($r);});
++
++test('F6-G 31 denied required engine metadata leaves incomplete rather than guessing PASS',function():void{$db=$GLOBALS['hg']['observation']->database;$db['engine']=null;$r=hgObserved(database:$db);same('PREFLIGHT_INCOMPLETE',$r['status']);hgRow($r,'DB_INNODB','UNKNOWN');});
++
++test('F6-G 32 MySQL or unsupported MariaDB baseline is not silently accepted',function():void{foreach(['8.4.0-MySQL','10.5.25-MariaDB','not-a-version'] as $version){$db=$GLOBALS['hg']['observation']->database;$db['server']['version']=$version;$r=hgObserved(database:$db);same('PREFLIGHT_BLOCKED',$r['status']);hgRow($r,'DB_MARIADB','FAIL');}});
++
++test('F6-G 33 older PHP and 32-bit observations block the native baseline',function():void{foreach([['version'=>80200],['bits'=>32]] as $runtime){$r=hgObserved(runtime:$runtime);same('PREFLIGHT_BLOCKED',$r['status']);hgGates($r);}});
++
++test('F6-G 34 missing fileinfo or intl closes only the dependent feature',function():void{$r=hgObserved(runtime:['extensions'=>['fileinfo'=>false,'intl'=>false],'functions'=>['idn_to_ascii'=>false],'finfo'=>false]);same('PREFLIGHT_PASS_WITHIN_CHECKED_SCOPE',$r['status']);hgRow($r,'FILEINFO','FAIL');hgRow($r,'INTL_IDN','FAIL');same('BLOCKED_BY_OBSERVED_PREREQUISITE',$r['feature_prerequisites']['documents']);same('BLOCKED_BY_OBSERVED_PREREQUISITE',$r['feature_prerequisites']['domains']);});
++
++test('F6-G 35 disabled PHP file writes and flock close managed files and F6-F without a write attempt',function():void{$r=hgFull(['-d','disable_functions=fwrite,flock']);same(0,$r['exit']);hgRow($r['report'],'FILE_LOCKS','FAIL');hgRow($r['report'],'BACKUP_FILE_FUNCTIONS','FAIL');same('BLOCKED_BY_OBSERVED_PREREQUISITE',$r['report']['feature_prerequisites']['offline_backup']);hgGates($r['report']);});
++
++test('F6-G 36 descriptor privacy cannot be guessed when UID and proc metadata are unavailable',function():void{$r=hgFull(['-d','disable_functions=posix_geteuid,file_get_contents']);same(1,$r['exit']);hgGates($r['report']);});
++
++test('F6-G 37 permissive private descriptor mode is rejected without modification',function():void{$p=$GLOBALS['hg']['db_file'];$hash=hash_file('sha256',$p);same(true,chmod($p,0644));try{$r=hgFull();same(1,$r['exit']);same($hash,hash_file('sha256',$p));}finally{same(true,chmod($p,0600));}});
++
++test('F6-G 38 unrelated storage directory cannot substitute for the native storage root',function():void{$d=$GLOBALS['hg']['deployment'];$d['storage']=$GLOBALS['hg']['private_root'];$r=hgCli([],[],hgPrivate('fake-native-storage.json',$d),$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgRow($r['report'],'STORAGE_PATH','FAIL');});
++
++test('F6-G 39 explicit remote DSN remains unverified without any remote connector',function():void{$c=$GLOBALS['hg']['config'];$c['dsn']='mysql:host=hosting.example.invalid;port=3306;dbname=private_database;charset=utf8mb4';$r=hgCli([],[],$GLOBALS['hg']['deployment_file'],hgPrivate('remote-db.json',$c));same(2,$r['exit']);hgRow($r['report'],'DB_CONNECTION','UNKNOWN');same(false,str_contains($r['raw'],'hosting.example.invalid'));hgGates($r['report']);});
++
++test('F6-G 40 caller flags cannot create production permission',function():void{$d=$GLOBALS['hg']['deployment'];$d['production_allowed']=true;$r=hgCli([],[],hgPrivate('forged-gate.json',$d),$GLOBALS['hg']['db_file']);same(1,$r['exit']);hgGates($r['report']);});
++
++test('F6-G 41 hard-linked private descriptor is rejected and original bytes survive',function():void{$p=$GLOBALS['hg']['db_file'];$alias=$GLOBALS['hg']['private_root'].'/hardlinked-db';$hash=hash_file('sha256',$p);same(true,link($p,$alias));try{$r=hgFull();same(1,$r['exit']);same($hash,hash_file('sha256',$p));}finally{same(true,unlink($alias));}});
++
++test('F6-G 42 readonly native installation permissions and supplied readonly mount cannot pass storage writes',function():void{
++ $copy=$GLOBALS['hg']['private_root'].'/readonly-installation';same(true,mkdir($copy,0700));foreach(['bin','bootstrap','src','src/HostingPreflight','public','storage'] as $dir){same(true,mkdir($copy.'/'.$dir,0700));}
++ $files=['bin/hosting-preflight.php','bootstrap/autoload.php'];foreach(glob(dirname(__DIR__).'/src/HostingPreflight/*.php') as $file){$files[]='src/HostingPreflight/'.basename($file);}foreach($files as $file){same(true,copy(dirname(__DIR__).'/'.$file,$copy.'/'.$file));same(true,chmod($copy.'/'.$file,0400));}
++ foreach(['bin','bootstrap','src/HostingPreflight','src','public','storage',''] as $dir){same(true,chmod(rtrim($copy.'/'.$dir,'/'),0500));}
++ $roots=[$copy];if(is_file('/input/bin/hosting-preflight.php')&&is_dir('/input/storage')){$roots[]='/input';}
++ foreach($roots as $index=>$root){same(false,is_writable($root.'/storage'));$d=$GLOBALS['hg']['deployment'];$d['webroot']=$root.'/public';$d['storage']=$root.'/storage';$path=hgPrivate('readonly-layout-'.$index.'.json',$d);$pipes=[];$proc=proc_open([PHP_BINARY,$root.'/bin/hosting-preflight.php','--deployment-fd=3','--db-config-fd=4'],[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w'],3=>['file',$path,'r'],4=>['file',$GLOBALS['hg']['db_file'],'r']],$pipes,null,getenv());same(true,is_resource($proc));fclose($pipes[0]);$out=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);same(1,proc_close($proc));same('',$err);$r=json_decode($out,true,32,JSON_THROW_ON_ERROR);hgRow($r,'STORAGE_PATH','FAIL');hgGates($r);}
++});
++
++test('F6-G 43 duplicate and reused descriptor options fail closed',function():void{foreach([['--db-config-fd=4'],['--deployment-fd=4']] as $extra){$r=hgFull(extra:$extra);same(1,$r['exit']);hgGates($r['report']);}});
++
++test('F6-G 44 real metadata account queries are exactly allowlisted SELECTs with zero mutation',function():void{$admin=$GLOBALS['hg']['admin'];$users=[$GLOBALS['hg']['full_user'],$GLOBALS['hg']['limited_user']];$rows=$admin->query("SELECT user_host,argument,command_type FROM mysql.general_log WHERE command_type IN ('Query','Prepare','Execute')")->fetchAll();$checked=0;$executed=0;foreach($rows as $row){$owned=false;foreach($users as $user){$owned=$owned||str_starts_with($row['user_host'],$user.'[');}if(!$owned){continue;}++$checked;if($row['command_type']!=='Prepare'){++$executed;}if(!in_array($row['argument'],Metadata::QUERIES,true)){preg_match('/\A([A-Za-z_]+)(?:\s+([A-Za-z_]+))?/',$row['argument'],$safe);throw new RuntimeException('F6G_QUERY_NOT_ALLOWLISTED_'.strtoupper(($safe[1]??'OTHER').'_'.($safe[2]??'')).'_SHA256_'.hash('sha256',$row['argument']));}same(1,preg_match('/\ASELECT\b/',$row['argument']));same(0,preg_match('/\b(CREATE|ALTER|DROP|INSERT|UPDATE|DELETE|GRANT|REVOKE|SET|INTO\s+OUTFILE)\b/i',$row['argument']));}if($checked<40||$executed<40){throw new RuntimeException('F6G_QUERY_ACCOUNT_COUNT_'.(string)$checked.'_EXECUTED_'.(string)$executed);}same($GLOBALS['hg_source_before'],hgSource());$admin->exec('SET GLOBAL general_log=0');});
++
++test('F6-G 45 explicit metadata query denial remains UNKNOWN and cannot leak its exception',function():void{$b=$GLOBALS['hg']['observation'];$db=Metadata::inspect(function($sql)use($b){if($sql===Metadata::QUERIES['disks']){throw new PDOException('F6G_SECRET_METADATA_DENIAL_CANARY');}return match($sql){Metadata::QUERIES['server']=>$b->database['server'],Metadata::QUERIES['engine']=>$b->database['engine'],Metadata::QUERIES['plugin']=>$b->database['plugin'],default=>throw new LogicException('Unexpected metadata query')};});$r=hgObserved(database:$db);hgRow($r,'DB_DISKS','UNKNOWN');same('DENIED',hgCheck($r,'DB_DISKS')['reason']);same(false,str_contains(json_encode($r),'F6G_SECRET_METADATA_DENIAL_CANARY'));hgGates($r);});
++
++
++
++foreach($GLOBALS['tests'] as $name=>$work){$GLOBALS['tests'][$name]=static function()use($work):void{try{$work();}catch(Throwable $e){echo 'F6G_OBSERVATION '.json_encode(['exception'=>get_class($e),'trace'=>array_slice(array_map(static fn($f)=>['function'=>$f['function']??'','class'=>$f['class']??'','file'=>basename($f['file']??'')],$e->getTrace()),0,7)],JSON_THROW_ON_ERROR).PHP_EOL;throw $e;}};}
++exit(executeTests(true));
+--- a/tools/ci/suites.json
++++ b/tools/ci/suites.json
+@@ -69,5 +69,6 @@
+   "tests/support-merge-readonly.php",
+   "tests/support-split.php",
+   "tests/support-integration.php",
+-  "tests/offline-backup.php"
++  "tests/offline-backup.php",
++  "tests/hosting-preflight.php"
+ ]

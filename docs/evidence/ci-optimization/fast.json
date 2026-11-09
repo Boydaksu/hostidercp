@@ -1,0 +1,58 @@
+{
+  "ci_source_sha": "7e2092898287e566fc6a487c6540d6f70cec7481",
+  "source_tree": "b4451d7e85cf42ce48b51cc577096a4de6537d0f",
+  "run_id": 40377794488,
+  "run_url": "https://github.com/Boydaksu/hostidercp/actions/runs/40377794488",
+  "event": "push",
+  "profile": "broad",
+  "conclusion": "success",
+  "baseline_application_sha": "e0d460d0aea05f496135d169ecbb64ce94659cc9",
+  "baseline_run_id": 40367106726,
+  "baseline_php_tests": 582,
+  "baseline_state_controls": 3,
+  "jobs": [
+    {
+      "id": 121765622065,
+      "php": "8.3",
+      "suites": 52,
+      "tests": 582,
+      "failures": 0,
+      "old_php_missing": [],
+      "state_missing": [],
+      "quality": [
+        "No security vulnerability advisories found.",
+        "[OK] No errors                                                                 ",
+        "390 PHP files checked; 0 violations",
+        "411 source/config/test files scanned; 0 findings",
+        "found 0 vulnerabilities"
+      ]
+    },
+    {
+      "id": 121765622035,
+      "php": "8.4",
+      "suites": 52,
+      "tests": 582,
+      "failures": 0,
+      "old_php_missing": [],
+      "state_missing": [],
+      "quality": [
+        "No security vulnerability advisories found.",
+        "[OK] No errors                                                                 ",
+        "390 PHP files checked; 0 violations",
+        "411 source/config/test files scanned; 0 findings",
+        "found 0 vulnerabilities"
+      ]
+    }
+  ],
+  "ci_tooling": {
+    "scope_job": 121765492578,
+    "tests": 6,
+    "failures": 0
+  },
+  "result_job": 121773020775,
+  "full_acceptance": false,
+  "chromium_executed": false,
+  "stability_repeats_executed": false,
+  "raw_logs_persisted": false,
+  "note": "Only allowlisted PASS/count/quality evidence retained; full raw CI logs not copied because they contain runner environment diagnostics."
+}

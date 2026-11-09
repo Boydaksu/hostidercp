@@ -1,0 +1,38 @@
+PASS SUP-001 MIME strict plain text and RFC references preserve bounded canonical values
+PASS SUP-001 duplicate folded injected and oversized headers fail closed
+PASS SUP-001 body raw header-count encoded subject and nested MIME limits reject
+PASS SUP-004 traversal HTML SVG ZIP executable and MIME spoof attachments are rejected
+PASS SUP-001 HTML body alternate MIME and unknown transfer encoding are never canonical text
+PASS SUP-001 live SMTP and IMAP adapter gates deny before any network operation
+PASS SUP-001 unknown sender enters encrypted review without private ticket association
+PASS SUP-002 verified new mail creates exactly one canonical customer message and SLA cycle
+PASS SUP-002 missing Message-ID dedupes by bounded digest and never auto attaches
+PASS SUP-002 same Message-ID different bytes becomes immutable conflict review not a second reply
+PASS SUP-001 forged subject and wrong raw or foreign customer sender evidence cannot attach
+PASS SUP-001 verified own scoped reply requires token reference ownership and drives NEXT clock
+PASS SUP-001 forged expired and revoked-session reply tokens fail despite fresh sender evidence
+PASS SUP-001 mixed references or foreign ticket token never cross customer ownership
+PASS SUP-003 internal note emits no mail delivery template attachment or customer outbound
+PASS SUP-001 bounce autoresponder precedence and loop markers are blocked even with valid proof
+PASS SUP-001 malformed MIME is encrypted bounded review and oversized raw writes nothing
+PASS SUP-004 inbound files default quarantine and exact fixture is only TEST_CLEAN not real AV
+PASS SUP-004 native HTTP upload download headers foreign customer and CSRF isolation
+PASS SUP-004 file integrity wrong token and session revocation deny download
+PASS SUP-001 native HTTP review requires fresh MFA wildcard scope and no private list metadata
+PASS SUP-001 review approval revalidates sender proof and never force-maps unknown address
+PASS SUP-002 inbound 1 4 8 independent PHP workers produce one message per raw Message-ID
+PASS SUP-002 outbound 1 4 8 independent workers accept a public delivery once without DELIVERED
+PASS SUP-002 outbound retryable and permanent mock outcomes require explicit bounded retry
+PASS SUP-002 unpublished forged extra payload and fingerprint mismatch never mint mail receipts
+PASS SUP-004 quarantined attachment prevents mock transport acceptance
+PASS SUP-002 database failure rolls back inbound canonical message outbox and source receipt
+PASS SUP-004 storage failure leaves no inbound support message or successful receipt
+PASS SUP-004 retention hold preserves evidence and purge keeps immutable metadata
+PASS SUP-001 native HTTP sender proof and adapter ingestion use current scoped session atomically
+PASS SUP-001 review confirmation payload actor stale version and idempotent replay are enforced
+PASS SUP-004 native staff department and permission revocation invalidate download and review
+PASS SUP-002 native outbound transaction failure cannot leave false transport acceptance receipt
+PASS SUP-004 missing or tampered storage prevents both download and mock acceptance
+PASS SUP-002 live flag or staging environment cannot activate adapter or mail pipeline
+PASS F5-C additive 051 to 052 upgrade protects all old migration checksums and replay
+37 tests, 0 failures

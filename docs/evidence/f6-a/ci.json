@@ -1,0 +1,58 @@
+{
+  "application_sha": "8340be6c5a12e551587ab92e72da930a18a7894d",
+  "application_tree": "63c9f86c6b618002d140ec49512d1e703f00f2cb",
+  "run": 40465060398,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40465060398",
+  "event": "push",
+  "profile": "broad",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 122058798175,
+      "name": "FAST scope and documentation security",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122058872039,
+      "name": "FAST PHP 8.4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122058872099,
+      "name": "FAST PHP 8.3",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122065266369,
+      "name": "FAST result",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "old_application_tests": 582,
+  "new_f6_a_tests": 31,
+  "application_total": 613,
+  "ci_helper_tests_separate": 6,
+  "state_checks_separate": 3,
+  "chromium_on_candidate": "NOT_RUN",
+  "repeated_10_30_20_on_candidate": "NOT_RUN",
+  "full_acceptance_on_candidate": "NOT_RUN_NOT_DISPATCHED",
+  "superseded_run": {
+    "id": 40464340021,
+    "application_sha": "3c941bd273e34a9073b85f7137f96b0eb09ab9e0",
+    "php_jobs": "cancelled by branch concurrency",
+    "result": "failure; not accepted evidence"
+  },
+  "pr": {
+    "number": 3,
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "main_protected": false,
+  "main_settings_changed": false
+}

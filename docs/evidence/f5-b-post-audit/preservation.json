@@ -1,0 +1,387 @@
+{
+    "baseline": "b225f3e52961ef1e2bdf39931c961dd174305670",
+    "protected": [
+        {
+            "path": ".github/workflows/f0.yml",
+            "git_blob": "8672c0365aecb7f92a57654cefbb98748b2feaf7",
+            "sha256": "afec5d5227a099fa7e7810a62a6da810d383c047b5a465126c7dc85397caf653",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/001_f0_infrastructure.php",
+            "git_blob": "e632bffe6337aacf1418e582f399f6c651a3b16d",
+            "sha256": "b3eb10070a1c21180d3fbe0611d388d6b5bb435d521daa001a26e6c068bb8965",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/002_f0_1_retention.php",
+            "git_blob": "6b459bd9af671953c837286a1d07b9ad78eede37",
+            "sha256": "921b6f9e2edc3766e0244fddae14c8c4cb17881152a8dd518f715a044c92ae15",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/003_f1_identity.php",
+            "git_blob": "ae6a33cf8030e02644e7f9f07b53ab402deb0558",
+            "sha256": "33cea76f09cd1b8c98fe81801b2bc0612191afb909a935953b22554ea36a042b",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/004_f1_1_confirmations.php",
+            "git_blob": "5d65ea0162af95b6226d165cd187c16aa6cf49db",
+            "sha256": "5f8cf9a4c6b954b8fd9b2eb3f0f6309bf35a289d4b3dad3e7571fc2f903930a9",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/005_f1_1_reset_step_up.php",
+            "git_blob": "15ca3aa29aa480ddcba80000bbde7cf5577f4909",
+            "sha256": "4dc9c03e57a962fa4ffa691e9d5b550c5bef1e4ea59fc6bd269b69b208086b7e",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/006_f2_finance.php",
+            "git_blob": "96a48c92ac3e34bcbb5b08daa648836907ce6e47",
+            "sha256": "97e2a3507deb26ee2e1b9c8c6c4d1d886f30a40df04ed5a7db5d4b839754655f",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/007_f2_wallet_credits.php",
+            "git_blob": "71bd38472863140337834c208a81dafc384b7272",
+            "sha256": "9cd6d260745ee58d7be371ebdd41c9292e3f1b1f6b41c6562f774aef6d6e058e",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/008_f2_catalog.php",
+            "git_blob": "70cb67fd1f80a680a2ab958d29c54eeebafef88d",
+            "sha256": "7feb55ed7ac53a2f2bc95e5811123fe6e82efb1fe1f47e07298db34f0e6ae7bf",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/009_f2_pricing.php",
+            "git_blob": "d2daafa7e24dda7948e962e4f37ed6859190d12a",
+            "sha256": "dc5f34fa318e0ac77f2370a6b644ca26a8d3b747019062ed650f7bf017b5cbef",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/010_f2_orders_billing.php",
+            "git_blob": "a82c15682cae0577b675aaa02dca8f8d145769d5",
+            "sha256": "51ccfdfadf8d293a48b4efd21dd4b2db702b1334715606a14aedbf41dd0099e5",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/011_f2_payment_workflows.php",
+            "git_blob": "d2c6f4e834c5b49047953cf388316c4dbf3c8a10",
+            "sha256": "b1e9f9adb4c265e6604ab66834b16a151535a9b2f14a00c455d924f271659d63",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/012_f2_documents_cash.php",
+            "git_blob": "e069ae5eeeae22e4020995d9357a6baf7aa97528",
+            "sha256": "7633bcbb49fdc13ac021d103488468d174814b6d9f3508321aaa3a96ceb496a4",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/013_f2_commerce_confirmations.php",
+            "git_blob": "71e058fbd2310a64bb520e8bfeff661296f26a78",
+            "sha256": "cc847c3045bbc668214050048b8d4998e45273f3e03e5338ef915777da593166",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/014_f2_paid_refunds.php",
+            "git_blob": "6b5d0f31d640dacc43897ed8f36319843b91c40c",
+            "sha256": "046ed51e9fdec380758633b519d0b2a290f100b0d3d65a657590ae2a17f06798",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/015_f2_standalone_addons.php",
+            "git_blob": "7ffa87745a5c46023fced330716c54e9d220d765",
+            "sha256": "a6a355224d0bcdbbfb02415d583cdf7492c74de4844c6c0563810c2547498a6b",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/016_f2_source_evidence.php",
+            "git_blob": "dc3930bb741d5af6f1b6c9118aa53b0b2e9235d1",
+            "sha256": "d3f5ccb378f1f576d697c28d23b372a4fb6c00ed3c7b7188de022075113061be",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/017_f2_wallet_currency.php",
+            "git_blob": "08fba6bd3b3fe46a17bc60680763f554d76e0f33",
+            "sha256": "8623261999d5fc4af0d2944112c8ff3ee6411fd3d75e087847dc674d32df9651",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/018_f2_wallet_refund_fx.php",
+            "git_blob": "2eace08d3875ae3a1bf603e1a2d39e65b66a367f",
+            "sha256": "c0fd259c0d3d7796794d713df4b3bd9df35d3405e0541ed1ee598a1a7821537f",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/019_f2_held_facts.php",
+            "git_blob": "9d460fb0404356961a5defaa9c4b2384defe40db",
+            "sha256": "f2b2c7849508be7a57eb7ebc8647a2667838ec0fc75dbd41ee21e220b56e4bfa",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/020_f2_reconciliation_resolution.php",
+            "git_blob": "4ef8434dcd764e660d3f2a37ebdb17cbeb06d94e",
+            "sha256": "dcad3cdb3a90793a35f56f49da8445139fe9dfbe832cf87a0dab4a906acf5a40",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/021_f2_order_provenance.php",
+            "git_blob": "a2772c8814118f36ae5e09afc1a5608202fa398e",
+            "sha256": "e317363a343b59b0fa474af931f610d575747fd50c31fb50fe0ee249e765cc83",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/022_f2_confirmation_versions.php",
+            "git_blob": "c14fa376f101d960c08780dbe50e1760225c9c1a",
+            "sha256": "127ca8c342844298a5871567c7d39c06429d9c29b2f1e1760ed01ffb391c0840",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/023_f3_service_model.php",
+            "git_blob": "58659226c607a78df584ee5f51168d483f18b177",
+            "sha256": "e24894460b0cdcf7ab7bf88b45e81efab8fa74caf494152e6fac4a77ed5f8e2f",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/024_f3_resources.php",
+            "git_blob": "6f275908d13cb90b172c145d00ff080221ef77cf",
+            "sha256": "edae51ba5c7de0170964c8dda6043a04ed928822619acb27aed34662d4b88f87",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/025_f3_operations.php",
+            "git_blob": "e9c21bbd461586f009ac5eed88a953907d9c83b5",
+            "sha256": "02cd485070124e6aefa002d2303c1ecd87d57257f10512cd7703a5394a188b1e",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/026_f3_mock_hosting.php",
+            "git_blob": "ba3d86bbc800ae9a979309fafef0763e10b1f8ea",
+            "sha256": "8b86ab9c4e0420091cf0670424ff709242f5150601b5319e0217eb5b35d1a775",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/027_f3_mapping_integrity.php",
+            "git_blob": "559ce00a1acaa5ba1f23993ffa1e9c1bb08d0f73",
+            "sha256": "40a82ee6133785afa750b0a0782064ba5b8c26e47c2fde6a4173f0fd85c60033",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/028_f3_reconciliation.php",
+            "git_blob": "ef0cb7a7152537a07935f31454c90a48b68ab2e9",
+            "sha256": "8d4b5884d7d5bb20347cc32db9eb43ab7b497022a6c574f02222ea966a20af94",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/029_f3_lifecycle_policy.php",
+            "git_blob": "20fb0a795b45534abf404959c8bd0e2e05d13097",
+            "sha256": "ea2c81044f4167f141b7a4e29f53a699b7b3d041f1260fc1e1e25006b4bd5251",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/030_f3_renewals.php",
+            "git_blob": "0222221304a46a449041c1e6abac973360b1edd0",
+            "sha256": "4789d3393bb64c740a20755777b69995b2b68cb6888119f4217e3283fa30b247",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/031_f3_cancellations.php",
+            "git_blob": "e11a95432409fcb8ad2df45f18cfc9386afe8da3",
+            "sha256": "85b4cf29dd39c77519fe85677a7f23f0484262ac620d12fce7ee7bc2c4c0b142",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/032_f3_action_evidence.php",
+            "git_blob": "432424d56fd7ea814c238c4e96ebcd4bbaffea55",
+            "sha256": "97664416a465123d72bee94020906658b85d02430bd45e48da9455fc67659fe8",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/033_f3_transfer.php",
+            "git_blob": "ea9ba084870be34c41e39bb1e8ba3a51c84be119",
+            "sha256": "92396c6b1ab777838dc0b27511670cc2fbad4da15d541d435c63f32e715d384c",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/034_f3_package_changes.php",
+            "git_blob": "02049973441e40d6148a7edcec6ee8b0140c37c3",
+            "sha256": "f555a64dd9924be65416bb02543268ab509495f26cb54cf4ed15aed31d4a8d96",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/035_f3_http_confirmations.php",
+            "git_blob": "1e2099a42387f3a556fe37f221c3f40c5cb3fe6f",
+            "sha256": "ffd9aeefa7b2a07ea514e23e7039b45cbc20f56f85b53503cf75b16c91966ab8",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/036_f3_scope_and_query_guards.php",
+            "git_blob": "4ad32d5e7d76be99f1550000098c60475ab2d102",
+            "sha256": "ca02859608f5b437134ab6c4f59a7405dbc3c852a8b76831bfa4d496587c3caa",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/037_f3_scheduler_fairness.php",
+            "git_blob": "a13b2cbea23f6cf6be7a3a640dd50b6c8712949e",
+            "sha256": "e67f0a93a4194d217af3ec6ff969aa483c411e46e0e83266b7a3d19cb07227e7",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/038_service_runner_fairness.php",
+            "git_blob": "68a39bdf162e07554430ec83815529514fc49b06",
+            "sha256": "95c745e3feb8dd7806ed7b3c49a85a4c3c0f077cb67b54245851c9670a63af35",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/039_f4_domain_model.php",
+            "git_blob": "8f83645f53087bb668ac87540324954dcce2b303",
+            "sha256": "144f0eed70100d92788aab0b8d4450c702d6fba6970e38d71a9411aa447817bb",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/040_f4_mock_registrar.php",
+            "git_blob": "ca34cbb4996fd6b1eaa5ef5f4362decc16c5c724",
+            "sha256": "f8490c5ca09ed2a21dba294840641401515c54e92b1b389d3cee714a1267b453",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/041_f4_domain_operations.php",
+            "git_blob": "d3aaddd38ed7b1e95e03ab9939344dc33896549d",
+            "sha256": "456db8c758f758bdab4f4f2a68829dcef4d568dfb476776a42fc8720398e145f",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/042_f4_domain_runner_fairness.php",
+            "git_blob": "1c3249e9efd53c16791e337a98671df35c342e49",
+            "sha256": "72c9c6bec7919d5efb56f448d5059fc604eda0d9ff6b6766fda874135f9b2968",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/043_f4_domain_audit_safety.php",
+            "git_blob": "e1a5b5cd3795ecd173107d97454747a0dd511e02",
+            "sha256": "d9a786fcaa6cfb6531f5130b6934f5b0be8aa9da8a9bc85209258140f1ae9351",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/044_f4_cloud_operations.php",
+            "git_blob": "2589d547c2fcc2fbd495c2e9bd756fc24a4c4701",
+            "sha256": "ed160643313f28c918173d1e5c11f5b334c9f1f79c7a613ce9ea14dc5a53478f",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/045_cloud_purchase_containment.php",
+            "git_blob": "8db428671f88f829898e22adc0cb7f376f377684",
+            "sha256": "6b9d1a8324a99ee24db6d59e2abc9f2acdde2a15031325d1516962db21c826db",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/046_cloud_metering_costs.php",
+            "git_blob": "4b02fa4ce527823684817dd08a1a970ed1e0d276",
+            "sha256": "db8e72c41e22e843f6c9193172b54ff5cea5ac6727d621c98d52deb0c38318c5",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/047_cloud_cost_admission.php",
+            "git_blob": "3da480a877c7819f1211c20fd002c788bf326c4d",
+            "sha256": "be4e9a1220693d4146093f7c912aadc0cc63621e13330c22602e73dc1d883888",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/048_provider_panel.php",
+            "git_blob": "c728fa7c52970756f55b5da672007b6a1b55df89",
+            "sha256": "d183c79d2f859b860385d9a9e3898a5b53821cc33df7683e07dcdb0c37827bbe",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/049_support_core.php",
+            "git_blob": "d65dab4ba2d04cf012f7f27afe4d2289eab9b713",
+            "sha256": "80502a5faec052a79f57177680756beb4f68963e45dd0bf479f0d21761d9c8b7",
+            "unchanged": true
+        },
+        {
+            "path": "migrations/050_support_sla_assignment.php",
+            "git_blob": "0698829ad7ffdac1401f4e4a628c58c97c94ab7d",
+            "sha256": "dcaa76da7b9bd6de764d3de77cee5e5c4d714c1175bb9dc3432b80519cf6edbe",
+            "unchanged": true
+        },
+        {
+            "path": "src/Core/Queue/Outbox.php",
+            "git_blob": "41fffd646221e22fdaa5106e7c509e91efd17f16",
+            "sha256": "5be009a1f94b63b44e4a74eafb3f0ddef912d178e77fc6b9f485573a2d353a8e",
+            "unchanged": true
+        },
+        {
+            "path": "src/Core/Queue/Queue.php",
+            "git_blob": "3e39001cb1dc1a1741b23760f8a0dfea12f9b384",
+            "sha256": "c1a268e73f6de3f50e265219135e01a23e244ef6a8e5e04781565df6c0277218",
+            "unchanged": true
+        },
+        {
+            "path": "src/Core/Queue/Retention.php",
+            "git_blob": "e770ed2f199c561f25dd0c068318dbd9a916784b",
+            "sha256": "00efd52826a4b74b269334a33f067316156393b0c530121e02e8c0620a822781",
+            "unchanged": true
+        },
+        {
+            "path": "src/Core/Queue/Worker.php",
+            "git_blob": "7ff42e7d6e108199b2a5406e94536d49d7d83dcc",
+            "sha256": "7a1575f98e3642d64c342494b335dcbfd3f15baf99bc5ae0f8ecdf9c4a633854",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/Controller.php",
+            "git_blob": "816abfae411ac6f408039bd6894ef7a6068660e9",
+            "sha256": "cf47a09983f6c583cfa9f20f32251e67d5a88d4dcaec40ef26c2bafd5d616019",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/CriticalActions.php",
+            "git_blob": "079fe67d5cb0642f907c29c7ad33fbae72d9d616",
+            "sha256": "850181ed63287f7712b1f7566f4310332d5bd813b124165677d01fef73e6e827",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/IdentityService.php",
+            "git_blob": "de59e66e1a3cd4cc4cfde1f17849f83ee3cca024",
+            "sha256": "d21574de41e3c1b42969974e8bbcc7bf027c5a9d5071e32d8409b8549291a6a1",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/Panel.php",
+            "git_blob": "2af71c7a18463f469ffcacf86567c43064a3b55f",
+            "sha256": "8fd6fbd4126e23a67707279a6ac7e8b3f7d12c7bed8ed0ed682fe118ba557009",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/Passwords.php",
+            "git_blob": "efc0fc26e4867550a03d6f1b9a5b352c6cc7c43c",
+            "sha256": "ba7b126adb58a06eba0def4d8a8824f18dedbf697d5661a346104f64544fadd3",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/PersistentSessionGuard.php",
+            "git_blob": "d45e4ca3cf4dbee97e3dda91a2ea21e47fcad86f",
+            "sha256": "a877065b468c3fdc0e9dbf1f1862fb2d6cc9606d02609aa83154c2addb9933b6",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/Repository.php",
+            "git_blob": "029726e74ead17e4cd9280e171de6d5774c04fd8",
+            "sha256": "c56cd880a11e8a42a79a82e46cf9d8066d565e08ac4f581c5ed4000b410a668c",
+            "unchanged": true
+        },
+        {
+            "path": "src/Identity/Totp.php",
+            "git_blob": "55046d43f522df2f2ed60c0e2f5b1397301aa2cd",
+            "sha256": "e244693202bb80e7058b798bcc6b94e90d245aed0d08b10ddcb2efff948bc707",
+            "unchanged": true
+        }
+    ],
+    "old_migrations": 50,
+    "new_migrations": [
+        "051_support_sla_availability.php"
+    ]
+}

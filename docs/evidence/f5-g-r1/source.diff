@@ -1,0 +1,202 @@
+diff --git a/.github/workflows/f0.yml b/.github/workflows/f0.yml
+index 1de72fb..0c33814 100644
+--- a/.github/workflows/f0.yml
++++ b/.github/workflows/f0.yml
+@@ -139,6 +139,7 @@ jobs:
+       - run: php tests/migration-discovery-collector.php
+       - run: php tests/support-auto-close.php
+           php tests/support-merge.php
++          php tests/support-merge-readonly.php
+       - run: node --check public/assets/support.js
+       - run: node tests/support-e-state.cjs
+       - run: node tests/support-merge-state.cjs
+diff --git a/src/Support/Advanced/Csat.php b/src/Support/Advanced/Csat.php
+index a60d029..df59d2d 100644
+--- a/src/Support/Advanced/Csat.php
++++ b/src/Support/Advanced/Csat.php
+@@ -11,7 +11,7 @@ final readonly class Csat
+     public function command(string $ref,array $p,string $key,string $trace): array
+     {
+         $this->m->gate();Validation::fields($p,['ticket_id','ticket_version','version','score','comment'],['ticket_id','ticket_version','version','score']);$p+=['comment'=>''];Access::id($p['ticket_id']);Service::version($p['ticket_version']);Common::version($p['version'],true);Policy::integer($p['score'],1,5);Common::text($p['comment'],2000,true);
+-        $work=function(bool $replay)use($ref,$p,$trace){return $this->m->c->identity->locked($ref,'client',function($u,$s)use($p,$trace,$replay){$a=$this->m->access->actor($u,$s);if($a->staff||$u['administrative']!==null){throw new HttpError(403,'CUSTOMER_REQUIRED');}$t=$this->m->access->ticket($u,$s,$p['ticket_id']);if($replay){return [];}$db=$this->m->c->db;if($t['status']!=='RESOLVED'){throw new HttpError(409,'CSAT_RESOLVED_REQUIRED');}if((int)$t['version']!==$p['ticket_version']){throw new HttpError(409,'SUPPORT_VERSION_CONFLICT');}$policy=$db->execute('SELECT * FROM support_csat_policies WHERE department_id=? FOR UPDATE',[$t['department_id']])->fetch();if(!$policy){throw new HttpError(409,'CSAT_POLICY_UNCONFIGURED');}$resolution=$db->execute("SELECT id,created_at FROM support_events WHERE ticket_id=? AND customer_id=? AND to_state='RESOLVED' AND (from_state IS NULL OR from_state<>'RESOLVED') ORDER BY ticket_version DESC,id DESC LIMIT 1",[$t['id'],$t['customer_id']])->fetch();if(!$resolution||Time::now($db)>=Time::parse($resolution['created_at'])+(int)$policy['window_seconds']*1_000_000){throw new HttpError(409,'CSAT_WINDOW_EXPIRED');}$r=$db->execute('SELECT * FROM support_ratings WHERE ticket_id=? FOR UPDATE',[$t['id']])->fetch();if(($r&&(int)$r['version']!==$p['version'])||(!$r&&$p['version']!==0)||($r&&$r['resolution_event']!==$resolution['id'])){throw new HttpError(409,'CSAT_VERSION_CONFLICT');}if(!$r){$db->execute('INSERT INTO support_ratings(ticket_id,customer_id,resolution_event) VALUES (?,?,?)',[$t['id'],$t['customer_id'],$resolution['id']]);}$id=Id::uuid();$v=$p['version']+1;$db->execute('INSERT INTO support_rating_revisions(id,ticket_id,customer_id,revision,score,comment_encrypted,policy_version,window_seconds,actor_id) VALUES (?,?,?,?,?,?,?,?,?)',[$id,$t['id'],$t['customer_id'],$v,$p['score'],$this->m->crypto->encrypt($p['comment'],'csat:'.$id),$policy['version'],$policy['window_seconds'],$u['id']]);$db->execute('UPDATE support_ratings SET revision_id=?,version=? WHERE ticket_id=?',[$id,$v,$t['id']]);$this->m->event($t['department_id'],$t['id'],'CSAT_SUBMITTED',$a,$trace,['revision_id'=>$id,'version'=>$v],$t);return ['id'=>$id,'version'=>$v];});};return (new Idempotency($this->m->c->db))->run($ref,'support-csat',$key,['hmac'=>$this->m->hash($p)],fn()=>$work(false),fn()=>$work(true));
++        $work=function(bool $replay)use($ref,$p,$trace){return $this->m->c->identity->locked($ref,'client',function($u,$s)use($p,$trace,$replay){$a=$this->m->access->actor($u,$s);if($a->staff||$u['administrative']!==null){throw new HttpError(403,'CUSTOMER_REQUIRED');}$t=$this->m->access->ticket($u,$s,$p['ticket_id']);(new \Hostider\Support\Merge\Projection($this->m->c))->writable($u,$s,$t);if($replay){return [];}$db=$this->m->c->db;if($t['status']!=='RESOLVED'){throw new HttpError(409,'CSAT_RESOLVED_REQUIRED');}if((int)$t['version']!==$p['ticket_version']){throw new HttpError(409,'SUPPORT_VERSION_CONFLICT');}$policy=$db->execute('SELECT * FROM support_csat_policies WHERE department_id=? FOR UPDATE',[$t['department_id']])->fetch();if(!$policy){throw new HttpError(409,'CSAT_POLICY_UNCONFIGURED');}$resolution=$db->execute("SELECT id,created_at FROM support_events WHERE ticket_id=? AND customer_id=? AND to_state='RESOLVED' AND (from_state IS NULL OR from_state<>'RESOLVED') ORDER BY ticket_version DESC,id DESC LIMIT 1",[$t['id'],$t['customer_id']])->fetch();if(!$resolution||Time::now($db)>=Time::parse($resolution['created_at'])+(int)$policy['window_seconds']*1_000_000){throw new HttpError(409,'CSAT_WINDOW_EXPIRED');}$r=$db->execute('SELECT * FROM support_ratings WHERE ticket_id=? FOR UPDATE',[$t['id']])->fetch();if(($r&&(int)$r['version']!==$p['version'])||(!$r&&$p['version']!==0)||($r&&$r['resolution_event']!==$resolution['id'])){throw new HttpError(409,'CSAT_VERSION_CONFLICT');}if(!$r){$db->execute('INSERT INTO support_ratings(ticket_id,customer_id,resolution_event) VALUES (?,?,?)',[$t['id'],$t['customer_id'],$resolution['id']]);}$id=Id::uuid();$v=$p['version']+1;$db->execute('INSERT INTO support_rating_revisions(id,ticket_id,customer_id,revision,score,comment_encrypted,policy_version,window_seconds,actor_id) VALUES (?,?,?,?,?,?,?,?,?)',[$id,$t['id'],$t['customer_id'],$v,$p['score'],$this->m->crypto->encrypt($p['comment'],'csat:'.$id),$policy['version'],$policy['window_seconds'],$u['id']]);$db->execute('UPDATE support_ratings SET revision_id=?,version=? WHERE ticket_id=?',[$id,$v,$t['id']]);$this->m->event($t['department_id'],$t['id'],'CSAT_SUBMITTED',$a,$trace,['revision_id'=>$id,'version'=>$v],$t);return ['id'=>$id,'version'=>$v];});};return (new Idempotency($this->m->c->db))->run($ref,'support-csat',$key,['hmac'=>$this->m->hash($p)],fn()=>$work(false),fn()=>$work(true));
+     }
+     public function view(string $ref,string $ctx,array $p): array
+     {
+diff --git a/src/Support/Advanced/Incidents.php b/src/Support/Advanced/Incidents.php
+index b5b3487..e5099ad 100644
+--- a/src/Support/Advanced/Incidents.php
++++ b/src/Support/Advanced/Incidents.php
+@@ -15,7 +15,7 @@ final readonly class Incidents
+     }
+     public function linkable(array $u,array $s,array $t,string $id): array
+     {
+-        $this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.ticket.manage');$this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.incident.manage');$r=$this->m->c->db->execute('SELECT * FROM support_incidents WHERE id=? FOR UPDATE',[$id])->fetch();if(!$r||$r['department_id']!==$t['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}if((int)$this->m->c->db->execute('SELECT COUNT(*) FROM support_incident_tickets WHERE incident_id=?',[$id])->fetchColumn()>=1000){throw new HttpError(409,'INCIDENT_LINK_LIMIT');}return $r;
++        $this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.ticket.manage');$this->m->scoped($u,$s,$t['department_id'],$t['customer_id'],'support.incident.manage');(new \Hostider\Support\Merge\Projection($this->m->c))->writable($u,$s,$t);$r=$this->m->c->db->execute('SELECT * FROM support_incidents WHERE id=? FOR UPDATE',[$id])->fetch();if(!$r||$r['department_id']!==$t['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}if((int)$this->m->c->db->execute('SELECT COUNT(*) FROM support_incident_tickets WHERE incident_id=?',[$id])->fetchColumn()>=1000){throw new HttpError(409,'INCIDENT_LINK_LIMIT');}return $r;
+     }
+     public function link(array $u,array $s,array $t,string $id,string $trace,?string $execution=null,?string $cause=null): string
+     {
+diff --git a/src/Support/Mail/Outbound.php b/src/Support/Mail/Outbound.php
+index aa44384..b4d3511 100644
+--- a/src/Support/Mail/Outbound.php
++++ b/src/Support/Mail/Outbound.php
+@@ -20,7 +20,7 @@ final readonly class Outbound
+         $db=$this->m->c->db;$keys=array_keys($p);sort($keys,SORT_STRING);$expected=$type==='support.mail.ready'?['customer_id','event_uuid','message_id','support_event_uuid','ticket_id']:['delivery_id','event_uuid'];if($keys!==$expected){return null;}try{foreach($p as $v){Access::id($v);}}catch(HttpError){return null;}
+         $o=$db->execute('SELECT o.payload,o.aggregate_id,j.payload AS jp,j.payload_fingerprint FROM outbox_events o JOIN jobs j ON j.dedupe_key=CONCAT(\'outbox:\',o.event_uuid) AND j.job_type=o.event_type WHERE o.event_uuid=? AND o.event_type=? AND o.published_at IS NOT NULL AND j.payload_purged_at IS NULL'.($lock?' FOR UPDATE':''),[$p['event_uuid'],$type])->fetch();if(!$o){return null;}$json=CanonicalJson::encode($p);if(CanonicalJson::fromJson($o['payload'])!==$json||CanonicalJson::fromJson($o['jp'])!==$json||!hash_equals(hash('sha256',$json),$o['payload_fingerprint']??'')){return null;}
+         $id=$type==='support.mail.ready'?$p['event_uuid']:$p['delivery_id'];$r=$db->execute('SELECT * FROM support_mail_outbound WHERE id=?'.($lock?' FOR UPDATE':''),[$id])->fetch();if(!$r||$o['aggregate_id']!==$r['ticket_id']){return null;}if($type==='support.mail.ready'){foreach(['event_id'=>'event_uuid','support_event_id'=>'support_event_uuid','ticket_id'=>'ticket_id','customer_id'=>'customer_id','message_id'=>'message_id'] as $column=>$key){if($r[$column]!==$p[$key]){return null;}}}else{$d=$db->execute('SELECT * FROM support_mail_dispatches WHERE event_id=? AND delivery_id=?'.($lock?' FOR UPDATE':''),[$p['event_uuid'],$id])->fetch();if(!$d){return null;}$r['dispatch']=$d;}
+-        if(!$db->execute("SELECT 1 FROM support_events e JOIN support_messages m ON m.id=e.subject_id AND m.ticket_id=e.ticket_id AND m.customer_id=e.customer_id AND m.author_id=e.actor_id JOIN support_tickets t ON t.id=e.ticket_id AND t.customer_id=e.customer_id WHERE e.id=? AND e.ticket_id=? AND e.customer_id=? AND e.subject_id=? AND e.kind='STAFF_REPLY' AND m.type='staff_reply' AND m.customer_visible=TRUE",[$r['support_event_id'],$r['ticket_id'],$r['customer_id'],$r['message_id']])->fetchColumn()){return null;}return $r;
++        if(!$db->execute("SELECT 1 FROM support_events e JOIN support_messages m ON m.id=e.subject_id AND m.ticket_id=e.ticket_id AND m.customer_id=e.customer_id AND m.author_id=e.actor_id JOIN support_tickets t ON t.id=e.ticket_id AND t.customer_id=e.customer_id WHERE e.id=? AND e.ticket_id=? AND e.customer_id=? AND e.subject_id=? AND e.kind='STAFF_REPLY' AND m.type='staff_reply' AND m.customer_visible=TRUE",[$r['support_event_id'],$r['ticket_id'],$r['customer_id'],$r['message_id']])->fetchColumn()){return null;}if($db->execute("SELECT 1 FROM support_merge_members WHERE ticket_id=? AND side='SOURCE'".($lock?' FOR UPDATE':''),[$r['ticket_id']])->fetchColumn()){return null;}return $r;
+     }
+     private function recipient(array $r): string
+     {
+diff --git a/src/Support/Merge/Projection.php b/src/Support/Merge/Projection.php
+index 06689cf..5d7f943 100644
+--- a/src/Support/Merge/Projection.php
++++ b/src/Support/Merge/Projection.php
+@@ -8,19 +8,19 @@ use Hostider\Support\Advanced\Common;
+ final readonly class Projection
+ {
+     public function __construct(private Services $c){}
+-    public function edge(string $id):?array
++    public function edge(string $id,bool $lock=false):?array
+     {
+-        return $this->c->db->execute('SELECT e.* FROM support_ticket_merges e JOIN support_merge_members m ON m.merge_id=e.id WHERE m.ticket_id=?',[$id])->fetch()?:null;
++        if($lock){$this->c->db->requireTransaction();}return $this->c->db->execute('SELECT e.* FROM support_ticket_merges e JOIN support_merge_members m ON m.merge_id=e.id WHERE m.ticket_id=?'.($lock?' FOR UPDATE':''),[$id])->fetch()?:null;
+     }
+-    public function alias(array $u,array $s,array $t):?array
++    public function alias(array $u,array $s,array $t,bool $lock=false):?array
+     {
+-        $e=$this->edge($t['id']);if($e===null){return null;}$a=new Access($this->c);$tickets=[];
+-        foreach([$e['source_id'],$e['target_id']] as $id){$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=?',[$id])->fetch();if(!$row||$row['customer_id']!==$e['customer_id']||$row['department_id']!==$e['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}$a->require($u,$s,$row['customer_id'],$row['department_id']);$tickets[$id]=$row;}
++        $e=$this->edge($t['id'],$lock);if($e===null){return null;}$a=new Access($this->c);$tickets=[];
++        foreach([$e['source_id'],$e['target_id']] as $id){$row=$this->c->db->execute('SELECT * FROM support_tickets WHERE id=?'.($lock?' FOR UPDATE':''),[$id])->fetch();if(!$row||$row['customer_id']!==$e['customer_id']||$row['department_id']!==$e['department_id']){throw new HttpError(404,'SUPPORT_NOT_FOUND');}$a->require($u,$s,$row['customer_id'],$row['department_id']);$tickets[$id]=$row;}
+         return ['source_id'=>$e['source_id'],'source_number'=>$e['source_number'],'target_id'=>$e['target_id'],'target_number'=>$tickets[$e['target_id']]['number'],'source_version'=>(int)$tickets[$e['source_id']]['version'],'target_version'=>(int)$tickets[$e['target_id']]['version'],'read_only'=>$t['id']===$e['source_id'],'created_at'=>$e['created_at']];
+     }
+     public function writable(array $u,array $s,array $t):void
+     {
+-        $e=$this->edge($t['id']);if($e!==null&&$e['source_id']===$t['id']){$a=$this->alias($u,$s,$t);throw new HttpError(409,'SUPPORT_TICKET_MERGED_TARGET_'.$a['target_id']);}
++        $e=$this->edge($t['id'],true);if($e!==null&&$e['source_id']===$t['id']){$a=$this->alias($u,$s,$t,true);throw new HttpError(409,'SUPPORT_TICKET_MERGED_TARGET_'.$a['target_id']);}
+     }
+     /** Combined messages are a bounded read projection. Attachments retain the origin ticket. */
+     public function augment(array $u,array $s,array $t,array $out,int $offset=0):array
+diff --git a/src/Support/Service.php b/src/Support/Service.php
+index efc9f62..943962e 100644
+--- a/src/Support/Service.php
++++ b/src/Support/Service.php
+@@ -119,7 +119,7 @@ final readonly class Service
+     private function change(array $u,array $s,array $p,string $action,string $trace): array
+     {
+         $row=$this->access->ticket($u,$s,$p['id'],'support.ticket.manage');$this->expected($row,$p['version']);$status=$row['status'];$dep=$row['department_id'];
+-        if($action==='move'&&(new \Hostider\Support\Merge\Projection($this->c))->edge($row['id'])!==null){throw new HttpError(409,'MERGE_DEPARTMENT_PINNED');}
++        if($action==='move'&&(new \Hostider\Support\Merge\Projection($this->c))->edge($row['id'],true)!==null){throw new HttpError(409,'MERGE_DEPARTMENT_PINNED');}
+         if($action==='state'){State::transition($status,$p['status'],$this->access->department($dep));$status=$p['status'];}else{$dep=$p['department_id'];if($dep===$row['department_id']){throw new HttpError(409,'SUPPORT_DEPARTMENT_UNCHANGED');}}
+         $next=$this->update($row,$status,$dep);$this->event($u,$s,$next,strtoupper($action),$trace,true,$row);return $this->slaResult(['id'=>$row['id'],'version'=>$next['version']]);
+     }
+diff --git a/tools/ci/suites.json b/tools/ci/suites.json
+index 12dc54b..8526966 100644
+--- a/tools/ci/suites.json
++++ b/tools/ci/suites.json
+@@ -65,5 +65,6 @@
+   "tests/migration-inventory.php",
+   "tests/migration-discovery-collector.php",
+   "tests/support-auto-close.php",
+-  "tests/support-merge.php"
++  "tests/support-merge.php",
++  "tests/support-merge-readonly.php"
+ ]
+--- /dev/null
++++ b/tests/support-merge-readonly-child.php
+@@ -0,0 +1,11 @@
++<?php
++declare(strict_types=1);
++require dirname(__DIR__).'/bootstrap/autoload.php';
++ini_set('display_errors','0');ini_set('log_errors','0');ini_set('zend.exception_ignore_args','1');
++use Hostider\Core\{Config,Id};
++use Hostider\Core\Database\Database;
++use Hostider\Core\Http\HttpError;
++$config=Config::fromEnvironment();if($config->environment!=='test'||!str_contains($config->dsn,'dbname=hostider_f0_test')){exit(2);}$c=new \Hostider\Commerce\Services(Database::connect($config),$config);$c->db->execute('SET SESSION innodb_lock_wait_timeout=2');$p=json_decode(stream_get_contents(STDIN),true,32,JSON_THROW_ON_ERROR);
++try{if($p['op']==='merge'){$r=(new \Hostider\Support\Merge\Commands($c))->command($p['ref'],'execute',$p['body'],$p['key'],Id::uuid());}else{$r=(new \Hostider\Support\Advanced\Csat(new \Hostider\Support\Advanced\Common($c)))->command($p['ref'],$p['body'],$p['key'],Id::uuid());}echo json_encode(['status'=>200,'version'=>$r['version']]);}
++catch(HttpError $e){echo json_encode(['status'=>$e->status,'code'=>$e->errorCode]);}
++catch(PDOException $e){if(in_array($e->errorInfo[1]??0,[1205,1213],true)){echo json_encode(['status'=>409,'code'=>'DB_LOCK_CONFLICT']);}else{throw $e;}}
+--- /dev/null
++++ b/tests/support-merge-readonly.php
+@@ -0,0 +1,79 @@
++<?php
++declare(strict_types=1);
++require __DIR__.'/harness.php';require __DIR__.'/database.php';require __DIR__.'/support-merge-fixture.php';
++use Hostider\Core\{Id,CanonicalJson};
++use Hostider\Core\Http\HttpError;
++use Hostider\Support\Advanced\{Common,Csat,Incidents};
++function rFixture(bool $mail=false):array{$f=gFixture(mail:$mail);dGrant($f);$f['advanced']=new Common($f['c']);$f['csat']=new Csat($f['advanced']);dCommand($f,'csat-policy',['department_id'=>$f['departments'][0],'version'=>0,'window_seconds'=>3600]);return $f;}
++function rPayload(array $f,array $t,int $v=0,int $score=4):array{return ['ticket_id'=>$t['id'],'ticket_version'=>(int)bRow($f,$t)['version'],'version'=>$v,'score'=>$score,'comment'=>'Synthetic R1 own rating'];}
++function rRate(array $f,array $t,int $v=0,?string $key=null):array{return $f['csat']->command($f['client']['reference'],rPayload($f,$t,$v),$key??Id::uuid(),Id::uuid());}
++function rSnapshot(array $f):array{$out=[];$tables=$f['db']->execute("SELECT table_name FROM information_schema.tables WHERE table_schema=DATABASE() AND (table_name LIKE 'support_%' OR table_name IN ('audit_logs','outbox_events','inbox_events','jobs','idempotency_keys')) ORDER BY table_name")->fetchAll(PDO::FETCH_COLUMN);foreach($tables as $table){$rows=$f['db']->execute('SELECT * FROM `'.$table.'`')->fetchAll();usort($rows,fn($a,$b)=>strcmp(CanonicalJson::encode($a),CanonicalJson::encode($b)));$out[$table]=hash('sha256',CanonicalJson::encode($rows));}return $out;}
++function rPair(array $f,bool $targetResolved=false):array{$a=bTicket($f);$b=bTicket($f);fResolve($f,$a);if($targetResolved){fResolve($f,$b);}return [$a,$b];}
++function rRace(array $f,array $requests):array{$children=[];foreach($requests as $p){$pipes=[];$proc=proc_open([PHP_BINARY,__DIR__.'/support-merge-readonly-child.php'],[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']],$pipes,null,bEnvironment($f));if(!is_resource($proc)){throw new RuntimeException('R1_CHILD');}fwrite($pipes[0],json_encode($p,JSON_THROW_ON_ERROR));fclose($pipes[0]);$children[]=[$proc,$pipes];}$out=[];foreach($children as [$proc,$pipes]){$raw=stream_get_contents($pipes[1]);$err=stream_get_contents($pipes[2]);fclose($pipes[1]);fclose($pipes[2]);same(0,proc_close($proc));same('',$err);$out[]=json_decode($raw,true,32,JSON_THROW_ON_ERROR);}return $out;}
++
++test('F5-G-R1 01 native HTTP source CSAT CREATE rejects with all business snapshots unchanged',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);gMerge($f,$a,$b);$server=new HttpTestServer(dirname(__DIR__),bEnvironment($f),__DIR__.'/commerce-router.php');$auth=['cookies'=>[],'csrf'=>''];try{dClientLogin($server,$f['client'],$auth);$before=rSnapshot($f);$res=bHttp($server,'/api/v1/client/support-advanced/csat',$auth,rPayload($f,$a));$after=rSnapshot($f);
++ if($res[0]!==409){$path=dirname(__DIR__).'/docs/evidence/f5-g-r1/initial-csat-observation.json';if(!is_file($path)){file_put_contents($path,json_encode(['native_http_status'=>$res[0],'expected_status'=>409,'source_version'=>(int)bRow($f,$a)['version'],'ratings'=>(int)$f['db']->execute('SELECT COUNT(*) FROM support_ratings')->fetchColumn(),'rating_revisions'=>(int)$f['db']->execute('SELECT COUNT(*) FROM support_rating_revisions')->fetchColumn(),'before_sha256'=>$before,'after_sha256'=>$after,'business_unchanged'=>$before===$after],JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR));}}
++ same(409,$res[0]);same($before,$after);same(true,str_contains($res[2],$b['id']));same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_ratings')->fetchColumn());}finally{$server->stop();}
++});
++test('F5-G-R1 02 source CSAT UPDATE and completed-key replay deny without new revisions',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$payload=rPayload($f,$a);$key=Id::uuid();rRate($f,$a,key:$key);gMerge($f,$a,$b);$before=rSnapshot($f);same(409,raises(HttpError::class,fn()=>rRate($f,$a,1))->status);same($before,rSnapshot($f));same(409,raises(HttpError::class,fn()=>$f['csat']->command($f['client']['reference'],$payload,$key,Id::uuid()))->status);same($before,rSnapshot($f));same(1,(int)$f['db']->execute('SELECT COUNT(*) FROM support_rating_revisions')->fetchColumn());
++});
++test('F5-G-R1 03 normal unmerged CSAT CREATE UPDATE and exact replay keep native semantics',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$p=rPayload($f,$a);$key=Id::uuid();$x=$f['csat']->command($f['client']['reference'],$p,$key,Id::uuid());$before=rSnapshot($f);same($x,$f['csat']->command($f['client']['reference'],$p,$key,Id::uuid()));same($before,rSnapshot($f));same(2,rRate($f,$a,1)['version']);same(2,(int)$f['db']->execute('SELECT COUNT(*) FROM support_rating_revisions')->fetchColumn());
++});
++test('F5-G-R1 04 merged TARGET CSAT works under native policy status and version',function():void{
++ $f=rFixture();[$a,$b]=rPair($f,true);gMerge($f,$a,$b);same(1,rRate($f,$b)['version']);same(2,rRate($f,$b,1)['version']);same($b['id'],$f['db']->execute('SELECT ticket_id FROM support_ratings')->fetchColumn());same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_ratings WHERE ticket_id=?',[$a['id']])->fetchColumn());
++});
++test('F5-G-R1 05 source historical CSAT view remains readable and read only',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);rRate($f,$a);gMerge($f,$a,$b);$before=rSnapshot($f);$v=$f['csat']->view($f['client']['reference'],'client',['ticket_id'=>$a['id']]);same(4,$v['score']);same('Synthetic R1 own rating',$v['comment']);same($before,rSnapshot($f));same(404,raises(HttpError::class,fn()=>$f['csat']->view($f['other']['reference'],'client',['ticket_id'=>$a['id']]))->status);
++});
++test('F5-G-R1 06 native HTTP customer IDOR rejects without leaking source or target',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);gMerge($f,$a,$b);$server=new HttpTestServer(dirname(__DIR__),bEnvironment($f),__DIR__.'/commerce-router.php');$auth=['cookies'=>[],'csrf'=>''];try{dClientLogin($server,$f['other'],$auth);$before=rSnapshot($f);$res=bHttp($server,'/api/v1/client/support-advanced/csat',$auth,rPayload($f,$a));same(404,$res[0]);same(false,str_contains($res[2],$b['id']));same(false,str_contains($res[2],$a['id']));same($before,rSnapshot($f));}finally{$server->stop();}
++});
++test('F5-G-R1 07 stale normal and merged source ticket versions never create a revision',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$p=rPayload($f,$a);$p['ticket_version']=1;$before=rSnapshot($f);same('SUPPORT_VERSION_CONFLICT',raises(HttpError::class,fn()=>$f['csat']->command($f['client']['reference'],$p,Id::uuid(),Id::uuid()))->errorCode);same($before,rSnapshot($f));gMerge($f,$a,$b);$before=rSnapshot($f);same(409,raises(HttpError::class,fn()=>$f['csat']->command($f['client']['reference'],$p,Id::uuid(),Id::uuid()))->status);same($before,rSnapshot($f));
++});
++test('F5-G-R1 08 native CSRF rejection creates no rating audit outbox or revision',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);gMerge($f,$a,$b);$server=new HttpTestServer(dirname(__DIR__),bEnvironment($f),__DIR__.'/commerce-router.php');$auth=['cookies'=>[],'csrf'=>''];try{dClientLogin($server,$f['client'],$auth);$before=rSnapshot($f);same(403,bHttp($server,'/api/v1/client/support-advanced/csat',$auth,rPayload($f,$a),csrf:false)[0]);same($before,rSnapshot($f));}finally{$server->stop();}
++});
++test('F5-G-R1 09 revoked session denies CSAT and cached replay',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$p=rPayload($f,$a);$key=Id::uuid();rRate($f,$a,key:$key);$f['db']->transaction(fn()=>$f['c']->identity->invalidate($f['client']['user']));$before=rSnapshot($f);same(401,raises(HttpError::class,fn()=>$f['csat']->command($f['client']['reference'],$p,$key,Id::uuid()))->status);same($before,rSnapshot($f));
++});
++test('F5-G-R1 10 real CSAT and merge process race serializes without post merge rating mutation',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$body=gPrepare($f,$a,$b);$p=rPayload($f,$a);$res=rRace($f,[['op'=>'merge','ref'=>$f['admin']['reference'],'body'=>$body,'key'=>Id::uuid()],['op'=>'csat','ref'=>$f['client']['reference'],'body'=>$p,'key'=>Id::uuid()]]);foreach($res as $x){same(true,in_array($x['status'],[200,409],true));}if(gCount($f)===0){gMerge($f,$a,$b);}same(1,gCount($f));$count=(int)$f['db']->execute('SELECT COUNT(*) FROM support_rating_revisions')->fetchColumn();same($res[1]['status']===200?1:0,$count);$before=rSnapshot($f);same(409,raises(HttpError::class,fn()=>rRate($f,$a,$count))->status);same($before,rSnapshot($f));
++});
++test('F5-G-R1 11 service operations work and UI drafts reject SOURCE business writes',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);gMerge($f,$a,$b);$before=rSnapshot($f);foreach(['reply','note'] as $action){same(409,raises(HttpError::class,fn()=>bReply($f,$a,$action))->status);}same(409,raises(HttpError::class,fn()=>bState($f,$a,'CLOSED'))->status);same(409,raises(HttpError::class,fn()=>dCommand($f,'priority',['ticket_id'=>$a['id'],'version'=>(int)bRow($f,$a)['version'],'value'=>'HIGH','reason'=>'Synthetic']))->status);same(409,raises(HttpError::class,fn()=>bCommand($f,'assign',['id'=>$a['id'],'version'=>(int)bRow($f,$a)['version'],'assignee_id'=>null]))->status);$store=new \Hostider\Support\UI\StateStore(new \Hostider\Support\UI\Context($f['advanced']));same(409,raises(HttpError::class,fn()=>$store->command($f['client']['reference'],'client','draft-save',['ticket_id'=>$a['id'],'kind'=>'reply','body'=>'Synthetic','base_version'=>(int)bRow($f,$a)['version'],'version'=>0],Id::uuid(),Id::uuid()))->status);same($before,rSnapshot($f));
++});
++test('F5-G-R1 12 native incident link seam rejects SOURCE loaded with view permission',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$incident=dCommand($f,'incident-new',['department_id'=>$f['departments'][0],'version'=>0,'title'=>'Synthetic incident','description'=>'Synthetic public','private_root'=>'Synthetic private','affected'=>'Synthetic']);gMerge($f,$a,$b);$before=rSnapshot($f);same(409,raises(HttpError::class,fn()=>$f['c']->identity->withStepUp($f['admin']['reference'],'admin',function($u,$s)use($f,$a,$incident){$t=$f['service']->access->ticket($u,$s,$a['id']);return (new Incidents($f['advanced']))->link($u,$s,$t,$incident['id'],Id::uuid());}))->status);same($before,rSnapshot($f));
++});
++test('F5-G-R1 13 queued source mail ready does not mutate frozen outbound state',function():void{
++ $f=rFixture(true);[$a,$b]=rPair($f);bReply($f,$a);$mail=cDelivery($f,$a);$p=['event_uuid'=>$mail['event_id'],'support_event_uuid'=>$mail['support_event_id'],'ticket_id'=>$a['id'],'customer_id'=>$f['client']['customer'],'message_id'=>$mail['message_id']];gMerge($f,$a,$b);dPublish($f);$before=rSnapshot($f);same('FAILED',$f['outbound']->ready($p));same($before,rSnapshot($f));same('FAILED',$f['outbound']->ready($p));same($before,rSnapshot($f));
++});
++test('F5-G-R1 14 SOURCE original attachment read works upload rejects and TARGET mail stays native',function():void{
++ $f=rFixture(true);[$a,$b]=rPair($f);$upload=['ticket_id'=>$a['id'],'message_id'=>$a['message_id'],'version'=>(int)bRow($f,$a)['version'],'name'=>'synthetic.pdf','base64'=>base64_encode(\Hostider\Support\Mail\Attachments::FIXTURE)];$file=$f['attachments']->upload($f['client']['reference'],'client',$upload,Id::uuid(),Id::uuid());gMerge($f,$a,$b);$token=$f['attachments']->token($f['client']['reference'],'client',$file['id']);same(\Hostider\Support\Mail\Attachments::FIXTURE,$f['attachments']->download($f['client']['reference'],'client',$file['id'],$token['token'],Id::uuid())['bytes']);$upload['version']=(int)bRow($f,$a)['version'];$before=rSnapshot($f);same(409,raises(HttpError::class,fn()=>$f['attachments']->upload($f['client']['reference'],'client',$upload,Id::uuid(),Id::uuid()))->status);same($before,rSnapshot($f));bReply($f,$b);$mail=cDelivery($f,$b);dPublish($f);$p=['event_uuid'=>$mail['event_id'],'support_event_uuid'=>$mail['support_event_id'],'ticket_id'=>$b['id'],'customer_id'=>$f['client']['customer'],'message_id'=>$mail['message_id']];same('SUCCEEDED',$f['outbound']->ready($p));same('HELD',cDelivery($f,$b)['status']);
++});
++test('F5-G-R1 15 alias disclosure fails closed when target current scope is inconsistent',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);gMerge($f,$a,$b);$f['db']->execute('UPDATE support_tickets SET department_id=? WHERE id=?',[$f['departments'][1],$b['id']]);$before=rSnapshot($f);$x=raises(HttpError::class,fn()=>rRate($f,$a));same(404,$x->status);same(false,str_contains($x->errorCode,$b['id']));same($before,rSnapshot($f));
++});
++test('F5-G-R1 16 TARGET native unresolved window and rating versions remain enforced',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);gMerge($f,$a,$b);same('CSAT_RESOLVED_REQUIRED',raises(HttpError::class,fn()=>rRate($f,$b))->errorCode);fResolve($f,$b);rRate($f,$b);$before=rSnapshot($f);same('CSAT_VERSION_CONFLICT',raises(HttpError::class,fn()=>rRate($f,$b))->errorCode);same($before,rSnapshot($f));$f['db']->execute('UPDATE support_csat_policies SET window_seconds=1 WHERE department_id=?',[$f['departments'][0]]);usleep(1100000);$before=rSnapshot($f);same('CSAT_WINDOW_EXPIRED',raises(HttpError::class,fn()=>rRate($f,$b,1))->errorCode);same($before,rSnapshot($f));
++});
++
++test('F5-G-R1 17 current writable proof detects merge after repeatable read snapshot starts',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$body=gPrepare($f,$a,$b);$f['db']->execute('SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ');
++ $f['db']->transaction(function()use($f,$a,$b,$body):void{same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_merge_members')->fetchColumn());$res=rRace($f,[['op'=>'merge','ref'=>$f['admin']['reference'],'body'=>$body,'key'=>Id::uuid()]]);same(200,$res[0]['status']);same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_merge_members')->fetchColumn());same(409,raises(HttpError::class,fn()=>$f['c']->identity->locked($f['client']['reference'],'client',function($u,$s)use($f,$a){$t=$f['service']->access->ticket($u,$s,$a['id']);same(3,(int)$t['version']);(new \Hostider\Support\Merge\Projection($f['c']))->writable($u,$s,$t);}))->status);});same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_ratings')->fetchColumn());
++});
++test('F5-G-R1 18 canonical inbound reply rejects SOURCE after an earlier read snapshot',function():void{
++ $f=rFixture();[$a,$b]=rPair($f);$body=gPrepare($f,$a,$b);$f['db']->execute('SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ');
++ $f['db']->transaction(function()use($f,$a,$body):void{same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_merge_members')->fetchColumn());$res=rRace($f,[['op'=>'merge','ref'=>$f['admin']['reference'],'body'=>$body,'key'=>Id::uuid()]]);same(200,$res[0]['status']);same(409,raises(HttpError::class,fn()=>$f['service']->inbound($f['client']['reference'],'reply',['id'=>$a['id'],'version'=>3,'body'=>'Synthetic stale snapshot reply'],Id::uuid()))->status);});same(2,(int)$f['db']->execute('SELECT COUNT(*) FROM support_messages')->fetchColumn());same(3,(int)bRow($f,$a)['version']);
++});
++
++test('F5-G-R1 19 target department pin uses current merge relationship after old snapshot',function():void{
++ $f=rFixture();supportGrant($f,$f['departments'][1],'*');[$a,$b]=rPair($f);$body=gPrepare($f,$a,$b);$f['db']->execute('SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ');$f['db']->transaction(function()use($f,$a,$b,$body):void{same(0,(int)$f['db']->execute('SELECT COUNT(*) FROM support_merge_members')->fetchColumn());$res=rRace($f,[['op'=>'merge','ref'=>$f['admin']['reference'],'body'=>$body,'key'=>Id::uuid()]]);same(200,$res[0]['status']);same('MERGE_DEPARTMENT_PINNED',raises(HttpError::class,fn()=>$f['service']->compose($f['admin']['reference'],'admin','move',['id'=>$b['id'],'version'=>2,'department_id'=>$f['departments'][1]],Id::uuid()))->errorCode);});same($f['departments'][0],bRow($f,$b)['department_id']);
++});
++exit(executeTests());
++
++

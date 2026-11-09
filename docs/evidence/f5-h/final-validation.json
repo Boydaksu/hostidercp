@@ -1,0 +1,57 @@
+{
+  "tested_source_current": true,
+  "runtime_results": [
+    {
+      "php": "8.3.36",
+      "passed": 432,
+      "failed": 0,
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "phpstan_totals": {
+        "errors": 0,
+        "file_errors": 0
+      }
+    },
+    {
+      "php": "8.4.27",
+      "passed": 432,
+      "failed": 0,
+      "quality": {
+        "check": 0,
+        "audit": 0,
+        "phpstan": 0,
+        "documentation": 0
+      },
+      "phpstan_totals": {
+        "errors": 0,
+        "file_errors": 0
+      }
+    }
+  ],
+  "migration_001_056_tree": "67280d29411bb2b570dbc83e1b8fa0c8d3a0e468",
+  "new_migrations_tree": "01b51a655655cb4c7483d6b5937555504264ca3f",
+  "old_evidence_preserved": 636,
+  "main_user_review_preserved": true,
+  "ui_state_assertions": 10,
+  "full_chromium_actions": "NOT_RUN",
+  "independent_review": "PENDING",
+  "closing_documentation": {
+    "files": 788,
+    "result": "PASS",
+    "network": "none",
+    "source_mount": "readonly",
+    "runtime": "PHP8.3.36"
+  },
+  "lint": {
+    "php_files": 496,
+    "violations": 0
+  },
+  "pattern": {
+    "files": 520,
+    "findings": 0
+  }
+}

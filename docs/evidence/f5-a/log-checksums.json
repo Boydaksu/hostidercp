@@ -1,0 +1,14 @@
+[
+  {
+    "php": "8.3.36",
+    "job_id": 121213753537,
+    "sha256": "19eeaedb11eaf4f6907000bb12d471fe7766758e664ca48df1e386a16382eda7",
+    "log_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121213753537/logs"
+  },
+  {
+    "php": "8.4.27",
+    "job_id": 121213753410,
+    "sha256": "363773e6ad6713329b4475ce53a23624a8f0e25783b316e6c094468f1d8d3354",
+    "log_api": "https://api.github.com/repos/Boydaksu/hostidercp/actions/jobs/121213753410/logs"
+  }
+]

@@ -1,0 +1,14 @@
+P0_SOURCE_MANIFEST_MATCH 478
+P0_PHP 8.3.36
+P0_QUALITY_BEGIN check
+456 PHP files checked; 0 violations
+P0_QUALITY_RESULT check 0
+P0_QUALITY_BEGIN audit
+478 source/config/test files scanned; 0 findings
+P0_QUALITY_RESULT audit 0
+P0_QUALITY_BEGIN phpstan
+P0_QUALITY_RESULT phpstan 0
+P0_QUALITY_BEGIN documentation
+577 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+P0_QUALITY_RESULT documentation 0
+P0_SOURCE_MANIFEST_MATCH 478

@@ -1,0 +1,40 @@
+{
+  "final_php": [
+    {
+      "file": "php83-hostider-f6f-ec28602128d8-83.json",
+      "run_id": "hostider-f6f-ec28602128d8-83",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 23,
+      "passed_tests": 565,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "c29eb1e09fb45c20998a48080a96baa74390c617b8c98a0e04550674731d0b4b"
+    },
+    {
+      "file": "php84-hostider-f6f-9829a5346ad0-84.json",
+      "run_id": "hostider-f6f-9829a5346ad0-84",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 23,
+      "passed_tests": 565,
+      "failed_assertions": 0,
+      "suite_errors": [],
+      "source_manifest_sha256": "c29eb1e09fb45c20998a48080a96baa74390c617b8c98a0e04550674731d0b4b"
+    }
+  ],
+  "all_registered_suites_executed": false,
+  "targeted_suites_per_runtime": 23,
+  "new_suite_tests": 36,
+  "canonical_manifest_sha256": "c29eb1e09fb45c20998a48080a96baa74390c617b8c98a0e04550674731d0b4b",
+  "source_files": 536,
+  "phpstan_level": 5,
+  "migration_tree": "01b51a655655cb4c7483d6b5937555504264ca3f",
+  "old_evidence_preserved": 713,
+  "user_file_preserved": true,
+  "independent_review": "PENDING",
+  "github_actions": "NOT_RUN",
+  "cutover_allowed": false,
+  "effects_allowed": false,
+  "real_gate_status": "BLOCKED"
+}

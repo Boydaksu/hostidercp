@@ -1,0 +1,19 @@
+SUITE tests/support-e-browser.php
+PASS F5-E Chromium client DOM uses literal text and excludes internal note and staff controls
+PASS F5-E Chromium encrypted server draft survives reload without browser storage
+PASS F5-E Chromium native confirmed send renders one canonical public message
+PASS F5-E audit Chromium client UI and legacy JSON redact authors and supply boolean attachment eligibility
+PASS F5-E audit Chromium attachment controls use can_attach without author UUID comparison
+PASS F5-E Chromium operator reply and note drafts stay separate
+PASS F5-E Chromium structured roster publishes with explicit native UTC time and server confirmation
+PASS F5-E Chromium native policy snapshot and structured AST editor open with current ACL
+PASS F5-E Chromium mobile portal fits viewport
+PASS F5-E Chromium changed native scope epoch stops polling and clears conversation drafts and dialog DOM
+PASS F5-E Chromium browser reports no page script errors
+11 browser checks, 0 failures
+SUITE tests/support-integration-browser.php
+PASS F5-I Chromium native split selection preview confirmation and child navigation
+PASS F5-I Chromium client child provenance original timestamp and private metadata isolation
+PASS F5-I Chromium normal child reply does not enter source active conversation
+PASS F5-I Chromium integration has no page script errors
+4 browser checks, 0 failures

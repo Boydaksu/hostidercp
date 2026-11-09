@@ -1,0 +1,10 @@
+{
+  "migrations/057_support_ticket_split.php": "178c4b4633f202bd6249f63ad0f7852257d2351e345f8bf8fca20b6bf871b713",
+  "src/Support/Split/Commands.php": "415f3ab78cc8997dc816ffa192bea0548ca1631fc550da75825390e708679511",
+  "src/Support/Split/Controller.php": "9d1c48dab895f37843899ce53beda0b1a9c73f74429e96e0f1c977c755a81e75",
+  "src/Support/Split/Projection.php": "d60d09c63ee538a0e306e1a9cd4f6f648bd8c6ac3bc22914eca6a73456555c5b",
+  "tests/support-split-child.php": "383882bcd79955f37f8c250c93ba98eaa5218c9ab57402dc3eacc5e403991be3",
+  "tests/support-split-fixture.php": "a444d4d16bc430792aa418e643be42d93ad784dd592e871ed4c37025e7d4d6e0",
+  "tests/support-split-state.cjs": "ab52381b40bd0f72a84bf4a116d85f561d20b5bb16525491555b736cc346941a",
+  "tests/support-split.php": "2649951178a8056bc86c80682491bf91300c40cfba99822f0fe05f601b699906"
+}

@@ -1,0 +1,649 @@
+F6F_SOURCE_MANIFEST_MATCH 536
+F6F_PHP 8.3.36
+F6F_UID 10001
+F6F_SUITE_BEGIN tests/offline-backup.php
+PASS F6-F 01 actual complete encrypted native backup contains no plaintext secret
+PASS F6-F 02 real isolated native restore matches every row file schema and ledger
+PASS F6-F 03 independently reopened native target has current57 migrations and exact rows
+PASS F6-F 04 native restored attachment decrypts to exact original checksum
+PASS F6-F 05 native official PDF bytes and encrypted metadata restore correctly
+PASS F6-F 06 wrong256 bit key rejects before target allocation
+PASS F6-F 07 modified ciphertext rejects before any restore effects
+PASS F6-F 08 truncated ciphertext cannot be mistaken for a complete backup
+PASS F6-F 09 authenticated but altered final manifest is rejected
+PASS F6-F 10 authenticated missing registered file cannot pass a recomputed manifest
+PASS F6-F 11 traversal in an authenticated file record never escapes private target
+PASS F6-F 12 nonroot source permissions are enforced without changing existing DB data
+PASS F6-F 13 actual insufficient tmpfs free space blocks backup before export
+PASS F6-F 14 real competing DB mutation is blocked during the read locked snapshot
+PASS F6-F 15 noncooperating file change during capture cannot produce success
+PASS F6-F 16 partial export fault leaves no complete archive and preserves source
+PASS F6-F 17 partial restore import fault deletes only new owned target and preserves source
+PASS F6-F 18 completed restore replay and cleanup cannot overwrite existing target
+PASS F6-F 19 concurrent backup process is rejected without second archive or source writes
+PASS F6-F 20 production environment DSN and path inputs fail closed
+PASS F6-F 21 real CLI seal backup restore never print key configuration or payload secrets
+PASS F6-F 22 authenticated migration mismatch rejects before target creation
+PASS F6-F 23 independent ledger sums match and unbalanced native source cannot be backed up
+PASS F6-F 24 audit copy is protected by verification fence and native message triggers remain
+PASS F6-F 25 killed backup leaves only ciphertext and owned cleanup preserves source
+PASS F6-F 26 failure preserves an existing unowned path and refuses destructive cleanup
+PASS F6-F 27 killed restore staging is anonymous and cleanup removes only owned quarantine
+PASS F6-F 28 actual source symlink is rejected and unrelated bytes are preserved
+PASS F6-F 29 inconsistent orphan managed file cannot yield a quiescent backup
+PASS F6-F 30 authenticated schema SQL substitution is data and is never executed
+PASS F6-F 31 authenticated row alteration and duplicate sequence reject before target
+PASS F6-F 32 missing or expired dedicated instance pin cannot authorize operations
+PASS F6-F 33 keygen uses private descriptor and generates distinct256 bit keys without stdout leak
+PASS F6-F 34 missing physical registered source file cannot produce success
+PASS F6-F 35 privileged audit tamper is detected against authenticated backup without repair or source writes
+PASS F6-F 36 keygen refuses a nonempty descriptor without overwriting existing bytes
+36 tests, 0 failures
+F6F_SUITE_RESULT tests/offline-backup.php 0
+F6F_SUITE_BEGIN tests/run.php
+PASS config rejects absent environment/key and staging live flags
+PASS effect policy denies every live effect in all environments
+PASS production flags cannot bypass open F0 provider gate
+PASS DI shares services and detects circular/missing/duplicate bindings
+PASS router middleware wraps handler in declaration order
+PASS kernel error envelope and logger never leak message/body/headers
+PASS JSON media type/object/depth/size and validation are bounded
+PASS CSRF denies missing/wrong tokens and allows safe reads
+PASS authorization denies anonymous/expired/missing permission/customer scope
+PASS staff requires MFA, department membership and fresh step-up
+PASS AEAD roundtrip randomized nonce, tamper/context/key binding
+PASS canonical fingerprint ignores map ordering and preserves lists/types
+PASS provider contract Hostider\Providers\Mock\Paytr
+PASS provider contract Hostider\Providers\Mock\Cpanel
+PASS provider contract Hostider\Providers\Mock\ResellerClub
+PASS provider contract Hostider\Providers\Mock\DomainNameApi
+PASS provider contract Hostider\Providers\Mock\Voyar
+PASS mock PayTR never accepts live callback as verified payment
+PASS provider normalized results reject unrecognized status/provider/PII error
+19 tests, 0 failures
+F6F_SUITE_RESULT tests/run.php 0
+F6F_SUITE_BEGIN tests/hardening-unit.php
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures
+F6F_SUITE_RESULT tests/hardening-unit.php 0
+F6F_SUITE_BEGIN tests/integration.php
+PASS MariaDB migrations apply/replay and expected table/JSON/status constraints
+PASS migration checksum/missing file/incomplete DDL stop execution
+PASS migration advisory lock excludes concurrent deployer
+PASS actual partial DDL remains APPLYING and blocks runner/readiness
+PASS migration out-of-order insertion and pending readiness fail closed
+PASS business write and outbox rollback/commit together
+PASS idempotency replay, actor/scope isolation, conflict and rollback
+PASS two independent PHP processes cannot execute same idempotency work twice
+PASS two independent worker processes claim exactly one lease
+PASS expired unsafe lease becomes UNKNOWN and stale worker is fenced
+PASS expired safe lease retries with different fencing token
+PASS safe bounded retry/backoff ends in dead letter
+PASS unsafe handler exception is UNKNOWN with no second execution
+PASS unregistered handler fails closed and worker refuses open transaction
+PASS inbox dedupe and consumer failure rolls back receipt
+PASS queue dedupe rejects different payload without modifying original
+PASS rate limiter stores hashed bucket and enforces bound
+PASS audit keeps original actor/effective customer and refuses free text
+PASS F01-QUEUE reordered nested payload reuses one job including legacy JSON
+PASS F01-QUEUE scalar list object and operation differences remain conflicts
+PASS F01-AUDIT security vocabulary persists typed opaque references only
+PASS F01-AUDIT business mutation and audit commit or roll back atomically
+PASS F01-RETENTION rate cleanup preserves active and legacy windows and is bounded
+PASS F01-RETENTION refreshed rate bucket cannot be pruned as expired
+PASS F01-RETENTION succeeded payload redaction keeps dedupe trace attempts and conflicts
+PASS F01-RETENTION never redacts failed unknown pending or running evidence
+26 tests, 0 failures
+F6F_SUITE_RESULT tests/integration.php 0
+F6F_SUITE_BEGIN tests/identity-security.php
+PASS F11 MFA active challenge cannot refresh critical verification and explicit password factor is required
+PASS F11 pending recovery login activates without step-up and trusted staff device cannot bypass MFA
+PASS F11 role grants cannot cross assigned customer or delegate beyond actor resources
+PASS F11 confirmation binds actor session payload version expiry and rolls back validation writes
+PASS F11 confirmation consumption business writes and audit are atomic and replay is single use
+PASS F11 two concurrent confirmation consumers commit only one critical mutation
+PASS F11 trusted customer login and renewal do not grant critical freshness
+PASS F11 stale customer policy staff target and membership approvals are rejected
+8 tests, 0 failures
+F6F_SUITE_RESULT tests/identity-security.php 0
+F6F_SUITE_BEGIN tests/finance-unit.php
+PASS F2-A exact arithmetic exceeds JavaScript and machine integer precision
+PASS F2-A explicit symmetric rounding and ties to even
+PASS F2-A money minor strings survive JSON and currency precision
+PASS F2-A malformed or lossy input and overflow fail closed
+4 tests, 0 failures
+F6F_SUITE_RESULT tests/finance-unit.php 0
+F6F_SUITE_BEGIN tests/finance.php
+PASS F2-A immutable journals balance and rollback also removes audit and outbox
+PASS F2-A DB PHP JSON roundtrip preserves amounts above Number safe integer
+PASS F2-A duplicate collection and payload conflicts cannot create a second payment
+PASS F2-A independent processes cannot overdraw the same wallet
+PASS F2-A mixed allocation and wallet liability never double-count cash
+PASS F2-A concurrent refunds reserve at most original unallocated collection
+PASS F2-A impersonation and production test collections fail closed
+PASS F2-A persistent idempotency commits collection audit and outbox once
+PASS F2-A foreign collection preserves immutable source amount and FX receipt
+PASS F2-A wallet compensation appends linked reversal and respects original spend limit
+10 tests, 0 failures
+F6F_SUITE_RESULT tests/finance.php 0
+F6F_SUITE_BEGIN tests/billing-cash.php
+PASS F2-F official PDF is stored outside webroot with owner scope checksum and encrypted metadata
+PASS F2-F upload traversal non-PDF active document and interrupted file offset fail closed
+PASS F2-F cash reports separate collection sales wallet liability and costs
+PASS F2-F recurring payable is not paid cash expense and calendar anchor survives February
+4 tests, 0 failures
+F6F_SUITE_RESULT tests/billing-cash.php 0
+F6F_SUITE_BEGIN tests/paid-refunds.php
+PASS F2-F paid mixed refund distributes to original sources and preserves the original bill
+PASS F2-F interrupted paid refund rolls back credit note wallet credit and external reserve
+PASS F2-F parallel paid refund requests never exceed the original mixed payment
+3 tests, 0 failures
+F6F_SUITE_RESULT tests/paid-refunds.php 0
+F6F_SUITE_BEGIN tests/post-delivery.php
+PASS Review reconciliation uses pure bound confirmation and immutable encrypted evidence
+PASS Review reconciliation rejects IDOR missing scope impersonation stale MFA evidence and policy gates
+PASS Review interrupted resolution rolls back and refund is reserved without external send
+PASS Review no-funds decision requires zero unallocated balance and never posts money
+PASS Review parallel case resolution produces one wallet credit and one immutable decision
+PASS Review unrelated catalog change leaves customer finance confirmation valid
+PASS Review handoff eligibility is fail closed for test legacy manual refund and open gates
+PASS Review order environment provenance cannot be promoted by update
+PASS Review shared catalog and FX version fences block unseen writes and rollback lock timeout
+9 tests, 0 failures
+F6F_SUITE_RESULT tests/post-delivery.php 0
+F6F_SUITE_BEGIN tests/support-migrations.php
+PASS F5-A empty MariaDB 001 to 049 replay and all checksums
+PASS F5-A installed 001 to 048 upgrade only 049 preserve old bytes replay no-op
+PASS F5-A failed DDL remains APPLYING and readiness plus blind replay fail closed
+PASS F5-A migration checksum tamper blocks current schema
+4 tests, 0 failures
+F6F_SUITE_RESULT tests/support-migrations.php 0
+F6F_SUITE_BEGIN tests/support-http.php
+PASS F5-A native HTTP authentication MFA and method gates
+PASS F5-A client create canonical ownership and strict field allowlist
+PASS F5-A staff role without department membership cannot discover title or search metadata
+PASS F5-A membership role customer grant and department scope are jointly required
+PASS F5-A another customer cannot read reply or enumerate ticket
+PASS F5-A client cannot forge message kind visibility author or other customer binding
+PASS F5-A internal note never enters client response search or outbox notifications
+PASS F5-A note permission revoked next request also blocks cached idempotency replay
+PASS F5-A CSRF missing wrong method and missing idempotency key cannot mutate
+PASS F5-A create and message retry same key are single durable effects different payload conflicts
+PASS F5-A two different staff in independent HTTP processes conflict and explicit retry preserves both
+PASS F5-A 1 4 8 independent HTTP processes duplicate key create one message
+PASS F5-A stale state version returns explicit 409 without message or audit loss
+PASS F5-A failed audit insert rolls back message state event outbox and idempotency
+PASS F5-A HTML XSS text is JSON data under no-store CSP and no HTML renderer
+PASS F5-A closed reopen and hold obey explicit department policy allowlist
+PASS F5-A department move requires both scopes and invalidates old staff access
+PASS F5-A fresh MFA management controls mutable template policy and department membership
+PASS F5-A impersonation does not confer privileged support permission
+PASS F5-A service link uses canonical ownership and transfer never opens old conversations
+PASS F5-A messages events tenant binding and ticket ownership immutable in MariaDB
+PASS F5-A database visibility CHECK and composite customer FK independently reject forgeries
+PASS F5-A existing queue consumes held public receipts once and rejects private or forged payloads
+PASS F5-A malformed null body version identifiers and links are 422 without partial mutation
+PASS F5-A multi-account memberships do not union selected account permissions
+PASS F5-A explicit department reopen policy changes permit only canonical transition
+PASS F5-A native staff removal revokes department membership without deleting history
+PASS F5-A requester membership revocation succeeds and keeps immutable ticket history
+PASS F5-A identity version invalidation rejects next HTTP request
+PASS F5-A session revocation rejects read and cached mutation
+PASS P1-1 distinct STATE events consume only their own dispatched receipt
+PASS P1-1 event ticket message private note and extra fields cannot forge receipt
+PASS P1-1 unpublished legacy or mismatched native queue payload stays unreceived
+PASS P1-2 search beyond first 50 is explicitly unsupported for client and department staff
+PASS P1-2 unfiltered pagination covers authorized 51 once with matching client staff pages
+PASS SUP-005 Friday 17:30 plus 120 business minutes is Monday 10:30 local
+PASS SUP-005 explicit holiday pushes deadline to Tuesday and half-day is exact
+PASS SUP-005 DST spring skips nonexistent wall minutes without losing real UTC time
+PASS SUP-005 DST fold counts each real UTC minute once and interval union avoids duplicates
+PASS SUP-005 overnight shift and holiday override carry with half-open boundaries
+PASS SUP-005 microsecond precision and overlapping shifts use exact integer arithmetic
+PASS SUP-005 invalid calendars pause states and missing commercial targets fail closed
+PASS SUP-005 held acknowledgement and internal note never count as actual first response
+PASS SUP-005 each customer reply starts a next clock and genuine staff reply closes pending clocks
+PASS SUP-005 pause states are policy-specific and customer reply resumes resolution
+PASS SUP-005 paused duration is not consumed while nonpaused first response continues
+PASS SUP-005 policy revision does not rewrite historical targets calendars or completed response
+PASS SUP-005 risk breach and held receipts remain unique across repeated cron time
+PASS SUP-006 round robin is deterministic and cron does not reassign valid staff
+PASS SUP-006 weighted least load uses explicit weights and UUID tie break
+PASS SUP-006 missing shift availability priority or expiry is fail closed
+PASS SUP-006 assignment revocation rechecks native membership role active staff and MFA
+PASS SUP-006 manual assignment and unassign override auto until explicit auto command
+PASS SUP-006 transaction rollback leaves no half assignment cursor audit or outbox
+PASS SUP-005 move preserves old policy history and starts current department cycle
+PASS SUP-005 legacy unconfigured tickets require explicit confirmed enrollment without backfill
+PASS SUP-006 real 1 4 8 PHP workers assign each ticket once with consistent RR and bounded cron
+PASS SUP-005 native HTTP detail protects department customer scope and fresh confirmation rules
+PASS SUP-006 two native HTTP staff same version produce one assignment and explicit conflict
+PASS SUP-006 native HTTP permission revoke session version and stale step-up cut access
+PASS F5-B additive 049 to 050 upgrade replay and old checksums are preserved
+PASS SUP-006 target eligibility follows native department revoke role revoke MFA and customer grants
+PASS SUP-006 confirmation binds roster revision and held sink rejects unpublished forged extra payload
+PASS F5-B P1 resolved staff reopen completes exactly one new FIRST and preserves old cycle
+PASS F5-B P1 permitted CLOSED staff reopen completes FIRST and replay is an exact no-op
+PASS F5-B P1 customer reopen leaves FIRST pending until a genuine staff reply
+PASS F5-B P1 parallel native HTTP reopen replies create one cycle completion and public outbox
+PASS F5-B P1 HTTP empty weekly policy is rejected without writes and client can still create
+PASS F5-B P1 HTTP exception horizon policy is rejected and previous policy stays usable
+PASS F5-B P1 future calendar failure preserves HTTP ticket message and explicit idempotent unavailable result
+PASS F5-B P1 valid HTTP create is atomic and SQL failure leaves no partial support or idempotency rows
+PASS F5-B P1 active-cycle horizon failure preserves snapshots replies and cross-department recovery
+PASS F5-B P1 additive 050 to 051 preserves all prior checksums and replays without work
+PASS F5-B P1 failed target calendar move rolls back SLA side effects and records correct policy
+PASS SUP-001 MIME strict plain text and RFC references preserve bounded canonical values
+PASS SUP-001 duplicate folded injected and oversized headers fail closed
+PASS SUP-001 body raw header-count encoded subject and nested MIME limits reject
+PASS SUP-004 traversal HTML SVG ZIP executable and MIME spoof attachments are rejected
+PASS SUP-001 HTML body alternate MIME and unknown transfer encoding are never canonical text
+PASS SUP-001 live SMTP and IMAP adapter gates deny before any network operation
+PASS SUP-001 unknown sender enters encrypted review without private ticket association
+PASS SUP-002 verified new mail creates exactly one canonical customer message and SLA cycle
+PASS SUP-002 missing Message-ID dedupes by bounded digest and never auto attaches
+PASS SUP-002 same Message-ID different bytes becomes immutable conflict review not a second reply
+PASS SUP-001 forged subject and wrong raw or foreign customer sender evidence cannot attach
+PASS SUP-001 verified own scoped reply requires token reference ownership and drives NEXT clock
+PASS SUP-001 forged expired and revoked-session reply tokens fail despite fresh sender evidence
+PASS SUP-001 mixed references or foreign ticket token never cross customer ownership
+PASS SUP-003 internal note emits no mail delivery template attachment or customer outbound
+PASS SUP-001 bounce autoresponder precedence and loop markers are blocked even with valid proof
+PASS SUP-001 malformed MIME is encrypted bounded review and oversized raw writes nothing
+PASS SUP-004 inbound files default quarantine and exact fixture is only TEST_CLEAN not real AV
+PASS SUP-004 native HTTP upload download headers foreign customer and CSRF isolation
+PASS SUP-004 file integrity wrong token and session revocation deny download
+PASS SUP-001 native HTTP review requires fresh MFA wildcard scope and no private list metadata
+PASS SUP-001 review approval revalidates sender proof and never force-maps unknown address
+PASS SUP-002 inbound 1 4 8 independent PHP workers produce one message per raw Message-ID
+PASS SUP-002 outbound 1 4 8 independent workers accept a public delivery once without DELIVERED
+PASS SUP-002 outbound retryable and permanent mock outcomes require explicit bounded retry
+PASS SUP-002 unpublished forged extra payload and fingerprint mismatch never mint mail receipts
+PASS SUP-004 quarantined attachment prevents mock transport acceptance
+PASS SUP-002 database failure rolls back inbound canonical message outbox and source receipt
+PASS SUP-004 storage failure leaves no inbound support message or successful receipt
+PASS SUP-004 retention hold preserves evidence and purge keeps immutable metadata
+PASS SUP-001 native HTTP sender proof and adapter ingestion use current scoped session atomically
+PASS SUP-001 review confirmation payload actor stale version and idempotent replay are enforced
+PASS SUP-004 native staff department and permission revocation invalidate download and review
+PASS SUP-002 native outbound transaction failure cannot leave false transport acceptance receipt
+PASS SUP-004 missing or tampered storage prevents both download and mock acceptance
+PASS SUP-002 live flag or staging environment cannot activate adapter or mail pipeline
+PASS F5-C additive 051 to 052 upgrade protects all old migration checksums and replay
+PASS SUP-004 public file listing excludes private notes and stale department tokens after move
+PASS SUP-001 native mail settings are explicit administrative config and mail origin stays visible
+PASS SUP-002 native CLI stdin test adapter ingests without credentials or network arguments
+PASS SUP-002 adapter acknowledgement waits for DB commit and retains failed input
+PASS SUP-002 adapter ack loss after commit replays immutable Message-ID without duplicate
+PASS SUP-008 allowlisted versioned AST rejects SQL PHP dynamic actions unknown nodes and depth bombs
+PASS SUP-008 unavailable predicate stays unavailable through NOT and cannot silently match
+PASS SUP-008 simulation rolls back native last seen and produces no message audit outbox or financial mutation
+PASS SUP-008 self triggering A to A stops with immutable LOOP_BLOCKED and one tag action
+PASS SUP-008 A to B to A causation cycle converges with repeated rule blocked
+PASS SUP-008 exact event replay dedupes action and unpublished forged fingerprint jobs fail closed
+PASS SUP-008 stale rule snapshot and stale ticket source produce explicit skips
+PASS SUP-008 deterministic rule ordering preserves both changes on the same ticket
+PASS SUP-008 revoked sponsor department and customer grants cannot authorize system actions
+PASS SUP-008 atomic rule rollback prevents partial tag note and wrong success receipt
+PASS SUP-008 automated internal note stays private and HELD notification never enters customer mail
+PASS SUP-008 priority override preserves requested priority and all previous SLA history
+PASS SUP-008 closed tickets and invalid transitions cannot be mutated by rules
+PASS SUP-008 independent 1 4 8 workers dedupe one event action and receipt
+PASS SUP-008 scope cannot publish a rule for another customer or department
+PASS SUP-009 incident projection never mixes two customers private ticket message note or attachment data
+PASS SUP-009 incident public update and resolution never close tickets or response SLA clocks
+PASS SUP-009 incident wrong department link and unconfirmed publication fail closed
+PASS SUP-009 incident update transaction rollback leaves no partial public root audit or confirmation use
+PASS F5-D CSAT requires explicit policy resolved state and integer score 1 to 5
+PASS F5-D CSAT ownership version revision replay and HTML comment remain scoped without SLA effect
+PASS F5-D CSAT expiry policy is server measured and rollback leaves no half rating
+PASS F5-D reports enforce SQL customer department grants and redact all private content
+PASS F5-D unavailable SLA never contributes to success numerator or denominator
+PASS F5-D report UTC IANA range validation and deterministic pagination do not repeat tickets
+PASS F5-D native HTTP CSRF MFA confirmation incident public and customer CSAT boundaries
+PASS F5-D additive 052 to 053 upgrade preserves checksums and replay
+PASS SUP-008 real A to B to A priority cycle is stopped by immutable repeated rule detection
+PASS SUP-008 four distinct rule chain reaches depth four and blocks the next action
+PASS SUP-008 native source adapter seed selects matching triggers without old-event starvation
+PASS SUP-008 automation assignment uses canonical native eligibility and then assigned adapter
+PASS SUP-008 rule incident link and public update adapter preserve customer isolation and SLA
+PASS SUP-008 two rules under concurrent event workers retain both canonical effects without finance or provider writes
+PASS SUP-008 expired native step up or revoked sponsor session cannot be bypassed by rule publication
+PASS F5-D stale confirmation and rule publication rollback leave no half revision or idempotent success
+PASS F5-D native HTTP resolved customer CSAT submission replay and membership revocation are enforced
+PASS F5-D live mail flag and non-test environments deny advanced automation before mutation
+PASS SUP-009 immutable encrypted root revisions never enter public projection and incident rules cannot resolve tickets
+PASS SUP-008 native staff HELD receipt binds its own immutable execution and never means delivery
+PASS SUP-008 native rules and execution views redact templates and enforce current department access
+PASS F5-D native HTTP CSAT comment may be omitted and normalizes to empty on replay
+157 tests, 0 failures
+F6F_SUITE_RESULT tests/support-http.php 0
+F6F_SUITE_BEGIN tests/support-e.php
+PASS F5-E native admin and customer context expose only authorized departments and mock contracts
+PASS F5-E SQL filters and deterministic pagination cover more than fifty authorized tickets
+PASS F5-E subject search fails explicitly instead of searching only the first page
+PASS F5-E customer conversation and timeline exclude internal notes in SQL
+PASS F5-E encrypted drafts are scoped to exact owner session ticket customer and kind
+PASS F5-E draft optimistic versions prevent overwrite and expired drafts do not return
+PASS F5-E stale draft is retained and cannot silently rebase into a send
+PASS F5-E exact confirmed send clears only its own draft and keeps note draft
+PASS F5-E forged confirmation body kind version and session fail without consuming draft
+PASS F5-E changed draft invalidates previously prepared send
+PASS F5-E send transaction failure rolls back message event receipt confirmation and draft clear
+PASS F5-E customer confirmed reply preserves canonical FIRST completion and own draft semantics
+PASS F5-E polling snapshot changes with version and unchanged projection is bounded
+PASS F5-E saved filters remain encrypted session scoped and reject search or forged fields
+PASS F5-E presence is approximate bounded and never discloses note typing or viewers identities
+PASS F5-E settings and rule editor reuse native snapshots and action-specific ACL
+PASS F5-E incident projection and CSAT remain connected to canonical customer scope
+PASS F5-E revoked department blocks draft poll filter and presence reads immediately
+PASS F5-E migration 054 is additive with immutable 001 through 053 and replay no-op
+PASS F5-E native HTTP CSRF method context and page guards operate with real MariaDB
+PASS F5-E independent 1 4 8 PHP send replays produce one message event completion and cleared draft
+PASS F5-E same user different native session cannot read or consume another session draft
+PASS F5-E actual installed 053 upgrade applies only 054 and leaves previous migration rows unchanged
+PASS F5-E native HTTP create assign reply SLA incident CSAT report flow remains atomic and scoped
+PASS F5-E audit UI HTTP redacts message authors and preserves native own attachment CSRF stale replay revoke guards
+PASS F5-E audit legacy HTTP redacts message authors while preserving public messages admin notes and tenant isolation
+PASS F5-E audit can_attach follows current reply grant and never substitutes for native upload authorization
+27 tests, 0 failures
+F6F_SUITE_RESULT tests/support-e.php 0
+F6F_SUITE_BEGIN tests/support-auto-close.php
+PASS F5-F 01 default disabled no duration no jobs or ticket mutation
+PASS F5-F 02 explicit enable disable revisions and immutable policy audit
+PASS F5-F 03 invalid duration boolean and unexpected policy fields rejected
+PASS F5-F 04 deadline uses last real RESOLVED transition not ticket updated time
+PASS F5-F 05 no other ticket states are changed
+PASS F5-F 06 customer reply invalidates queued close and no reply is lost
+PASS F5-F 07 native allow_reopen false retains atomic rejection after close
+PASS F5-F 08 allow_reopen true creates new native SLA cycle preserves old history
+PASS F5-F 09 stale ticket version rejected current candidate may close
+PASS F5-F 10 concurrent two native workers produce exactly one close
+PASS F5-F 11 duplicate sweep execution and canonical service replay are idempotent
+PASS F5-F 12 old resolution event cannot close a newer resolved cycle
+PASS F5-F 13 policy version change invalidates queued job and disable cancels it
+PASS F5-F 14 department isolation moved resolved ticket needs a local resolution anchor
+PASS F5-F 15 customer and unscoped staff cannot manage department-wide policy
+PASS F5-F 16 issuer capability and MFA revocation pause durable policy
+PASS F5-F 17 scoped dry run and preview create no business jobs or audit
+PASS F5-F 18 close event receipt audit outbox and immutable SLA remain atomic
+PASS F5-F 19 failure after state event audit and outbox rolls all business effects back
+PASS F5-F 20 native retry exhausts at three attempts no infinite reseed
+PASS F5-F 21 reply racing worker accepts one customer message and honors reopen
+PASS F5-F 22 private notes and attachments keep native privacy after automatic close
+PASS F5-F 23 forged job payload or policy pin cannot authorize close
+PASS F5-F 24 CLI bounded dry-run seed and native queue once complete real flow
+PASS F5-F 25 native HTTP admin settings preview confirmation CSRF and client IDOR
+PASS F5-F 26 native HTTP session revoke invalidates prepared setting
+PASS F5-F 27 production gates and bounds reject actual mutation
+PASS F5-F 28 migration fresh 055 replay and immutable original checksums
+PASS F5-F 29 installed 054 upgrade applies only 055 preserves previous rows
+PASS F5-F 30 partial 055 blocks runtime until reviewed isolated forward completion
+PASS F5-F 31 contended department lock yields bounded native retry then safe completion
+31 tests, 0 failures
+F6F_SUITE_RESULT tests/support-auto-close.php 0
+F6F_SUITE_BEGIN tests/support-merge.php
+PASS F5-G 01 scoped merge preserves tickets and messages with immutable directed alias
+PASS F5-G 02 same ticket and unknown payload scope assertions are rejected
+PASS F5-G 03 cross customer merge rejected using real locked DB owners
+PASS F5-G 04 cross department merge denied even with both explicit grants
+PASS F5-G 05 customer and administrator without explicit merge grant cannot prepare
+PASS F5-G 06 session revocation invalidates prepared merge atomically
+PASS F5-G 07 disabled MFA cannot execute prepared merge
+PASS F5-G 08 current merge grant and membership revocation block execute
+PASS F5-G 09 stale source version rejects with no merge side effects
+PASS F5-G 10 stale target version rejects prepared merge
+PASS F5-G 11 direction tampering and explicit decline cannot execute
+PASS F5-G 12 exact duplicate is idempotent but fresh-key replay is blocked
+PASS F5-G 13 inverse real process race creates at most one edge and no cycle
+PASS F5-G 14 triples chains repeated endpoints and cycles remain blocked
+PASS F5-G 15 reply to source explicitly identifies target and never silently appends
+PASS F5-G 16 customer alias lookup and legacy projection enforce current ACL
+PASS F5-G 17 private notes metadata and attachment ownership stay on original ticket
+PASS F5-G 18 original source and target SLA history remains byte equal after merge and tick
+PASS F5-G 19 immutable work events audit provenance and HELD outbox are atomic no fake reply
+PASS F5-G 20 queued auto close source skips and target stale version skips then target can close
+PASS F5-G 21 actual merge and auto close race commits a valid version-fenced outcome
+PASS F5-G 22 transaction member insertion fault rolls back versions events audit edge and outbox
+PASS F5-G 23 native HTTP prepare CSRF execute and source conflict expose authorized target
+PASS F5-G 24 client cannot access staff merge route and current membership revoke denies execute
+PASS F5-G 25 changed policy invalidates confirmation and expired confirmation cannot execute
+PASS F5-G 26 uncertain RUNNING queue job or active sandbox migration blocks merge
+PASS F5-G 27 fresh056 prefix055 upgrade and replay preserve all previous migration rows
+PASS F5-G 28 partial056 failure blocks runtime and requires reviewed forward completion
+PASS F5-G 29 bounded mixed projection retains original IDs timestamps and stable provenance
+PASS F5-G 30 merged target cannot move departments and production gate denies merge
+PASS F5-G 31 attempted pending mail blocks merge without creating new delivery
+PASS F5-G 32 fresh install056 has empty aliases and second migration is no op
+PASS F5-G 33 current authorization epoch changes require new review even if merge grant survives
+PASS F5-G 34 archived source keeps assignment snapshot but cannot inflate active least load
+PASS F5-G 35 source alias poll observes new target reply without rewriting source version
+PASS F5-G 36 pending source and target automation jobs skip stale versions and replay no effect
+36 tests, 0 failures
+F6F_SUITE_RESULT tests/support-merge.php 0
+F6F_SUITE_BEGIN tests/support-merge-readonly.php
+PASS F5-G-R1 01 native HTTP source CSAT CREATE rejects with all business snapshots unchanged
+PASS F5-G-R1 02 source CSAT UPDATE and completed-key replay deny without new revisions
+PASS F5-G-R1 03 normal unmerged CSAT CREATE UPDATE and exact replay keep native semantics
+PASS F5-G-R1 04 merged TARGET CSAT works under native policy status and version
+PASS F5-G-R1 05 source historical CSAT view remains readable and read only
+PASS F5-G-R1 06 native HTTP customer IDOR rejects without leaking source or target
+PASS F5-G-R1 07 stale normal and merged source ticket versions never create a revision
+PASS F5-G-R1 08 native CSRF rejection creates no rating audit outbox or revision
+PASS F5-G-R1 09 revoked session denies CSAT and cached replay
+PASS F5-G-R1 10 real CSAT and merge process race serializes without post merge rating mutation
+PASS F5-G-R1 11 service operations work and UI drafts reject SOURCE business writes
+PASS F5-G-R1 12 native incident link seam rejects SOURCE loaded with view permission
+PASS F5-G-R1 13 queued source mail ready does not mutate frozen outbound state
+PASS F5-G-R1 14 SOURCE original attachment read works upload rejects and TARGET mail stays native
+PASS F5-G-R1 15 alias disclosure fails closed when target current scope is inconsistent
+PASS F5-G-R1 16 TARGET native unresolved window and rating versions remain enforced
+PASS F5-G-R1 17 current writable proof detects merge after repeatable read snapshot starts
+PASS F5-G-R1 18 canonical inbound reply rejects SOURCE after an earlier read snapshot
+PASS F5-G-R1 19 target department pin uses current merge relationship after old snapshot
+19 tests, 0 failures
+F6F_SUITE_RESULT tests/support-merge-readonly.php 0
+F6F_SUITE_BEGIN tests/support-split.php
+PASS F5-H 01 split creates real independent NEW child without moving immutable messages
+PASS F5-H 02 child active and source active plus explicit history separate selected messages
+PASS F5-H 03 message author timestamp visibility and physical ownership are unchanged
+PASS F5-H 04 private note selection is rejected without business changes
+PASS F5-H 05 foreign customer and department message IDs cannot enter split
+PASS F5-H 06 no role only privilege or client IDOR grants split authority
+PASS F5-H 07 session and MFA revocation invalidate prepared split
+PASS F5-H 08 grant and membership revoke cannot execute confirmed intent
+PASS F5-H 09 stale source reply version rejects split without partial ticket
+PASS F5-H 10 invalid duplicate empty and all public selections are blocked
+PASS F5-H 11 exact duplicate execute creates one child while confirmation replay is blocked
+PASS F5-H 12 concurrent two split processes produce at most one child relationship
+PASS F5-H 13 split and source reply race preserves every accepted message
+PASS F5-H 14 split and merge race cannot combine membership graphs
+PASS F5-H 15 chain cycle and merge combinations are fail closed for parent and child
+PASS F5-H 16 merged SOURCE and TARGET cannot split
+PASS F5-H 17 original attachment ownership storage and both endpoint ACL remain native
+PASS F5-H 18 source SLA and assignment snapshots untouched child starts current independent cycle
+PASS F5-H 19 immutable edge membership audit provenance and HELD outbox are linked
+PASS F5-H 20 membership insertion fault rolls back child SLA events audit and confirmation
+PASS F5-H 21 child and source receive independent normal replies after split
+PASS F5-H 22 public private projection never moves or reveals source internal notes
+PASS F5-H 23 source child pagination and poll track independent current versions
+PASS F5-H 24 native HTTP CSRF explicit confirm client projection and child reply work
+PASS F5-H 25 explicit subject identity version epoch and confirmation bind payload
+PASS F5-H 26 relational scope and public membership constraints reject forged DB associations
+PASS F5-H 27 requester membership is current and cannot be spoofed by HTTP fields
+PASS F5-H 28 fresh057 installed056 upgrade replay and old checksums are preserved
+PASS F5-H 29 partial057 fails closed until explicit isolated forward completion
+PASS F5-H 30 split participants cannot change department through native service
+PASS F5-H 31 unavailable requester and production environment never create split child
+PASS F5-H 32 repeatable read snapshot cannot bypass new split membership guard
+32 tests, 0 failures
+F6F_SUITE_RESULT tests/support-split.php 0
+F6F_SUITE_BEGIN tests/support-integration.php
+PASS F5-I 01 split source customer and child staff/customer replies remain independent
+PASS F5-I 02 child SLA and assignment change without source Work mutation
+PASS F5-I 03 split versus queued auto-close serializes without duplicate child or close
+PASS F5-I 04 queued merge SOURCE auto-close job cannot mutate frozen source
+PASS F5-I 05 merge TARGET keeps independent native SLA and CSAT
+PASS F5-I 06 split selected attachment retention preserves membership and immutable history
+PASS F5-I 07 merge SOURCE CSAT incident and queued outbound guards are atomic
+PASS F5-I 08 split merge chains and both endpoints reject without business writes
+PASS F5-I 09 stale split confirmation after native reply creates no partial child
+PASS F5-I 10 duplicate key replay and different-key confirmation replay are distinct
+PASS F5-I 11 current session MFA grant membership revoke preserve all business tables
+PASS F5-I 12 source private notes remain isolated from child and foreign customer
+PASS F5-I 13 four concurrent workers close split participants independently once
+PASS F5-I 14 native HELD outbox queue audit and immutable split events reconcile
+PASS F5-I 15 fault after child SLA creation rolls back all split effects and permits reviewed retry
+PASS F5-I 16 native HTTP CSRF and client split mutation preserve business state
+PASS F5-I 17 native concurrent queue claims must not leak deadlocks or lose lease accounting
+PASS F5-I 18 claim retry never repeats an unsafe external handler
+PASS F5-I 19 exhausted claim deadlock retry remains bounded and rolls back all business effects
+19 tests, 0 failures
+F6F_SUITE_RESULT tests/support-integration.php 0
+F6F_SUITE_BEGIN tests/migration-contract.php
+PASS F6-A 01 same identity fingerprint deterministic replay and input order
+PASS F6-A 02 same identity changed content conflicts without overwrite
+PASS F6-A 03 source instances are isolated even with identical IDs
+PASS F6-A 04 missing immutable source ID fails closed
+PASS F6-A 05 invalid versions entity and extra envelope fields rejected
+PASS F6-A 06 mixed snapshots schema watermark and timezone rejected
+PASS F6-A 07 missing parents never invented or linked across instance
+PASS F6-A 08 duplicate external resources conflict for every provider
+PASS F6-A 09 customer service and provider account ownership fail closed
+PASS F6-A 10 unknown payment cannot establish PAID or allocations
+PASS F6-A 11 unknown or inflight resource never promoted ACTIVE
+PASS F6-A 12 currencies never combined or silently converted
+PASS F6-A 13 unknown historical FX remains review without current rate
+PASS F6-A 14 private note cannot become public or uncertain visibility
+PASS F6-A 15 wrong author membership or kind requires review
+PASS F6-A 16 attachment missing malformed checksum rejected
+PASS F6-A 17 traversal absolute encoded backslash and symlink paths reviewed without reads
+PASS F6-A 18 source staff cannot inherit admin MFA roles sessions or tokens
+PASS F6-A 19 legacy password format rejected and reset verification mandatory
+PASS F6-A 20 imported CREATE forbidden all providers and pure module has no effect dependencies
+PASS F6-A 21 malformed types floats overflow UTF8 and unknown fields fail closed
+PASS F6-A 22 duplicate identity and stale content SHA rejected
+PASS F6-A 23 knowledge states distinct and never carry guessed values
+PASS F6-A 24 mapping target tamper metadata and snapshot conflict
+PASS F6-A 25 partial payment limits refunds and immutable provenance
+PASS F6-A 26 original message order time visibility and attachment relations preserved
+PASS F6-A 27 attachment missing corrupt MIME size and reported file evidence
+PASS F6-A 28 timezone uncertainty email conflicts and invalid timestamps explicit
+PASS F6-A 29 fully evidenced PAID remains distinct from suspended imported resource
+PASS F6-A 30 published synthetic fixture and manifest match generator exactly
+PASS F6-A 31 malformed knowledge payload provenance timezone and source encoding rejected
+31 tests, 0 failures
+F6F_SUITE_RESULT tests/migration-contract.php 0
+F6F_SUITE_BEGIN tests/migration-operations.php
+PASS F6-D actual encrypted backup verifies bounded DB and private sample files
+PASS F6-D backup identity is deterministic while native crypto uses fresh nonces
+PASS F6-D reports contain no keys tokens paths private bodies or ciphertext
+PASS F6-D wrong rotated missing revoked and mismatched key identities fail closed
+PASS F6-D ciphertext tag truncation and missing package cannot verify
+PASS F6-D source file missing corrupt size or snapshot mismatch prevents complete backup
+PASS F6-D traversal absolute sibling Unicode case and unknown file types are rejected
+PASS F6-D foreign owner checksum and inventory loss block authenticated malformed packages
+PASS F6-D physical source symlink is denied where platform capability exists
+PASS F6-D environment explicit authority wrong vault and expired lease fail closed
+PASS F6-D 1 4 8 independent backup processes publish one immutable artifact
+PASS F6-D real process crashes at capture encryption manifest and publish never expose final
+PASS F6-D controlled short write disk budget and stale operation do not verify partial files
+PASS F6-D escrow restore preserves exact DB evidence finance and sample file bytes
+PASS F6-D wrong target marker ownership lease grants and schema are denied
+PASS F6-D corrupted backup and wrong key leave owned destination empty
+PASS F6-D restore exception and real crashes rollback or re-read exact durable outcome
+PASS F6-D existing conflicting restore rows are never overwritten or rebound
+PASS F6-D source readiness lost migration checksum partial schema or evidence cannot back up
+PASS F6-D actual source connection loss prevents publication and fresh reconnect recovers
+PASS F6-D dry retention uses tier union and protects the last recoverable verified copy
+PASS F6-D retention clock key loss incomplete chain quota and timezone produce review not deletion
+PASS F6-D native Queue expiry keeps unsafe outcome UNKNOWN and rejects stale owner finish
+PASS F6-D native retry-safe poison work reaches DLQ without dispatching other engines
+PASS F6-D destination least privilege denies UPDATE DELETE DDL and cross-schema reads
+PASS F6-D compression version duplicate archive key and partial manifest cannot authenticate
+PASS F6-D dry retention rejects duplicate identities and never performs filesystem deletion
+PASS F6-D native Worker executes only an explicitly registered synthetic backup handler
+PASS F6-D operations module has no provider finance mail transport or public endpoint dependency
+PASS F6-D authenticated duplicate JSON archive keys are rejected before restore
+PASS F6-D encryption key alone cannot issue a forged source ownership backup
+PASS F6-D unapproved target definer trigger blocks restore before any insert
+32 tests, 0 failures
+F6F_SUITE_RESULT tests/migration-operations.php 0
+F6F_SUITE_BEGIN tests/migration-recovery.php
+PASS F6-D-R1 cold verification succeeds in a fresh process after source schema loss and Vault expiry
+PASS F6-D-R1 enrollment preserves original artifact issuer MAC backup identity and legacy verification
+PASS F6-D-R1 encryption key without a trusted issuer authority cannot verify or self-enrol
+PASS F6-D-R1 trusted issuer authority without the correct encryption key is denied
+PASS F6-D-R1 wrong backup source root target snapshot and encryption version are denied
+PASS F6-D-R1 revoked untrusted and malformed pinned issuer keys fail closed
+PASS F6-D-R1 forged detached signature and wrong signing context cannot authenticate
+PASS F6-D-R1 encryption-key forged issuer MAC cannot reuse the original recovery signature
+PASS F6-D-R1 corrupt truncated and substituted ciphertext cannot verify
+PASS F6-D-R1 independently signed corrupt AEAD tag still fails native decryption
+PASS F6-D-R1 tampered manifest unknown format and embedded trust key are rejected
+PASS F6-D-R1 duplicate JSON keys noncanonical bytes missing parts and oversize are rejected
+PASS F6-D-R1 expired operational lease is distinct from expired bounded recovery authorization
+PASS F6-D-R1 another backup or source instance cannot replay a valid certificate under the current authorization
+PASS F6-D-R1 recovery key rotation preserves an old correct backup and enforces revocation
+PASS F6-D-R1 expired Vault or wrong capability cannot enrol an artifact after issuer loss
+PASS F6-D-R1 signer binds the exact authenticated ciphertext and cannot attest a substituted package
+PASS F6-D-R1 authentic malformed inner payload still fails immutable issuer evidence and duplicate-key checks
+PASS F6-D-R1 recovery report redacts keys signatures ciphertext issuer MAC private bodies and paths
+PASS F6-D-R1 environment and explicit recovery authorization flags remain mandatory
+PASS F6-D-R1 real crashes before authority and after verification do not change the immutable backup
+PASS F6-D-R1 duplicate and concurrent verification is read-only and grants no native activation
+PASS F6-D-R1 restored schema still rejects native Sandbox authority without rewriting original evidence
+PASS F6-D-R1 history mapping provenance and customer conflicts in restored targets remain fail closed
+PASS F6-D-R1 cached authentication cannot enrol a cold capsule after original issuer lease expiry
+25 tests, 0 failures
+F6F_SUITE_RESULT tests/migration-recovery.php 0
+F6F_SUITE_BEGIN tests/migration-recovery-target.php
+PASS F6-D-R2 actual restored target reconciles in a fresh process after source loss and Vault expiry
+PASS F6-D-R2 wrong schema and account cannot reuse the target policy
+PASS F6-D-R2 source backup snapshot and encryption key mismatches are blocked
+PASS F6-D-R2 revoked or forged recovery issuer cannot establish a context
+PASS F6-D-R2 wrong purpose stale epoch and revoked target policy are denied
+PASS F6-D-R2 expired authorization is checked again before reporting
+PASS F6-D-R2 stale or expired restore marker blocks verification
+PASS F6-D-R2 restored payload tamper changes actual evidence despite unchanged aggregate counts
+PASS F6-D-R2 mapping provenance history and checkpoint mismatches cannot pass
+PASS F6-D-R2 customer and private attachment ownership changes are blocked
+PASS F6-D-R2 private message visibility cannot become public in recovery
+PASS F6-D-R2 finance amount and currency mutations require review without ledger writes
+PASS F6-D-R2 changed schema or unique index and missing migration are blocked
+PASS F6-D-R2 unexpected and missing target rows are detected by actual queries
+PASS F6-D-R2 partial restore and corrupt marker cannot claim PASS
+PASS F6-D-R2 SELECT-only reader denies DML DDL native and sibling schema reads
+PASS F6-D-R2 added write execute or trigger privilege blocks reader authority
+PASS F6-D-R2 views are denied and ungranted triggers routines are never executed
+PASS F6-D-R2 1 4 8 independent processes reconcile deterministically without writes
+PASS F6-D-R2 real process crashes never publish a verified report or alter target evidence
+PASS F6-D-R2 reports redact credentials bodies identifiers paths signatures and ciphertext
+PASS F6-D-R2 oversized row and disconnected target cannot produce PASS
+PASS F6-D-R2 a caller supplied array comparison cannot claim actual database authority
+PASS F6-D-R2 marker view is rejected before any definer SELECT side effect
+24 tests, 0 failures
+F6F_SUITE_RESULT tests/migration-recovery-target.php 0
+F6F_SUITE_BEGIN tests/migration-recovery-integrity.php
+PASS F6-D-R2 integrity equal row multisets with different ordered root cannot match reference
+PASS F6-D-R2 integrity actual DB PASS requires matched root and same-count tamper cannot pass
+2 tests, 0 failures
+F6F_SUITE_RESULT tests/migration-recovery-integrity.php 0
+F6F_QUALITY_BEGIN check
+511 PHP files checked; 0 violations
+F6F_QUALITY_RESULT check 0
+F6F_QUALITY_BEGIN audit
+536 source/config/test files scanned; 0 findings
+F6F_QUALITY_RESULT audit 0
+F6F_QUALITY_BEGIN phpstan
+F6F_QUALITY_RESULT phpstan 0
+F6F_QUALITY_BEGIN documentation
+860 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6F_QUALITY_RESULT documentation 0
+F6F_SOURCE_MANIFEST_MATCH 536

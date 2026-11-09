@@ -12,10 +12,11 @@ final readonly class RateLimiter
         }
         $hash = hash_hmac('sha256', $bucket, $this->key);
         return $this->db->transaction(function () use ($hash, $limit, $window): bool {
+            $this->db->execute('INSERT INTO rate_limits (bucket_hash,window_start,hits) VALUES (?,0,0) ON DUPLICATE KEY UPDATE bucket_hash=bucket_hash', [$hash]);
+            $row = $this->db->execute('SELECT * FROM rate_limits WHERE bucket_hash=? FOR UPDATE', [$hash])->fetch();
+            // A contender can cross a window while waiting for the bucket lock.
             $now = (int) $this->db->execute('SELECT UNIX_TIMESTAMP()')->fetchColumn();
             $start = intdiv($now, $window) * $window;
-            $this->db->execute('INSERT INTO rate_limits (bucket_hash,window_start,hits) VALUES (?,?,0) ON DUPLICATE KEY UPDATE bucket_hash=bucket_hash', [$hash, $start]);
-            $row = $this->db->execute('SELECT * FROM rate_limits WHERE bucket_hash=? FOR UPDATE', [$hash])->fetch();
             $hits = (int) $row['window_start'] === $start ? (int) $row['hits'] : 0;
             if ($hits >= $limit) {
                 return false;

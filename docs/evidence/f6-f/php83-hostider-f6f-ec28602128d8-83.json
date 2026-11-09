@@ -1,0 +1,195 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "target",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "c29eb1e09fb45c20998a48080a96baa74390c617b8c98a0e04550674731d0b4b",
+  "source_files": 536,
+  "run_id": "hostider-f6f-ec28602128d8-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "scope": "target",
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-31T17:38:13Z",
+  "suites": [
+    {
+      "path": "tests/offline-backup.php",
+      "passed": 36,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/run.php",
+      "passed": 19,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/hardening-unit.php",
+      "passed": 7,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/integration.php",
+      "passed": 26,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/identity-security.php",
+      "passed": 8,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/finance-unit.php",
+      "passed": 4,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/finance.php",
+      "passed": 10,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/billing-cash.php",
+      "passed": 4,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/paid-refunds.php",
+      "passed": 3,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/post-delivery.php",
+      "passed": 9,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-migrations.php",
+      "passed": 4,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-http.php",
+      "passed": 157,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-e.php",
+      "passed": 27,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-auto-close.php",
+      "passed": 31,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-merge.php",
+      "passed": 36,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-merge-readonly.php",
+      "passed": 19,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-split.php",
+      "passed": 32,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-integration.php",
+      "passed": 19,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/migration-contract.php",
+      "passed": 31,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/migration-operations.php",
+      "passed": 32,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/migration-recovery.php",
+      "passed": 25,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/migration-recovery-target.php",
+      "passed": 24,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/migration-recovery-integrity.php",
+      "passed": 2,
+      "failed": 0,
+      "exit": 0
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "phpstan": 0,
+    "documentation": 0
+  },
+  "safe_output_lines": 649,
+  "registry_before": {
+    "suites": 70,
+    "expected_tests": 1054
+  },
+  "registry_candidate_suites": 71,
+  "php": "8.3.36",
+  "phpstan_totals": {
+    "errors": 0,
+    "file_errors": 0
+  },
+  "phpstan_messages": [],
+  "exit": 0,
+  "status": "PASS",
+  "cleanup": [
+    {
+      "name": "hostider-f6f-ec28602128d8-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f6f-ec28602128d8-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f6f-ec28602128d8-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-31T17:51:34Z"
+}

@@ -1,0 +1,48 @@
+{
+  "ci_source_sha": "7e2092898287e566fc6a487c6540d6f70cec7481",
+  "baseline_sha": "fb8a217619196b650d82a89a16b3d2680736cf2d",
+  "application_test_sources_unchanged": true,
+  "migrations": 54,
+  "ci_source_tree": "b4451d7e85cf42ce48b51cc577096a4de6537d0f",
+  "provider_io": false,
+  "protected_files": 389,
+  "f6_runtime_added": false,
+  "trees": [
+    {
+      "identical": true,
+      "path": "src",
+      "source_tree": "a9beabba94466170038200689432bdf1bdfcdb42",
+      "baseline_tree": "a9beabba94466170038200689432bdf1bdfcdb42"
+    },
+    {
+      "identical": true,
+      "path": "bootstrap",
+      "source_tree": "22f30d4cbf6b870ab2dbd1fa2537daba5a9acca0",
+      "baseline_tree": "22f30d4cbf6b870ab2dbd1fa2537daba5a9acca0"
+    },
+    {
+      "identical": true,
+      "path": "bin",
+      "source_tree": "aa0f2ca3dedda4eb3a7c0283f39a929fc2df0ab6",
+      "baseline_tree": "aa0f2ca3dedda4eb3a7c0283f39a929fc2df0ab6"
+    },
+    {
+      "identical": true,
+      "path": "public",
+      "source_tree": "2acd1743b1e2e48f6a9367d3f0180a24752482e8",
+      "baseline_tree": "2acd1743b1e2e48f6a9367d3f0180a24752482e8"
+    },
+    {
+      "identical": true,
+      "path": "tests",
+      "source_tree": "deeb1c1401b6a5cdcaffbf65439e772a0d18b5ac",
+      "baseline_tree": "deeb1c1401b6a5cdcaffbf65439e772a0d18b5ac"
+    },
+    {
+      "identical": true,
+      "path": "migrations",
+      "source_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+      "baseline_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b"
+    }
+  ]
+}

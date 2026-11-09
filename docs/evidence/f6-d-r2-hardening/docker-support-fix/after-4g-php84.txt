@@ -1,0 +1,179 @@
+LOCAL_STAGE prepare PHP84
+LOCAL_PREPARED 53162495902b3b168c2fb8554594e99c23a34d62
+LOCAL_PREP_RESULT 0
+LOCAL_STAGE quality PHP84
+LOCAL_STAGE application PHP84
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}
+PASS F5-A native HTTP authentication MFA and method gates
+PASS F5-A client create canonical ownership and strict field allowlist
+PASS F5-A staff role without department membership cannot discover title or search metadata
+PASS F5-A membership role customer grant and department scope are jointly required
+PASS F5-A another customer cannot read reply or enumerate ticket
+PASS F5-A client cannot forge message kind visibility author or other customer binding
+PASS F5-A internal note never enters client response search or outbox notifications
+PASS F5-A note permission revoked next request also blocks cached idempotency replay
+PASS F5-A CSRF missing wrong method and missing idempotency key cannot mutate
+PASS F5-A create and message retry same key are single durable effects different payload conflicts
+PASS F5-A two different staff in independent HTTP processes conflict and explicit retry preserves both
+PASS F5-A 1 4 8 independent HTTP processes duplicate key create one message
+PASS F5-A stale state version returns explicit 409 without message or audit loss
+PASS F5-A failed audit insert rolls back message state event outbox and idempotency
+PASS F5-A HTML XSS text is JSON data under no-store CSP and no HTML renderer
+PASS F5-A closed reopen and hold obey explicit department policy allowlist
+PASS F5-A department move requires both scopes and invalidates old staff access
+PASS F5-A fresh MFA management controls mutable template policy and department membership
+PASS F5-A impersonation does not confer privileged support permission
+PASS F5-A service link uses canonical ownership and transfer never opens old conversations
+PASS F5-A messages events tenant binding and ticket ownership immutable in MariaDB
+PASS F5-A database visibility CHECK and composite customer FK independently reject forgeries
+PASS F5-A existing queue consumes held public receipts once and rejects private or forged payloads
+PASS F5-A malformed null body version identifiers and links are 422 without partial mutation
+PASS F5-A multi-account memberships do not union selected account permissions
+PASS F5-A explicit department reopen policy changes permit only canonical transition
+PASS F5-A native staff removal revokes department membership without deleting history
+PASS F5-A requester membership revocation succeeds and keeps immutable ticket history
+PASS F5-A identity version invalidation rejects next HTTP request
+PASS F5-A session revocation rejects read and cached mutation
+PASS P1-1 distinct STATE events consume only their own dispatched receipt
+PASS P1-1 event ticket message private note and extra fields cannot forge receipt
+PASS P1-1 unpublished legacy or mismatched native queue payload stays unreceived
+PASS P1-2 search beyond first 50 is explicitly unsupported for client and department staff
+PASS P1-2 unfiltered pagination covers authorized 51 once with matching client staff pages
+PASS SUP-005 Friday 17:30 plus 120 business minutes is Monday 10:30 local
+PASS SUP-005 explicit holiday pushes deadline to Tuesday and half-day is exact
+PASS SUP-005 DST spring skips nonexistent wall minutes without losing real UTC time
+PASS SUP-005 DST fold counts each real UTC minute once and interval union avoids duplicates
+PASS SUP-005 overnight shift and holiday override carry with half-open boundaries
+PASS SUP-005 microsecond precision and overlapping shifts use exact integer arithmetic
+PASS SUP-005 invalid calendars pause states and missing commercial targets fail closed
+PASS SUP-005 held acknowledgement and internal note never count as actual first response
+PASS SUP-005 each customer reply starts a next clock and genuine staff reply closes pending clocks
+PASS SUP-005 pause states are policy-specific and customer reply resumes resolution
+PASS SUP-005 paused duration is not consumed while nonpaused first response continues
+PASS SUP-005 policy revision does not rewrite historical targets calendars or completed response
+PASS SUP-005 risk breach and held receipts remain unique across repeated cron time
+PASS SUP-006 round robin is deterministic and cron does not reassign valid staff
+PASS SUP-006 weighted least load uses explicit weights and UUID tie break
+PASS SUP-006 missing shift availability priority or expiry is fail closed
+PASS SUP-006 assignment revocation rechecks native membership role active staff and MFA
+PASS SUP-006 manual assignment and unassign override auto until explicit auto command
+PASS SUP-006 transaction rollback leaves no half assignment cursor audit or outbox
+PASS SUP-005 move preserves old policy history and starts current department cycle
+PASS SUP-005 legacy unconfigured tickets require explicit confirmed enrollment without backfill
+PASS SUP-006 real 1 4 8 PHP workers assign each ticket once with consistent RR and bounded cron
+PASS SUP-005 native HTTP detail protects department customer scope and fresh confirmation rules
+PASS SUP-006 two native HTTP staff same version produce one assignment and explicit conflict
+PASS SUP-006 native HTTP permission revoke session version and stale step-up cut access
+PASS F5-B additive 049 to 050 upgrade replay and old checksums are preserved
+PASS SUP-006 target eligibility follows native department revoke role revoke MFA and customer grants
+PASS SUP-006 confirmation binds roster revision and held sink rejects unpublished forged extra payload
+PASS F5-B P1 resolved staff reopen completes exactly one new FIRST and preserves old cycle
+PASS F5-B P1 permitted CLOSED staff reopen completes FIRST and replay is an exact no-op
+PASS F5-B P1 customer reopen leaves FIRST pending until a genuine staff reply
+PASS F5-B P1 parallel native HTTP reopen replies create one cycle completion and public outbox
+PASS F5-B P1 HTTP empty weekly policy is rejected without writes and client can still create
+PASS F5-B P1 HTTP exception horizon policy is rejected and previous policy stays usable
+PASS F5-B P1 future calendar failure preserves HTTP ticket message and explicit idempotent unavailable result
+PASS F5-B P1 valid HTTP create is atomic and SQL failure leaves no partial support or idempotency rows
+PASS F5-B P1 active-cycle horizon failure preserves snapshots replies and cross-department recovery
+PASS F5-B P1 additive 050 to 051 preserves all prior checksums and replays without work
+PASS F5-B P1 failed target calendar move rolls back SLA side effects and records correct policy
+PASS SUP-001 MIME strict plain text and RFC references preserve bounded canonical values
+PASS SUP-001 duplicate folded injected and oversized headers fail closed
+PASS SUP-001 body raw header-count encoded subject and nested MIME limits reject
+PASS SUP-004 traversal HTML SVG ZIP executable and MIME spoof attachments are rejected
+PASS SUP-001 HTML body alternate MIME and unknown transfer encoding are never canonical text
+PASS SUP-001 live SMTP and IMAP adapter gates deny before any network operation
+PASS SUP-001 unknown sender enters encrypted review without private ticket association
+PASS SUP-002 verified new mail creates exactly one canonical customer message and SLA cycle
+PASS SUP-002 missing Message-ID dedupes by bounded digest and never auto attaches
+PASS SUP-002 same Message-ID different bytes becomes immutable conflict review not a second reply
+PASS SUP-001 forged subject and wrong raw or foreign customer sender evidence cannot attach
+PASS SUP-001 verified own scoped reply requires token reference ownership and drives NEXT clock
+PASS SUP-001 forged expired and revoked-session reply tokens fail despite fresh sender evidence
+PASS SUP-001 mixed references or foreign ticket token never cross customer ownership
+PASS SUP-003 internal note emits no mail delivery template attachment or customer outbound
+PASS SUP-001 bounce autoresponder precedence and loop markers are blocked even with valid proof
+PASS SUP-001 malformed MIME is encrypted bounded review and oversized raw writes nothing
+PASS SUP-004 inbound files default quarantine and exact fixture is only TEST_CLEAN not real AV
+PASS SUP-004 native HTTP upload download headers foreign customer and CSRF isolation
+PASS SUP-004 file integrity wrong token and session revocation deny download
+PASS SUP-001 native HTTP review requires fresh MFA wildcard scope and no private list metadata
+PASS SUP-001 review approval revalidates sender proof and never force-maps unknown address
+PASS SUP-002 inbound 1 4 8 independent PHP workers produce one message per raw Message-ID
+PASS SUP-002 outbound 1 4 8 independent workers accept a public delivery once without DELIVERED
+PASS SUP-002 outbound retryable and permanent mock outcomes require explicit bounded retry
+PASS SUP-002 unpublished forged extra payload and fingerprint mismatch never mint mail receipts
+PASS SUP-004 quarantined attachment prevents mock transport acceptance
+PASS SUP-002 database failure rolls back inbound canonical message outbox and source receipt
+PASS SUP-004 storage failure leaves no inbound support message or successful receipt
+PASS SUP-004 retention hold preserves evidence and purge keeps immutable metadata
+PASS SUP-001 native HTTP sender proof and adapter ingestion use current scoped session atomically
+PASS SUP-001 review confirmation payload actor stale version and idempotent replay are enforced
+PASS SUP-004 native staff department and permission revocation invalidate download and review
+PASS SUP-002 native outbound transaction failure cannot leave false transport acceptance receipt
+PASS SUP-004 missing or tampered storage prevents both download and mock acceptance
+PASS SUP-002 live flag or staging environment cannot activate adapter or mail pipeline
+PASS F5-C additive 051 to 052 upgrade protects all old migration checksums and replay
+PASS SUP-004 public file listing excludes private notes and stale department tokens after move
+PASS SUP-001 native mail settings are explicit administrative config and mail origin stays visible
+PASS SUP-002 native CLI stdin test adapter ingests without credentials or network arguments
+PASS SUP-002 adapter acknowledgement waits for DB commit and retains failed input
+PASS SUP-002 adapter ack loss after commit replays immutable Message-ID without duplicate
+PASS SUP-008 allowlisted versioned AST rejects SQL PHP dynamic actions unknown nodes and depth bombs
+PASS SUP-008 unavailable predicate stays unavailable through NOT and cannot silently match
+PASS SUP-008 simulation rolls back native last seen and produces no message audit outbox or financial mutation
+PASS SUP-008 self triggering A to A stops with immutable LOOP_BLOCKED and one tag action
+PASS SUP-008 A to B to A causation cycle converges with repeated rule blocked
+PASS SUP-008 exact event replay dedupes action and unpublished forged fingerprint jobs fail closed
+PASS SUP-008 stale rule snapshot and stale ticket source produce explicit skips
+PASS SUP-008 deterministic rule ordering preserves both changes on the same ticket
+PASS SUP-008 revoked sponsor department and customer grants cannot authorize system actions
+PASS SUP-008 atomic rule rollback prevents partial tag note and wrong success receipt
+PASS SUP-008 automated internal note stays private and HELD notification never enters customer mail
+PASS SUP-008 priority override preserves requested priority and all previous SLA history
+PASS SUP-008 closed tickets and invalid transitions cannot be mutated by rules
+PASS SUP-008 independent 1 4 8 workers dedupe one event action and receipt
+PASS SUP-008 scope cannot publish a rule for another customer or department
+PASS SUP-009 incident projection never mixes two customers private ticket message note or attachment data
+PASS SUP-009 incident public update and resolution never close tickets or response SLA clocks
+PASS SUP-009 incident wrong department link and unconfirmed publication fail closed
+PASS SUP-009 incident update transaction rollback leaves no partial public root audit or confirmation use
+PASS F5-D CSAT requires explicit policy resolved state and integer score 1 to 5
+PASS F5-D CSAT ownership version revision replay and HTML comment remain scoped without SLA effect
+PASS F5-D CSAT expiry policy is server measured and rollback leaves no half rating
+PASS F5-D reports enforce SQL customer department grants and redact all private content
+PASS F5-D unavailable SLA never contributes to success numerator or denominator
+PASS F5-D report UTC IANA range validation and deterministic pagination do not repeat tickets
+PASS F5-D native HTTP CSRF MFA confirmation incident public and customer CSAT boundaries
+PASS F5-D additive 052 to 053 upgrade preserves checksums and replay
+PASS SUP-008 real A to B to A priority cycle is stopped by immutable repeated rule detection
+PASS SUP-008 four distinct rule chain reaches depth four and blocks the next action
+PASS SUP-008 native source adapter seed selects matching triggers without old-event starvation
+PASS SUP-008 automation assignment uses canonical native eligibility and then assigned adapter
+PASS SUP-008 rule incident link and public update adapter preserve customer isolation and SLA
+PASS SUP-008 two rules under concurrent event workers retain both canonical effects without finance or provider writes
+PASS SUP-008 expired native step up or revoked sponsor session cannot be bypassed by rule publication
+PASS F5-D stale confirmation and rule publication rollback leave no half revision or idempotent success
+PASS F5-D native HTTP resolved customer CSAT submission replay and membership revocation are enforced
+PASS F5-D live mail flag and non-test environments deny advanced automation before mutation
+PASS SUP-009 immutable encrypted root revisions never enter public projection and incident rules cannot resolve tickets
+PASS SUP-008 native staff HELD receipt binds its own immutable execution and never means delivery
+PASS SUP-008 native rules and execution views redact templates and enforce current department access
+PASS F5-D native HTTP CSAT comment may be omitted and normalizes to empty on replay
+157 tests, 0 failures
+SOURCE_PROOF {
+    "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "checkout_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+    "tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+    "workflow_sha": "",
+    "run_id": "local",
+    "php": "8.4.27"
+}

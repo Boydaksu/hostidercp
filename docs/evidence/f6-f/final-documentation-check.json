@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "exit": 0,
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "uid": 10001,
+  "network": "none",
+  "database": "none",
+  "source_mount": "readonly",
+  "documents_scanned_before_this_receipt": 876,
+  "output": "876 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)",
+  "scope": "Final generated delivery report and all evidence present; receipt is checked by seal UTF8/pattern scan."
+}

@@ -1,0 +1,66 @@
+{
+    "baseline": "03d18666397d8dd63c5f23aa9818daf4548e41b4",
+    "source": "3404ddda79bc2017f05cb474b5546e23647910d8",
+    "modules": [
+        {
+            "path": "src/Identity",
+            "baseline_tree": "11089029ce86907948da56f10ba6708605958734",
+            "source_tree": "11089029ce86907948da56f10ba6708605958734",
+            "unchanged": true
+        },
+        {
+            "path": "src/Core",
+            "baseline_tree": "325e939a5f6459802681b7face14ab48aeda79a4",
+            "source_tree": "325e939a5f6459802681b7face14ab48aeda79a4",
+            "unchanged": true
+        },
+        {
+            "path": "src/Finance",
+            "baseline_tree": "28dfd8b5919bd425179f3ad96ed4083ded6b3825",
+            "source_tree": "28dfd8b5919bd425179f3ad96ed4083ded6b3825",
+            "unchanged": true
+        },
+        {
+            "path": "src/Commerce",
+            "baseline_tree": "81e16e819c2a73665b26536f70a8beff1b54678c",
+            "source_tree": "81e16e819c2a73665b26536f70a8beff1b54678c",
+            "unchanged": true
+        },
+        {
+            "path": "src/Services",
+            "baseline_tree": "5092f49e45da19002ccfeec7434579bfd8c73d37",
+            "source_tree": "5092f49e45da19002ccfeec7434579bfd8c73d37",
+            "unchanged": true
+        },
+        {
+            "path": "src/Domains",
+            "baseline_tree": "c397cc57992d9202019be89b62b788bf72e9add3",
+            "source_tree": "c397cc57992d9202019be89b62b788bf72e9add3",
+            "unchanged": true
+        },
+        {
+            "path": "src/Cloud",
+            "baseline_tree": "2deb924ef9218992f96fb30ce430d1aa86cd9867",
+            "source_tree": "2deb924ef9218992f96fb30ce430d1aa86cd9867",
+            "unchanged": true
+        },
+        {
+            "path": "src/CloudCosts",
+            "baseline_tree": "ffb2cd802cbdf7b1bdc2f1254153b5756a2df33f",
+            "source_tree": "ffb2cd802cbdf7b1bdc2f1254153b5756a2df33f",
+            "unchanged": true
+        },
+        {
+            "path": "src/Providers",
+            "baseline_tree": "2fefa06a128e737fb646c89bd4c224820bd4af9a",
+            "source_tree": "2fefa06a128e737fb646c89bd4c224820bd4af9a",
+            "unchanged": true
+        },
+        {
+            "path": "src/Support/Mail",
+            "baseline_tree": "9fe02443bb0e00418ff81c77fb3907cce8ebb931",
+            "source_tree": "9fe02443bb0e00418ff81c77fb3907cce8ebb931",
+            "unchanged": true
+        }
+    ]
+}

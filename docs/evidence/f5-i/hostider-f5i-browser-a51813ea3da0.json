@@ -1,0 +1,27 @@
+{
+  "classification": "LOCAL_SYNTHETIC_HEADLESS_CHROMIUM",
+  "run_id": "hostider-f5i-browser-a51813ea3da0",
+  "php_target": "HOST_PHP_8.4.24_NOT_8.4.27",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "network": "Docker bridge; only an ephemeral127.0.0.1 DB port published; browser requests routed exclusively to owned loopback PHP server",
+  "suites": [
+    {
+      "path": "tests/support-e-browser.php",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "failure_message": "Browser check failed: browserType.launch: spawn UNKNOWN"
+    },
+    {
+      "path": "tests/support-integration-browser.php",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "failure_message": "Browser check failed: browserType.launch: spawn UNKNOWN"
+    }
+  ],
+  "started_at": "2026-10-31T13:43:49Z",
+  "status": "FAILED",
+  "cleanup_owned_db_removed": true,
+  "finished_at": "2026-10-31T13:44:07Z"
+}

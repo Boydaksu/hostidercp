@@ -1,0 +1,1122 @@
+{
+    "baseline_head": "579788e66f448b5560e05c37b7a3ba9487923731",
+    "all_equal": true,
+    "protected_count": 277,
+    "files": [
+        {
+            "path": "bootstrap/app.php",
+            "blob": "8a166b5db6e6044095c209e2eae20c6faa27a9a5"
+        },
+        {
+            "path": "bootstrap/autoload.php",
+            "blob": "8eb9111bdbe674db4fcdb383e67262a38e5afcf7"
+        },
+        {
+            "path": "migrations/001_f0_infrastructure.php",
+            "blob": "e632bffe6337aacf1418e582f399f6c651a3b16d"
+        },
+        {
+            "path": "migrations/002_f0_1_retention.php",
+            "blob": "6b459bd9af671953c837286a1d07b9ad78eede37"
+        },
+        {
+            "path": "migrations/003_f1_identity.php",
+            "blob": "ae6a33cf8030e02644e7f9f07b53ab402deb0558"
+        },
+        {
+            "path": "migrations/004_f1_1_confirmations.php",
+            "blob": "5d65ea0162af95b6226d165cd187c16aa6cf49db"
+        },
+        {
+            "path": "migrations/005_f1_1_reset_step_up.php",
+            "blob": "15ca3aa29aa480ddcba80000bbde7cf5577f4909"
+        },
+        {
+            "path": "migrations/006_f2_finance.php",
+            "blob": "96a48c92ac3e34bcbb5b08daa648836907ce6e47"
+        },
+        {
+            "path": "migrations/007_f2_wallet_credits.php",
+            "blob": "71bd38472863140337834c208a81dafc384b7272"
+        },
+        {
+            "path": "migrations/008_f2_catalog.php",
+            "blob": "70cb67fd1f80a680a2ab958d29c54eeebafef88d"
+        },
+        {
+            "path": "migrations/009_f2_pricing.php",
+            "blob": "d2daafa7e24dda7948e962e4f37ed6859190d12a"
+        },
+        {
+            "path": "migrations/010_f2_orders_billing.php",
+            "blob": "a82c15682cae0577b675aaa02dca8f8d145769d5"
+        },
+        {
+            "path": "migrations/011_f2_payment_workflows.php",
+            "blob": "d2c6f4e834c5b49047953cf388316c4dbf3c8a10"
+        },
+        {
+            "path": "migrations/012_f2_documents_cash.php",
+            "blob": "e069ae5eeeae22e4020995d9357a6baf7aa97528"
+        },
+        {
+            "path": "migrations/013_f2_commerce_confirmations.php",
+            "blob": "71e058fbd2310a64bb520e8bfeff661296f26a78"
+        },
+        {
+            "path": "migrations/014_f2_paid_refunds.php",
+            "blob": "6b5d0f31d640dacc43897ed8f36319843b91c40c"
+        },
+        {
+            "path": "migrations/015_f2_standalone_addons.php",
+            "blob": "7ffa87745a5c46023fced330716c54e9d220d765"
+        },
+        {
+            "path": "migrations/016_f2_source_evidence.php",
+            "blob": "dc3930bb741d5af6f1b6c9118aa53b0b2e9235d1"
+        },
+        {
+            "path": "migrations/017_f2_wallet_currency.php",
+            "blob": "08fba6bd3b3fe46a17bc60680763f554d76e0f33"
+        },
+        {
+            "path": "migrations/018_f2_wallet_refund_fx.php",
+            "blob": "2eace08d3875ae3a1bf603e1a2d39e65b66a367f"
+        },
+        {
+            "path": "migrations/019_f2_held_facts.php",
+            "blob": "9d460fb0404356961a5defaa9c4b2384defe40db"
+        },
+        {
+            "path": "migrations/020_f2_reconciliation_resolution.php",
+            "blob": "4ef8434dcd764e660d3f2a37ebdb17cbeb06d94e"
+        },
+        {
+            "path": "migrations/021_f2_order_provenance.php",
+            "blob": "a2772c8814118f36ae5e09afc1a5608202fa398e"
+        },
+        {
+            "path": "migrations/022_f2_confirmation_versions.php",
+            "blob": "c14fa376f101d960c08780dbe50e1760225c9c1a"
+        },
+        {
+            "path": "migrations/023_f3_service_model.php",
+            "blob": "58659226c607a78df584ee5f51168d483f18b177"
+        },
+        {
+            "path": "migrations/024_f3_resources.php",
+            "blob": "6f275908d13cb90b172c145d00ff080221ef77cf"
+        },
+        {
+            "path": "migrations/025_f3_operations.php",
+            "blob": "e9c21bbd461586f009ac5eed88a953907d9c83b5"
+        },
+        {
+            "path": "migrations/026_f3_mock_hosting.php",
+            "blob": "ba3d86bbc800ae9a979309fafef0763e10b1f8ea"
+        },
+        {
+            "path": "migrations/027_f3_mapping_integrity.php",
+            "blob": "559ce00a1acaa5ba1f23993ffa1e9c1bb08d0f73"
+        },
+        {
+            "path": "migrations/028_f3_reconciliation.php",
+            "blob": "ef0cb7a7152537a07935f31454c90a48b68ab2e9"
+        },
+        {
+            "path": "migrations/029_f3_lifecycle_policy.php",
+            "blob": "20fb0a795b45534abf404959c8bd0e2e05d13097"
+        },
+        {
+            "path": "migrations/030_f3_renewals.php",
+            "blob": "0222221304a46a449041c1e6abac973360b1edd0"
+        },
+        {
+            "path": "migrations/031_f3_cancellations.php",
+            "blob": "e11a95432409fcb8ad2df45f18cfc9386afe8da3"
+        },
+        {
+            "path": "migrations/032_f3_action_evidence.php",
+            "blob": "432424d56fd7ea814c238c4e96ebcd4bbaffea55"
+        },
+        {
+            "path": "migrations/033_f3_transfer.php",
+            "blob": "ea9ba084870be34c41e39bb1e8ba3a51c84be119"
+        },
+        {
+            "path": "migrations/034_f3_package_changes.php",
+            "blob": "02049973441e40d6148a7edcec6ee8b0140c37c3"
+        },
+        {
+            "path": "migrations/035_f3_http_confirmations.php",
+            "blob": "1e2099a42387f3a556fe37f221c3f40c5cb3fe6f"
+        },
+        {
+            "path": "migrations/036_f3_scope_and_query_guards.php",
+            "blob": "4ad32d5e7d76be99f1550000098c60475ab2d102"
+        },
+        {
+            "path": "migrations/037_f3_scheduler_fairness.php",
+            "blob": "a13b2cbea23f6cf6be7a3a640dd50b6c8712949e"
+        },
+        {
+            "path": "migrations/038_service_runner_fairness.php",
+            "blob": "68a39bdf162e07554430ec83815529514fc49b06"
+        },
+        {
+            "path": "migrations/039_f4_domain_model.php",
+            "blob": "8f83645f53087bb668ac87540324954dcce2b303"
+        },
+        {
+            "path": "migrations/040_f4_mock_registrar.php",
+            "blob": "ca34cbb4996fd6b1eaa5ef5f4362decc16c5c724"
+        },
+        {
+            "path": "migrations/041_f4_domain_operations.php",
+            "blob": "d3aaddd38ed7b1e95e03ab9939344dc33896549d"
+        },
+        {
+            "path": "migrations/042_f4_domain_runner_fairness.php",
+            "blob": "1c3249e9efd53c16791e337a98671df35c342e49"
+        },
+        {
+            "path": "migrations/043_f4_domain_audit_safety.php",
+            "blob": "e1a5b5cd3795ecd173107d97454747a0dd511e02"
+        },
+        {
+            "path": "migrations/044_f4_cloud_operations.php",
+            "blob": "2589d547c2fcc2fbd495c2e9bd756fc24a4c4701"
+        },
+        {
+            "path": "migrations/045_cloud_purchase_containment.php",
+            "blob": "8db428671f88f829898e22adc0cb7f376f377684"
+        },
+        {
+            "path": "migrations/046_cloud_metering_costs.php",
+            "blob": "4b02fa4ce527823684817dd08a1a970ed1e0d276"
+        },
+        {
+            "path": "migrations/047_cloud_cost_admission.php",
+            "blob": "3da480a877c7819f1211c20fd002c788bf326c4d"
+        },
+        {
+            "path": "migrations/048_provider_panel.php",
+            "blob": "c728fa7c52970756f55b5da672007b6a1b55df89"
+        },
+        {
+            "path": "migrations/049_support_core.php",
+            "blob": "d65dab4ba2d04cf012f7f27afe4d2289eab9b713"
+        },
+        {
+            "path": "migrations/050_support_sla_assignment.php",
+            "blob": "0698829ad7ffdac1401f4e4a628c58c97c94ab7d"
+        },
+        {
+            "path": "migrations/051_support_sla_availability.php",
+            "blob": "c288646deaa484ad9b93384e387505271f274401"
+        },
+        {
+            "path": "migrations/052_support_mail.php",
+            "blob": "4c24aacee0a0fcc0ff1ce2bee5edaec195abd849"
+        },
+        {
+            "path": "migrations/053_support_automation_incident_csat.php",
+            "blob": "6a3863e4af92750745f69438486a62c9814b805b"
+        },
+        {
+            "path": "migrations/054_support_ui_state.php",
+            "blob": "98a61f18ca7558fd90775b10ef75d96dc6a10f4d"
+        },
+        {
+            "path": "public/.htaccess",
+            "blob": "90f591fd13dc8ec32c94030b909e63babac277ee"
+        },
+        {
+            "path": "public/assets/commerce.css",
+            "blob": "147714c6975350036b7dec2da9dc9065cd35352f"
+        },
+        {
+            "path": "public/assets/commerce.js",
+            "blob": "90df2525f2ad10a85762deb06a4c36eb16c0f0a3"
+        },
+        {
+            "path": "public/assets/identity.css",
+            "blob": "a7995a3d31c1f14a19215123bb33b06d38ef8a6c"
+        },
+        {
+            "path": "public/assets/identity.js",
+            "blob": "6d41b04e636beedc891a72d563ad44cfff069ad7"
+        },
+        {
+            "path": "public/assets/provider-panel.css",
+            "blob": "1bc81621cf7c9aaf64e4eae3b25e0b63e7e6487d"
+        },
+        {
+            "path": "public/assets/provider-panel.js",
+            "blob": "4c75b7a4cf1f32876978233cdd70144dbf2601de"
+        },
+        {
+            "path": "public/assets/services.js",
+            "blob": "94ac786bfd6df86dbf5747dbd557609a47b5ff97"
+        },
+        {
+            "path": "public/assets/support-state.js",
+            "blob": "755cfea38a2da4caf98c5214b57967814d2be816"
+        },
+        {
+            "path": "public/assets/support.css",
+            "blob": "84d028b488d76da9b176f94c20f5581e69f063ad"
+        },
+        {
+            "path": "public/index.php",
+            "blob": "d1140b8fab725f316ec2f693010316c27731b167"
+        },
+        {
+            "path": "src/Billing/BillingService.php",
+            "blob": "bc1667d09ba7c21025958cb8abf2285cf4bb400a"
+        },
+        {
+            "path": "src/Billing/Credits.php",
+            "blob": "42c59602032f27bf43839e5146d6464b992c14bb"
+        },
+        {
+            "path": "src/Billing/DocumentService.php",
+            "blob": "60253cab01783ca5595f0f0fc82ac57c7be6ae04"
+        },
+        {
+            "path": "src/Billing/DocumentStore.php",
+            "blob": "c3328aaf6fc50739370910d529e419baba81d630"
+        },
+        {
+            "path": "src/Billing/Repository.php",
+            "blob": "744d6af7224344ca903f3583354107592b753529"
+        },
+        {
+            "path": "src/Catalog/BillingCycle.php",
+            "blob": "c9c9bacc3e31dca1906112aa5fcab0529fc9ff69"
+        },
+        {
+            "path": "src/Catalog/CatalogService.php",
+            "blob": "069b587ecb58f5efebe89cc8c7faf42a87a3065f"
+        },
+        {
+            "path": "src/Catalog/CloudCostProposals.php",
+            "blob": "b53689fa16c548e871e1ed09cc2426a36f45719a"
+        },
+        {
+            "path": "src/Catalog/CloudOffers.php",
+            "blob": "304e09ec0c6a0bcd91f7f2f17ecf43ae5a079897"
+        },
+        {
+            "path": "src/Catalog/Promotions.php",
+            "blob": "5c2fd0183ba494b9d63a8f523edb546b286d9629"
+        },
+        {
+            "path": "src/Catalog/Repository.php",
+            "blob": "db20e56a63420e4f87e06be1d93bf7ee1b3bbf10"
+        },
+        {
+            "path": "src/Cloud/Catalog.php",
+            "blob": "2b45e767a1bc89a763adb480f9107fea67e7824c"
+        },
+        {
+            "path": "src/Cloud/Containment.php",
+            "blob": "6c0ce6d251c437283e28a51db7268f0bc62d5825"
+        },
+        {
+            "path": "src/Cloud/Engine.php",
+            "blob": "cfba125e77305992996ee551178ad6b3eed11a17"
+        },
+        {
+            "path": "src/Cloud/Entitlements.php",
+            "blob": "4222e5535817f5127af5d43f62029f43f6a53a01"
+        },
+        {
+            "path": "src/Cloud/EventSink.php",
+            "blob": "8491b037d40df65f845a92f745ffe1f351a4b5f4"
+        },
+        {
+            "path": "src/Cloud/Store.php",
+            "blob": "8d24df6bd5d7c6f65a9957d7f0ab2f6ef42ec10d"
+        },
+        {
+            "path": "src/Cloud/Worker.php",
+            "blob": "ad677ad1fefb2b9cb714466f177b75ef784caf96"
+        },
+        {
+            "path": "src/CloudCosts/Calculator.php",
+            "blob": "c1d2c4ba7c0c2657d1cb3c37b6a542297ff9f6e4"
+        },
+        {
+            "path": "src/CloudCosts/Engine.php",
+            "blob": "93868aff94478d4ce1c20692ab8026adbceed799"
+        },
+        {
+            "path": "src/CloudCosts/EventSink.php",
+            "blob": "08ae3d4880434f87df321972f7a6710aa9a8068a"
+        },
+        {
+            "path": "src/CloudCosts/LocalTransactions.php",
+            "blob": "3219a6e66dd70d32eece336198264cd9cc22ac09"
+        },
+        {
+            "path": "src/CloudCosts/Store.php",
+            "blob": "c1c429b37e139078644202e99693216bebfdf94c"
+        },
+        {
+            "path": "src/CloudCosts/Tariffs.php",
+            "blob": "591a367165db0fab329119f950fbae1bf13318e4"
+        },
+        {
+            "path": "src/Commerce/Commands.php",
+            "blob": "09f0300151fdc2bb6ee6dbc0a5164edbdfa77d05"
+        },
+        {
+            "path": "src/Commerce/Confirmations.php",
+            "blob": "c725f40b2cbc51c0da23f301c1262db719af40ef"
+        },
+        {
+            "path": "src/Commerce/Controller.php",
+            "blob": "ba2e8930eede3bbce07f7b65e925dbe00b06840e"
+        },
+        {
+            "path": "src/Commerce/CurrencyChanges.php",
+            "blob": "4c28f7629ec6e198113cc2de35750c3b25a26ecf"
+        },
+        {
+            "path": "src/Commerce/EventSink.php",
+            "blob": "170ebfe9cc783f508c1123a1443e771e548b19c5"
+        },
+        {
+            "path": "src/Commerce/HandoffPolicy.php",
+            "blob": "0d4202b9cc4e536e7026d447d3ceaf7f3b29e17c"
+        },
+        {
+            "path": "src/Commerce/Panel.php",
+            "blob": "db38ae127ea645f1b2b97caaa698f849a27f5d20"
+        },
+        {
+            "path": "src/Commerce/Services.php",
+            "blob": "028c6ee7527d097d85b8687b20915bb9a6882a04"
+        },
+        {
+            "path": "src/Commerce/State.php",
+            "blob": "6212341059540aa9f7c12df9b6a730d293fbd01e"
+        },
+        {
+            "path": "src/Core/CanonicalJson.php",
+            "blob": "c8d6de77dd76d19fe3fc40d076691491cb617dae"
+        },
+        {
+            "path": "src/Core/Config.php",
+            "blob": "59162ca591c94f04220954365bbfa2b177a6e209"
+        },
+        {
+            "path": "src/Core/Container.php",
+            "blob": "65f7dd6b15bc1aecbb7d1e08908bf4e93adbc991"
+        },
+        {
+            "path": "src/Core/Database/Database.php",
+            "blob": "8d428c196c4be701e202174cec36166c21021502"
+        },
+        {
+            "path": "src/Core/Database/Migrator.php",
+            "blob": "ec52f9dc79446f6304f369cfcc973b0c872627f5"
+        },
+        {
+            "path": "src/Core/Database/VersionFence.php",
+            "blob": "936823d04e9524dc4fc917739a830010cf4b25b5"
+        },
+        {
+            "path": "src/Core/Http/HttpError.php",
+            "blob": "54541f9b6b88acc56548ed163c18cace347f5053"
+        },
+        {
+            "path": "src/Core/Http/Kernel.php",
+            "blob": "e73f042c6aed0130e18221fa5fa99e9214bc811f"
+        },
+        {
+            "path": "src/Core/Http/Request.php",
+            "blob": "699b1b0ea8f3467933029361092a7fdf27ed8957"
+        },
+        {
+            "path": "src/Core/Http/Response.php",
+            "blob": "861ccc7082e41fcdaa83e37ecd98b8fee96aebbd"
+        },
+        {
+            "path": "src/Core/Http/Router.php",
+            "blob": "13fe400f2ea5d7e86e813f15ac7994989c33b778"
+        },
+        {
+            "path": "src/Core/Id.php",
+            "blob": "8eeaf94cfdcd2412d1aa60c283891a4e47d2f0be"
+        },
+        {
+            "path": "src/Core/Idempotency.php",
+            "blob": "eb81f99be0475e0a71380fd21b59932cb2b3553a"
+        },
+        {
+            "path": "src/Core/Queue/Outbox.php",
+            "blob": "41fffd646221e22fdaa5106e7c509e91efd17f16"
+        },
+        {
+            "path": "src/Core/Queue/Queue.php",
+            "blob": "3e39001cb1dc1a1741b23760f8a0dfea12f9b384"
+        },
+        {
+            "path": "src/Core/Queue/Retention.php",
+            "blob": "e770ed2f199c561f25dd0c068318dbd9a916784b"
+        },
+        {
+            "path": "src/Core/Queue/Worker.php",
+            "blob": "7ff42e7d6e108199b2a5406e94536d49d7d83dcc"
+        },
+        {
+            "path": "src/Core/SafeLogger.php",
+            "blob": "958a87005816119474a70991d0d76c1386145747"
+        },
+        {
+            "path": "src/Core/Security/AccessGrant.php",
+            "blob": "103d364fb55d074623fa68eba31509951495499b"
+        },
+        {
+            "path": "src/Core/Security/Audit.php",
+            "blob": "396cb0603cf6f81771d89f2d32cee061e02ae404"
+        },
+        {
+            "path": "src/Core/Security/AuditEvent.php",
+            "blob": "4c60e0c46dbaf1d39d974cb9fe45e78ac029e620"
+        },
+        {
+            "path": "src/Core/Security/Authenticator.php",
+            "blob": "f5a0455b2ee14c6b6201acd3e71b8423d34cea36"
+        },
+        {
+            "path": "src/Core/Security/Authorization.php",
+            "blob": "7e222e8b36a25a5ade7a07a4993c8b84fe5acc76"
+        },
+        {
+            "path": "src/Core/Security/Crypto.php",
+            "blob": "4bdbd83d652566e1a430049b4592837c016bc90f"
+        },
+        {
+            "path": "src/Core/Security/Csrf.php",
+            "blob": "129fa360d61f4049a3244b96914306f3f3bb5659"
+        },
+        {
+            "path": "src/Core/Security/EffectPolicy.php",
+            "blob": "0e0d3b50e8222c1e7bbdf03941c7c552690602b1"
+        },
+        {
+            "path": "src/Core/Security/Principal.php",
+            "blob": "b001a9d1b0f322b6e0ea75d009d9b4d8c204b7d5"
+        },
+        {
+            "path": "src/Core/Security/RateLimiter.php",
+            "blob": "5479a99b6c27a9173d11d5da1e2f2d0493043b63"
+        },
+        {
+            "path": "src/Core/Security/Session.php",
+            "blob": "6da033ccffae30bee087b22a840a0165458c5ed9"
+        },
+        {
+            "path": "src/Core/Security/SessionGuard.php",
+            "blob": "a650816d3861dda7f45236fb65c783e51ca418a0"
+        },
+        {
+            "path": "src/Core/Security/SessionSnapshot.php",
+            "blob": "f476dc2c152f0f7218e48c79e7734473599e62d8"
+        },
+        {
+            "path": "src/Core/Validation.php",
+            "blob": "3ab24a4ff373d40876caacb3777e8d624d9fcc53"
+        },
+        {
+            "path": "src/Domains/AttemptEvidence.php",
+            "blob": "9374e4c05698a00954510afe8efe7975d9e50e04"
+        },
+        {
+            "path": "src/Domains/DomainEngine.php",
+            "blob": "67b4d5ca2a7023768f99a6742164060cd46d8e1a"
+        },
+        {
+            "path": "src/Domains/DomainName.php",
+            "blob": "b31ff7a3dbe3f0416d6b2c1170662d0142bc94a1"
+        },
+        {
+            "path": "src/Domains/DomainReconciliation.php",
+            "blob": "4941a8841234c814ed7771c1a124cbb402363c36"
+        },
+        {
+            "path": "src/Domains/DomainRunner.php",
+            "blob": "e67648a36339ed808a75542980d0a2c1eac4364d"
+        },
+        {
+            "path": "src/Domains/DomainWorker.php",
+            "blob": "9a9dfa328938caa4a18c3c8fa9a7c92a56e9b1be"
+        },
+        {
+            "path": "src/Domains/EventSink.php",
+            "blob": "e8d1eb3909081a3e984b79d982c451a8e74213bf"
+        },
+        {
+            "path": "src/Domains/Registry.php",
+            "blob": "5aaeb65d60a750b249704d6838704a28d0b58c44"
+        },
+        {
+            "path": "src/Domains/TldPolicy.php",
+            "blob": "ca190213d080cec12231375b31432bdb59af65d0"
+        },
+        {
+            "path": "src/Finance/CashService.php",
+            "blob": "033b935a747d5e928baeee21445366e9d4084f6e"
+        },
+        {
+            "path": "src/Finance/Currency.php",
+            "blob": "c5d842e4b10a5944acd7d5db4817564069128de8"
+        },
+        {
+            "path": "src/Finance/Decimal.php",
+            "blob": "16d133220b0caacabdb8a36b6ada16631ab9a8cf"
+        },
+        {
+            "path": "src/Finance/FinanceService.php",
+            "blob": "61049246d6691324ce2b52ad1d20edd5c1c7c437"
+        },
+        {
+            "path": "src/Finance/FxSnapshot.php",
+            "blob": "2504416de0108cebc9f3955476b9a53426f8c313"
+        },
+        {
+            "path": "src/Finance/Ledger.php",
+            "blob": "ed1aa4be0c5f4ef505f0be25e96e1951841e5b7f"
+        },
+        {
+            "path": "src/Finance/Money.php",
+            "blob": "52fc3ff743b5245e345ef2bca86b6216e67b0a4b"
+        },
+        {
+            "path": "src/Finance/ProviderCosts.php",
+            "blob": "a75fa620b775f569a10346a1a44d26749e5502eb"
+        },
+        {
+            "path": "src/Finance/Reconciliation.php",
+            "blob": "f904d2aa2d06c08c587608d5df11926318a10d59"
+        },
+        {
+            "path": "src/Finance/Repository.php",
+            "blob": "c2db3cc3816a262cff70446510d9a00de69daee0"
+        },
+        {
+            "path": "src/Finance/Rounding.php",
+            "blob": "03157532c67fae658edf9d79cf61ec77f9e343b2"
+        },
+        {
+            "path": "src/Finance/Unsigned.php",
+            "blob": "816623be232fdd5e1693d9ed076fb0403818e74a"
+        },
+        {
+            "path": "src/Hosting/Pools.php",
+            "blob": "706e2d64f3425d7257be06c75d014eec93a4e261"
+        },
+        {
+            "path": "src/Identity/Controller.php",
+            "blob": "816abfae411ac6f408039bd6894ef7a6068660e9"
+        },
+        {
+            "path": "src/Identity/CriticalActions.php",
+            "blob": "079fe67d5cb0642f907c29c7ad33fbae72d9d616"
+        },
+        {
+            "path": "src/Identity/IdentityService.php",
+            "blob": "de59e66e1a3cd4cc4cfde1f17849f83ee3cca024"
+        },
+        {
+            "path": "src/Identity/Panel.php",
+            "blob": "153d2e939f3ab3a7152cc9a02b16e3bd0883afba"
+        },
+        {
+            "path": "src/Identity/Passwords.php",
+            "blob": "efc0fc26e4867550a03d6f1b9a5b352c6cc7c43c"
+        },
+        {
+            "path": "src/Identity/PersistentSessionGuard.php",
+            "blob": "d45e4ca3cf4dbee97e3dda91a2ea21e47fcad86f"
+        },
+        {
+            "path": "src/Identity/Repository.php",
+            "blob": "029726e74ead17e4cd9280e171de6d5774c04fd8"
+        },
+        {
+            "path": "src/Identity/Totp.php",
+            "blob": "55046d43f522df2f2ed60c0e2f5b1397301aa2cd"
+        },
+        {
+            "path": "src/Orders/OrderService.php",
+            "blob": "5a52f7247466694cab842998e0009d343ed1388a"
+        },
+        {
+            "path": "src/Orders/Repository.php",
+            "blob": "b5265080d93a10a296dc2a2f9bf2160bb4edd0b7"
+        },
+        {
+            "path": "src/Payments/PaymentService.php",
+            "blob": "a53a6e05589f9f66c475849a15f7e2e34f21388d"
+        },
+        {
+            "path": "src/Payments/PaytrBoundary.php",
+            "blob": "a0774cd678d0ec91edc2c715bb16d79a1c83c8db"
+        },
+        {
+            "path": "src/Payments/Repository.php",
+            "blob": "ed6d95a36dc8b29a3f314987f726ece13f410e5d"
+        },
+        {
+            "path": "src/Pricing/ExchangeRatePolicy.php",
+            "blob": "1a52c3baaf4ee6d81a81659d17edee4c20a116c8"
+        },
+        {
+            "path": "src/Pricing/FxRateRepository.php",
+            "blob": "c7e326084f6bc5c1855b9c792e7d3c860ecc5c37"
+        },
+        {
+            "path": "src/Pricing/PriceResolver.php",
+            "blob": "8e368c03c46c17dda2c447edd996d5d5c9014063"
+        },
+        {
+            "path": "src/Pricing/PriceSnapshot.php",
+            "blob": "87a7a50ae078060bf1222c154b4a99f9497f9629"
+        },
+        {
+            "path": "src/Pricing/PromotionEngine.php",
+            "blob": "65392c2dbaeb1bff2c67428db9e6f202faa9e660"
+        },
+        {
+            "path": "src/Pricing/QuoteService.php",
+            "blob": "c2aa5be6796fbc7aea99530ef1f031bacf606651"
+        },
+        {
+            "path": "src/Pricing/RenewalPricePolicy.php",
+            "blob": "64ed77305d148c5d6451b5bc09084e30a9257934"
+        },
+        {
+            "path": "src/Pricing/TaxCalculator.php",
+            "blob": "9de8dfe9f23a1ad62010bd6e425bc2bfec732514"
+        },
+        {
+            "path": "src/ProviderPanel/Access.php",
+            "blob": "1759a366a344db2991c731facc205fe4896ad4e7"
+        },
+        {
+            "path": "src/ProviderPanel/Commands.php",
+            "blob": "e40641877b5659d8a69079b3ffb7aa03b77c8da3"
+        },
+        {
+            "path": "src/ProviderPanel/Confirmations.php",
+            "blob": "b80fac809e9f165ff80331e230a0a39ee9a1817c"
+        },
+        {
+            "path": "src/ProviderPanel/Controller.php",
+            "blob": "cb534d6ac930e1b301f39ee3ed1e10801fe9148e"
+        },
+        {
+            "path": "src/ProviderPanel/Evidence.php",
+            "blob": "b142d61fe9ddc5429af7cc99a6f39123fa86df7e"
+        },
+        {
+            "path": "src/ProviderPanel/Inspections.php",
+            "blob": "ff666c53142341b6632316ac82385400909ed09d"
+        },
+        {
+            "path": "src/ProviderPanel/Panel.php",
+            "blob": "6c2a0e3f528a1f44b50f2797a03cfafebfe6ac16"
+        },
+        {
+            "path": "src/ProviderPanel/Views.php",
+            "blob": "6b58cc52a36f9eef27d4e8c3d34cc393b2654592"
+        },
+        {
+            "path": "src/Providers/Contract/AsyncComputeProvider.php",
+            "blob": "ed389ae2ae2699ee0a0edaf5b11a4d0c7e497800"
+        },
+        {
+            "path": "src/Providers/Contract/ComputeProvider.php",
+            "blob": "9d90da72b4d0c445e6d07f38268d926ac0fae07f"
+        },
+        {
+            "path": "src/Providers/Contract/DomainManagement.php",
+            "blob": "061244fecb5869cb6c6a87628fe9ba36298ad59e"
+        },
+        {
+            "path": "src/Providers/Contract/DomainRegistrar.php",
+            "blob": "ea08d46acf7ac5d92b2dad392af59d4c81c372ef"
+        },
+        {
+            "path": "src/Providers/Contract/HostingProvider.php",
+            "blob": "51b1df7de0d1751c0752c639c11d350e6a8ec146"
+        },
+        {
+            "path": "src/Providers/Contract/HostingRenewal.php",
+            "blob": "81ee9fd71bfdd7bd4609e51e7463b488724b239e"
+        },
+        {
+            "path": "src/Providers/Contract/Operation.php",
+            "blob": "01312d7ac541dcd48f18558cc7a0b75915c3f91d"
+        },
+        {
+            "path": "src/Providers/Contract/PaymentGateway.php",
+            "blob": "4707b6c54799d7516cd6650ff19956a8cef67dda"
+        },
+        {
+            "path": "src/Providers/Contract/Provider.php",
+            "blob": "133c83024d60d8a7334a6950a714b3b30d9aa604"
+        },
+        {
+            "path": "src/Providers/Contract/ProviderResult.php",
+            "blob": "0540aa8bb321f7b68ef147e3f8c0ff9a1d091dd2"
+        },
+        {
+            "path": "src/Providers/Contract/ResultAcceptance.php",
+            "blob": "f83beb1940bb23ee70f808d269fb0851564d284c"
+        },
+        {
+            "path": "src/Providers/Mock/CloudMetering.php",
+            "blob": "1686b277355c4c981281efc405ba870f48130138"
+        },
+        {
+            "path": "src/Providers/Mock/Cpanel.php",
+            "blob": "a9726ca812b34c19ad85a7fba6be0f36c75e113c"
+        },
+        {
+            "path": "src/Providers/Mock/DomainNameApi.php",
+            "blob": "27d00943180681255141dc8d8f0e736dc71e283d"
+        },
+        {
+            "path": "src/Providers/Mock/DurableCpanel.php",
+            "blob": "ec573d455de0ac2e509d258b99acd03b6ca36e83"
+        },
+        {
+            "path": "src/Providers/Mock/DurableRegistrar.php",
+            "blob": "c9b9aa20b1e4827e7850f2b0e1505f927ee89b72"
+        },
+        {
+            "path": "src/Providers/Mock/DurableVoyar.php",
+            "blob": "2e71b3f057e0d6acf70f4aa4b34503b2fe4bb78f"
+        },
+        {
+            "path": "src/Providers/Mock/MockAdapter.php",
+            "blob": "d25ad1fb09039667cbd395d241aa36f5ab525309"
+        },
+        {
+            "path": "src/Providers/Mock/Paytr.php",
+            "blob": "84a44f03801d0438f091806d6201f863b18dc89b"
+        },
+        {
+            "path": "src/Providers/Mock/Registrar.php",
+            "blob": "ccb2f8238b28cce8469cf4bf439f144221abc400"
+        },
+        {
+            "path": "src/Providers/Mock/ResellerClub.php",
+            "blob": "cadafb4c7afc0ae465a9267b47e5c29cff4b64f3"
+        },
+        {
+            "path": "src/Providers/Mock/Voyar.php",
+            "blob": "4ed13c3456741dd08f8c913c7d40394bb36e0417"
+        },
+        {
+            "path": "src/Providers/VoyarMutationFence.php",
+            "blob": "af32774188055a798dce44e786f440a9fb1900b1"
+        },
+        {
+            "path": "src/Providers/WhmBoundary.php",
+            "blob": "9d99e701ba0be89a578036bff2dad88a30232a25"
+        },
+        {
+            "path": "src/Services/ActionWorker.php",
+            "blob": "ea5d2c31a6068d97a4b934452f99927ff7c41907"
+        },
+        {
+            "path": "src/Services/Actions.php",
+            "blob": "adb7fd8e4883918b729b04ea44f1196e2c8e7d79"
+        },
+        {
+            "path": "src/Services/CloudServices.php",
+            "blob": "4427d36c51762d9ac798a831173e22419285fb0f"
+        },
+        {
+            "path": "src/Services/Commands.php",
+            "blob": "3100178b95d98834a18ee8d76dc21a3b0b589f6e"
+        },
+        {
+            "path": "src/Services/Confirmations.php",
+            "blob": "9730da79ca0263fd0bf350363439d3f84c64ea7a"
+        },
+        {
+            "path": "src/Services/Controller.php",
+            "blob": "173a9db31d383fb06d847aea8f5018263ed2e526"
+        },
+        {
+            "path": "src/Services/DomainPeriods.php",
+            "blob": "f32ef2e21d605f052715e571509ad99abe0ae8dc"
+        },
+        {
+            "path": "src/Services/Engine.php",
+            "blob": "17ed7649cb85dbb96137058be7183a972daf5bf2"
+        },
+        {
+            "path": "src/Services/EventSink.php",
+            "blob": "e6ce7cdf3459ca12b672b34a4084703451d944c5"
+        },
+        {
+            "path": "src/Services/Inspector.php",
+            "blob": "cd8b740e4bc3f7f4fbcaf5fd1d6e8f268ff215d3"
+        },
+        {
+            "path": "src/Services/OperationReconciliation.php",
+            "blob": "ca3e25f3f705a8925fe27430044110d8081138ac"
+        },
+        {
+            "path": "src/Services/PackageChanges.php",
+            "blob": "80c6cdc4e0b6f5b6a6fb3bdd9d7596841296e5e5"
+        },
+        {
+            "path": "src/Services/Panel.php",
+            "blob": "d4dc8955b13786b407611fbfa78c0f74ca9baf0b"
+        },
+        {
+            "path": "src/Services/Policies.php",
+            "blob": "9f7f7f3ab820467332acd4f5068eb56399e62b3b"
+        },
+        {
+            "path": "src/Services/Reconciliation.php",
+            "blob": "2cd9fa201e55f53b753285e11cd5859e0b488cfc"
+        },
+        {
+            "path": "src/Services/RegistrationEligibility.php",
+            "blob": "c9b58638950f985796e751df98bc1e90182189a8"
+        },
+        {
+            "path": "src/Services/RenewalWorker.php",
+            "blob": "ce0dd1340de410687227af7979ff1353246ed071"
+        },
+        {
+            "path": "src/Services/Renewals.php",
+            "blob": "5f6fcf8c0b066a9268b5a0f9c9a7ac3dc40807d8"
+        },
+        {
+            "path": "src/Services/Repository.php",
+            "blob": "af6bbcc21e2bda48d5103cc7005ca475a2734307"
+        },
+        {
+            "path": "src/Services/Runner.php",
+            "blob": "a87db5741906f65983a31a42ace702a64b61c951"
+        },
+        {
+            "path": "src/Services/Scheduler.php",
+            "blob": "3747084cfc435a7df01d8c884fa56c59b744a270"
+        },
+        {
+            "path": "src/Services/State.php",
+            "blob": "5b8fcdf7c451478b3ac43fe9eb0d41f244fa6890"
+        },
+        {
+            "path": "src/Services/SupportLinks.php",
+            "blob": "5ff0a45f7f13277ff664fce5df034f39c9440b59"
+        },
+        {
+            "path": "src/Services/Transfers.php",
+            "blob": "8804d375343d6570f2d89df13a21c8ea2f6207e9"
+        },
+        {
+            "path": "src/Services/Views.php",
+            "blob": "7674ba782ac7ee6945c4bfb023b0afbb645eb70e"
+        },
+        {
+            "path": "src/Services/Worker.php",
+            "blob": "871054c27a9245ae12c5c911c645300e7bf3efb1"
+        },
+        {
+            "path": "src/Support/Access.php",
+            "blob": "63e57b958d9ecf333dac1de1ca52714f2c95daad"
+        },
+        {
+            "path": "src/Support/Advanced/Commands.php",
+            "blob": "c0b29cb6922ba8b13c772fac946abbd7811f1cd5"
+        },
+        {
+            "path": "src/Support/Advanced/Common.php",
+            "blob": "88d3afc6b0e8b49dee3cbaae5fd8d06ac6919323"
+        },
+        {
+            "path": "src/Support/Advanced/Controller.php",
+            "blob": "d314ebf079ff9c33a8e9bba369050c254e456382"
+        },
+        {
+            "path": "src/Support/Advanced/Csat.php",
+            "blob": "a60d02961cb3543236d8063cb7b95242c9c1668b"
+        },
+        {
+            "path": "src/Support/Advanced/Incidents.php",
+            "blob": "b5b34877dd3dac2ded9ab7aa7a912f5608bdc942"
+        },
+        {
+            "path": "src/Support/Advanced/Operations.php",
+            "blob": "20592426ac49af8321876223b1d1530433794a10"
+        },
+        {
+            "path": "src/Support/Advanced/Reports.php",
+            "blob": "d107ba62c73c30bc67b51da55274bbe3b82171da"
+        },
+        {
+            "path": "src/Support/Advanced/Views.php",
+            "blob": "ef897a954e27ebac955d34184a2048cb93bc12ea"
+        },
+        {
+            "path": "src/Support/Automation/Ast.php",
+            "blob": "694a8979e38a44bc2221b8cec88fc8f13826a4e4"
+        },
+        {
+            "path": "src/Support/Automation/Engine.php",
+            "blob": "a6e64cf4967784e4b7220ad7cec58a85377d08a5"
+        },
+        {
+            "path": "src/Support/Controller.php",
+            "blob": "41764a0e9e826c7df7086f6908f808d8f02e17d5"
+        },
+        {
+            "path": "src/Support/EventSink.php",
+            "blob": "8041a5b033efdc1258904c8ff75b71a253b8ed78"
+        },
+        {
+            "path": "src/Support/Mail/Attachments.php",
+            "blob": "cdf92388b70e25019e1dd4a19d20be136e4ec40e"
+        },
+        {
+            "path": "src/Support/Mail/Commands.php",
+            "blob": "13847923f21fd8c5bbab867463974f5040434978"
+        },
+        {
+            "path": "src/Support/Mail/Common.php",
+            "blob": "d4031f2b10e3ab2ef279a17d112662433d4bcfd9"
+        },
+        {
+            "path": "src/Support/Mail/Controller.php",
+            "blob": "536b9df82803d91d8b063421770830f397e033b7"
+        },
+        {
+            "path": "src/Support/Mail/DeniedAdapter.php",
+            "blob": "bb9080d60319ced68879f46452702479b0990a82"
+        },
+        {
+            "path": "src/Support/Mail/Factory.php",
+            "blob": "cb615899b037edf1b313d2d8d75e42602c9a4b8c"
+        },
+        {
+            "path": "src/Support/Mail/FileStore.php",
+            "blob": "8cdc890536d39b04c2bd472b3df80c98297bd9e8"
+        },
+        {
+            "path": "src/Support/Mail/Inbound.php",
+            "blob": "a4f2fe11b69177a6d4169507a8545b9cf2d996b0"
+        },
+        {
+            "path": "src/Support/Mail/InboundAdapter.php",
+            "blob": "943c34b3f88eade6396070681f3c92e16d55aae7"
+        },
+        {
+            "path": "src/Support/Mail/Mime.php",
+            "blob": "49c7fc3344d296d3f43fdeb7ed714a1624e5cb36"
+        },
+        {
+            "path": "src/Support/Mail/Outbound.php",
+            "blob": "aa443849f3153068660ef59a55a9cf3b234a6867"
+        },
+        {
+            "path": "src/Support/Mail/Retention.php",
+            "blob": "5617126fbeaafeddb4fd3388bc53358239d3611e"
+        },
+        {
+            "path": "src/Support/Mail/TestAdapter.php",
+            "blob": "2057306ade610496c06b82e29ead97bf413d19c6"
+        },
+        {
+            "path": "src/Support/Mail/Tokens.php",
+            "blob": "7f2bb3e10d8a54bc5c15037bbaef4ed4151d0d26"
+        },
+        {
+            "path": "src/Support/State.php",
+            "blob": "f0a7a9958010ae87899981cb241d13dcf53543e5"
+        },
+        {
+            "path": "src/Support/UI/Commands.php",
+            "blob": "3aa0ddabd31352934c4e8d270968b31f3a53dff7"
+        },
+        {
+            "path": "src/Support/UI/Context.php",
+            "blob": "b564f7c4c80989bf7ac9616d97021424ee280b8d"
+        },
+        {
+            "path": "src/Support/UI/Controller.php",
+            "blob": "a74d58a0a4eb263a02b23cbc6a779299a0fc7869"
+        },
+        {
+            "path": "src/Support/UI/Panel.php",
+            "blob": "6662e87291b23aedeba8ca73430776a94cd226bd"
+        },
+        {
+            "path": "src/Support/UI/StateStore.php",
+            "blob": "cab4b8eaa59e187e3cd8d6a98c2a8dbc5861a77e"
+        },
+        {
+            "path": "src/Support/Work/Assignments.php",
+            "blob": "c8261b882ddec734091873c5f97e671f3b0e3021"
+        },
+        {
+            "path": "src/Support/Work/Calendar.php",
+            "blob": "a3c5e8ddd0213b85c50a71480fcf734e7abdc5d2"
+        },
+        {
+            "path": "src/Support/Work/Clocks.php",
+            "blob": "4156cb2aa4c383b9208d5c0142f0889d1d9146f0"
+        },
+        {
+            "path": "src/Support/Work/Commands.php",
+            "blob": "22a61aee3bc95adb8160c99b2a5d1feca33e65f5"
+        },
+        {
+            "path": "src/Support/Work/Controller.php",
+            "blob": "b3eef10aed6f441b4267b24ea1857b62192b74ea"
+        },
+        {
+            "path": "src/Support/Work/Eligibility.php",
+            "blob": "d33108824ea51831f5a6f818368ff638faf1c875"
+        },
+        {
+            "path": "src/Support/Work/Engine.php",
+            "blob": "61cc018c16ff1ee5138a777a6bc28da2f3fe0061"
+        },
+        {
+            "path": "src/Support/Work/HeldSink.php",
+            "blob": "80f674dc1c103ced1b06be8cb09303ad45eb9ebd"
+        },
+        {
+            "path": "src/Support/Work/Policy.php",
+            "blob": "d80737fbf70f1c7f9db7543e1650634ecb3dc841"
+        },
+        {
+            "path": "src/Support/Work/Store.php",
+            "blob": "0f9de320ee8afa9b5fddd0d7d6df7448e78311c9"
+        },
+        {
+            "path": "src/Support/Work/Time.php",
+            "blob": "99cac324fe727d9e667d888d72d00ad7fd2bdae1"
+        }
+    ],
+    "only_runtime_changes": [
+        "src/Support/Service.php",
+        "src/Support/UI/Views.php",
+        "public/assets/support.js"
+    ],
+    "migration": "001-054 byte-equal; no migration added",
+    "native_attachment_upload_unchanged": true
+}

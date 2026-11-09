@@ -1,0 +1,2 @@
+FAIL F6-D-R2 marker view is rejected before any definer SELECT side effect: Assertion failed: NULL != 12
+1 tests, 1 failures

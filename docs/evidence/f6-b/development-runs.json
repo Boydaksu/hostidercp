@@ -1,0 +1,57 @@
+{
+  "runs": [
+    {
+      "local_run": "f6b-local-first.txt",
+      "tests": 37,
+      "failures": 33,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-third.txt",
+      "tests": 37,
+      "failures": 33,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-fourth.txt",
+      "tests": 37,
+      "failures": 0,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-scope.txt",
+      "tests": 39,
+      "failures": 1,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "f6b-local-final.txt",
+      "tests": 39,
+      "failures": 0,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "snapshot-before.txt",
+      "source_sha": "422bf81f7689523075cf46993486c8f66fd2e827",
+      "failures": 1,
+      "tests": 41,
+      "passed_as_acceptance": false,
+      "reason": "Unmapped row changed within already admitted partial source snapshot"
+    },
+    {
+      "local_run": "f6b-snapshot-after.txt",
+      "failures": 0,
+      "tests": 41,
+      "passed_as_acceptance": false
+    },
+    {
+      "local_run": "local-targeted.txt",
+      "failures": 0,
+      "tests": 42,
+      "source_sha": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+      "passed_as_acceptance": false
+    }
+  ],
+  "final_targeted": "local-targeted.txt",
+  "note": "Development failures retained; only final exact-candidate CI is acceptance evidence"
+}

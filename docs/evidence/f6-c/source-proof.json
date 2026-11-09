@@ -1,0 +1,37 @@
+{
+  "application": {
+    "sha": "c5ee92645a3cda842581fccd86707e76cea4dfde",
+    "tree": "6418118929a977729f6fe12383c689c91f3edad5"
+  },
+  "acceptance_documentation_commit": "541cf9cb6d2efafd4bbc9a7effe03cdd4b70807f",
+  "accepted_f6_b_application": "d4ead54db3aad6208e1a40e70822da7ad1346e33",
+  "f6_b_evidence_commit": "dadef0b3c2d36e44dcbf2236227d160071945566",
+  "acceptance_paths": [
+    "README.md",
+    "docs/F6_PLAN.md",
+    "docs/F6_B_DELIVERY_REPORT.md",
+    "docs/F6_B_B01_REVIEW.md"
+  ],
+  "acceptance_application_unchanged": true,
+  "full_acceptance_dispatched": false,
+  "chromium_and_stability_runs": false,
+  "main_protected_observed": false,
+  "rulesets_observed": [],
+  "protection_mutations": false,
+  "branch": "codex/f5-support-center",
+  "pr": 3,
+  "pr_open_draft": true,
+  "production_unchanged": true,
+  "original_local_document_edit_preserved": true,
+  "final_observations": {
+    "main_protected": false,
+    "main_head": "ada37dc52b324e34380ba836ae7794cebb174ec4",
+    "rulesets": [],
+    "pr": {
+      "number": 3,
+      "state": "open",
+      "draft": true,
+      "head": "c5ee92645a3cda842581fccd86707e76cea4dfde"
+    }
+  }
+}

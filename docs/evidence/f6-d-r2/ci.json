@@ -1,0 +1,57 @@
+{
+  "classification": "SYNTHETIC",
+  "application_sha": "f0db545b5b5fd0e569b07e33efb85e245be16b40",
+  "application_tree": "6482e0d546e9bcafbeeb7872052eda99a97d8d26",
+  "run_id": 40637188575,
+  "url": "https://github.com/Boydaksu/hostidercp/actions/runs/40637188575",
+  "status": "completed",
+  "conclusion": "failure",
+  "attempts": [
+    {
+      "attempt": 1,
+      "scope_job": 122646752817,
+      "result_job": 122646769784,
+      "matrix_placeholder": 122646771331,
+      "conclusion": "failure",
+      "tests_started": false
+    },
+    {
+      "attempt": 2,
+      "scope_job": 122647590476,
+      "result_job": 122647608592,
+      "matrix_placeholder": 122647610155,
+      "conclusion": "failure",
+      "tests_started": false,
+      "user_explicitly_authorized_one_same_sha_retry": true
+    }
+  ],
+  "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+  "php83": {
+    "status": "NOT_RUN",
+    "job_id": null,
+    "suites": null,
+    "tests": null,
+    "failures": null
+  },
+  "php84": {
+    "status": "NOT_RUN",
+    "job_id": null,
+    "suites": null,
+    "tests": null,
+    "failures": null
+  },
+  "expected_registry_only_not_execution": {
+    "suites": 59,
+    "tests": 780
+  },
+  "old_756_names_verified_in_current_ci": false,
+  "old_58_suite_counts_verified_in_current_ci": false,
+  "old_source_blobs_equal": true,
+  "success_evidence": false,
+  "full_dispatched": false,
+  "chromium_executed": false,
+  "stability_marathons_executed": false,
+  "source_changed_between_attempts": false,
+  "further_retries_not_dispatched": true,
+  "raw_logs_committed": false
+}

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require __DIR__.'/harness.php'; require __DIR__.'/database.php';
 use Hostider\Core\{Id,CanonicalJson};
-use Hostider\Core\Database\Migrator;
+use Hostider\Core\Database\{Database,Migrator};
 use Hostider\Core\Http\{Request,HttpError};
 use Hostider\Identity\{Passwords,Totp,Repository};
 $db=integrationDb(); (new Migrator($db,dirname(__DIR__).'/migrations'))->migrate();
@@ -73,12 +73,52 @@ test('F1-B registration verify and reset tokens are encrypted single-use and mai
     same(['denied'=>true],$identity->login('missing@example.invalid',$password,'client',Id::uuid(),'missing-network'));
     same('active',$identity->login('client@example.invalid',$next,'client',Id::uuid(),'next-login')['stage']);
 });
+// These tests use integrationDb's test-only database guard.
+function withIdentityThrottleTime(Database $db, int $timestamp, Closure $check): void
+{
+    $db->execute('SET SESSION timestamp = '.$timestamp);
+    try {
+        same($timestamp, (int) $db->execute('SELECT UNIX_TIMESTAMP()')->fetchColumn());
+        $check();
+    } finally {
+        $db->execute('SET SESSION timestamp = DEFAULT');
+    }
+}
+
 test('F1-B bootstrap is one-use has no seeded password and login throttles account attempts', function () use($identity,$db): void {
     cleanIdentity(); cleanJobs($db); $pw=bin2hex(random_bytes(20)); $identity->bootstrap('admin@example.invalid','Synthetic admin',$pw);
     raises(HttpError::class,fn()=>$identity->bootstrap('second@example.invalid','second',$pw));
-    for($i=0;$i<10;++$i){same(['denied'=>true],$identity->login('nobody@example.invalid','wrong','admin',Id::uuid(),'different'.$i));}
-    same(429,raises(HttpError::class,fn()=>$identity->login('nobody@example.invalid','wrong','admin',Id::uuid(),'extra'))->status);
+
+    // Use distinct windows to exercise the start, middle, and final second.
+    foreach ([1800000000, 1800000450, 1800000899] as $timestamp) {
+        withIdentityThrottleTime($db, $timestamp, function () use ($identity): void {
+            for ($i=0; $i<10; ++$i) {
+                same(['denied'=>true],$identity->login('nobody@example.invalid','wrong','admin',Id::uuid(),'different'.$i));
+            }
+            same(429,raises(HttpError::class,fn()=>$identity->login('nobody@example.invalid','wrong','admin',Id::uuid(),'extra'))->status);
+        });
+    }
 });
+
+test('F1-B account throttle resets on the first second of the next 300-second window', function () use ($identity,$db): void {
+    cleanIdentity();
+    cleanJobs($db);
+    $login = fn(string $network) => $identity->login('reset@example.invalid','wrong','admin',Id::uuid(),$network);
+    $boundary = 1800001200;
+
+    withIdentityThrottleTime($db, $boundary - 1, function () use ($login): void {
+        for ($i=0; $i<10; ++$i) {
+            same(['denied'=>true], $login('reset-'.$i));
+        }
+        $error = raises(HttpError::class, fn() => $login('reset-extra'));
+        same(429, $error->status);
+        same('RATE_LIMITED', $error->errorCode);
+    });
+    withIdentityThrottleTime($db, $boundary, function () use ($login): void {
+        same(['denied'=>true], $login('reset-next-window'));
+    });
+});
+
 test('F1-C staff enrollment MFA recovery replay and trusted-device bypass denial', function () use($identity,$db): void {
     cleanJobs($db); [$id,$ref,$pw,$codes,$secret]=rootFixture();
     raises(HttpError::class,fn()=>$identity->verifyMfa($ref,'admin',Totp::code($secret,intdiv(time(),30))));

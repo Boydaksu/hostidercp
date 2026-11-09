@@ -1,0 +1,21 @@
+F5GR1_SOURCE_MANIFEST_MATCH 512
+F5GR1_PHP 8.3.36
+F5GR1_SUITE_BEGIN tests/support-merge-readonly.php
+FAIL F5-G-R1 01 native HTTP source CSAT CREATE rejects with all business snapshots unchanged: [details redacted]
+FAIL F5-G-R1 02 source CSAT UPDATE and completed-key replay deny without new revisions: [details redacted]
+PASS F5-G-R1 03 normal unmerged CSAT CREATE UPDATE and exact replay keep native semantics
+PASS F5-G-R1 04 merged TARGET CSAT works under native policy status and version
+PASS F5-G-R1 05 source historical CSAT view remains readable and read only
+PASS F5-G-R1 06 native HTTP customer IDOR rejects without leaking source or target
+PASS F5-G-R1 07 stale normal and merged source ticket versions never create a revision
+PASS F5-G-R1 08 native CSRF rejection creates no rating audit outbox or revision
+PASS F5-G-R1 09 revoked session denies CSAT and cached replay
+FAIL F5-G-R1 10 real CSAT and merge process race serializes without post merge rating mutation: [details redacted]
+PASS F5-G-R1 11 service operations work and UI drafts reject SOURCE business writes
+FAIL F5-G-R1 12 native incident link seam rejects SOURCE loaded with view permission: [details redacted]
+FAIL F5-G-R1 13 queued source mail ready does not mutate frozen outbound state: [details redacted]
+PASS F5-G-R1 14 SOURCE original attachment read works upload rejects and TARGET mail stays native
+FAIL F5-G-R1 15 alias disclosure fails closed when target current scope is inconsistent: [details redacted]
+PASS F5-G-R1 16 TARGET native unresolved window and rating versions remain enforced
+16 tests, 6 failures
+F5GR1_SUITE_RESULT tests/support-merge-readonly.php 1

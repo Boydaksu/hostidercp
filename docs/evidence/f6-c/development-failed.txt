@@ -1,0 +1,35 @@
+PASS F6-C completed snapshot independently matches all entities and evidence
+PASS F6-C repeat reversed input and reviewer metadata preserve deterministic fingerprint
+PASS F6-C partial and failed runs never claim complete reconciliation
+PASS F6-C APPLIED status cannot hide missing mapping and orphan target
+PASS F6-C unexpected target entity is reported without repair
+PASS F6-C tampered mapping provenance and payload hashes are independently rejected
+PASS F6-C missing provenance is not accepted from APPLIED flag
+PASS F6-C stale checkpoint wrong snapshot and root tampering require review
+PASS F6-C changed source snapshot never silently reuses APPLIED target
+PASS F6-C customer ownership and target identity mismatch reject matching payload
+PASS F6-C provider account service external identity and claim conflicts are visible
+PASS F6-C wrong claim owner cannot be hidden by valid mapping
+PASS F6-C provider operations remain zero after load retry replay and parallel reads
+PASS F6-C payment allocation and refund mismatches stay review only
+PASS F6-C native Money totals keep allocation wallet collection and remaining separate
+PASS F6-C wallet liability and currency mismatches never cross sum currencies
+PASS F6-C unknown historical FX and payment evidence cannot produce zero difference PASS
+PASS F6-C official PDF and proforma retain independent metadata without byte claims
+PASS F6-C tied message timestamps retain deterministic source sequence and identity order
+PASS F6-C reports never expose private body author path email or credentials
+PASS F6-C private message and attachment metadata conflicts never gain public eligibility
+PASS F6-C test archive still refuses cross customer projection
+PASS F6-C incomplete migration and expired marker fail closed before data reporting
+PASS F6-C reader has physical SELECT only grants and denies excess permissions
+PASS F6-C reader cannot access similarly named sibling or native schema
+PASS F6-C arbitrary DSN source paths users and revoked synthetic authorization are denied
+PASS F6-C missing customer parent and orphan dependencies require review
+PASS F6-C repeated reports leave target finance history and every table byte unchanged
+PASS F6-C absent real source ledger and attachment bytes remain explicitly unverified
+PASS F6-C oversized payload and row inventory are inconclusive rather than truncated PASS
+PASS F6-C module has no native effect adapters transport file copy or repair SQL
+PASS F6-C unexpected refund cannot disappear into equal financial totals
+PASS F6-C target legacy credentials admin and MFA flags remain forbidden facts
+FAIL F6-C unexpected columns or lost uniqueness block bounded reconciliation: SQLSTATE[HY000]: General error: 1553 Cannot drop index 'target_id': needed in a foreign key constraint
+34 tests, 1 failures

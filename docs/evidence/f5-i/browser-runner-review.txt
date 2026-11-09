@@ -1,0 +1,31 @@
+import pathlib,subprocess,os,json,time,uuid,re,hashlib
+r=pathlib.Path(__file__).resolve().parents[2];e=r/'docs/evidence/f5-i';run='hostider-f5i-browser-'+uuid.uuid4().hex[:12];label='hostider.f5i='+run;db=run+'-db';image='sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d';password='SYNTHETIC_FIXTURE_SECRET_REDACTED'
+meta={'classification':'LOCAL_SYNTHETIC_HEADLESS_CHROMIUM','run_id':run,'php_target':'HOST_PHP_8.4.24_NOT_8.4.27','browser_binary':'INSTALLED_GOOGLE_CHROME_HEADLESS_OWN_TEMP_PROFILE','prior_cached_browser_launch':'spawn UNKNOWN; no assertions executed','db_image':image,'network':'Docker bridge; only an ephemeral127.0.0.1 DB port published; browser requests routed exclusively to owned loopback PHP server','suites':[],'started_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())};lines=[];created=False
+manifest={}
+for d in ['src','tests','bootstrap','bin','public','migrations','tools','.github']:
+ for f in (r/d).rglob('*'):
+  n=f.relative_to(r).as_posix()
+  if f.is_file() and not any(x in n for x in ['tools/local/','tools/analysis/vendor/','tools/browser/node_modules/']):manifest[n]=hashlib.sha256(f.read_bytes()).hexdigest()
+meta['source_manifest_sha256']=hashlib.sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest();meta['source_files']=len(manifest);meta['browser_product_version']='156.0.8078.74'
+
+try:
+ p=subprocess.run(['docker','run','-d','--name',db,'--label',label,'--log-driver','none','--publish','127.0.0.1::3306','--tmpfs','/var/lib/mysql:rw,size=4g','-e','MARIADB_ROOT_PASSWORD='+password,'-e','MARIADB_DATABASE=hostider_f0_test','--health-cmd','healthcheck.sh --connect --innodb_initialized','--health-interval','2s','--health-retries','40',image],capture_output=True,text=True);assert p.returncode==0;created=True
+ for _ in range(80):
+  p=subprocess.run(['docker','inspect','--format','{{.State.Health.Status}}',db],capture_output=True,text=True)
+  if p.stdout.strip()=='healthy':break
+  time.sleep(1)
+ else:raise RuntimeError('SYNTHETIC_DB_HEALTH_TIMEOUT')
+ port=json.loads(subprocess.check_output(['docker','inspect','--format','{{json .NetworkSettings.Ports}}',db],text=True))['3306/tcp'][0]['HostPort'];env=os.environ.copy();env.update({'APP_ENV':'test','HTTP_TEST_ENGINE':'interpreter','TEST_DB_DSN':'mysql:host=127.0.0.1;port='+port+';dbname=hostider_f0_test;charset=utf8mb4','TEST_DB_USER':'root','TEST_DB_PASSWORD':password,'F5_E_PLAYWRIGHT':r'C:\Users\alici\AppData\Local\Temp\hostider-f5-i-1f48d0r5\tools\browser\node_modules\playwright','F5_E_NODE':r'C:\ServBay\bin\node.exe','F5_E_BROWSER':r'C:\Program Files\Google\Chrome\Application\chrome.exe'})
+ for suite in ['tests/support-e-browser.php','tests/support-integration-browser.php']:
+  p=subprocess.run(['cmd','/d','/c','php',suite],cwd=r,env=env,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=240,creationflags=subprocess.CREATE_NO_WINDOW)
+  safe=[x for x in p.stdout.splitlines() if x.startswith('PASS ') or re.match(r'^\d+ browser checks, \d+ failures$',x)];lines+=['SUITE '+suite]+safe
+  rec={'path':suite,'exit':p.returncode,'passed':sum(x.startswith('PASS ') for x in safe),'failed':0 if p.returncode==0 else 1,'failure_message':(p.stderr or '\n'.join(x for x in p.stdout.splitlines() if x.startswith('Browser check failed:')))[:500].replace(password,'[redacted]')};meta['suites'].append(rec);print(json.dumps(rec),flush=True)
+ meta['status']='PASS' if all(x['exit']==0 for x in meta['suites']) else 'FAILED'
+except Exception as ex:meta['status']='FAILED_OR_UNAVAILABLE';meta['failure_class']=type(ex).__name__;print(meta['failure_class'],flush=True)
+finally:
+ if created:
+  own=subprocess.run(['docker','inspect','--format','{{index .Config.Labels "hostider.f5i"}}',db],capture_output=True,text=True)
+  if own.stdout.strip()==run:
+   p=subprocess.run(['docker','rm','-f',db],capture_output=True,text=True);meta['cleanup_owned_db_removed']=p.returncode==0
+ meta['host_source_unchanged']=all(hashlib.sha256((r/n).read_bytes()).hexdigest()==h for n,h in manifest.items())
+ meta['finished_at']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime());(e/(run+'.json')).write_bytes((json.dumps(meta,indent=2)+'\n').encode());(e/(run+'.txt')).write_bytes(('\n'.join(lines)+'\n').encode());print(json.dumps({'status':meta['status'],'evidence':run}),flush=True)

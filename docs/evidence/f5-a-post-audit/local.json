@@ -1,0 +1,17 @@
+{
+  "source": "d3712eda6b3d9156187727ced85fff04de7457c5",
+  "environment": "test/mock",
+  "php": "8.4.24",
+  "mariadb": "10.11.18",
+  "pipeline_suites": 51,
+  "pipeline_pass": 433,
+  "pipeline_failures": 0,
+  "baseline_tests": 428,
+  "new_tests": 5,
+  "supplemental_standalone_repeat": 5,
+  "workflow_unchanged": true,
+  "migration_count": 49,
+  "new_migrations": 0,
+  "mail_dispatch": false,
+  "provider_io": false
+}

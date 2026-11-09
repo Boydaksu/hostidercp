@@ -1,0 +1,12 @@
+v23.11.1
+
+
+PASS F5-E selection generation rejects a late response for another ticket
+PASS F5-E response sequence and ticket version prevent backward projection
+PASS F5-E changed scope epoch stops projection until native reload
+3 state checks, 0 failures
+
+PASS F5-G late source alias cannot replace selected merge target
+PASS F5-G stale pre merge target version cannot replace merged projection
+PASS F5-G merge projection scope revocation stops native UI state
+3 state checks, 0 failures

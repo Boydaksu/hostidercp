@@ -1,0 +1,34 @@
+{
+  "full_acceptance": false,
+  "independent_acceptance": "PENDING",
+  "previous_successful_tests_per_php": 625,
+  "application_tree": "e5a4dc3c8daff38e09ed8f1fb1f8225366a91f47",
+  "segmented_successful_tests_per_php": 782,
+  "classification": "LOCAL_DOCKER_SYNTHETIC_SEGMENTED_VALIDATION",
+  "php84": {
+    "exit": 0,
+    "support_tests": 157,
+    "passed": 157,
+    "version": "8.4.27",
+    "failed": 0
+  },
+  "production": "UNCHANGED",
+  "source_modified": false,
+  "migrations_modified": false,
+  "change": "MariaDB test tmpfs 768 MiB to 4 GiB",
+  "php83": {
+    "exit": 0,
+    "support_tests": 157,
+    "passed": 157,
+    "version": "8.3.36",
+    "failed": 0
+  },
+  "tests_modified": false,
+  "previous_successful_suites": 59,
+  "quality_rerun": false,
+  "registry_modified": false,
+  "single_full_broad_pass": false,
+  "application_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "github_fast": "NOT_RUN_EXTERNAL_BILLING",
+  "segmented_successful_suites_per_php": 60
+}

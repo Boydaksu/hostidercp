@@ -1,0 +1,41 @@
+{
+  "classification": "SYNTHETIC",
+  "identity_bound": {
+    "status": "OPEN",
+    "restored_new_owned_schema": "PASS_ESCROW_ONLY",
+    "immutable_source_history_mapping_provenance": "PRESERVED",
+    "correct_authorization_native_validation": "BLOCKED_NO_RUNTIME_CAPABILITY",
+    "wrong_schema_or_account": "REJECTED_NATIVE_AND_ESCROW_GUARDS",
+    "wrong_source_or_signing_context": "REJECTED_COLD_CERTIFICATE",
+    "old_other_backup_replay": "REJECTED_EXACT_OPERATOR_POLICY",
+    "tampered_history_mapping_provenance_ownership": "REJECTED_ESCROW_REPLAY_NO_OVERWRITE",
+    "expired_recovery_authorization": "REJECTED",
+    "duplicate_native_recovery": "BLOCKED",
+    "crash_inside_insert_after_commit": "PRESERVED_EXISTING_32_ESCROW_TESTS_NOT_NEW_COLD_RESTORE",
+    "post_restore_f6c": "BLOCKED_IDENTITY_BOUND",
+    "new_production_migration": "NONE",
+    "proposed_design": "Versioned read-only recovery authority and durable activation/replay/revocation contract; any future 055+ requires separate approval"
+  },
+  "issuer_recovery": {
+    "status": "PARTIAL",
+    "cold_without_source_connection": "PASS_FRESH_CHILD_SOURCE_SCHEMA_DROPPED",
+    "expired_original_vault": "PASS",
+    "encryption_key_only": "REJECTED",
+    "issuer_authority_without_encryption_key": "REJECTED",
+    "wrong_identity_version_context": "REJECTED",
+    "revoked_issuer_or_forged_signature_mac": "REJECTED",
+    "corrupt_aead_ciphertext": "REJECTED_NATIVE_CRYPTO",
+    "tampered_manifest_or_source": "REJECTED",
+    "rotation_old_good_backup": "PASS_PINNED_OLD_PUBLIC_KEY",
+    "operational_lease_vs_recovery_authority": "SEPARATE",
+    "unauthorized_vault_open": "REJECTED",
+    "cached_enrollment_after_expiry": "REJECTED_AFTER_REAL_BEFORE_FAIL",
+    "unenrolled_lost_issuer": "BLOCKED",
+    "cold_native_restore": "BLOCKED",
+    "offsite_custody_clock_policy_rollback_instant_revocation": "NOT_VERIFIED"
+  },
+  "original_archive_bytes": "OPEN",
+  "verification_duplicates": "READ_ONLY_ALLOWED_NOT_SINGLE_USE_ACTIVATION",
+  "crash_before_authority_after_verification": "REAL_CHILD_EXIT_73_NO_REPORT_NO_WRITES",
+  "final_ci": "40566808738: PHP8.3/8.4 both58 suites/756 tests/0 failures; native recovery remains BLOCKED"
+}

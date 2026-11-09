@@ -1,0 +1,118 @@
+{
+  "classification": "SYNTHETIC",
+  "restore": {
+    "classification": "SYNTHETIC",
+    "escrow_restore": "VERIFIED",
+    "native_application_restore": "BLOCKED_IDENTITY_BOUND",
+    "f6c_activation": "BLOCKED_IDENTITY_BOUND",
+    "backup_id": "9ecba4fae9bd376c7e5578da8da8cbb1159dfb557c35ac87bdaca0f8eaeddf7a",
+    "logical_sha256": "617c4a58305a43adb662f8e916901cea537532fd01257906eb8061cc7abb3924",
+    "finance": {
+      "differences_by_currency": {
+        "allocation": {
+          "TRY": "0"
+        },
+        "confirmed_collection": {
+          "TRY": "0"
+        },
+        "official_pdf": {
+          "TRY": "0"
+        },
+        "order_total": {
+          "TRY": "0"
+        },
+        "payment_amount": {
+          "TRY": "0"
+        },
+        "proforma": {
+          "TRY": "0"
+        },
+        "remaining_balance": {
+          "TRY": "0"
+        },
+        "wallet_liability": {
+          "TRY": "0"
+        }
+      },
+      "equal": true,
+      "source": {
+        "ledger_credit": "NOT_AVAILABLE",
+        "ledger_debit": "NOT_AVAILABLE",
+        "no_facts_in_observed_scope": [
+          "refund"
+        ],
+        "real_payment_reconciliation": "NOT_VERIFIED",
+        "status": "OBSERVED_SYNTHETIC_METADATA",
+        "totals": {
+          "allocation": {
+            "TRY": "4000"
+          },
+          "confirmed_collection": {
+            "TRY": "6000"
+          },
+          "official_pdf": {
+            "TRY": "10000"
+          },
+          "order_total": {
+            "TRY": "10000"
+          },
+          "payment_amount": {
+            "TRY": "6000"
+          },
+          "proforma": {
+            "TRY": "10000"
+          },
+          "remaining_balance": {
+            "TRY": "6000"
+          },
+          "wallet_liability": {
+            "TRY": "2000"
+          }
+        }
+      },
+      "target": {
+        "ledger_credit": "NOT_AVAILABLE",
+        "ledger_debit": "NOT_AVAILABLE",
+        "no_facts_in_observed_scope": [
+          "refund"
+        ],
+        "real_payment_reconciliation": "NOT_VERIFIED",
+        "status": "OBSERVED_SYNTHETIC_METADATA",
+        "totals": {
+          "allocation": {
+            "TRY": "4000"
+          },
+          "confirmed_collection": {
+            "TRY": "6000"
+          },
+          "official_pdf": {
+            "TRY": "10000"
+          },
+          "order_total": {
+            "TRY": "10000"
+          },
+          "payment_amount": {
+            "TRY": "6000"
+          },
+          "proforma": {
+            "TRY": "10000"
+          },
+          "remaining_balance": {
+            "TRY": "6000"
+          },
+          "wallet_liability": {
+            "TRY": "2000"
+          }
+        }
+      }
+    },
+    "files": 4,
+    "file_contract": "F6D_DERIVED_SYNTHETIC_SAMPLES_NOT_ORIGINAL_ARCHIVE_BYTES",
+    "replay": false,
+    "provider_create": 0,
+    "production_restore": "NOT_VERIFIED"
+  },
+  "actual_native_sandbox_activation_denied": true,
+  "elapsed_ms": 889,
+  "production_rpo_rto": "NOT_VERIFIED"
+}

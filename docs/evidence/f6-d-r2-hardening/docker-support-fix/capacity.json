@@ -1,0 +1,24 @@
+{
+  "quality_rerun": false,
+  "interpretation": "Actual package DB use exceeds the previous hard cap; same source and assertions continue past old failure with increased capacity",
+  "old_limit_kib": 786432,
+  "observed_before_failure_kib": {
+    "used": 703020,
+    "available": 83412,
+    "percent": 90
+  },
+  "source_sha": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "os_enospc_explicitly_captured": false,
+  "orchestrator_quality_exit_zero_is_placeholder": true,
+  "after_observed_kib": {
+    "php83_used": 1105548,
+    "php84_used": 1155688
+  },
+  "after_limit_kib": 4194304,
+  "before_failure_driver_code": 1005,
+  "before_failure_sqlstate": "HY000",
+  "after_later_observed_kib": {
+    "php83_used": 2174860,
+    "php84_used": 2287580
+  }
+}

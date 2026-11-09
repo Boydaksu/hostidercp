@@ -1,0 +1,16 @@
+{
+  "classification": "SYNTHETIC",
+  "run_id": 40637188575,
+  "attempt": 1,
+  "conclusion": "failure",
+  "application_sha": "f0db545b5b5fd0e569b07e33efb85e245be16b40",
+  "scope_job": 122646752817,
+  "result_job": 122646769784,
+  "skipped_matrix_placeholder": 122646771331,
+  "php_tests_executed": false,
+  "success_evidence": false,
+  "reason": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+  "logs": "Unavailable BlobNotFound; job not started",
+  "user_retry_authorization": "User confirmed billing resolved and authorized one retry on the same exact SHA",
+  "retry_source_changed": false
+}

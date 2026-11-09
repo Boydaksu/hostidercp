@@ -1,0 +1,105 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "all",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "0b58e2c521e71e0b51448240b57862cacd9efc05fae2f6bed02377e0bd58e25e",
+  "source_files": 502,
+  "run_id": "hostider-f5f-5278f725620a-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-30T17:16:17Z",
+  "suites": [
+    {
+      "path": "tests/support-auto-close.php",
+      "passed": 30,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-migrations.php",
+      "passed": 4,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-http.php",
+      "passed": 157,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-b.php",
+      "passed": 28,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-c.php",
+      "passed": 42,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-d.php",
+      "passed": 41,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-e.php",
+      "passed": 27,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/identity-security.php",
+      "passed": 8,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/hardening-unit.php",
+      "passed": 7,
+      "failed": 0,
+      "exit": 0
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "phpstan": 0,
+    "documentation": 0
+  },
+  "safe_output_lines": 385,
+  "php": "8.3.36",
+  "phpstan_totals": {
+    "errors": 0,
+    "file_errors": 0
+  },
+  "phpstan_messages": [],
+  "exit": 0,
+  "status": "PASS",
+  "cleanup": [
+    {
+      "name": "hostider-f5f-5278f725620a-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f5f-5278f725620a-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f5f-5278f725620a-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-30T17:26:26Z"
+}

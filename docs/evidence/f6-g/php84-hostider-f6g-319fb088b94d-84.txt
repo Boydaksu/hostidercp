@@ -1,0 +1,208 @@
+F6G_SOURCE_MANIFEST_MATCH 548
+F6G_PHP 8.4.27
+F6G_UID 10001
+F6G_SUITE_BEGIN tests/hosting-preflight.php
+PASS F6-G 00 a non-files session backend stays UNKNOWN and its callbacks are never invoked
+PASS F6-G 01 full native CLI metadata preflight is safe and inside checked scope
+PASS F6-G 02 missing extension in a real php no-ini process blocks safely
+PASS F6-G 03 actually disabled native mb function blocks required capability
+PASS F6-G 04 missing POSIX and fsync do not block a cPanel core installation observation
+PASS F6-G 05 actual open_basedir denial cannot become a path PASS or leak a path
+PASS F6-G 06 declared CLI web PHP mismatch blocks while matching declaration is unverified
+PASS F6-G 07 real read-only account without FILE cannot attest optional DISKS metadata
+PASS F6-G 08 no explicit descriptor means UNKNOWN and no environment DB fallback
+PASS F6-G 09 closed private descriptor is blocked without raw diagnostics
+PASS F6-G 10 writable config descriptor is rejected without changing its bytes
+PASS F6-G 11 malformed private config never prints secret payload or parser details
+PASS F6-G 12 stdout redacts config credentials hosts usernames private paths and file contents
+PASS F6-G 13 actual symlink configuration path is rejected without following it
+PASS F6-G 14 traversal is rejected even when it names an existing private file
+PASS F6-G 15 source root cannot be declared as the public webroot
+PASS F6-G 16 configuration under public is never treated as safe
+PASS F6-G 17 actual nonroot read-only native storage permission blocks without a write probe
+PASS F6-G 18 real tmpfs space pressure disables F6-F rather than inventing a core capacity floor
+PASS F6-G 19 missing MariaDB DISKS is a feature failure and does not block core metadata
+PASS F6-G 20 minute cron permission remains UNKNOWN even after all local checks pass
+PASS F6-G 21 duplicate checks cannot overwrite an earlier result
+PASS F6-G 22 unknown checks cannot enter a report
+PASS F6-G 23 missing check inventory fails closed
+PASS F6-G 24 arbitrary status or raw diagnostic reason cannot be emitted
+PASS F6-G 25 repeated real CLI observations have byte-identical deterministic sanitized JSON
+PASS F6-G 26 tool leaves every native source byte and private input unchanged
+PASS F6-G 27 live install or mutation options are rejected before metadata use
+PASS F6-G 28 non-readonly and SQL-smuggling descriptor configs are rejected
+PASS F6-G 29 openssl zip curl imagick absence is not an invented global core requirement
+PASS F6-G 30 session SQL mode and UTC mismatches stay unverified without SET repair
+PASS F6-G 31 denied required engine metadata leaves incomplete rather than guessing PASS
+PASS F6-G 32 MySQL or unsupported MariaDB baseline is not silently accepted
+PASS F6-G 33 older PHP and 32-bit observations block the native baseline
+PASS F6-G 34 missing fileinfo or intl closes only the dependent feature
+PASS F6-G 35 disabled PHP file writes and flock close managed files and F6-F without a write attempt
+PASS F6-G 36 descriptor privacy cannot be guessed when UID and proc metadata are unavailable
+PASS F6-G 37 permissive private descriptor mode is rejected without modification
+PASS F6-G 38 unrelated storage directory cannot substitute for the native storage root
+PASS F6-G 39 explicit remote DSN remains unverified without any remote connector
+PASS F6-G 40 caller flags cannot create production permission
+PASS F6-G 41 hard-linked private descriptor is rejected and original bytes survive
+PASS F6-G 42 readonly native installation permissions and supplied readonly mount cannot pass storage writes
+PASS F6-G 43 duplicate and reused descriptor options fail closed
+PASS F6-G 44 real metadata account queries are exactly allowlisted SELECTs with zero mutation
+PASS F6-G 45 explicit metadata query denial remains UNKNOWN and cannot leak its exception
+46 tests, 0 failures
+F6G_SUITE_RESULT tests/hosting-preflight.php 0
+F6G_SUITE_BEGIN tests/run.php
+PASS config rejects absent environment/key and staging live flags
+PASS effect policy denies every live effect in all environments
+PASS production flags cannot bypass open F0 provider gate
+PASS DI shares services and detects circular/missing/duplicate bindings
+PASS router middleware wraps handler in declaration order
+PASS kernel error envelope and logger never leak message/body/headers
+PASS JSON media type/object/depth/size and validation are bounded
+PASS CSRF denies missing/wrong tokens and allows safe reads
+PASS authorization denies anonymous/expired/missing permission/customer scope
+PASS staff requires MFA, department membership and fresh step-up
+PASS AEAD roundtrip randomized nonce, tamper/context/key binding
+PASS canonical fingerprint ignores map ordering and preserves lists/types
+PASS provider contract Hostider\Providers\Mock\Paytr
+PASS provider contract Hostider\Providers\Mock\Cpanel
+PASS provider contract Hostider\Providers\Mock\ResellerClub
+PASS provider contract Hostider\Providers\Mock\DomainNameApi
+PASS provider contract Hostider\Providers\Mock\Voyar
+PASS mock PayTR never accepts live callback as verified payment
+PASS provider normalized results reject unrecognized status/provider/PII error
+19 tests, 0 failures
+F6G_SUITE_RESULT tests/run.php 0
+F6G_SUITE_BEGIN tests/hardening-unit.php
+PASS F01-AUTH staff or administrator status never grants customer access
+PASS F01-AUTH grants bind operation customer service and department together
+PASS F01-AUTH explicit all-customer grant is operation-bound and not impersonation
+PASS F01-AUTH impersonation cannot inherit admin or cross effective account
+PASS F01-AUTH customer service scope and explicit administrator boundary
+PASS F01-JSON nested object order canonicalizes without collapsing types or lists
+PASS F01-PROVIDER production blocks all five mock adapters and mock results
+7 tests, 0 failures
+F6G_SUITE_RESULT tests/hardening-unit.php 0
+F6G_SUITE_BEGIN tests/integration.php
+PASS MariaDB migrations apply/replay and expected table/JSON/status constraints
+PASS migration checksum/missing file/incomplete DDL stop execution
+PASS migration advisory lock excludes concurrent deployer
+PASS actual partial DDL remains APPLYING and blocks runner/readiness
+PASS migration out-of-order insertion and pending readiness fail closed
+PASS business write and outbox rollback/commit together
+PASS idempotency replay, actor/scope isolation, conflict and rollback
+PASS two independent PHP processes cannot execute same idempotency work twice
+PASS two independent worker processes claim exactly one lease
+PASS expired unsafe lease becomes UNKNOWN and stale worker is fenced
+PASS expired safe lease retries with different fencing token
+PASS safe bounded retry/backoff ends in dead letter
+PASS unsafe handler exception is UNKNOWN with no second execution
+PASS unregistered handler fails closed and worker refuses open transaction
+PASS inbox dedupe and consumer failure rolls back receipt
+PASS queue dedupe rejects different payload without modifying original
+PASS rate limiter stores hashed bucket and enforces bound
+PASS audit keeps original actor/effective customer and refuses free text
+PASS F01-QUEUE reordered nested payload reuses one job including legacy JSON
+PASS F01-QUEUE scalar list object and operation differences remain conflicts
+PASS F01-AUDIT security vocabulary persists typed opaque references only
+PASS F01-AUDIT business mutation and audit commit or roll back atomically
+PASS F01-RETENTION rate cleanup preserves active and legacy windows and is bounded
+PASS F01-RETENTION refreshed rate bucket cannot be pruned as expired
+PASS F01-RETENTION succeeded payload redaction keeps dedupe trace attempts and conflicts
+PASS F01-RETENTION never redacts failed unknown pending or running evidence
+26 tests, 0 failures
+F6G_SUITE_RESULT tests/integration.php 0
+F6G_SUITE_BEGIN tests/identity.php
+PASS F1-A request preserves nested object/list types through canonical fingerprint
+PASS F1-A identity schema relationships and initial roles exist without default users
+PASS F1-A ownership is read from authoritative database relation
+PASS F1-B Argon2id policy and verification use native safe hashes
+PASS F1-C TOTP known RFC counter vector and replay fence
+PASS F1-B registration verify and reset tokens are encrypted single-use and mail remains held
+PASS F1-B bootstrap is one-use has no seeded password and login throttles account attempts
+PASS F1-C staff enrollment MFA recovery replay and trusted-device bypass denial
+PASS F1-B persistent guard logout-all and password change invalidate sessions
+PASS F1-D explicit staff customer grant and impersonation actor constraints
+PASS F1-D invitation creates membership without staff permission escalation
+PASS F1-E API keys are shown once scoped hashed revocable and use current owner permissions
+PASS F1-D role revocation fences sessions and identity mutation audit rolls back atomically
+PASS F1-D revocation race serializes at transaction boundary and blocks later mutation
+PASS F1-C enabling customer MFA revokes pre-enrollment sessions and keeps only enrolling session
+PASS F1-D a narrow resource grant cannot authorize a broad customer operation
+16 tests, 0 failures
+F6G_SUITE_RESULT tests/identity.php 0
+F6G_SUITE_BEGIN tests/identity-security.php
+PASS F11 MFA active challenge cannot refresh critical verification and explicit password factor is required
+PASS F11 pending recovery login activates without step-up and trusted staff device cannot bypass MFA
+PASS F11 role grants cannot cross assigned customer or delegate beyond actor resources
+PASS F11 confirmation binds actor session payload version expiry and rolls back validation writes
+PASS F11 confirmation consumption business writes and audit are atomic and replay is single use
+PASS F11 two concurrent confirmation consumers commit only one critical mutation
+PASS F11 trusted customer login and renewal do not grant critical freshness
+PASS F11 stale customer policy staff target and membership approvals are rejected
+8 tests, 0 failures
+F6G_SUITE_RESULT tests/identity-security.php 0
+F6G_SUITE_BEGIN tests/session.php
+PASS session HTTPS/cookie separation, rotation and expiry reset
+1 tests, 0 failures
+F6G_SUITE_RESULT tests/session.php 0
+F6G_SUITE_BEGIN tests/session-concurrency.php
+PASS F01-SESSION slow request releases lock before concurrent request finishes
+PASS F01-SESSION parallel mutations serialize without losing increments
+PASS F01-SESSION stale concurrent replacement gets 409
+PASS F01-SESSION in-flight old request cannot resurrect after rotation
+PASS F01-SESSION in-flight old request cannot resurrect after logout
+PASS F01-SESSION failed mutation aborts and revocation hook denies subsequent write
+PASS F01-SESSION client SID is rejected in admin context
+7 tests, 0 failures
+F6G_SUITE_RESULT tests/session-concurrency.php 0
+F6G_SUITE_BEGIN tests/offline-backup.php
+PASS F6-F 01 actual complete encrypted native backup contains no plaintext secret
+PASS F6-F 02 real isolated native restore matches every row file schema and ledger
+PASS F6-F 03 independently reopened native target has current57 migrations and exact rows
+PASS F6-F 04 native restored attachment decrypts to exact original checksum
+PASS F6-F 05 native official PDF bytes and encrypted metadata restore correctly
+PASS F6-F 06 wrong256 bit key rejects before target allocation
+PASS F6-F 07 modified ciphertext rejects before any restore effects
+PASS F6-F 08 truncated ciphertext cannot be mistaken for a complete backup
+PASS F6-F 09 authenticated but altered final manifest is rejected
+PASS F6-F 10 authenticated missing registered file cannot pass a recomputed manifest
+PASS F6-F 11 traversal in an authenticated file record never escapes private target
+PASS F6-F 12 nonroot source permissions are enforced without changing existing DB data
+PASS F6-F 13 actual insufficient tmpfs free space blocks backup before export
+PASS F6-F 14 real competing DB mutation is blocked during the read locked snapshot
+PASS F6-F 15 noncooperating file change during capture cannot produce success
+PASS F6-F 16 partial export fault leaves no complete archive and preserves source
+PASS F6-F 17 partial restore import fault deletes only new owned target and preserves source
+PASS F6-F 18 completed restore replay and cleanup cannot overwrite existing target
+PASS F6-F 19 concurrent backup process is rejected without second archive or source writes
+PASS F6-F 20 production environment DSN and path inputs fail closed
+PASS F6-F 21 real CLI seal backup restore never print key configuration or payload secrets
+PASS F6-F 22 authenticated migration mismatch rejects before target creation
+PASS F6-F 23 independent ledger sums match and unbalanced native source cannot be backed up
+PASS F6-F 24 audit copy is protected by verification fence and native message triggers remain
+PASS F6-F 25 killed backup leaves only ciphertext and owned cleanup preserves source
+PASS F6-F 26 failure preserves an existing unowned path and refuses destructive cleanup
+PASS F6-F 27 killed restore staging is anonymous and cleanup removes only owned quarantine
+PASS F6-F 28 actual source symlink is rejected and unrelated bytes are preserved
+PASS F6-F 29 inconsistent orphan managed file cannot yield a quiescent backup
+PASS F6-F 30 authenticated schema SQL substitution is data and is never executed
+PASS F6-F 31 authenticated row alteration and duplicate sequence reject before target
+PASS F6-F 32 missing or expired dedicated instance pin cannot authorize operations
+PASS F6-F 33 keygen uses private descriptor and generates distinct256 bit keys without stdout leak
+PASS F6-F 34 missing physical registered source file cannot produce success
+PASS F6-F 35 privileged audit tamper is detected against authenticated backup without repair or source writes
+PASS F6-F 36 keygen refuses a nonempty descriptor without overwriting existing bytes
+36 tests, 0 failures
+F6G_SUITE_RESULT tests/offline-backup.php 0
+F6G_QUALITY_BEGIN check
+523 PHP files checked; 0 violations
+F6G_QUALITY_RESULT check 0
+F6G_QUALITY_BEGIN audit
+548 source/config/test files scanned; 0 findings
+F6G_QUALITY_RESULT audit 0
+F6G_QUALITY_BEGIN phpstan
+F6G_QUALITY_RESULT phpstan 0
+F6G_QUALITY_BEGIN documentation
+919 documentation files: encoding/credential patterns PASS (not a complete secret audit; historical evidence is scanned as text)
+F6G_QUALITY_RESULT documentation 0
+F6G_SOURCE_MANIFEST_MATCH 548

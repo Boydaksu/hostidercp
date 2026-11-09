@@ -1,0 +1,74 @@
+{
+  "run": "hostider-f6h-84-53060a71",
+  "phase": "regression",
+  "php_image": "sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba",
+  "mariadb_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_manifest_sha256": "28f1622142a94532bbdea59671e148b62ee8bc14ad3e68ea25367c8e970be65f",
+  "suites": [
+    {
+      "suite": "hosting-preflight",
+      "pass": 46,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity",
+      "pass": 17,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-throttle-q1",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-security",
+      "pass": 8,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "identity-http",
+      "pass": 6,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "session",
+      "pass": 1,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "session-concurrency",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "integration",
+      "pass": 26,
+      "fail": [],
+      "exit": 0
+    },
+    {
+      "suite": "hardening-unit",
+      "pass": 7,
+      "fail": [],
+      "exit": 0
+    }
+  ],
+  "checks": [],
+  "fail": [],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "ci/doc-check": 0,
+    "phpstan": 0
+  },
+  "php": "8.4.27",
+  "manifest_match": true,
+  "exit": 0
+}

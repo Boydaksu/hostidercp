@@ -1,0 +1,59 @@
+{
+  "status": "TARGETED_VALIDATION_COMPLETE_WITH_RETAINED_RUNNER_FAILURE",
+  "candidate_commit": null,
+  "candidate_source_manifest_sha256": "ec9dcfe23c2b00559170be9ff353ce33b3bf82353e7ab8c16f16b505b3dc4c0c",
+  "candidate_source_files": 478,
+  "independent_p0_acceptance": "PENDING",
+  "r2_exception_applies_to_new_candidate": false,
+  "r2_accepted_application": "53162495902b3b168c2fb8554594e99c23a34d62",
+  "github_actions": "NOT_RUN",
+  "full_acceptance": false,
+  "native_runtime_recovery": "BLOCKED",
+  "real_gates": "OPEN_OR_BLOCKED",
+  "runs": [
+    {
+      "file": "php83-hostider-p0-78079cb1d08b-83.json",
+      "status": "FAILED",
+      "mode": "all",
+      "php": "8.3.36"
+    },
+    {
+      "file": "php83-hostider-p0-dd018e81261b-83.json",
+      "status": "PASS",
+      "mode": "quality",
+      "php": "8.3.36"
+    },
+    {
+      "file": "php84-hostider-p0-2dbd9c0f3d68-84.json",
+      "status": "PASS",
+      "mode": "all",
+      "php": "8.4.27"
+    }
+  ],
+  "per_php": {
+    "8.3.36": {
+      "application_suites": 9,
+      "application_tests": 163,
+      "new_tests": 27,
+      "related_tests": 136,
+      "test_failures": 0,
+      "quality": "PASS_SEPARATE_QUALITY_ONLY_RUN",
+      "first_runner_exit": 255
+    },
+    "8.4.27": {
+      "application_suites": 9,
+      "application_tests": 163,
+      "new_tests": 27,
+      "related_tests": 136,
+      "test_failures": 0,
+      "quality": "PASS"
+    }
+  },
+  "retained_failure": "Initial PHP8.3 runner documentation step255: ephemeral checkout omitted Git index. All163 application tests passed. Runner-only fix creates an ephemeral docs index; no commit. Initial PHPStan output separator did not preserve its exit marker; no first-run PHPStan PASS inferred. Separate same-source quality-only run recorded PHPStan0 and docs0. No PHP8.3 application tests repeated.",
+  "source_changed_during_tests": false,
+  "suite_registry_expected_only": {
+    "packages": 61,
+    "tests": 809,
+    "entire_registry_executed": false
+  }
+}

@@ -1,0 +1,216 @@
+{
+    "classification": "SYNTHETIC",
+    "source_schema_removed": true,
+    "operational_vault_expired": true,
+    "fresh_php_process": true,
+    "original_signing_secret_supplied": false,
+    "writer_or_admin_credentials_supplied": false,
+    "report": {
+        "content": {
+            "classification": "SYNTHETIC",
+            "contract": "hostider.readonly-recovery.v1",
+            "status": "PASS",
+            "verification_scope": "ACTUAL_RESTORED_DB_READ_ONLY",
+            "backup_id": "72383c9085e2581410c3d5a46af395df62fc186cd655144dd55593282399769d",
+            "recovery_attestation_sha256": "c42ab807ac3d3c7a648989f14ca796eeb8e10db985368b5a0f7e84d85082b40f",
+            "source_roots_sha256": "4d679b26c0fce8ef877795c0762b39d4d89418c4b0981862e69419fe22ed3e63",
+            "original_target_snapshot": "f1a2a86649aee1c73f215acbbae9f3eb03a0e509fa6d6d8ca0655bb8bd042883",
+            "source_target_counts": {
+                "f6b_claims": {
+                    "source": 11,
+                    "target": 11,
+                    "matched": 11,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_entities": {
+                    "source": 26,
+                    "target": 26,
+                    "matched": 26,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_environment": {
+                    "source": 1,
+                    "target": 1,
+                    "matched": 1,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_history": {
+                    "source": 4,
+                    "target": 4,
+                    "matched": 4,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_mappings": {
+                    "source": 26,
+                    "target": 26,
+                    "matched": 26,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_provenance": {
+                    "source": 26,
+                    "target": 26,
+                    "matched": 26,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_runs": {
+                    "source": 1,
+                    "target": 1,
+                    "matched": 1,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "f6b_source_snapshots": {
+                    "source": 1,
+                    "target": 1,
+                    "matched": 1,
+                    "unmatched": 0,
+                    "extra": 0
+                },
+                "schema_migrations": {
+                    "source": 1,
+                    "target": 1,
+                    "matched": 1,
+                    "unmatched": 0,
+                    "extra": 0
+                }
+            },
+            "mapping_provenance_checkpoint_sha256": "98f8a2154c83fafbdc4f67cfa272faa12c44e7b0925d6d4187fe69625ca370b0",
+            "immutable_evidence": "MATCHED",
+            "finance": {
+                "source": {
+                    "ledger_credit": "NOT_AVAILABLE",
+                    "ledger_debit": "NOT_AVAILABLE",
+                    "no_facts_in_observed_scope": [
+                        "refund"
+                    ],
+                    "real_payment_reconciliation": "NOT_VERIFIED",
+                    "status": "OBSERVED_SYNTHETIC_METADATA",
+                    "totals": {
+                        "allocation": {
+                            "TRY": "4000"
+                        },
+                        "confirmed_collection": {
+                            "TRY": "6000"
+                        },
+                        "official_pdf": {
+                            "TRY": "10000"
+                        },
+                        "order_total": {
+                            "TRY": "10000"
+                        },
+                        "payment_amount": {
+                            "TRY": "6000"
+                        },
+                        "proforma": {
+                            "TRY": "10000"
+                        },
+                        "remaining_balance": {
+                            "TRY": "6000"
+                        },
+                        "wallet_liability": {
+                            "TRY": "2000"
+                        }
+                    }
+                },
+                "target": {
+                    "status": "OBSERVED_SYNTHETIC_METADATA",
+                    "totals": {
+                        "allocation": {
+                            "TRY": "4000"
+                        },
+                        "confirmed_collection": {
+                            "TRY": "6000"
+                        },
+                        "official_pdf": {
+                            "TRY": "10000"
+                        },
+                        "order_total": {
+                            "TRY": "10000"
+                        },
+                        "payment_amount": {
+                            "TRY": "6000"
+                        },
+                        "proforma": {
+                            "TRY": "10000"
+                        },
+                        "remaining_balance": {
+                            "TRY": "6000"
+                        },
+                        "wallet_liability": {
+                            "TRY": "2000"
+                        }
+                    },
+                    "no_facts_in_observed_scope": [
+                        "refund"
+                    ],
+                    "ledger_debit": "NOT_AVAILABLE",
+                    "ledger_credit": "NOT_AVAILABLE",
+                    "real_payment_reconciliation": "NOT_VERIFIED"
+                },
+                "equal": true,
+                "differences_by_currency": {
+                    "allocation": {
+                        "TRY": "0"
+                    },
+                    "confirmed_collection": {
+                        "TRY": "0"
+                    },
+                    "official_pdf": {
+                        "TRY": "0"
+                    },
+                    "order_total": {
+                        "TRY": "0"
+                    },
+                    "payment_amount": {
+                        "TRY": "0"
+                    },
+                    "proforma": {
+                        "TRY": "0"
+                    },
+                    "remaining_balance": {
+                        "TRY": "0"
+                    },
+                    "wallet_liability": {
+                        "TRY": "0"
+                    }
+                }
+            },
+            "support": {
+                "public_messages": 1,
+                "private_or_unverified_messages": 1,
+                "attachments": 2,
+                "projection": "AGGREGATE_NO_CLIENT_ACCESS"
+            },
+            "original_hmac": "PRESERVED_ENROLMENT_EVIDENCE_NOT_RECOMPUTED",
+            "runtime_authority": "NOT_GRANTED",
+            "native_application_restore": "BLOCKED",
+            "provider_operations": {
+                "CREATE": 0,
+                "RENEW": 0,
+                "TERMINATE": 0
+            },
+            "native_writes": 0,
+            "effects_allowed": false,
+            "reasons": [],
+            "original_archive_bytes": "NOT_VERIFIED",
+            "production_restore": "NOT_VERIFIED",
+            "key_custody": "NOT_VERIFIED",
+            "target_identity_sha256": "9b7299dc7cbff252e3eeb3ec756ef9f010c6235e510a6ec0e8d59bc7d51c4ee8",
+            "observed_target_evidence_sha256": "7431ea5f0ff36169f681928a0e6fa2a5d3ab579c1631a55793cea68f60bd940f",
+            "schema_verification": "MATCHED_BASE_TABLE_DEFINITIONS",
+            "migration": "READY",
+            "authorization": "R1_AND_TARGET_FENCES_PASSED",
+            "consistency": "REPEATABLE_READ_POINT_IN_TIME",
+            "executable_object_inventory": "NOT_VERIFIED_SELECT_ONLY",
+            "routines_triggers": "NOT_CALLED_NO_DML_OR_EXECUTE"
+        },
+        "fingerprint": "36c31cf32cbf1f0933e068eee38c8e8f0c94ba3684550e5c3f2b29d12ff572d0",
+        "attestation": null
+    }
+}

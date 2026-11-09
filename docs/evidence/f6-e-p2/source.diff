@@ -1,0 +1,591 @@
+diff --git a/.github/workflows/f0.yml b/.github/workflows/f0.yml
+index 47d7492..67687b7 100644
+--- a/.github/workflows/f0.yml
++++ b/.github/workflows/f0.yml
+@@ -134,6 +134,7 @@ jobs:
+       - run: php tests/migration-recovery-integrity.php
+       - run: php tests/migration-cutover-preflight.php
+       - run: php tests/migration-cutover-rehearsal.php
++      - run: php tests/migration-discovery.php
+       - run: node --check public/assets/support.js
+       - run: node tests/support-e-state.cjs
+       - name: Locked development-only Chromium checks
+diff --git a/tools/ci/suites.json b/tools/ci/suites.json
+index 00d2f5f..9ba631c 100644
+--- a/tools/ci/suites.json
++++ b/tools/ci/suites.json
+@@ -60,5 +60,6 @@
+   "tests/migration-recovery-target.php",
+   "tests/migration-recovery-integrity.php",
+   "tests/migration-cutover-preflight.php",
+-  "tests/migration-cutover-rehearsal.php"
++  "tests/migration-cutover-rehearsal.php",
++  "tests/migration-discovery.php"
+ ]
+--- /dev/null
++++ b/src/Migration/Discovery/StrictJson.php
+@@ -0,0 +1,62 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\Migration\Discovery;
++use Hostider\Migration\Contract;
++
++/** Bounded UTF-8 JSON. Duplicate keys are checked after JSON escape decoding. */
++final class StrictJson
++{
++    public const MAX_BYTES = 131072;
++    private int $at = 0;
++    private int $nodes = 0;
++    private function __construct(private readonly string $json) {}
++    public static function decode(#[\SensitiveParameter] string $json): \stdClass
++    {
++        Contract::require(strlen($json) > 0 && strlen($json) <= self::MAX_BYTES, 'P2_SIZE');
++        Contract::require(preg_match('//u', $json) === 1 && !str_starts_with($json, "\xEF\xBB\xBF"), 'P2_ENCODING');
++        // The native parser validates grammar, surrogate pairs and nesting first.
++        $value = json_decode($json, false, 16, JSON_THROW_ON_ERROR);
++        Contract::require($value instanceof \stdClass, 'P2_ROOT_OBJECT');
++        $scanner = new self($json); $scanner->value(0); $scanner->space();
++        Contract::require($scanner->at === strlen($json), 'P2_JSON');
++        return $value;
++    }
++    private function space(): void
++    {
++        while (isset($this->json[$this->at]) && str_contains(" \t\r\n", $this->json[$this->at])) { ++$this->at; }
++    }
++    private function string(): string
++    {
++        $start = $this->at++;
++        while (isset($this->json[$this->at])) {
++            $c = $this->json[$this->at++];
++            if ($c === '\\') { ++$this->at; continue; }
++            if ($c === '"') { break; }
++        }
++        $s = json_decode(substr($this->json, $start, $this->at-$start), false, 2, JSON_THROW_ON_ERROR);
++        Contract::require(is_string($s) && strlen($s) <= 128, 'P2_STRING_LIMIT');
++        return $s;
++    }
++    private function value(int $depth): void
++    {
++        Contract::require($depth < 16 && ++$this->nodes <= 8192, 'P2_COMPLEXITY');
++        $this->space(); $c = $this->json[$this->at];
++        if ($c === '{' || $c === '[') {
++            $object = $c === '{'; $end = $object ? '}' : ']'; ++$this->at; $this->space(); $seen = [];
++            if ($this->json[$this->at] === $end) { ++$this->at; return; }
++            while (true) {
++                if ($object) {
++                    $name = $this->string();
++                    Contract::require(!array_key_exists($name, $seen), 'P2_DUPLICATE_KEY'); $seen[$name] = true;
++                    $this->space(); ++$this->at; // colon, already checked by native JSON parser
++                }
++                $this->value($depth+1); $this->space();
++                if ($this->json[$this->at++] === $end) { break; }
++                $this->space(); // comma, already checked by native JSON parser
++            }
++        } elseif ($c === '"') { $this->string(); }
++        else {
++            while (isset($this->json[$this->at]) && !str_contains(",]} \t\r\n", $this->json[$this->at])) { ++$this->at; }
++        }
++    }
++}
+--- /dev/null
++++ b/src/Migration/Discovery/Validator.php
+@@ -0,0 +1,216 @@
++<?php
++declare(strict_types=1);
++namespace Hostider\Migration\Discovery;
++use Hostider\Migration\{Contract, Entity, Fact, Knowledge};
++
++/** Metadata only: no DB, URL, pathname, credentials, raw values or operational effects. */
++final class Validator
++{
++    public const VERSION = 'hostider.offline-discovery.v1';
++    private const CATEGORIES = ['version', 'schema', 'temporal', 'password', 'custom_fields', 'files'];
++    private const CHARSETS = ['UTF8MB4', 'ASCII', 'LATIN1', 'UNKNOWN'];
++    private const COLLATIONS = ['UTF8MB4_BIN', 'UTF8MB4_UNICODE_CI', 'ASCII_BIN', 'LATIN1_BIN', 'UNKNOWN'];
++    private const TYPES = ['INTEGER', 'DECIMAL', 'STRING', 'TEXT', 'BINARY', 'DATETIME', 'BOOLEAN', 'UNKNOWN'];
++
++    private static function fields(mixed $value, array $names): array
++    {
++        Contract::require($value instanceof \stdClass, 'P2_OBJECT');
++        $a = get_object_vars($value); Contract::fields($a, $names); return $a;
++    }
++    private static function items(mixed $v, int $max): array
++    {
++        Contract::require(is_array($v) && array_is_list($v) && count($v) <= $max, 'P2_LIST'); return $v;
++    }
++    private static function one(mixed $v, array $options): string
++    {
++        Contract::require(is_string($v) && in_array($v, $options, true), 'P2_ENUM'); return $v;
++    }
++    private static function source(mixed $v): string
++    {
++        Contract::id($v); Contract::require(preg_match('/^source-[a-f0-9]{64}$/D', $v) === 1, 'P2_SOURCE'); return $v;
++    }
++    private static function snapshot(mixed $v): string
++    {
++        Contract::id($v); Contract::require(preg_match('/^snapshot-[a-f0-9]{64}$/D', $v) === 1, 'P2_SNAPSHOT'); return $v;
++    }
++    private static function unique(string $id, array &$seen): void
++    {
++        Contract::require(!isset($seen[$id]), 'P2_DUPLICATE_ID'); $seen[$id] = true;
++    }
++    private static function fact(mixed $v): Fact
++    {
++        return Fact::fromArray(self::fields($v, ['state', 'value']));
++    }
++    private static function knowledge(Fact $f): string
++    {
++        return match ($f->state) {
++            Knowledge::Known => 'KNOWN_METADATA', Knowledge::Conflicting => 'INCOMPATIBLE',
++            Knowledge::Unverifiable => 'UNVERIFIED', default => 'UNKNOWN',
++        };
++    }
++    private static function bound(mixed $value, string $source, string $snapshot, array $fields): array
++    {
++        $a = self::fields($value, ['source_id', 'snapshot_id', ...$fields]);
++        Contract::require(self::source($a['source_id']) === $source
++            && self::snapshot($a['snapshot_id']) === $snapshot, 'P2_CROSS_SOURCE');
++        return $a;
++    }
++    private static function schema(array $a): string
++    {
++        $schemas = self::items($a['schemas'], 8); $state = $schemas === [] ? 'UNKNOWN' : 'KNOWN_METADATA';
++        $schemaIds = []; $tableIds = []; $incompatible = false;
++        foreach ($schemas as $schema) {
++            $s = self::fields($schema, ['id', 'tables']); self::unique(Contract::sha($s['id']), $schemaIds);
++            $tables = self::items($s['tables'], 64); if ($tables === []) { $state = 'UNKNOWN'; }
++            foreach ($tables as $table) {
++                $t = self::fields($table, ['id', 'charset', 'collation', 'columns', 'indexes']);
++                self::unique(Contract::sha($t['id']), $tableIds);
++                $charset = self::one($t['charset'], self::CHARSETS); $collation = self::one($t['collation'], self::COLLATIONS);
++                if ($charset === 'UNKNOWN' || $collation === 'UNKNOWN') { $state = 'UNKNOWN'; }
++                elseif (!str_starts_with($collation, $charset.'_')) { $incompatible = true; }
++                $columns = self::items($t['columns'], 64); $cols = [];
++                if ($columns === []) { $state = 'UNKNOWN'; }
++                foreach ($columns as $column) {
++                    $c = self::fields($column, ['id', 'type', 'nullable', 'charset', 'collation']);
++                    $id = Contract::sha($c['id']); self::unique($id, $cols);
++                    $type = self::one($c['type'], self::TYPES);
++                    $cc = self::one($c['charset'], ['NONE', ...self::CHARSETS]);
++                    $co = self::one($c['collation'], ['NONE', ...self::COLLATIONS]);
++                    if ($type === 'UNKNOWN' || $cc === 'UNKNOWN' || $co === 'UNKNOWN') { $state = 'UNKNOWN'; }
++                    if (in_array($type, ['STRING', 'TEXT'], true)) {
++                        Contract::require($cc !== 'NONE' && $co !== 'NONE', 'P2_COLUMN_CHARSET');
++                    } elseif ($type !== 'UNKNOWN') {
++                        Contract::require($cc === 'NONE' && $co === 'NONE', 'P2_COLUMN_CHARSET');
++                    }
++                    if ($cc !== 'UNKNOWN' && $co !== 'UNKNOWN'
++                        && !(($cc === 'NONE' && $co === 'NONE') || str_starts_with($co, $cc.'_'))) { $incompatible = true; }
++                    Contract::require(is_bool($c['nullable']), 'P2_TYPE'); $cols[$id] = $c['nullable'];
++                }
++                $indexes = self::items($t['indexes'], 64); $ids = []; $primary = false;
++                foreach ($indexes as $index) {
++                    $i = self::fields($index, ['id', 'kind', 'columns']);
++                    self::unique(Contract::sha($i['id']), $ids); $kind = self::one($i['kind'], ['PRIMARY', 'UNIQUE', 'INDEX']);
++                    Contract::require($kind !== 'PRIMARY' || !$primary, 'P2_MULTIPLE_PRIMARY');
++                    if ($kind === 'PRIMARY') { $primary = true; }
++                    $refs = self::items($i['columns'], 16); Contract::require($refs !== [], 'P2_INDEX'); $seen = [];
++                    foreach ($refs as $ref) {
++                        $id = Contract::sha($ref); self::unique($id, $seen);
++                        Contract::require(array_key_exists($id, $cols), 'P2_INDEX_REFERENCE');
++                        Contract::require($kind !== 'PRIMARY' || $cols[$id] === false, 'P2_PRIMARY_NULLABLE');
++                    }
++                }
++            }
++        }
++        return $incompatible ? 'INCOMPATIBLE' : $state;
++    }
++    private static function report(string $status, array $assessment, array $reasons, ?string $fingerprint): array
++    {
++        return [
++            'contract' => self::VERSION, 'status' => $status, 'assessment' => $assessment,
++            'reasons' => $reasons, 'metadata_fingerprint' => $fingerprint,
++            'source_truth' => 'UNVERIFIED', 'operator_authority' => 'UNVERIFIED',
++            'cryptographic_attestation' => 'NOT_VERIFIED', 'mapping_readiness' => 'NOT_ASSESSED',
++            'G-O03' => 'OPEN', 'cutover_allowed' => false, 'effects_allowed' => false,
++            'real_gate_status' => 'BLOCKED',
++        ];
++    }
++    public function validate(
++        #[\SensitiveParameter] string $json, string $expectedSource, string $expectedSnapshot,
++        array $allowedCustomFields = [],
++    ): array {
++        try {
++            self::source($expectedSource); self::snapshot($expectedSnapshot);
++            $allowed = []; foreach (self::items($allowedCustomFields, 64) as $id) { self::unique(Contract::sha($id), $allowed); }
++            $object = StrictJson::decode($json);
++            $a = self::fields($object, ['contract', 'classification', 'encoding', 'source', 'snapshot',
++                'provenance', ...self::CATEGORIES, 'uncertainties', 'content_sha256']);
++            Contract::require($a['contract'] === self::VERSION && $a['encoding'] === 'UTF-8', 'P2_CONTRACT');
++            $classification = self::one($a['classification'], ['SYNTHETIC', 'SANITIZED_METADATA']);
++            $source = self::fields($a['source'], ['id', 'system']);
++            Contract::require($source['system'] === 'WHMCS' && self::source($source['id']) === $expectedSource, 'P2_SOURCE');
++            $snap = self::fields($a['snapshot'], ['id', 'source_id', 'extracted_at', 'watermark', 'schema_sha256']);
++            Contract::require(self::snapshot($snap['id']) === $expectedSnapshot && self::source($snap['source_id']) === $expectedSource, 'P2_SNAPSHOT');
++            Contract::timestamp($snap['extracted_at']); Contract::timestamp($snap['watermark']);
++            Contract::require($snap['watermark'] <= $snap['extracted_at'], 'P2_TIME_ORDER');
++            $prov = self::bound($a['provenance'], $expectedSource, $expectedSnapshot, ['kind', 'artifact_sha256', 'collected_at']);
++            Contract::require($prov['kind'] === ($classification === 'SYNTHETIC' ? 'SYNTHETIC_FIXTURE' : 'OPERATOR_SUPPLIED_UNVERIFIED'), 'P2_PROVENANCE');
++            Contract::sha($prov['artifact_sha256']); Contract::timestamp($prov['collected_at']);
++            Contract::require($prov['collected_at'] === $snap['extracted_at'], 'P2_PROVENANCE_TIME');
++            Contract::require(hash_equals(Contract::sha($snap['schema_sha256']), Contract::hash($a['schema'])), 'P2_SCHEMA_DIGEST');
++            $v = self::bound($a['version'], $expectedSource, $expectedSnapshot, ['fact']); $version = self::fact($v['fact']);
++            if ($version->state === Knowledge::Known) {
++                Contract::require(preg_match('/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}$/D', $version->value ?? '') === 1, 'P2_VERSION_FORMAT');
++            }
++            $assessment = ['version' => $version->state === Knowledge::Known ? 'UNVERIFIED' : self::knowledge($version)];
++            $assessment['schema'] = self::schema(self::bound($a['schema'], $expectedSource, $expectedSnapshot, ['schemas']));
++            $t = self::bound($a['temporal'], $expectedSource, $expectedSnapshot, ['timezone', 'date_policy']);
++            $zone = self::fact($t['timezone']); $policy = self::one($t['date_policy'], ['UTC', 'LOCAL_UNVERIFIED', 'UNKNOWN']);
++            if ($zone->state === Knowledge::Known) {
++                Contract::require(in_array($zone->value, \DateTimeZone::listIdentifiers(\DateTimeZone::ALL_WITH_BC), true), 'P2_TIMEZONE');
++            }
++            $assessment['temporal'] = self::knowledge($zone);
++            if ($assessment['temporal'] !== 'INCOMPATIBLE' && $policy === 'UNKNOWN') { $assessment['temporal'] = 'UNKNOWN'; }
++            elseif ($assessment['temporal'] !== 'INCOMPATIBLE' && $policy === 'LOCAL_UNVERIFIED') { $assessment['temporal'] = 'UNVERIFIED'; }
++            elseif ($zone->state === Knowledge::Known && $zone->value !== 'UTC') { $assessment['temporal'] = 'INCOMPATIBLE'; }
++            $pw = self::bound($a['password'], $expectedSource, $expectedSnapshot, ['algorithm']);
++            $algorithm = self::one($pw['algorithm'], ['ARGON2ID', 'BCRYPT', 'LEGACY', 'MIXED', 'UNKNOWN', 'UNVERIFIABLE']);
++            $assessment['password'] = in_array($algorithm, ['MIXED', 'UNKNOWN'], true) ? 'UNKNOWN' : 'UNVERIFIED';
++            $custom = self::bound($a['custom_fields'], $expectedSource, $expectedSnapshot, ['items']);
++            $assessment['custom_fields'] = 'KNOWN_METADATA'; $seen = [];
++            foreach (self::items($custom['items'], 64) as $item) {
++                $f = self::fields($item, ['id', 'entity', 'kind']); $id = Contract::sha($f['id']); self::unique($id, $seen);
++                self::one($f['entity'], array_column(Entity::cases(), 'value')); self::one($f['kind'], ['STRING', 'INTEGER', 'BOOLEAN', 'UNKNOWN']);
++                if (!isset($allowed[$id])) { $assessment['custom_fields'] = 'INCOMPATIBLE'; }
++                elseif ($f['kind'] === 'UNKNOWN' && $assessment['custom_fields'] !== 'INCOMPATIBLE') { $assessment['custom_fields'] = 'UNKNOWN'; }
++            }
++            $files = self::bound($a['files'], $expectedSource, $expectedSnapshot, ['state', 'items']);
++            $state = self::one($files['state'], ['COMPLETE', 'MISSING', 'UNKNOWN']);
++            $assessment['files'] = $state === 'COMPLETE' ? 'KNOWN_METADATA' : 'UNKNOWN'; $seen = [];
++            foreach (self::items($files['items'], 128) as $item) {
++                $f = self::fields($item, ['id', 'entity', 'size_bytes', 'content_sha256', 'storage']);
++                self::unique(Contract::sha($f['id']), $seen); Contract::sha($f['content_sha256']);
++                self::one($f['entity'], ['attachment', 'document']);
++                Contract::require(is_int($f['size_bytes']) && $f['size_bytes'] >= 0 && $f['size_bytes'] <= 1099511627776, 'P2_FILE_SIZE');
++                if (self::one($f['storage'], ['PRIVATE', 'UNKNOWN']) === 'UNKNOWN') { $assessment['files'] = 'UNKNOWN'; }
++            }
++            Contract::require($state === 'COMPLETE' || $files['items'] === [], 'P2_FILE_INVENTORY_CONFLICT');
++            $uncertainties = self::items($a['uncertainties'], 6); $seen = [];
++            foreach ($uncertainties as $flag) {
++                self::one($flag, ['VERSION_UNVERIFIED', 'SCHEMA_INCOMPLETE', 'TIMEZONE_UNKNOWN', 'PASSWORD_UNVERIFIED', 'FILES_INCOMPLETE', 'OPERATOR_AUTHORITY_UNVERIFIED']);
++                self::unique($flag, $seen);
++            }
++            $bindings = ['VERSION_UNVERIFIED' => 'version', 'SCHEMA_INCOMPLETE' => 'schema', 'TIMEZONE_UNKNOWN' => 'temporal', 'PASSWORD_UNVERIFIED' => 'password', 'FILES_INCOMPLETE' => 'files'];
++            foreach ($bindings as $flag => $category) {
++                if (isset($seen[$flag]) && $assessment[$category] === 'KNOWN_METADATA') { $assessment[$category] = 'UNVERIFIED'; }
++            }
++            $body = clone $object; unset($body->content_sha256);
++            $fingerprint = Contract::hash($body);
++            Contract::require(hash_equals(Contract::sha($a['content_sha256']), $fingerprint), 'P2_FINGERPRINT');
++            // These are integration prerequisites, never inferred from metadata counts/digests.
++            $assessment['F6_A_identity_values'] = 'UNVERIFIED';
++            $assessment['F6_B_rows_and_files'] = 'UNVERIFIED';
++            $assessment['F6_C_finance_visibility_delta'] = 'UNVERIFIED';
++            $blocked = in_array('INCOMPATIBLE', $assessment, true);
++            return self::report($blocked ? 'BLOCKED' : 'OFFLINE_DISCOVERY_CONTRACT_VALIDATED', $assessment,
++                $blocked ? ['P2_METADATA_CONFLICT'] : [], $fingerprint);
++        } catch (\Throwable $e) {
++            $code = preg_match('/^P2_[A-Z_]+$/D', $e->getMessage()) === 1 ? $e->getMessage() : 'P2_INVALID_METADATA';
++            return self::report('BLOCKED', array_fill_keys(self::CATEGORIES, 'BLOCKED'), [$code], null);
++        }
++    }
++    /** Caller supplies an already opened regular file handle, never a path or URL. No handle ownership transfer. */
++    public function validateStream(
++        #[\SensitiveParameter] mixed $handle, string $source, string $snapshot, array $allowedCustomFields = [],
++    ): array {
++        try {
++            Contract::require(is_resource($handle) && get_resource_type($handle) === 'stream', 'P2_FILE_HANDLE');
++            $meta = stream_get_meta_data($handle); $stat = fstat($handle);
++            Contract::require($meta['stream_type'] === 'STDIO' && $stat !== false
++                && ($stat['mode'] & 0170000) === 0100000 && ftell($handle) === 0, 'P2_FILE_HANDLE');
++            Contract::require($stat['size'] > 0 && $stat['size'] <= StrictJson::MAX_BYTES, 'P2_SIZE');
++            $json = stream_get_contents($handle, StrictJson::MAX_BYTES+1);
++            Contract::require(is_string($json) && strlen($json) === $stat['size'] && feof($handle), 'P2_FILE_CHANGED');
++            return $this->validate($json, $source, $snapshot, $allowedCustomFields);
++        } catch (\Throwable) { return self::report('BLOCKED', array_fill_keys(self::CATEGORIES, 'BLOCKED'), ['P2_FILE_DENIED'], null); }
++    }
++}
+--- /dev/null
++++ b/tests/migration-discovery-fixture.php
+@@ -0,0 +1,44 @@
++<?php
++declare(strict_types=1);
++require_once dirname(__DIR__).'/bootstrap/autoload.php';
++use Hostider\Migration\Contract;
++
++/** Invented metadata shapes only; no actual WHMCS schema, customers, hashes or files. */
++function discoveryId(string $label): string { return Contract::hash(['SYNTHETIC_DISCOVERY_ONLY', $label]); }
++function discoveryFixture(): array
++{
++    $source = 'source-'.discoveryId('instance-a'); $snapshot = 'snapshot-'.discoveryId('snapshot-a');
++    $bind = ['source_id' => $source, 'snapshot_id' => $snapshot];
++    $a = [
++        'contract' => 'hostider.offline-discovery.v1', 'classification' => 'SYNTHETIC', 'encoding' => 'UTF-8',
++        'source' => ['id' => $source, 'system' => 'WHMCS'],
++        'snapshot' => ['id' => $snapshot, 'source_id' => $source, 'extracted_at' => '2026-10-29T00:00:00Z',
++            'watermark' => '2026-10-28T23:00:00Z', 'schema_sha256' => ''],
++        'provenance' => [...$bind, 'kind' => 'SYNTHETIC_FIXTURE', 'artifact_sha256' => discoveryId('metadata-artifact'),
++            'collected_at' => '2026-10-29T00:00:00Z'],
++        // UNKNOWN deliberately avoids inventing supported real WHMCS versions.
++        'version' => [...$bind, 'fact' => ['state' => 'UNKNOWN', 'value' => null]],
++        'schema' => [...$bind, 'schemas' => [
++            ['id' => discoveryId('synthetic-schema'), 'tables' => [
++                ['id' => discoveryId('synthetic-table'), 'charset' => 'UTF8MB4', 'collation' => 'UTF8MB4_BIN',
++                    'columns' => [['id' => discoveryId('synthetic-column'), 'type' => 'INTEGER', 'nullable' => false, 'charset' => 'NONE', 'collation' => 'NONE']],
++                    'indexes' => [['id' => discoveryId('synthetic-index'), 'kind' => 'PRIMARY', 'columns' => [discoveryId('synthetic-column')]]]],
++            ]],
++        ]],
++        'temporal' => [...$bind, 'timezone' => ['state' => 'KNOWN', 'value' => 'UTC'], 'date_policy' => 'UTC'],
++        'password' => [...$bind, 'algorithm' => 'UNKNOWN'],
++        'custom_fields' => [...$bind, 'items' => []],
++        'files' => [...$bind, 'state' => 'COMPLETE', 'items' => [
++            ['id' => discoveryId('synthetic-attachment'), 'entity' => 'attachment', 'size_bytes' => 0,
++                'content_sha256' => discoveryId('not-actual-file-bytes'), 'storage' => 'PRIVATE'],
++        ]],
++        'uncertainties' => ['VERSION_UNVERIFIED', 'PASSWORD_UNVERIFIED', 'OPERATOR_AUTHORITY_UNVERIFIED'],
++    ];
++    return discoverySeal($a);
++}
++function discoverySeal(array $a): array
++{
++    $a['snapshot']['schema_sha256'] = Contract::hash($a['schema']);
++    unset($a['content_sha256']); $a['content_sha256'] = Contract::hash($a); return $a;
++}
++function discoveryJson(array $a): string { return json_encode($a, JSON_THROW_ON_ERROR); }
+--- /dev/null
++++ b/tests/migration-discovery.php
+@@ -0,0 +1,233 @@
++<?php
++declare(strict_types=1);
++require __DIR__.'/harness.php';
++require __DIR__.'/migration-discovery-fixture.php';
++use Hostider\Migration\Discovery\{StrictJson, Validator};
++use Hostider\Migration\Contract;
++
++function discoveryRun(string $json, array $allowed = [], ?string $source = null, ?string $snapshot = null): array
++{
++    $f = discoveryFixture();
++    $r = (new Validator())->validate($json, $source ?? $f['source']['id'], $snapshot ?? $f['snapshot']['id'], $allowed);
++    same(false, $r['effects_allowed']); same(false, $r['cutover_allowed']); same('BLOCKED', $r['real_gate_status']);
++    same('OPEN', $r['G-O03']); same('UNVERIFIED', $r['source_truth']); same('UNVERIFIED', $r['operator_authority']);
++    same('NOT_VERIFIED', $r['cryptographic_attestation']); same('NOT_ASSESSED', $r['mapping_readiness']);
++    same(true, in_array($r['status'], ['BLOCKED', 'OFFLINE_DISCOVERY_CONTRACT_VALIDATED'], true));
++    return $r;
++}
++function discoveryBlock(string $json): array { $r = discoveryRun($json); same('BLOCKED', $r['status']); return $r; }
++function discoveryChange(callable $change): string { $f = discoveryFixture(); $change($f); return discoveryJson(discoverySeal($f)); }
++
++test('P2 01 valid explicitly synthetic metadata contract and safe aggregate report', function(): void {
++    $f = discoveryFixture(); $r = discoveryRun(discoveryJson($f));
++    same('OFFLINE_DISCOVERY_CONTRACT_VALIDATED', $r['status']); same($f['content_sha256'], $r['metadata_fingerprint']);
++    same('KNOWN_METADATA', $r['assessment']['schema']); same('UNKNOWN', $r['assessment']['version']);
++    foreach (['F6_A_identity_values', 'F6_B_rows_and_files', 'F6_C_finance_visibility_delta'] as $k) { same('UNVERIFIED', $r['assessment'][$k]); }
++    same(false, str_contains(json_encode($r), discoveryId('synthetic-table')));
++});
++test('P2 02 every required root field fails closed when missing', function(): void {
++    foreach (array_keys(discoveryFixture()) as $key) {
++        $f = discoveryFixture(); unset($f[$key]); discoveryBlock(discoveryJson($f));
++    }
++});
++test('P2 03 unsupported contract version and encoding rejected', function(): void {
++    foreach (['contract' => 'hostider.offline-discovery.v999', 'encoding' => 'UTF-16'] as $key => $v) {
++        discoveryBlock(discoveryChange(function(array &$f) use ($key, $v): void { $f[$key] = $v; }));
++    }
++});
++test('P2 04 claimed numeric WHMCS version stays unverified unknown remains unknown', function(): void {
++    $r = discoveryRun(discoveryChange(function(array &$f): void { $f['version']['fact'] = ['state' => 'KNOWN', 'value' => '99.99.999']; }));
++    same('UNVERIFIED', $r['assessment']['version']); same('OFFLINE_DISCOVERY_CONTRACT_VALIDATED', $r['status']);
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['version']['fact'] = ['state' => 'KNOWN', 'value' => 'not-a-version']; }));
++});
++test('P2 05 missing table or column metadata cannot imply inventory compatibility', function(): void {
++    $r = discoveryRun(discoveryChange(function(array &$f): void { $f['schema']['schemas'][0]['tables'] = []; }));
++    same('UNKNOWN', $r['assessment']['schema']);
++    $r = discoveryRun(discoveryChange(function(array &$f): void { $t =& $f['schema']['schemas'][0]['tables'][0]; $t['columns'] = []; $t['indexes'] = []; }));
++    same('UNKNOWN', $r['assessment']['schema']);
++    discoveryBlock(discoveryChange(function(array &$f): void { unset($f['schema']['schemas'][0]['tables'][0]['columns']); }));
++});
++test('P2 06 unexpected custom field blocked unless exact out of band allowlist', function(): void {
++    $id = discoveryId('custom');
++    $json = discoveryChange(function(array &$f) use ($id): void { $f['custom_fields']['items'][] = ['id' => $id, 'entity' => 'customer', 'kind' => 'STRING']; });
++    same('INCOMPATIBLE', discoveryBlock($json)['assessment']['custom_fields']);
++    same('KNOWN_METADATA', discoveryRun($json, [$id])['assessment']['custom_fields']);
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['custom_fields']['items'][] = ['id' => discoveryId('custom'), 'entity' => 'customer', 'kind' => 'STRING', 'value' => 'SYNTHETIC_FORBIDDEN_VALUE']; }));
++});
++test('P2 07 charset collation contradiction and unknown label cannot pass', function(): void {
++    $r = discoveryBlock(discoveryChange(function(array &$f): void { $f['schema']['schemas'][0]['tables'][0]['collation'] = 'ASCII_BIN'; }));
++    same('INCOMPATIBLE', $r['assessment']['schema']);
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['schema']['schemas'][0]['tables'][0]['charset'] = 'UNSUPPORTED'; }));
++});
++test('P2 08 password algorithms are metadata claims never hash compatibility', function(): void {
++    foreach (['UNKNOWN', 'MIXED', 'BCRYPT', 'ARGON2ID', 'LEGACY', 'UNVERIFIABLE'] as $algorithm) {
++        $r = discoveryRun(discoveryChange(function(array &$f) use ($algorithm): void { $f['password']['algorithm'] = $algorithm; }));
++        same(in_array($algorithm, ['UNKNOWN', 'MIXED'], true) ? 'UNKNOWN' : 'UNVERIFIED', $r['assessment']['password']);
++    }
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['password']['algorithm'] = 'invented-whmcs-format'; }));
++});
++test('P2 09 duplicate root JSON key rejected even with identical value', function(): void {
++    $j = discoveryJson(discoveryFixture());
++    same(['P2_DUPLICATE_KEY'], discoveryBlock('{"encoding":"UTF-8",'.substr($j, 1))['reasons']);
++});
++test('P2 10 nested duplicate keys and escaped key equivalence rejected', function(): void {
++    foreach (['"kind":"PRIMARY","kind":"PRIMARY"', '"kind":"PRIMARY","\\u006bind":"PRIMARY"'] as $replacement) {
++        $j = str_replace('"kind":"PRIMARY"', $replacement, discoveryJson(discoveryFixture()));
++        same(['P2_DUPLICATE_KEY'], discoveryBlock($j)['reasons']);
++    }
++    $j = str_replace('"encoding":"UTF-8"', '"encoding":"UTF-8","enco\\u0064ing":"UTF-8"', discoveryJson(discoveryFixture()));
++    same(['P2_DUPLICATE_KEY'], discoveryBlock($j)['reasons']);
++});
++test('P2 11 malformed JSON invalid Unicode BOM surrogate and trailing input blocked', function(): void {
++    foreach (['{', '[]', '{}[]', '{"a":1,}', "\xFF", "\xEF\xBB\xBF{}", '{"a":"\\uD800"}', "{\"a\":\"\0\"}"] as $j) { discoveryBlock($j); }
++});
++test('P2 12 byte string depth and node limits enforced', function(): void {
++    discoveryBlock(str_repeat(' ', StrictJson::MAX_BYTES+1));
++    discoveryBlock('{"a":"'.str_repeat('x',129).'"}');
++    discoveryBlock(str_repeat('{"a":',17).'0'.str_repeat('}',17));
++    same(['P2_COMPLEXITY'], discoveryBlock('{"a":['.implode(',', array_fill(0,8192,'0')).']}')['reasons']);
++});
++test('P2 13 out of band expected source binding rejects another source', function(): void {
++    $r = discoveryRun(discoveryJson(discoveryFixture()), [], 'source-'.discoveryId('other'));
++    same('BLOCKED', $r['status']); same(null, $r['metadata_fingerprint']);
++});
++test('P2 14 snapshot provenance and artifact binding mismatch blocked', function(): void {
++    foreach (['source_id', 'snapshot_id'] as $key) {
++        discoveryBlock(discoveryChange(function(array &$f) use ($key): void {
++            $f['provenance'][$key] = ($key === 'source_id' ? 'source-' : 'snapshot-').discoveryId('other');
++        }));
++    }
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['provenance']['collected_at'] = '2026-10-28T00:00:00Z'; }));
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['provenance']['artifact_sha256'] = 'not-digest'; }));
++});
++test('P2 15 every category rejects mixed source snapshot metadata', function(): void {
++    foreach (['version','schema','temporal','password','custom_fields','files'] as $category) {
++        foreach (['source_id','snapshot_id'] as $key) {
++            discoveryBlock(discoveryChange(function(array &$f) use ($category, $key): void {
++                $f[$category][$key] = ($key === 'source_id' ? 'source-' : 'snapshot-').discoveryId('other');
++            }));
++        }
++    }
++});
++test('P2 16 content fingerprint and schema fingerprint tampering rejected', function(): void {
++    $f = discoveryFixture(); $f['files']['items'][0]['size_bytes'] = 99; discoveryBlock(discoveryJson($f));
++    $f = discoveryFixture(); $f['snapshot']['schema_sha256'] = discoveryId('wrong'); unset($f['content_sha256']); $f['content_sha256'] = Contract::hash($f);
++    same(['P2_SCHEMA_DIGEST'], discoveryBlock(discoveryJson($f))['reasons']);
++});
++test('P2 17 forbidden personal data fields never enter report or exception text', function(): void {
++    $marker = 'SYNTHETIC_PERSONAL_DATA_CANARY';
++    $r = discoveryBlock(discoveryChange(function(array &$f) use ($marker): void { $f['source']['customer_email'] = $marker; }));
++    same(false, str_contains(json_encode($r), $marker));
++    $r = discoveryBlock(discoveryChange(function(array &$f) use ($marker): void { $f['schema']['schemas'][0]['tables'][0]['id'] = $marker; }));
++    same(false, str_contains(json_encode($r), $marker));
++});
++test('P2 18 credentials session secrets and actual password hash shapes forbidden', function(): void {
++    $hash = password_hash('SYNTHETIC_TEST_ONLY_NOT_A_CUSTOMER', PASSWORD_BCRYPT, ['cost' => 4]);
++    foreach (['password', 'api_token', 'session_secret', 'password_hash'] as $key) {
++        $r = discoveryBlock(discoveryChange(function(array &$f) use ($key, $hash): void { $f['password'][$key] = $hash; }));
++        same(false, str_contains(json_encode($r), $hash));
++    }
++    discoveryBlock(discoveryChange(function(array &$f) use ($hash): void { $f['password']['algorithm'] = $hash; }));
++});
++test('P2 19 forged G-O03 CLOSED and verified authority fields rejected', function(): void {
++    foreach (['G-O03' => 'CLOSED', 'source_truth' => 'REAL_SOURCE_VERIFIED', 'operator_authority' => 'APPROVED'] as $key => $value) {
++        discoveryBlock(discoveryChange(function(array &$f) use ($key, $value): void { $f[$key] = $value; }));
++    }
++});
++test('P2 20 missing file inventory is UNKNOWN absent category or contradictory items blocked', function(): void {
++    $r = discoveryRun(discoveryChange(function(array &$f): void { $f['files']['state'] = 'MISSING'; $f['files']['items'] = []; }));
++    same('UNKNOWN', $r['assessment']['files']);
++    discoveryBlock(discoveryChange(function(array &$f): void { $f['files']['state'] = 'MISSING'; }));
++    $f=discoveryFixture(); unset($f['files']); discoveryBlock(discoveryJson($f));
++});
++test('P2 21 canonical fingerprint deterministic across repeat and object key order', function(): void {
++    $f = discoveryFixture(); $r = discoveryRun(discoveryJson($f));
++    same($r, discoveryRun(discoveryJson($f)));
++    same($r, discoveryRun(json_encode(array_reverse($f,true), JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR)));
++});
++test('P2 22 malformed typed evidence never produces offline positive', function(): void {
++    foreach ([false, -1, 'true', null, [], (object)[]] as $value) {
++        $f=discoveryFixture(); $f['files']['items'][0]['size_bytes']=$value; discoveryBlock(discoveryJson(discoverySeal($f)));
++    }
++    discoveryBlock(str_replace('"size_bytes":0', '"size_bytes":1.5', discoveryJson(discoveryFixture())));
++});
++test('P2 23 cutover effects readiness escalation always blocked', function(): void {
++    foreach (['effects_allowed'=>true,'cutover_allowed'=>true,'status'=>'CUTOVER_GO','real_gate_status'=>'OPEN'] as $key=>$value) {
++        discoveryBlock(discoveryChange(function(array &$f) use($key,$value): void { $f[$key]=$value; }));
++    }
++});
++test('P2 24 no path URL traversal or filesystem locator accepted', function(): void {
++    foreach (['../private', '/etc/passwd', 'C:\\private', 'https://example.invalid/a', '%2e%2e/private'] as $path) {
++        discoveryBlock(discoveryChange(function(array &$f) use($path): void { $f['files']['items'][0]['path']=$path; }));
++        $r=(new Validator())->validateStream($path,'source-'.discoveryId('a'),'snapshot-'.discoveryId('b'));
++        same('BLOCKED',$r['status']); same(false,$r['effects_allowed']);
++    }
++});
++test('P2 25 regular file handle bounded read and caller ownership preserved', function(): void {
++    $f=discoveryFixture(); $h=tmpfile();
++    try {
++        fwrite($h,discoveryJson($f)); rewind($h);
++        $r=(new Validator())->validateStream($h,$f['source']['id'],$f['snapshot']['id']);
++        same('OFFLINE_DISCOVERY_CONTRACT_VALIDATED',$r['status']); same($f['content_sha256'],$r['metadata_fingerprint']);
++        same(false,$r['cutover_allowed']); same(true,is_resource($h));
++        same('BLOCKED',(new Validator())->validateStream($h,$f['source']['id'],$f['snapshot']['id'])['status']);
++    } finally { fclose($h); }
++});
++test('P2 26 oversized file and non regular stream rejected without path reads', function(): void {
++    $f=discoveryFixture(); $h=tmpfile();
++    try { fwrite($h,str_repeat(' ',StrictJson::MAX_BYTES+1));rewind($h);same('BLOCKED',(new Validator())->validateStream($h,$f['source']['id'],$f['snapshot']['id'])['status']); }
++    finally {fclose($h);}
++    $h=fopen('php://memory','r+');
++    try {fwrite($h,discoveryJson($f));rewind($h);same('BLOCKED',(new Validator())->validateStream($h,$f['source']['id'],$f['snapshot']['id'])['status']);}
++    finally {fclose($h);}
++});
++test('P2 27 duplicate inventory IDs index references primary and bounds rejected', function(): void {
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['schema']['schemas'][]=$f['schema']['schemas'][0];}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$t=&$f['schema']['schemas'][0]['tables'][0];$t['columns'][]=$t['columns'][0];}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['schema']['schemas'][0]['tables'][0]['indexes'][0]['columns']=[discoveryId('absent')];}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['schema']['schemas'][0]['tables'][0]['columns'][0]['nullable']=true;}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['files']['items']=array_fill(0,129,$f['files']['items'][0]);}));
++});
++test('P2 28 timezone date ordering and uncertainty allowlist fail closed', function(): void {
++    same('INCOMPATIBLE', discoveryBlock(discoveryChange(function(array &$f):void {$f['temporal']['timezone']['value']='Europe/Istanbul';}))['assessment']['temporal']);
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['snapshot']['watermark']='2026-11-01T00:00:00Z';}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['uncertainties'][]='OPERATOR_APPROVED';}));
++});
++test('P2 29 sanitized operator supplied classification never establishes truth', function(): void {
++    $r=discoveryRun(discoveryChange(function(array &$f):void {$f['classification']='SANITIZED_METADATA';$f['provenance']['kind']='OPERATOR_SUPPLIED_UNVERIFIED';}));
++    same('OFFLINE_DISCOVERY_CONTRACT_VALIDATED',$r['status']); same('UNVERIFIED',$r['source_truth']);
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['classification']='REAL_SOURCE_VERIFIED';}));
++});
++test('P2 30 strict object list distinction and unknown enum values rejected', function(): void {
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['custom_fields']['items']=(object)[];}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['files']['items'][0]['storage']='PUBLIC';}));
++    discoveryBlock(discoveryChange(function(array &$f):void {$f['schema']['schemas'][0]['tables'][0]['columns'][0]['type']='SECRET_TEXT';}));
++});
++test('P2 31 escaped arbitrary strings do not confuse JSON duplicate scanning', function(): void {
++    $f=discoveryFixture(); $j=str_replace('UTF-8', 'UTF\\u002d8', discoveryJson($f));
++    same(discoveryRun(discoveryJson($f)),discoveryRun($j));
++    $escaped = json_encode(['a' => 'quote"comma,colon:bracket]'], JSON_THROW_ON_ERROR);
++    foreach ([substr($escaped, 0, -1).',"a":1}', '{"a":{"b":[{"x":1,"x":2}]}}'] as $json) {
++        same(['P2_DUPLICATE_KEY'],discoveryBlock($json)['reasons']);
++    }
++});
++test('P2 32 conflicting knowledge cannot be downgraded to unknown by date policy', function(): void {
++    foreach (['UNKNOWN','LOCAL_UNVERIFIED','UTC'] as $policy) {
++        $r=discoveryBlock(discoveryChange(function(array &$f) use($policy):void {$f['temporal']['timezone']=['state'=>'CONFLICTING','value'=>null];$f['temporal']['date_policy']=$policy;}));
++        same('INCOMPATIBLE',$r['assessment']['temporal']);
++    }
++});
++test('P2 33 column charset metadata checked independently of table defaults', function(): void {
++    $r=discoveryBlock(discoveryChange(function(array &$f):void {
++        $c=&$f['schema']['schemas'][0]['tables'][0]['columns'][0];
++        $c['type']='STRING';$c['charset']='UTF8MB4';$c['collation']='ASCII_BIN';
++    }));same('INCOMPATIBLE',$r['assessment']['schema']);
++    $r=discoveryRun(discoveryChange(function(array &$f):void {
++        $c=&$f['schema']['schemas'][0]['tables'][0]['columns'][0];
++        $c['type']='STRING';$c['charset']='UTF8MB4';$c['collation']='UTF8MB4_BIN';
++    }));same('KNOWN_METADATA',$r['assessment']['schema']);
++    discoveryBlock(discoveryChange(function(array &$f):void {
++        $c=&$f['schema']['schemas'][0]['tables'][0]['columns'][0];$c['charset']='UTF8MB4';$c['collation']='UTF8MB4_BIN';
++    }));
++});
++exit(executeTests());

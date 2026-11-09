@@ -1,0 +1,12 @@
+{
+  "base_sha": "06de312796f19485aabb830f6e2cf531238f9975",
+  "base_tree": "50a27f2ca35d6ac97976c44b2a72c0fc0adae87d",
+  "production_migration_tree": "c0729c92dd143c017fdec32421bf67fe6b51e05b",
+  "existing_source_tests_blob_equal": 381,
+  "old_evidence_blob_equal": 487,
+  "migrations_blob_equal": 54,
+  "all_existing_files_except_two_registration_edits_blob_equal": 1133,
+  "p0_p1_r2_changed": false,
+  "new_production_migration": false,
+  "user_review_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7"
+}

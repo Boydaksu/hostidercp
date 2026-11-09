@@ -1,0 +1,16 @@
+26 October 2026; F5-B P1 test/mock only
+Application source: 5869483fd0d977ede646cbef02bdf4a9f2b12bc8
+Real GitHub CI: PHP8.3.36 / PHP8.4.27;51 suites /472 tests /0 failures each
+461 baseline test names preserved;11 new tests PASS
+PHPStan: [OK] No errors
+Lint/architecture:340 PHP files;0 violations
+Pattern scan:352 source/config/test files;0 findings (not a complete security audit)
+Composer locked audit: no security vulnerability advisories
+Service HTTP10 / commerce HTTP30 / session concurrency20 repeats:0 failures each/runtime
+Local targeted regression10 PASS plus failed-target-move1 PASS
+Old b225f3e repository archive:9 functional regressions;7 FAIL /2 PASS
+63 protected files byte/hash equal: migrations001-050, native Identity, Core Queue/Outbox, workflow
+Only additive051; no immutable policy/cycle/history rewrite
+Native F5-A exact event receipts and internal_note privacy unchanged
+Raw CI logs not persisted; only safe summaries, names and GitHub API links
+No real mail/provider dispatch, merge, staging, production or later phase

@@ -1,0 +1,223 @@
+{
+  "base": "4922bcf8060a6d5009359e9d83bb66eb98904631",
+  "historical_root_cause": "ROOT_CAUSE_UNVERIFIED",
+  "separate_race": "REPRODUCED_AND_FIXED",
+  "migrations": "01b51a655655cb4c7483d6b5937555504264ca3f",
+  "history": [
+    {
+      "version": "83",
+      "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+      "run": "hostider-q1-83-d9f00551",
+      "suites": [
+        {
+          "suite": "identity-throttle-q1",
+          "pass": 3,
+          "fail": [
+            {
+              "case": "Q1 account cap survives a 60-second boundary within one 300-second window",
+              "diagnostic": "REDACTED"
+            },
+            {
+              "case": "Q1 network cap denies new account and resets at the exact boundary",
+              "diagnostic": "REDACTED"
+            }
+          ],
+          "exit": 1
+        },
+        {
+          "suite": "identity",
+          "pass": 16,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity",
+          "pass": 16,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity-security",
+          "pass": 8,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "session",
+          "pass": 1,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "session-concurrency",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "hardening-unit",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "integration",
+          "pass": 26,
+          "fail": [],
+          "exit": 0
+        }
+      ],
+      "php": "8.3.36",
+      "exit": 1
+    },
+    {
+      "version": "83",
+      "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+      "run": "hostider-q1-83-41e698bd",
+      "suites": [
+        {
+          "suite": "identity-throttle-q1",
+          "pass": 6,
+          "fail": [
+            {
+              "case": "Q1 delayed old-window contender cannot reset an already exhausted new window",
+              "diagnostic": "CROSS_WINDOW_RESET_REPRODUCED"
+            }
+          ],
+          "exit": 1
+        }
+      ],
+      "php": "8.3.36",
+      "exit": 1
+    },
+    {
+      "source_manifest_sha256": "e0e6deaf32df2204f736873bee8ca584f1eaf15de37f8a1bfe91923d2dd6eb25",
+      "version": "83",
+      "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+      "run": "hostider-q1-83-daba8733",
+      "suites": [
+        {
+          "suite": "identity-throttle-q1",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity",
+          "pass": 16,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity",
+          "pass": 16,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity-security",
+          "pass": 8,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity-http",
+          "pass": 6,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "session",
+          "pass": 1,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "session-concurrency",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "hardening-unit",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "integration",
+          "pass": 26,
+          "fail": [],
+          "exit": 0
+        }
+      ],
+      "php": "8.3.36",
+      "exit": 0
+    },
+    {
+      "source_manifest_sha256": "e0e6deaf32df2204f736873bee8ca584f1eaf15de37f8a1bfe91923d2dd6eb25",
+      "version": "84",
+      "php_image": "sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba",
+      "run": "hostider-q1-84-1ddff24f",
+      "suites": [
+        {
+          "suite": "identity-throttle-q1",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity",
+          "pass": 16,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity",
+          "pass": 16,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity-security",
+          "pass": 8,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "identity-http",
+          "pass": 6,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "session",
+          "pass": 1,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "session-concurrency",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "hardening-unit",
+          "pass": 7,
+          "fail": [],
+          "exit": 0
+        },
+        {
+          "suite": "integration",
+          "pass": 26,
+          "fail": [],
+          "exit": 0
+        }
+      ],
+      "php": "8.4.27",
+      "exit": 0
+    }
+  ],
+  "github_actions": "NOT_RUN"
+}

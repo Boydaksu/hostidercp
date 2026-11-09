@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "stdout": "{\n    \"advisories\": [],\n    \"abandoned\": [],\n    \"filter\": []\n}\n",
+  "stderr": "",
+  "scope": "CURRENT_LOCKED_DEVELOPMENT_DEPENDENCIES",
+  "runtime": "host Composer/PHP; not a PHP target-suite result"
+}

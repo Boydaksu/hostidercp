@@ -1,0 +1,412 @@
+{
+  "count": 42,
+  "cases": [
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B dry-run repeats and reversed fixture produce deterministic plans",
+      "file": "tests/migration-import.php",
+      "line": 9,
+      "case_id": 1
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B dry-run writes no target run claim provenance or checkpoint",
+      "file": "tests/migration-import.php",
+      "line": 10,
+      "case_id": 2
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B dry-run has zero provider payment billing mail and notification calls",
+      "file": "tests/migration-import.php",
+      "line": 11,
+      "case_id": 3
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B first load creates expected separate facts mappings and provenance",
+      "file": "tests/migration-import.php",
+      "line": 12,
+      "case_id": 4
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B second load is no-op preserving all history and immutable data",
+      "file": "tests/migration-import.php",
+      "line": 13,
+      "case_id": 5
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B same identity changed content never overwrites existing facts",
+      "file": "tests/migration-import.php",
+      "line": 14,
+      "case_id": 6
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B customer user membership remain separate without admin MFA credentials",
+      "file": "tests/migration-import.php",
+      "line": 15,
+      "case_id": 7
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B cross-customer ownership is review with zero target facts",
+      "file": "tests/migration-import.php",
+      "line": 16,
+      "case_id": 8
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B four imported providers stay CREATE zero on first load retry and queue replay",
+      "file": "tests/migration-import.php",
+      "line": 17,
+      "case_id": 9
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B 1 4 8 independent PHP workers serialize to one mapping per source",
+      "file": "tests/migration-import.php",
+      "line": 18,
+      "case_id": 10
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B UNKNOWN payment and provider never become PAID ACTIVE or APPLIED",
+      "file": "tests/migration-import.php",
+      "line": 19,
+      "case_id": 11
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B currency allocation refund limits and historical FX remain fail closed",
+      "file": "tests/migration-import.php",
+      "line": 20,
+      "case_id": 12
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B wallet liability and payment allocations retain exact currency amounts once",
+      "file": "tests/migration-import.php",
+      "line": 21,
+      "case_id": 13
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B official document and proforma retain separate original types and numbers",
+      "file": "tests/migration-import.php",
+      "line": 22,
+      "case_id": 14
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B public archive excludes private note author metadata and private attachment path",
+      "file": "tests/migration-import.php",
+      "line": 23,
+      "case_id": 15
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B public archive cross-owner ticket scope is denied",
+      "file": "tests/migration-import.php",
+      "line": 24,
+      "case_id": 16
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B F6-A visibility P1 and forbidden legacy identity fields remain blocked",
+      "file": "tests/migration-import.php",
+      "line": 25,
+      "case_id": 17
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B missing corrupt files and duplicate identities require review not completion",
+      "file": "tests/migration-import.php",
+      "line": 26,
+      "case_id": 18
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B half batch exception rolls back entity mapping provenance and cursor",
+      "file": "tests/migration-import.php",
+      "line": 27,
+      "case_id": 19
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B checkpoint write and target batch roll back atomically on exception",
+      "file": "tests/migration-import.php",
+      "line": 28,
+      "case_id": 20
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B committed prefix resumes once with correct dependencies and final cursor",
+      "file": "tests/migration-import.php",
+      "line": 29,
+      "case_id": 21
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B stale checkpoint and wrong target snapshot do not write targets",
+      "file": "tests/migration-import.php",
+      "line": 30,
+      "case_id": 22
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B actual worker process crash rolls back then new process resumes",
+      "file": "tests/migration-import.php",
+      "line": 31,
+      "case_id": 23
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B actual own connection loss rolls back and reconnect resumes deterministically",
+      "file": "tests/migration-import.php",
+      "line": 32,
+      "case_id": 24
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B changed snapshot is conflict and never overwrites provenance",
+      "file": "tests/migration-import.php",
+      "line": 33,
+      "case_id": 25
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B two source instances stay separate without physical resource or identity merge",
+      "file": "tests/migration-import.php",
+      "line": 34,
+      "case_id": 26
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B competing resource payment email claims never silently merge",
+      "file": "tests/migration-import.php",
+      "line": 35,
+      "case_id": 27
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B target identity cannot be owned by another source even before mapping",
+      "file": "tests/migration-import.php",
+      "line": 36,
+      "case_id": 28
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B mapping target uniqueness is a physical database constraint",
+      "file": "tests/migration-import.php",
+      "line": 37,
+      "case_id": 29
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B immutable facts mappings provenance and history reject runtime update delete",
+      "file": "tests/migration-import.php",
+      "line": 38,
+      "case_id": 30
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B checkpoint tamper and failed migration readiness fail closed",
+      "file": "tests/migration-import.php",
+      "line": 39,
+      "case_id": 31
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B environment and explicit synthetic authority are independent mandatory gates",
+      "file": "tests/migration-import.php",
+      "line": 40,
+      "case_id": 32
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B arbitrary DSN real source URL path rows and credentials are not inputs",
+      "file": "tests/migration-import.php",
+      "line": 41,
+      "case_id": 33
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B matching schema prefix alone cannot bypass actual grants or lease",
+      "file": "tests/migration-import.php",
+      "line": 42,
+      "case_id": 34
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B unexpected native table and forged marker secret deny the sandbox",
+      "file": "tests/migration-import.php",
+      "line": 43,
+      "case_id": 35
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B explicit effect attempts are denied and never dispatch",
+      "file": "tests/migration-import.php",
+      "line": 44,
+      "case_id": 36
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B dry-run conflict check remains read only after a successful load",
+      "file": "tests/migration-import.php",
+      "line": 45,
+      "case_id": 37
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B schema underscore cannot grant SELECT to a similarly named sibling database",
+      "file": "tests/migration-import.php",
+      "line": 46,
+      "case_id": 38
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B real failed additive test DDL remains APPLYING and blocks sandbox replay",
+      "file": "tests/migration-import.php",
+      "line": 47,
+      "case_id": 39
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B synthetic module has no native engines transports or external dispatch dependency",
+      "file": "tests/migration-import.php",
+      "line": 48,
+      "case_id": 40
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B partial snapshot cannot admit changed content before that source row is mapped",
+      "file": "tests/migration-import.php",
+      "line": 49,
+      "case_id": 41
+    },
+    {
+      "kind": "SYNTHETIC_MARIADB_ISOLATED",
+      "name": "F6-B dry-run mapping evidence matches committed mappings and source roots are immutable",
+      "file": "tests/migration-import.php",
+      "line": 50,
+      "case_id": 42
+    }
+  ],
+  "application_sha": "eb3c2f64f8515dcf3ceff6ca7f41c3b9c702e576",
+  "user_minimum_scenarios": {
+    "1": [
+      1
+    ],
+    "2": [
+      2,
+      37
+    ],
+    "3": [
+      3,
+      36,
+      40
+    ],
+    "4": [
+      4,
+      42
+    ],
+    "5": [
+      5
+    ],
+    "6": [
+      6,
+      41
+    ],
+    "7": [
+      7
+    ],
+    "8": [
+      8,
+      16
+    ],
+    "9": [
+      9
+    ],
+    "10": [
+      9,
+      10,
+      26,
+      27,
+      28,
+      29
+    ],
+    "11": [
+      10
+    ],
+    "12": [
+      11
+    ],
+    "13": [
+      11
+    ],
+    "14": [
+      12
+    ],
+    "15": [
+      12
+    ],
+    "16": [
+      13
+    ],
+    "17": [
+      14
+    ],
+    "18": [
+      15,
+      16,
+      17
+    ],
+    "19": [
+      15
+    ],
+    "20": [
+      7,
+      17
+    ],
+    "21": [
+      7,
+      17
+    ],
+    "22": [
+      18
+    ],
+    "23": [
+      19,
+      20,
+      21,
+      23,
+      24
+    ],
+    "24": [
+      5,
+      22
+    ],
+    "25": [
+      32,
+      33,
+      34,
+      35,
+      38
+    ],
+    "26": [
+      33
+    ],
+    "27": "old F6-A 39 tests included in preserved baseline 621; preservation.json and exact CI names",
+    "28": [
+      5,
+      30,
+      31,
+      39,
+      42
+    ]
+  }
+}

@@ -7,4 +7,5 @@
 /build/
 /tools/local/
 /tools/analysis/vendor/
+/tools/browser/node_modules/
 *.log

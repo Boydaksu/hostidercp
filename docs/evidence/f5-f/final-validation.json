@@ -1,0 +1,20 @@
+{
+  "documentation_check": "PASS; final package rechecked before upload",
+  "effects_allowed": false,
+  "existing_native_ui_state_tests": {
+    "fail": 0,
+    "pass": 3
+  },
+  "final_manifest_sha256": "926df6d77291ad3c398464d0d0a69fa2cd1c184281206bc2aff7ac9b7662dce7",
+  "github_prepublication_head": "eba5694b0c73ac126822e95baabd0ed94e591ae1",
+  "live_auto_close_allowed": false,
+  "main_user_file_sha256": "fe09203507b7ad8d97200aa4641b52ad103072804ad66ad41f804d47209a8aa7",
+  "main_worktree_status": "only pre-existing docs/F6_B_B01_REVIEW.md modification",
+  "new_ui_visual_browser_acceptance_claimed": false,
+  "node_syntax": "PASS",
+  "packaging_check_note": "Initial packaging check used compact JSON separators and rejected the digest; corrected to actual unchanged runner serialization. Test/source bytes were not changed.",
+  "pr3": "OPEN / DRAFT",
+  "real_gate_status": "BLOCKED",
+  "source_frozen": true,
+  "source_manifest_serialization": "UTF-8 json.dumps(mapping, sort_keys=True), default separators, no newline; exact runner bytes retained"
+}

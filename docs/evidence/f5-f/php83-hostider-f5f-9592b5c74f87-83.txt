@@ -1,0 +1,21 @@
+F5F_SOURCE_MANIFEST_MATCH 502
+F5F_PHP 8.3.36
+F5F_SUITE_BEGIN tests/support-auto-close.php
+PASS F5-F 01 default disabled no duration no jobs or ticket mutation
+PASS F5-F 02 explicit enable disable revisions and immutable policy audit
+PASS F5-F 03 invalid duration boolean and unexpected policy fields rejected
+PASS F5-F 04 deadline uses last real RESOLVED transition not ticket updated time
+PASS F5-F 05 no other ticket states are changed
+PASS F5-F 06 customer reply invalidates queued close and no reply is lost
+PASS F5-F 07 native allow_reopen false retains atomic rejection after close
+PASS F5-F 08 allow_reopen true creates new native SLA cycle preserves old history
+PASS F5-F 09 stale ticket version rejected current candidate may close
+PASS F5-F 10 concurrent two native workers produce exactly one close
+PASS F5-F 11 duplicate sweep execution and canonical service replay are idempotent
+PASS F5-F 12 old resolution event cannot close a newer resolved cycle
+PASS F5-F 13 policy version change invalidates queued job and disable cancels it
+PASS F5-F 14 department isolation moved resolved ticket needs a local resolution anchor
+PASS F5-F 15 customer and unscoped staff cannot manage department-wide policy
+FAIL F5-F 16 issuer capability and MFA revocation pause durable policy: [details redacted]
+30 tests, 1 failures
+F5F_SUITE_RESULT tests/support-auto-close.php 1

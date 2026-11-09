@@ -1,0 +1,9 @@
+{
+    "classification": "SYNTHETIC",
+    "application_sha": "71e916a6e8e6ceb1eef9f02b5e3c6ee379064eaa",
+    "monthly_tier_count": 12,
+    "same_artifact_daily_monthly_union": true,
+    "incremental_chain": "BLOCKED",
+    "deletion_performed": false,
+    "purpose": "Supplemental monthly boundary probe; excluded from 32-suite test count"
+}

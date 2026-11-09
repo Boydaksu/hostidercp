@@ -29,6 +29,18 @@ final readonly class Queue
         if ($leaseSeconds < 1 || $leaseSeconds > 300) {
             throw new \InvalidArgumentException('Invalid lease');
         }
+        // Retry only a rolled-back local claim transaction, never a job handler or external effect.
+        for ($attempt = 0; ; ++$attempt) {
+            try { return $this->claimTransaction($leaseSeconds); }
+            catch (\PDOException $e) {
+                if ((int) ($e->errorInfo[1] ?? 0) !== 1213 || $attempt >= 4) { throw $e; }
+                usleep(($attempt + 1) * 25_000);
+            }
+        }
+    }
+
+    private function claimTransaction(int $leaseSeconds): ?array
+    {
         return $this->db->transaction(function () use ($leaseSeconds): ?array {
             // Expired external/unsafe work is never automatically dispatched again.
             $expired = $this->db->execute("SELECT * FROM jobs WHERE status='RUNNING' AND leased_until<=UTC_TIMESTAMP(6) ORDER BY id LIMIT 100 FOR UPDATE SKIP LOCKED")->fetchAll();

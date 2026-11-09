@@ -1,0 +1,104 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "target",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "3776d1c3c2b61e8f210649e748d7dc71ec96035365200e19ec0b6ba3604a2487",
+  "source_files": 536,
+  "run_id": "hostider-f6f-8e59823d4b5f-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "scope": "target",
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-31T17:25:39Z",
+  "suites": [
+    {
+      "path": "tests/offline-backup.php",
+      "passed": 24,
+      "failed": 1,
+      "exit": 1
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "phpstan": 0,
+    "documentation": 0
+  },
+  "safe_output_lines": 45,
+  "registry_before": {
+    "suites": 70,
+    "expected_tests": 1054
+  },
+  "registry_candidate_suites": 70,
+  "php": "8.3.36",
+  "observations": [
+    {
+      "safe_stage": "document",
+      "exception": "RuntimeException",
+      "trace": [
+        {
+          "function": "require",
+          "class": "Hostider\\OfflineBackup\\Guard",
+          "file": "Workspace.php"
+        },
+        {
+          "function": "set",
+          "class": "Hostider\\OfflineBackup\\Workspace",
+          "file": "Workspace.php"
+        },
+        {
+          "function": "cleanup",
+          "class": "Hostider\\OfflineBackup\\Workspace",
+          "file": "offline-backup.php"
+        },
+        {
+          "function": "{closure}",
+          "class": "",
+          "file": "offline-backup.php"
+        },
+        {
+          "function": "{closure}",
+          "class": "",
+          "file": "harness.php"
+        },
+        {
+          "function": "executeTests",
+          "class": "",
+          "file": "offline-backup.php"
+        }
+      ]
+    }
+  ],
+  "integration_failures": [
+    "F6F_STATE_TRANSITION"
+  ],
+  "phpstan_totals": {
+    "errors": 0,
+    "file_errors": 0
+  },
+  "phpstan_messages": [],
+  "exit": 1,
+  "status": "FAILED",
+  "cleanup": [
+    {
+      "name": "hostider-f6f-8e59823d4b5f-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f6f-8e59823d4b5f-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f6f-8e59823d4b5f-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-31T17:27:20Z"
+}

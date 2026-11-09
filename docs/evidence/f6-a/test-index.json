@@ -1,0 +1,191 @@
+{
+  "application_sha": "8340be6c5a12e551587ab92e72da930a18a7894d",
+  "cases": [
+    {
+      "name": "F6-A 01 same identity fingerprint deterministic replay and input order",
+      "file": "tests/migration-contract.php",
+      "line": 17,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 02 same identity changed content conflicts without overwrite",
+      "file": "tests/migration-contract.php",
+      "line": 25,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 03 source instances are isolated even with identical IDs",
+      "file": "tests/migration-contract.php",
+      "line": 31,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 04 missing immutable source ID fails closed",
+      "file": "tests/migration-contract.php",
+      "line": 37,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 05 invalid versions entity and extra envelope fields rejected",
+      "file": "tests/migration-contract.php",
+      "line": 40,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 06 mixed snapshots schema watermark and timezone rejected",
+      "file": "tests/migration-contract.php",
+      "line": 46,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 07 missing parents never invented or linked across instance",
+      "file": "tests/migration-contract.php",
+      "line": 51,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 08 duplicate external resources conflict for every provider",
+      "file": "tests/migration-contract.php",
+      "line": 55,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 09 customer service and provider account ownership fail closed",
+      "file": "tests/migration-contract.php",
+      "line": 61,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 10 unknown payment cannot establish PAID or allocations",
+      "file": "tests/migration-contract.php",
+      "line": 67,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 11 unknown or inflight resource never promoted ACTIVE",
+      "file": "tests/migration-contract.php",
+      "line": 72,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 12 currencies never combined or silently converted",
+      "file": "tests/migration-contract.php",
+      "line": 77,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 13 unknown historical FX remains review without current rate",
+      "file": "tests/migration-contract.php",
+      "line": 81,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 14 private note cannot become public or uncertain visibility",
+      "file": "tests/migration-contract.php",
+      "line": 85,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 15 wrong author membership or kind requires review",
+      "file": "tests/migration-contract.php",
+      "line": 90,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 16 attachment missing malformed checksum rejected",
+      "file": "tests/migration-contract.php",
+      "line": 95,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 17 traversal absolute encoded backslash and symlink paths reviewed without reads",
+      "file": "tests/migration-contract.php",
+      "line": 99,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 18 source staff cannot inherit admin MFA roles sessions or tokens",
+      "file": "tests/migration-contract.php",
+      "line": 105,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 19 legacy password format rejected and reset verification mandatory",
+      "file": "tests/migration-contract.php",
+      "line": 111,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 20 imported CREATE forbidden all providers and pure module has no effect dependencies",
+      "file": "tests/migration-contract.php",
+      "line": 117,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 21 malformed types floats overflow UTF8 and unknown fields fail closed",
+      "file": "tests/migration-contract.php",
+      "line": 127,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 22 duplicate identity and stale content SHA rejected",
+      "file": "tests/migration-contract.php",
+      "line": 135,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 23 knowledge states distinct and never carry guessed values",
+      "file": "tests/migration-contract.php",
+      "line": 139,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 24 mapping target tamper metadata and snapshot conflict",
+      "file": "tests/migration-contract.php",
+      "line": 146,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 25 partial payment limits refunds and immutable provenance",
+      "file": "tests/migration-contract.php",
+      "line": 154,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 26 original message order time visibility and attachment relations preserved",
+      "file": "tests/migration-contract.php",
+      "line": 161,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 27 attachment missing corrupt MIME size and reported file evidence",
+      "file": "tests/migration-contract.php",
+      "line": 167,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 28 timezone uncertainty email conflicts and invalid timestamps explicit",
+      "file": "tests/migration-contract.php",
+      "line": 174,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 29 fully evidenced PAID remains distinct from suspended imported resource",
+      "file": "tests/migration-contract.php",
+      "line": 180,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 30 published synthetic fixture and manifest match generator exactly",
+      "file": "tests/migration-contract.php",
+      "line": 191,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    },
+    {
+      "name": "F6-A 31 malformed knowledge payload provenance timezone and source encoding rejected",
+      "file": "tests/migration-contract.php",
+      "line": 197,
+      "kind": "SYNTHETIC_PURE_CONTRACT"
+    }
+  ]
+}

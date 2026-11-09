@@ -1,0 +1,6 @@
+{
+  "run": "php83-hostider-f5g-da88cf62db04-83",
+  "initial_shell_sha256": "83b57413775707344810244b03cdaf4019753d856a6cd6ccc904e1b39812bd69",
+  "failure": "Shell file CRLF line endings caused exit2 before PHP. Zero tests executed, not PASS.",
+  "fix": "Ignored shell runner converted to LF; application source unchanged."
+}

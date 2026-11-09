@@ -1,0 +1,32 @@
+PASS F6-A 01 same identity fingerprint deterministic replay and input order
+PASS F6-A 02 same identity changed content conflicts without overwrite
+PASS F6-A 03 source instances are isolated even with identical IDs
+PASS F6-A 04 missing immutable source ID fails closed
+PASS F6-A 05 invalid versions entity and extra envelope fields rejected
+PASS F6-A 06 mixed snapshots schema watermark and timezone rejected
+PASS F6-A 07 missing parents never invented or linked across instance
+PASS F6-A 08 duplicate external resources conflict for every provider
+PASS F6-A 09 customer service and provider account ownership fail closed
+PASS F6-A 10 unknown payment cannot establish PAID or allocations
+PASS F6-A 11 unknown or inflight resource never promoted ACTIVE
+PASS F6-A 12 currencies never combined or silently converted
+PASS F6-A 13 unknown historical FX remains review without current rate
+PASS F6-A 14 private note cannot become public or uncertain visibility
+PASS F6-A 15 wrong author membership or kind requires review
+PASS F6-A 16 attachment missing malformed checksum rejected
+PASS F6-A 17 traversal absolute encoded backslash and symlink paths reviewed without reads
+PASS F6-A 18 source staff cannot inherit admin MFA roles sessions or tokens
+PASS F6-A 19 legacy password format rejected and reset verification mandatory
+PASS F6-A 20 imported CREATE forbidden all providers and pure module has no effect dependencies
+PASS F6-A 21 malformed types floats overflow UTF8 and unknown fields fail closed
+PASS F6-A 22 duplicate identity and stale content SHA rejected
+PASS F6-A 23 knowledge states distinct and never carry guessed values
+PASS F6-A 24 mapping target tamper metadata and snapshot conflict
+PASS F6-A 25 partial payment limits refunds and immutable provenance
+PASS F6-A 26 original message order time visibility and attachment relations preserved
+PASS F6-A 27 attachment missing corrupt MIME size and reported file evidence
+PASS F6-A 28 timezone uncertainty email conflicts and invalid timestamps explicit
+PASS F6-A 29 fully evidenced PAID remains distinct from suspended imported resource
+PASS F6-A 30 published synthetic fixture and manifest match generator exactly
+PASS F6-A 31 malformed knowledge payload provenance timezone and source encoding rejected
+31 tests, 0 failures

@@ -1,0 +1,2 @@
+PASS F6-B B-01 migration readiness lost inside batch rolls back before commit
+1 tests, 0 failures

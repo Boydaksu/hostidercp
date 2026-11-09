@@ -1,0 +1,51 @@
+{
+  "final_php": [
+    {
+      "file": "php83-hostider-f5i-27faf3b787bb-83.json",
+      "run_id": "hostider-f5i-27faf3b787bb-83",
+      "mode": "full",
+      "php": "8.3.36",
+      "status": "PASS",
+      "suites_executed": 70,
+      "suite_errors": [],
+      "passed_tests": 1054,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    },
+    {
+      "file": "php84-hostider-f5i-4ef34f6b5946-84.json",
+      "run_id": "hostider-f5i-4ef34f6b5946-84",
+      "mode": "full",
+      "php": "8.4.27",
+      "status": "PASS",
+      "suites_executed": 70,
+      "suite_errors": [],
+      "passed_tests": 1054,
+      "failed_assertions": 0,
+      "source_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3"
+    }
+  ],
+  "all_registered_suites_executed": true,
+  "canonical_manifest_sha256": "e826c3f9546212595ac5bf1ad4a53f6906226646a7b67c6a181cb630bce531d3",
+  "source_files": 524,
+  "browser_passed": 15,
+  "browser_failed": 0,
+  "js_state_passed": 10,
+  "syntax_files": 11,
+  "phpstan_level": 5,
+  "lint_php_files": 499,
+  "pattern_files": 524,
+  "dependency_audit": "CURRENT_LOCKED_PASS",
+  "migration_tree": "01b51a655655cb4c7483d6b5937555504264ca3f",
+  "old_evidence_preserved": 665,
+  "user_file_preserved": true,
+  "independent_review": "PENDING",
+  "github_actions": "NOT_RUN",
+  "closing_documentation": {
+    "files": 835,
+    "result": "PASS",
+    "network": "none",
+    "source_mount": "readonly",
+    "runtime": "PHP8.3.36"
+  }
+}

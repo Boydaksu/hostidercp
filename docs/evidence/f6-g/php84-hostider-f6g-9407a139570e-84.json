@@ -1,0 +1,146 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "84",
+  "mode": "target",
+  "php_image": "sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "4e7e76a77e81b3a7f10939d61faf795258e9fd3a44f83d10f4ece7d1173f4eea",
+  "source_files": 548,
+  "run_id": "hostider-f6g-9407a139570e-84",
+  "github_actions": false,
+  "full_acceptance": false,
+  "scope": "target",
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-11-03T18:52:52Z",
+  "suites": [
+    {
+      "path": "tests/hosting-preflight.php",
+      "passed": 45,
+      "failed": 1,
+      "exit": 1
+    },
+    {
+      "path": "tests/run.php",
+      "passed": 19,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/hardening-unit.php",
+      "passed": 7,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/integration.php",
+      "passed": 26,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/identity.php",
+      "passed": 16,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/identity-security.php",
+      "passed": 8,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/session.php",
+      "passed": 1,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/session-concurrency.php",
+      "passed": 7,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/offline-backup.php",
+      "passed": 36,
+      "failed": 0,
+      "exit": 0
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "phpstan": 0,
+    "documentation": 0
+  },
+  "safe_output_lines": 209,
+  "registry_before": {
+    "suites": 71,
+    "expected_tests": 1090
+  },
+  "registry_candidate_suites": 72,
+  "php": "8.4.27",
+  "observations": [
+    {
+      "exception": "ErrorException",
+      "trace": [
+        {
+          "function": "{closure:/workspace/project/tests/harness.php:6}",
+          "class": "",
+          "file": ""
+        },
+        {
+          "function": "session_set_save_handler",
+          "class": "",
+          "file": "hosting-preflight.php"
+        },
+        {
+          "function": "{closure:/workspace/project/tests/hosting-preflight.php:96}",
+          "class": "",
+          "file": "hosting-preflight.php"
+        },
+        {
+          "function": "{closure:/workspace/project/tests/hosting-preflight.php:98}",
+          "class": "",
+          "file": "harness.php"
+        },
+        {
+          "function": "executeTests",
+          "class": "",
+          "file": "hosting-preflight.php"
+        }
+      ]
+    }
+  ],
+  "integration_failures": [
+    "session_set_save_handler(): Session save handler cannot be changed after headers have already been sent"
+  ],
+  "phpstan_totals": {
+    "errors": 0,
+    "file_errors": 0
+  },
+  "phpstan_messages": [],
+  "exit": 1,
+  "status": "FAILED",
+  "cleanup": [
+    {
+      "name": "hostider-f6g-9407a139570e-84-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f6g-9407a139570e-84-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f6g-9407a139570e-84-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-11-03T18:54:54Z"
+}

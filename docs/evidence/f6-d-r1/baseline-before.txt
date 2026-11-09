@@ -1,0 +1,2 @@
+FAIL F6-D-R1 baseline cold verification after operational lease expiry: F6D_LEASE
+1 tests, 1 failures

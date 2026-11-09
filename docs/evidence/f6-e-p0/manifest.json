@@ -1,0 +1,77 @@
+{
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "file": "candidate-source-manifest.json",
+      "sha256": "ec9dcfe23c2b00559170be9ff353ce33b3bf82353e7ab8c16f16b505b3dc4c0c"
+    },
+    {
+      "file": "changed-files.json",
+      "sha256": "a016d8ef421f9ee4a855a4875e406b46f835ad153a4fd44e04d1c1f159df67ce"
+    },
+    {
+      "file": "php83-hostider-p0-78079cb1d08b-83-source.json",
+      "sha256": "5903ab34e3b616e1213763ec3bb91750202de97e1d12df1b6efad3050dc5f555"
+    },
+    {
+      "file": "php83-hostider-p0-78079cb1d08b-83.json",
+      "sha256": "541459528a84b286969b6100f0f7e519852c6b886a7f4fff7e14b7c185111561"
+    },
+    {
+      "file": "php83-hostider-p0-78079cb1d08b-83.txt",
+      "sha256": "0d2fa4de23f4b58497188580952b4a5f8ea7ce63ce4aa9d9275db587050bcfa1"
+    },
+    {
+      "file": "php83-hostider-p0-dd018e81261b-83-source.json",
+      "sha256": "5903ab34e3b616e1213763ec3bb91750202de97e1d12df1b6efad3050dc5f555"
+    },
+    {
+      "file": "php83-hostider-p0-dd018e81261b-83.json",
+      "sha256": "0614df0e404b66a87e02fc87280076e6a67717795de0560e1821be895ca29dbb"
+    },
+    {
+      "file": "php83-hostider-p0-dd018e81261b-83.txt",
+      "sha256": "e32939be84599ccd11c60cff8185cb37abbae83e596ee5e4aa23b8e33e1b9953"
+    },
+    {
+      "file": "php84-hostider-p0-2dbd9c0f3d68-84-source.json",
+      "sha256": "5903ab34e3b616e1213763ec3bb91750202de97e1d12df1b6efad3050dc5f555"
+    },
+    {
+      "file": "php84-hostider-p0-2dbd9c0f3d68-84.json",
+      "sha256": "0d2f698d285ac45f13c597468f1c1e5102b12d4dbe4c99392adb961ee7802bfe"
+    },
+    {
+      "file": "php84-hostider-p0-2dbd9c0f3d68-84.txt",
+      "sha256": "c232048f3847540af5117c65bc759dd44936c3f6be7d025574975aa4a80be7d9"
+    },
+    {
+      "file": "preservation.json",
+      "sha256": "759ded0c1fb5d9f7d90359da872407959261d2dd681b441637e3b7e26741cec9"
+    },
+    {
+      "file": "r2-closure.diff",
+      "sha256": "03bf62fd74fc77ffd4e735e6cfebc62f9531ed6c6c84b37d6ae9434a3c3e5e1e"
+    },
+    {
+      "file": "run-tests.sh",
+      "sha256": "e30b4cba4cf7fdd25280d4f77522fe8c090183a7c3fe0cbc1b35cf62c61e371a"
+    },
+    {
+      "file": "runner-source-proof.json",
+      "sha256": "256b3899c56f8caa078ea8c64c50c51bedd80dabc32c66e0b11f194fe38c31e8"
+    },
+    {
+      "file": "runner.py.txt",
+      "sha256": "c236b98bcfdbdf39b754fbb3bcbb2770636777379de560820bdf46774780ba94"
+    },
+    {
+      "file": "source.diff",
+      "sha256": "b2d0c57645249b7bc9148225b1d423780d57e2365668440027d9fe42497b05e7"
+    },
+    {
+      "file": "summary.json",
+      "sha256": "182fcb8619c48c0a46c98ce30367e83037a8af8d8e0a69358a277f2e8ca513e8"
+    }
+  ]
+}

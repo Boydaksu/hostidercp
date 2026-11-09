@@ -1,0 +1,26 @@
+PASS F6-D-R1 cold verification succeeds in a fresh process after source schema loss and Vault expiry
+PASS F6-D-R1 enrollment preserves original artifact issuer MAC backup identity and legacy verification
+PASS F6-D-R1 encryption key without a trusted issuer authority cannot verify or self-enrol
+PASS F6-D-R1 trusted issuer authority without the correct encryption key is denied
+PASS F6-D-R1 wrong backup source root target snapshot and encryption version are denied
+PASS F6-D-R1 revoked untrusted and malformed pinned issuer keys fail closed
+PASS F6-D-R1 forged detached signature and wrong signing context cannot authenticate
+PASS F6-D-R1 encryption-key forged issuer MAC cannot reuse the original recovery signature
+PASS F6-D-R1 corrupt truncated and substituted ciphertext cannot verify
+PASS F6-D-R1 independently signed corrupt AEAD tag still fails native decryption
+PASS F6-D-R1 tampered manifest unknown format and embedded trust key are rejected
+PASS F6-D-R1 duplicate JSON keys noncanonical bytes missing parts and oversize are rejected
+PASS F6-D-R1 expired operational lease is distinct from expired bounded recovery authorization
+PASS F6-D-R1 another backup or source instance cannot replay a valid certificate under the current authorization
+PASS F6-D-R1 recovery key rotation preserves an old correct backup and enforces revocation
+PASS F6-D-R1 expired Vault or wrong capability cannot enrol an artifact after issuer loss
+PASS F6-D-R1 signer binds the exact authenticated ciphertext and cannot attest a substituted package
+PASS F6-D-R1 authentic malformed inner payload still fails immutable issuer evidence and duplicate-key checks
+PASS F6-D-R1 recovery report redacts keys signatures ciphertext issuer MAC private bodies and paths
+PASS F6-D-R1 environment and explicit recovery authorization flags remain mandatory
+PASS F6-D-R1 real crashes before authority and after verification do not change the immutable backup
+PASS F6-D-R1 duplicate and concurrent verification is read-only and grants no native activation
+PASS F6-D-R1 restored schema still rejects native Sandbox authority without rewriting original evidence
+PASS F6-D-R1 history mapping provenance and customer conflicts in restored targets remain fail closed
+PASS F6-D-R1 cached authentication cannot enrol a cold capsule after original issuer lease expiry
+25 tests, 0 failures

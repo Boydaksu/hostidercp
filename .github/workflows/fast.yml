@@ -1,0 +1,114 @@
+name: FAST CI
+on: [push]
+permissions:
+  contents: read
+concurrency:
+  group: fast-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  scope:
+    name: FAST scope and documentation security
+    runs-on: ubuntu-latest
+    outputs:
+      profile: ${{ steps.plan.outputs.profile }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - name: Determine conservative impact
+        id: plan
+        env:
+          CI_BEFORE: ${{ github.event.before }}
+        run: php tools/ci/plan.php
+      - name: Documentation encoding and credential patterns
+        run: php tools/ci/doc-check.php
+      - name: Existing source configuration and test credential patterns
+        run: php tools/audit.php
+      - name: CI selection and source guard regressions
+        run: php tools/ci/self-test.php
+  verify:
+    name: FAST PHP ${{ matrix.php }}
+    needs: scope
+    if: needs.scope.outputs.profile != 'docs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4']
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: isolated-ci-password
+          MARIADB_DATABASE: hostider_f0_test
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      APP_ENV: test
+      HTTP_TEST_ENGINE: interpreter
+      TEST_DB_DSN: mysql:host=127.0.0.1;port=3306;dbname=hostider_f0_test;charset=utf8mb4
+      TEST_DB_USER: root
+      TEST_DB_PASSWORD: isolated-ci-password
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php }}'
+          extensions: pdo_mysql, sodium, mbstring, fileinfo, intl, zip
+          coverage: none
+      - run: composer install --working-dir=tools/analysis --no-interaction --prefer-dist --no-plugins --no-scripts
+      - run: composer audit --working-dir=tools/analysis --locked
+      - run: php tools/analysis/vendor/phpstan/phpstan/phpstan.phar analyse --no-progress --memory-limit=512M
+      - run: php tools/check.php
+      - run: php tools/audit.php
+      - name: Selected native MariaDB HTTP and safety regressions
+        env:
+          CI_PROFILE: ${{ needs.scope.outputs.profile }}
+        run: php tools/ci/run.php "$CI_PROFILE"
+      - name: All native JavaScript syntax and Support state checks
+        run: |
+          node --check public/assets/support.js
+          node --check public/assets/commerce.js
+          node --check public/assets/services.js
+          node --check public/assets/provider-panel.js
+          node tests/support-e-state.cjs
+      - name: Locked browser development dependency security audit
+        run: npm audit --prefix tools/browser --package-lock-only --audit-level=high
+      - name: Upload allowlisted test process diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fast-diagnostics-php-${{ matrix.php }}-${{ github.run_attempt }}
+          path: |
+            storage/ci-diagnostics/*.json
+            storage/ci-stability/*.json
+          if-no-files-found: warn
+  result:
+    name: FAST result
+    if: always()
+    needs: [scope, verify]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stable required-check candidate (never FULL ACCEPTANCE)
+        env:
+          SCOPE_RESULT: ${{ needs.scope.result }}
+          PROFILE: ${{ needs.scope.outputs.profile }}
+          VERIFY_RESULT: ${{ needs.verify.result }}
+        run: |
+          test "$SCOPE_RESULT" = success
+          if [ "$PROFILE" = docs ]; then
+            test "$VERIFY_RESULT" = skipped
+          else
+            test "$VERIFY_RESULT" = success
+          fi
+          printf 'FAST %s passed; FULL ACCEPTANCE is separate and manual.\n' "$PROFILE" >> "$GITHUB_STEP_SUMMARY"

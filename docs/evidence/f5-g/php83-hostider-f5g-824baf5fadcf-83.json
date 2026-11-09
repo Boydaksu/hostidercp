@@ -1,0 +1,111 @@
+{
+  "classification": "LOCAL_DOCKER_SYNTHETIC_TARGETED_NEW_UNCOMMITTED_CANDIDATE",
+  "php_target": "83",
+  "mode": "all",
+  "php_image": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
+  "db_image": "sha256:de61fed4a40d3842f3ee09944ba52792156cfd9adf489b2cc670fc6ded28df8d",
+  "source_commit": null,
+  "source_manifest_sha256": "bc3e8efdff73c81461e09757214e0a8c3352a42a59576982e292834cdacc00c5",
+  "source_files": 510,
+  "run_id": "hostider-f5g-824baf5fadcf-83",
+  "github_actions": false,
+  "full_acceptance": false,
+  "real_gate_closure": false,
+  "host_ports_published": false,
+  "started_at": "2026-10-30T18:44:05Z",
+  "suites": [
+    {
+      "path": "tests/support-merge.php",
+      "passed": 34,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-auto-close.php",
+      "passed": 31,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-migrations.php",
+      "passed": 4,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-http.php",
+      "passed": 157,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-b.php",
+      "passed": 28,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-c.php",
+      "passed": 42,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-d.php",
+      "passed": 41,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/support-e.php",
+      "passed": 27,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/identity-security.php",
+      "passed": 8,
+      "failed": 0,
+      "exit": 0
+    },
+    {
+      "path": "tests/hardening-unit.php",
+      "passed": 7,
+      "failed": 0,
+      "exit": 0
+    }
+  ],
+  "quality": {
+    "check": 0,
+    "audit": 0,
+    "phpstan": 0,
+    "documentation": 0
+  },
+  "safe_output_lines": 423,
+  "php": "8.3.36",
+  "phpstan_totals": {
+    "errors": 0,
+    "file_errors": 0
+  },
+  "phpstan_messages": [],
+  "exit": 0,
+  "status": "PASS",
+  "cleanup": [
+    {
+      "name": "hostider-f5g-824baf5fadcf-83-app",
+      "already_absent": true
+    },
+    {
+      "name": "hostider-f5g-824baf5fadcf-83-db",
+      "ownership_verified": true,
+      "removed": true
+    },
+    {
+      "name": "hostider-f5g-824baf5fadcf-83-net",
+      "ownership_verified": true,
+      "removed": true
+    }
+  ],
+  "host_source_unchanged": true,
+  "finished_at": "2026-10-30T18:55:40Z"
+}
