@@ -75,12 +75,12 @@ def run(commit, output):
         rejected(lambda: release.verify(path))
         print("PASS reject " + label)
     bad_target = output / "must-not-exist"
-    rejected(lambda: release.extract(output / "traversal.zip", bad_target, None))
+    rejected(lambda: release.extract(output / "traversal.zip", bad_target, release.digest(raw)))
     assert not bad_target.exists()
     install = output / "installed"
     release.extract(archive, install, release.digest(raw))
     assert all((install / p).read_bytes() == b for p, b in expected.items())
-    rejected(lambda: release.extract(archive, install, None))
+    rejected(lambda: release.extract(archive, install, release.digest(raw)))
     assert (install / release.MANIFEST).read_bytes() == raw
     print("PASS fresh extraction and no overwrite")
 

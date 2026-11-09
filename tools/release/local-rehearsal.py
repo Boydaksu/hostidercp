@@ -11,7 +11,7 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[2]
-EVIDENCE = ROOT / "docs/evidence/f6-h"
+EVIDENCE = ROOT / "docs/evidence/f6-i"
 IMAGES = {
     "83": "sha256:d4c4bd00590b5983b8a2b42ad2cdc60693e1e091517abb6ba1d3fca0c30c2bad",
     "84": "sha256:ecef3f23a81f103e25add00f44a77fe073d4835506af101dadc3928c5802a0ba",
@@ -24,7 +24,7 @@ mkdir /workspace/project
 tar -C /input --exclude=.git --exclude=storage --exclude='h-*.py' -cf - . | tar -C /workspace/project -xf -
 cd /workspace/project
 mkdir -p storage
-verify() { php -r '$m=json_decode(file_get_contents("docs/evidence/f6-h/source-manifest.json"),true,512,JSON_THROW_ON_ERROR);foreach($m as $p=>$h){if(hash_file("sha256",$p)!==$h){exit(91);}}'; }
+verify() { php -r '$m=json_decode(file_get_contents("docs/evidence/f6-i/source-manifest.json"),true,512,JSON_THROW_ON_ERROR);foreach($m as $p=>$h){if(hash_file("sha256",$p)!==$h){exit(91);}}'; }
 verify
 php -r 'echo "PHP ".PHP_VERSION.PHP_EOL;'
 failed=0
@@ -74,6 +74,7 @@ def source_manifest():
         if path.is_file():
             files[path.relative_to(ROOT).as_posix()] = sha(path.read_bytes())
     files["tests/release-package.py"] = sha((ROOT / "tests/release-package.py").read_bytes())
+    files["tests/release-hardening.py"] = sha((ROOT / "tests/release-hardening.py").read_bytes())
     return json.dumps(files, sort_keys=True, separators=(",", ":")).encode()
 
 
@@ -105,8 +106,8 @@ def collect(output, record):
 
 
 def run(version, phase, installed, phar):
-    tag = "hostider-f6h-" + version + "-" + secrets.token_hex(4)
-    label = "hostider.f6h=" + tag
+    tag = "hostider-f6i-" + version + "-" + secrets.token_hex(4)
+    label = "hostider.f6i=" + tag
     db, net, app = [tag + "-" + suffix for suffix in ("db", "net", "app")]
     password = secrets.token_hex(24)
     env = dict(os.environ, MARIADB_ROOT_PASSWORD=password, TEST_DB_PASSWORD=password,
@@ -158,10 +159,10 @@ def run(version, phase, installed, phar):
         record.update(exit=2, error=str(error))
     finally:
         for obj in (app, db):
-            info = docker("inspect", "--format", '{{index .Config.Labels "hostider.f6h"}}', obj)
+            info = docker("inspect", "--format", '{{index .Config.Labels "hostider.f6i"}}', obj)
             if info.returncode == 0 and info.stdout.strip() == tag:
                 docker("rm", "-f", obj)
-        info = docker("network", "inspect", "--format", '{{index .Labels "hostider.f6h"}}', net)
+        info = docker("network", "inspect", "--format", '{{index .Labels "hostider.f6i"}}', net)
         if info.returncode == 0 and info.stdout.strip() == tag:
             docker("network", "rm", net)
         (EVIDENCE / (tag + ".json")).write_bytes((json.dumps(record, indent=2) + "\n").encode())

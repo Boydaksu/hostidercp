@@ -1,0 +1,1 @@
+{"pilot":"NOT_RUN","manifest_sha256":null,"checks":{"public_root":"NOT_RUN","php_web_cli":"NOT_RUN","extensions":"NOT_RUN","mariadb":"NOT_RUN","db_roles":"NOT_RUN","private_storage_session":"NOT_RUN","https_rewrite":"NOT_RUN","cron_overlap":"NOT_RUN","queue_outbox":"NOT_RUN","backup_restore":"NOT_RUN"},"sanitized_evidence_ids":[],"installation":"BLOCKED"}
